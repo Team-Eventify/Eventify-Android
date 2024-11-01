@@ -58,7 +58,7 @@ fun PasswordInput(
     val icon = if (passwordVisibility)
         painterResource(id = R.drawable.eye_opened)
     else
-        painterResource(id = R.drawable.eye_opened)
+        painterResource(id = R.drawable.eye_closed)
 
     OutlinedTextField(
         value = text,
