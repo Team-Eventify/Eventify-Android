@@ -14,7 +14,7 @@ import retrofit2.http.POST
 
 interface AuthAPI {
 
-    @POST("")
+    @POST(".")
     suspend fun refreshAccessToken(@Body data: RefreshTokenRequestData): Response<RefreshTokenResponse>
 
     @POST("register")
