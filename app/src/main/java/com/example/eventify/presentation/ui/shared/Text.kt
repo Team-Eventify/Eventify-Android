@@ -1,13 +1,16 @@
 package com.example.eventify.presentation.ui.shared
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 
@@ -43,14 +46,52 @@ fun AnnotationText(
 @Composable
 fun BodyText(
     text: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+) {
+    Text(
+        text = text,
+        fontSize = 17.sp,
+        fontWeight = FontWeight.Normal,
+        lineHeight = 20.sp,
+        modifier = modifier
+    )
+}
+
+@Composable
+fun ActionText(
+    text: String,
+    onClick: () -> Unit,
+    textAlign: TextAlign = TextAlign.Left,
+    modifier: Modifier = Modifier,
 ) {
     Text(
         text = text,
         fontSize = 17.sp,
         fontWeight = FontWeight.Normal,
         lineHeight = 17.sp,
+        textAlign = textAlign,
         modifier = modifier
+            .clickable { onClick() }
+    )
+}
+
+@Composable
+fun ActionPrimaryText(
+    text: String,
+    onClick: () -> Unit,
+    textAlign: TextAlign = TextAlign.Left,
+    modifier: Modifier = Modifier,
+) {
+    Text(
+        text = text,
+        fontSize = 17.sp,
+        fontWeight = FontWeight.Normal,
+        lineHeight = 17.sp,
+        textAlign = textAlign,
+        color = MaterialTheme.colorScheme.primary,
+        textDecoration = TextDecoration.Underline,
+        modifier = modifier
+            .clickable { onClick() }
     )
 }
 
@@ -64,7 +105,34 @@ fun PrimaryButtonText(
         lineHeight = 22.sp,
         fontSize = 17.sp,
         fontWeight = FontWeight.Medium,
-        textDecoration = textDecoration
+        textDecoration = textDecoration,
     )
 
+}
+
+@Composable
+fun EventCardTitle(
+    text: String,
+    modifier: Modifier = Modifier
+) {
+    Text(
+        text = text,
+        textAlign = TextAlign.Start,
+        fontWeight = FontWeight.Medium,
+        fontSize = 20.sp,
+        modifier = modifier
+            .padding(0.dp, 5.dp)
+    )
+}
+
+
+@Composable
+fun HeadingText(
+    text: String
+) {
+    Text(
+        text = text,
+        fontSize = 25.sp,
+        fontWeight = FontWeight.Medium
+    )
 }
