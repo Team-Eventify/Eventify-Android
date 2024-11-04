@@ -54,7 +54,7 @@ fun BottomNavigationBar(
         BottomNavigationBarItem(
             title = "Поиск",
             icon = painterResource(R.drawable.ic_magnifying_glass),
-            route = ""
+            route = HomeRouter.SearchRoute.route
         ),
         BottomNavigationBarItem(
             title = "Мои ивенты",

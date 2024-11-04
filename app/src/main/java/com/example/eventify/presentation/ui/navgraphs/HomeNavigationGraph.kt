@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.eventify.presentation.ui.events.EventDetailScreen
 import com.example.eventify.presentation.ui.events.EventsFeedScreen
+import com.example.eventify.presentation.ui.events.SearchScreen
 import com.example.eventify.presentation.ui.profile.ProfileEditScreen
 
 @Composable
@@ -24,13 +25,17 @@ fun HomeNavigationGraph(navController: NavHostController) {
         composable(HomeRouter.ProfileRoute.route) {
             ProfileEditScreen()
         }
+        composable(HomeRouter.SearchRoute.route) {
+            SearchScreen()
+        }
     }
 }
 
 
 sealed class HomeRouter(val route: String){
-    object EventFeedRoute : HomeRouter(route = "feed")
-    object FavoritesRoute : HomeRouter(route = "favorites")
-    object ProfileRoute : HomeRouter(route = "profile")
+    data object EventFeedRoute : HomeRouter(route = "feed")
+    data object FavoritesRoute : HomeRouter(route = "favorites")
+    data object ProfileRoute : HomeRouter(route = "profile")
+    data object SearchRoute : HomeRouter(route = "search")
 }
 
