@@ -4,16 +4,21 @@ package com.example.eventify.presentation.ui.shared
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemColors
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -57,17 +62,16 @@ fun BottomNavigationBar(
             route = ""
         ),
         BottomNavigationBarItem(
-            title = "Избранное",
-            icon = painterResource(R.drawable.ic_heart),
-            route = HomeRouter.FavoritesRoute.route
-        ),
-        BottomNavigationBarItem(
             title = "Профиль",
             icon = painterResource(R.drawable.ic_person),
             route = HomeRouter.ProfileRoute.route
         ),
     )
-    NavigationBar {
+    NavigationBar(
+        containerColor = MaterialTheme.colorScheme.surface,
+        contentColor = MaterialTheme.colorScheme.surface,
+        tonalElevation = 0.dp
+    ) {
         items.forEach { item ->
             AddItem(
                 item = item,
@@ -94,7 +98,12 @@ fun RowScope.AddItem(
                 contentDescription = item.route
             )
         },
-        label = { Text(text = item.title, fontSize = 10.sp) },
+        label = { Text(text = item.title, fontSize = 12.sp) },
+        colors = NavigationBarItemDefaults.colors(
+            selectedIconColor = MaterialTheme.colorScheme.primary,
+            selectedTextColor = MaterialTheme.colorScheme.primary,
+            indicatorColor = MaterialTheme.colorScheme.surface
+        ),
         selected = currentDestination?.hierarchy?.any {
             it.route == item.route
         } == true,
