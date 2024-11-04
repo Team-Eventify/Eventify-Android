@@ -20,6 +20,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.eventify.presentation.ui.navgraphs.AuthRouter
+import com.example.eventify.presentation.ui.navgraphs.RootRouter
 import com.example.eventify.presentation.ui.shared.ActionPrimaryText
 import com.example.eventify.presentation.ui.shared.BodyText
 import com.example.eventify.presentation.ui.shared.PasswordInput
@@ -54,7 +56,9 @@ fun RegisterScreen(
 
         Spacer(modifier = modifier.height(30.dp))
         PrimaryButton(
-            onClick = { /*TODO*/ },
+            onClick = {
+              navController.navigate(RootRouter.HomeRoute.route)
+            },
             modifier = modifier
                 .fillMaxWidth()
         ) {
@@ -71,7 +75,7 @@ fun RegisterScreen(
             ActionPrimaryText(
                 text = "Войти",
                 onClick = {
-                    navController.navigate("login")
+                    navController.navigate(AuthRouter.LogInRoute.route)
                 }
             )
         }

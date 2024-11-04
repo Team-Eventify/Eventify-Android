@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.example.eventify.presentation.ui.shared.AnnotationText
 import com.example.eventify.presentation.ui.shared.BodyText
 import com.example.eventify.presentation.ui.shared.CategorySelectChip
+import com.example.eventify.presentation.ui.shared.CategorySelector
 import com.example.eventify.presentation.ui.shared.PrimaryButton
 import com.example.eventify.presentation.ui.shared.PrimaryButtonText
 import com.example.eventify.presentation.ui.shared.TitleText
@@ -45,13 +46,7 @@ fun CategorySelectScreen(
             Spacer(modifier = modifier.height(10.dp))
             BodyText(text = "Мы подберём рекомендации ивентов под твои вкусы.")
             Spacer(modifier = modifier.height(30.dp))
-            FlowRow(
-                horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.Start),
-            ){
-                listOf("Наука", "Спорт", "Хакатоны", "ML", "GameDev", "Робототехника", "Студенческая жизнь", "Наставничество", "Backend", "Frontend", "Media").forEach {
-                    CategorySelectChip(text = it)
-                }
-        }
+            CategorySelector()
 
         }
         Column {

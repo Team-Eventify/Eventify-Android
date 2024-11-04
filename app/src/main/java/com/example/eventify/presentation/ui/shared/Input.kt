@@ -28,6 +28,7 @@ fun TextInput(
     value: String? = null,
     placeholder: String? = null,
     modifier: Modifier = Modifier,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     onValueChange: ((String) -> Unit)? = null
 ) {
     var text by remember { mutableStateOf(TextFieldValue(value ?: "")) }

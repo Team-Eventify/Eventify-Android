@@ -12,10 +12,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
+import com.example.eventify.presentation.ui.events.EventDetailScreen
 import com.example.eventify.presentation.ui.events.EventsFeedScreen
 import com.example.eventify.presentation.ui.login.LogInScreen
 import com.example.eventify.presentation.ui.login.RegisterScreen
 import com.example.eventify.presentation.ui.navgraphs.RootNavGraph
+import com.example.eventify.presentation.ui.profile.ProfileEditScreen
 import com.example.eventify.presentation.ui.register.CategorySelectScreen
 import com.example.eventify.presentation.ui.shared.EventCard
 import com.example.eventify.presentation.ui.theme.EventifyTheme
@@ -30,8 +32,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-//                    RootNavGraph(navController = rememberNavController())
-                    EventsFeedScreen()
+                    RootNavGraph(navController = rememberNavController())
                 }
             }
         }
