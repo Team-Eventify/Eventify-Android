@@ -25,22 +25,19 @@ import com.example.eventify.R
 
 @Composable
 fun TextInput(
-    value: String? = null,
+    text: String,
     placeholder: String? = null,
     modifier: Modifier = Modifier,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    onValueChange: ((String) -> Unit)? = null
+    onValueChange: (String) -> Unit
 ) {
-    var text by remember { mutableStateOf(TextFieldValue(value ?: "")) }
 
     OutlinedTextField(
         value = text,
-        onValueChange = {
-            text = it
-            onValueChange?.invoke(it.text)
-        },
+        onValueChange = onValueChange,
         placeholder = {Text(placeholder ?: "", fontSize = 17.sp, fontWeight = FontWeight.Normal)},
         shape = RoundedCornerShape(10.dp),
+        keyboardOptions = keyboardOptions,
         singleLine = true,
         modifier = modifier
             .fillMaxWidth()
@@ -49,11 +46,11 @@ fun TextInput(
 
 @Composable
 fun PasswordInput(
+    text: String,
     placeholder: String? = null,
     modifier: Modifier = Modifier,
-    onValueChange: ((String) -> Unit)? = null
+    onValueChange: (String) -> Unit
 ) {
-    var text by remember { mutableStateOf(TextFieldValue("")) }
     var passwordVisibility by remember { mutableStateOf(false) }
 
     val icon = if (passwordVisibility)
@@ -63,10 +60,7 @@ fun PasswordInput(
 
     OutlinedTextField(
         value = text,
-        onValueChange = {
-            text = it
-            onValueChange?.invoke(it.text)
-        },
+        onValueChange = onValueChange,
         placeholder = {Text(placeholder ?: "", fontSize = 17.sp, fontWeight = FontWeight.Normal)},
         shape = RoundedCornerShape(10.dp),
         singleLine = true,

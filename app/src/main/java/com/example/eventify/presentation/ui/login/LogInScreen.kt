@@ -13,12 +13,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.eventify.presentation.ui.navgraphs.AuthRouter
@@ -31,12 +30,15 @@ import com.example.eventify.presentation.ui.shared.PrimaryButton
 import com.example.eventify.presentation.ui.shared.PrimaryButtonText
 import com.example.eventify.presentation.ui.shared.TextInput
 import com.example.eventify.presentation.ui.shared.TitleText
+import com.example.eventify.presentation.viewmodels.LogInViewModel
 
 @Composable
 fun LogInScreen(
     navController: NavHostController,
+    logInViewModel: LogInViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 ) {
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -53,11 +55,19 @@ fun LogInScreen(
         Spacer(modifier = modifier.height(30.dp))
 
         TextInput(
-            placeholder = "Email"
+            text = logInViewModel.loginValue,
+            placeholder = "Email",
+            onValueChange = {
+                logInViewModel.loginValue = it
+            }
         )
         Spacer(modifier = modifier.height(10.dp))
         PasswordInput(
-            placeholder = "Password"
+            text = logInViewModel.passwordValue,
+            placeholder = "Password",
+            onValueChange = {
+                logInViewModel.passwordValue = it
+            }
         )
         ActionText(
             text = "Забыли пароль?",
@@ -68,7 +78,9 @@ fun LogInScreen(
         Spacer(modifier = modifier.height(30.dp))
         PrimaryButton(
             onClick = {
-                navController.navigate(RootRouter.HomeRoute.route)
+                logInViewModel.logIn(onSuccess = {
+                    navController.navigate(RootRouter.HomeRoute.route)
+                })
             },
             modifier = modifier
                 .fillMaxWidth()

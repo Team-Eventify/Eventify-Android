@@ -11,6 +11,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -41,17 +45,28 @@ fun RegisterScreen(
         ,
         verticalArrangement = Arrangement.Center
     ) {
+        var email by remember { mutableStateOf("") }
+        var password by remember { mutableStateOf("") }
+
         TitleText(text = "Регистрация")
         Spacer(modifier = modifier.height(5.dp))
         BodyText(text = "Пожалуйста, создайте новый аккаунт.")
         BodyText(text = "Это займёт меньше минуты.")
         Spacer(modifier = modifier.height(30.dp))
         TextInput(
-            placeholder = "Email"
+            text = email,
+            placeholder = "Email",
+            onValueChange = {
+                email = it
+            }
         )
         Spacer(modifier = modifier.height(10.dp))
         PasswordInput(
-            placeholder = "Password"
+            text = password,
+            placeholder = "Password",
+            onValueChange = {
+                password = it
+            }
         )
 
         Spacer(modifier = modifier.height(30.dp))

@@ -21,7 +21,10 @@ import com.example.eventify.presentation.ui.profile.ProfileEditScreen
 import com.example.eventify.presentation.ui.register.CategorySelectScreen
 import com.example.eventify.presentation.ui.shared.EventCard
 import com.example.eventify.presentation.ui.theme.EventifyTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -13,6 +13,10 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
@@ -37,32 +41,59 @@ fun ProfileEditScreen(
             .fillMaxSize()
             .padding(10.dp)
     ) {
+        var firstName by remember { mutableStateOf("") }
+        var lastName by remember { mutableStateOf("") }
+        var middleName by remember { mutableStateOf("") }
+        var email by remember { mutableStateOf("") }
+        var telegram by remember { mutableStateOf("") }
+
+
         SubHeadingText(text = "Имя")
         TextInput(
-            placeholder = "Иван"
+            text = firstName,
+            placeholder = "Иван",
+            onValueChange = {
+                firstName = it
+            }
         )
 
         SubHeadingText(text = "Фамилия")
         TextInput(
-            placeholder = "Иванов"
+            text = lastName,
+            placeholder = "Иванов",
+            onValueChange = {
+                lastName = it
+            }
         )
 
         SubHeadingText(text = "Отчество")
         TextInput(
-            placeholder = "Иванович"
+            text = middleName,
+            placeholder = "Иванович",
+            onValueChange = {
+                middleName = it
+            }
         )
 
         SubHeadingText(text = "Электронная почта")
         TextInput(
+            text = email,
             placeholder = "ivanov@gmail.com",
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Email
-            )
+            ),
+            onValueChange = {
+                email = it
+            }
         )
 
         SubHeadingText(text = "Telegram")
         TextInput(
-            placeholder = "@ivanov"
+            text = telegram,
+            placeholder = "@ivanov",
+            onValueChange = {
+                telegram = it
+            }
         )
 
         Spacer(Modifier.height(10.dp))

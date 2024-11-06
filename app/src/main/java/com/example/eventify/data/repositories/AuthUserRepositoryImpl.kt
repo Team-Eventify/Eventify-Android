@@ -9,8 +9,11 @@ import com.example.eventify.data.remote.models.auth.RefreshTokenResponse
 import com.example.eventify.data.remote.models.auth.RegisterResponse
 import com.example.eventify.data.remote.models.auth.RegisterUserRequestData
 import retrofit2.Response
+import javax.inject.Inject
 
-class AuthUserRepositoryImpl(val dataSource: AuthAPI): AuthUserRepository {
+class AuthUserRepositoryImpl @Inject constructor (
+    private val dataSource: AuthAPI
+): AuthUserRepository {
     override suspend fun refreshAccessToken(data: RefreshTokenRequestData): Response<RefreshTokenResponse> = dataSource.refreshAccessToken(data)
 
     override suspend fun registerUser(user: RegisterUserRequestData): Response<RegisterResponse> = dataSource.registerUser(user)
