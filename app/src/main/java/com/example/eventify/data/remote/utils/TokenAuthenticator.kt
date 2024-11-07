@@ -14,8 +14,11 @@ class TokenAuthenticator @Inject constructor(
     private val authRepository: AuthUserRepository
 ) : Authenticator {
     override fun authenticate(route: Route?, response: Response): Request? {
-        val refreshToken = tokenManager.getRefreshToken() ?: return null
+        if (!response.request.isAuthRequired()) {
+            return response.request.newBuilder().build()
+        }
 
+        val refreshToken = tokenManager.getRefreshToken() ?: return null
         val newTokensData = runBlocking {
             authRepository.refreshAccessToken(data = RefreshTokenRequestData(
                 refresh = refreshToken

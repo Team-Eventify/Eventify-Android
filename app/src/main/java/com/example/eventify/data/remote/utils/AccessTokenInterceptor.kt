@@ -8,11 +8,16 @@ class AccessTokenInterceptor @Inject constructor(
     private val tokenManager: TokenManager
 ): Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
-        val token = tokenManager.getAccessToken() ?: ""
         val request = chain.request().newBuilder()
-        request.addHeader(HEADER_AUTHORIZATION, "$TOKEN_TYPE $token")
+
+        if (chain.request().isAuthRequired()){
+            val token = tokenManager.getAccessToken() ?: ""
+            request.addHeader(HEADER_AUTHORIZATION, "$TOKEN_TYPE $token")
+        }
+
         return chain.proceed(request.build())
     }
+
 
     companion object {
         const val HEADER_AUTHORIZATION = "Authorization"
