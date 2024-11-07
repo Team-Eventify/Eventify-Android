@@ -9,10 +9,14 @@ import okhttp3.Response
 import okhttp3.Route
 import javax.inject.Inject
 
+val Response.responseCount: Int
+    get() = generateSequence(this) { it.priorResponse }.count()
+
 class TokenAuthenticator @Inject constructor(
     private val tokenManager: TokenManager,
     private val authRepository: AuthUserRepository
 ) : Authenticator {
+
     override fun authenticate(route: Route?, response: Response): Request? {
         if (!response.request.isAuthRequired()) {
             return response.request.newBuilder().build()
@@ -35,6 +39,7 @@ class TokenAuthenticator @Inject constructor(
     companion object {
         const val HEADER_AUTHORIZATION = "Authorization"
         const val TOKEN_TYPE = "Bearer"
+        const val MAX_RETRIES = 3
     }
 
 }
