@@ -1,6 +1,5 @@
-package com.example.eventify.data.remote
+package com.example.eventify.data.remote.utils
 
-import com.example.eventify.data.TokenManager
 import com.example.eventify.data.remote.models.auth.RefreshTokenRequestData
 import com.example.eventify.data.repositories.AuthUserRepository
 import kotlinx.coroutines.runBlocking

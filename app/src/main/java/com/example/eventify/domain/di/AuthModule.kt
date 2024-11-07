@@ -1,11 +1,11 @@
 package com.example.eventify.domain.di
 
 import android.content.Context
-import com.example.eventify.data.PreferencesTokenManagerImpl
-import com.example.eventify.data.TokenManager
-import com.example.eventify.data.remote.AccessTokenInterceptor
-import com.example.eventify.data.remote.NetworkServiceFactory
-import com.example.eventify.data.remote.TokenAuthenticator
+import com.example.eventify.data.remote.utils.PreferencesTokenManagerImpl
+import com.example.eventify.data.remote.utils.TokenManager
+import com.example.eventify.data.remote.utils.AccessTokenInterceptor
+import com.example.eventify.data.remote.utils.NetworkServiceFactory
+import com.example.eventify.data.remote.utils.TokenAuthenticator
 import com.example.eventify.data.remote.api.AuthAPI
 import com.example.eventify.data.repositories.AuthUserRepository
 import com.example.eventify.data.repositories.AuthUserRepositoryImpl

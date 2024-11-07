@@ -1,8 +1,6 @@
-package com.example.eventify.data
+package com.example.eventify.data.remote.utils
 
-import android.app.Activity
 import android.content.Context
-import com.example.eventify.data.repositories.AuthUserRepository
 import dagger.hilt.android.qualifiers.ActivityContext
 import javax.inject.Inject
 

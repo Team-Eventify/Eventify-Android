@@ -1,9 +1,8 @@
 package com.example.eventify
 
-import com.example.eventify.data.remote.NetworkServiceFactory
+import com.example.eventify.data.remote.utils.NetworkServiceFactory
 import com.example.eventify.data.remote.api.AuthAPI
 import com.example.eventify.data.remote.models.auth.LogInRequestData
-import com.example.eventify.data.remote.models.auth.LogInResponse
 import com.example.eventify.data.remote.models.auth.RefreshTokenRequestData
 import com.example.eventify.data.remote.models.auth.RegisterUserRequestData
 import com.example.eventify.data.repositories.AuthUserRepositoryImpl

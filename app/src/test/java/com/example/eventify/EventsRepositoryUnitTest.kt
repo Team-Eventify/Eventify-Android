@@ -1,16 +1,5 @@
 package com.example.eventify
 
-import com.example.eventify.data.remote.NetworkServiceFactory
-import com.example.eventify.data.remote.api.AuthAPI
-import com.example.eventify.data.remote.api.EventsAPI
-import com.example.eventify.data.remote.models.auth.LogInRequestData
-import com.example.eventify.data.repositories.AuthUserRepositoryImpl
-import com.example.eventify.data.repositories.EventRepositoryImpl
-import junit.framework.TestCase.assertEquals
-import junit.framework.TestCase.assertNotNull
-import kotlinx.coroutines.runBlocking
-import org.junit.Test
-
 //class EventsRepositoryUnitTest {
 //    private val authDataSource = NetworkServiceFactory.getApi("http://188.225.82.113:8090/api/v1/auth/", AuthAPI::class.java)
 //    private val authRepository = AuthUserRepositoryImpl(authDataSource)

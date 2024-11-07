@@ -1,7 +1,7 @@
 package com.example.eventify.domain.di
 
-import com.example.eventify.data.remote.AccessTokenInterceptor
-import com.example.eventify.data.remote.TokenAuthenticator
+import com.example.eventify.data.remote.utils.AccessTokenInterceptor
+import com.example.eventify.data.remote.utils.TokenAuthenticator
 import com.example.eventify.data.remote.api.EventsAPI
 import com.example.eventify.data.repositories.EventRepositoryImpl
 import com.example.eventify.data.repositories.EventsRepository
