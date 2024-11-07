@@ -78,9 +78,11 @@ fun LogInScreen(
         Spacer(modifier = modifier.height(30.dp))
         PrimaryButton(
             onClick = {
-                logInViewModel.logIn(onSuccess = {
-                    navController.navigate(RootRouter.HomeRoute.route)
-                })
+                logInViewModel.logIn(
+                    onSuccess = {
+                        navController.navigate(RootRouter.HomeRoute.route)
+                    }
+                )
             },
             modifier = modifier
                 .fillMaxWidth()

@@ -10,19 +10,26 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.eventify.presentation.ui.shared.EventCard
 import com.example.eventify.presentation.ui.shared.HeadingText
+import com.example.eventify.presentation.viewmodels.EventsViewModel
 
 @Composable
 fun EventsFeedScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: EventsViewModel = hiltViewModel()
 ) {
+    LaunchedEffect(true) {
+        viewModel.loadEvents()
+    }
     Column(
         verticalArrangement = Arrangement.spacedBy(20.dp),
         modifier = modifier
@@ -32,8 +39,8 @@ fun EventsFeedScreen(
     ) {
         HeadingText("Популярные ивенты")
 
-        (1..5).forEach{
-            EventCard()
+        viewModel.events.forEach { event ->
+            EventCard(title = event.title)
             Divider()
         }
 

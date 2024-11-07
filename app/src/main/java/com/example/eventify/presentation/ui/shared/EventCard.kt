@@ -18,6 +18,7 @@ import com.example.eventify.R
 
 @Composable
 fun EventCard(
+    title: String = "Some event",
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -32,7 +33,7 @@ fun EventCard(
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(10.dp))
         )
-        EventCardTitle("День открытых дверей")
+        EventCardTitle(title)
         BodyText("Дни открытых дверей — это уникальная возможность для старшеклассников больше узнать о специальностях, которым обучают в Унивеситете МИСИС.")
     }
 }

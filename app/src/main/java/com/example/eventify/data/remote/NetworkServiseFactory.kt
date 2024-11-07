@@ -1,4 +1,5 @@
 package com.example.eventify.data.remote
+import okhttp3.Authenticator
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -6,15 +7,27 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object NetworkServiceFactory {
 
-    fun <Service>getApi(baseUrl: String, service: Class<Service>): Service = Retrofit.Builder()
+    fun <Service>getApi(
+        baseUrl: String,
+        service: Class<Service>,
+        authenticator: Authenticator? = null
+    ): Service = Retrofit.Builder()
         .baseUrl(baseUrl)
         .addConverterFactory(GsonConverterFactory.create())
-        .client(getOkHttpClient())
+        .client(getOkHttpClient(authenticator))
         .build()
         .create(service)
 
-    fun getOkHttpClient(): OkHttpClient {
+    fun getOkHttpClient(
+        authenticator: Authenticator?
+    ): OkHttpClient {
         val interceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-        return OkHttpClient.Builder().addInterceptor(interceptor).build()
+        val builder = OkHttpClient.Builder()
+        authenticator?.let {
+            builder.authenticator(it)
+        }
+        return builder
+            .addInterceptor(interceptor)
+            .build()
     }
 }

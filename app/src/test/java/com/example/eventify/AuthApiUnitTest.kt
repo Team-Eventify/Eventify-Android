@@ -14,7 +14,7 @@ import org.junit.Ignore
 import org.junit.Test
 
 class AuthRepositoryUnitTest {
-    private val dataSource = NetworkServiceFactory.getApi("http://188.225.82.113:8090/api/v1/auth/", AuthAPI::class.java)
+    private val dataSource = NetworkServiceFactory.getApi("http://188.225.82.113:8090/api/v1/auth/", AuthAPI::class.java, authenticator = null)
     private val repository = AuthUserRepositoryImpl(dataSource)
 
     @Test
