@@ -5,7 +5,7 @@ import com.example.eventify.data.remote.api.AuthAPI
 import com.example.eventify.data.remote.models.auth.LogInRequestData
 import com.example.eventify.data.remote.models.auth.RefreshTokenRequestData
 import com.example.eventify.data.remote.models.auth.RegisterUserRequestData
-import com.example.eventify.data.repositories.AuthUserRepositoryImpl
+import com.example.eventify.data.repositories.auth.AuthUserRepositoryImpl
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertNotNull
 import kotlinx.coroutines.runBlocking

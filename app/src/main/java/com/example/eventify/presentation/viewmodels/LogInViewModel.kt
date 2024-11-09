@@ -38,7 +38,7 @@ class LogInViewModel @Inject constructor(
     }
 
     fun logIn(): Unit {
-        if (!(uiState.loginValue.isNotEmpty() && uiState.passwordValue.isNotEmpty())){
+        if (!uiState.isValidData){
             loginResult = LoginResult.Error(message = "Заполните данные")
             uiState = uiState.copy(
                 hasErrors = true,

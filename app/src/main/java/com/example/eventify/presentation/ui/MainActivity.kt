@@ -17,6 +17,7 @@ import com.example.eventify.presentation.ui.events.EventsFeedScreen
 import com.example.eventify.presentation.ui.login.LogInScreen
 import com.example.eventify.presentation.ui.login.RegisterScreen
 import com.example.eventify.presentation.ui.navgraphs.RootNavGraph
+import com.example.eventify.presentation.ui.navgraphs.RootRouter
 import com.example.eventify.presentation.ui.profile.ProfileEditScreen
 import com.example.eventify.presentation.ui.register.CategorySelectScreen
 import com.example.eventify.presentation.ui.shared.EventCard
@@ -35,7 +36,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    RootNavGraph(navController = rememberNavController())
+                    RootNavGraph(
+                        navController = rememberNavController()
+                    )
                 }
             }
         }

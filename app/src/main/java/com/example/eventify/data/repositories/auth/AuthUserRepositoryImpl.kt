@@ -41,7 +41,7 @@ class AuthUserRepositoryImpl @Inject constructor (
         )
 
         val tokenData = when (response.code()) {
-            200 -> response.body()?.let {
+            201 -> response.body()?.let {
                 TokenData(
                     accessToken = it.accessToken,
                     refreshToken = it.refreshToken,
@@ -51,7 +51,7 @@ class AuthUserRepositoryImpl @Inject constructor (
             else -> null
         }
 
-        return tokenData ?: error("Ошибка")
+        return tokenData ?: throw Exception("Ошибка сервера.")
     }
     override suspend fun logInUser(credentials: UserCredentials): TokenData {
         val response = dataSource.logInUser(
