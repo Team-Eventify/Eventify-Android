@@ -1,7 +1,7 @@
 package com.example.eventify.data.remote.utils
 
-import com.example.eventify.data.remote.models.auth.RefreshTokenRequestData
-import com.example.eventify.data.repositories.AuthUserRepository
+import com.example.eventify.data.repositories.auth.AuthUserRepository
+import com.example.eventify.data.repositories.tokens.TokenManager
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
 import okhttp3.Request
@@ -18,16 +18,19 @@ class TokenAuthenticator @Inject constructor(
 ) : Authenticator {
 
     override fun authenticate(route: Route?, response: Response): Request? {
-        if (!response.request.isAuthRequired()) {
-            return response.request.newBuilder().build()
-        }
+        if (response.responseCount >= MAX_RETRIES) return null
+
+        if (!response.request.isAuthRequired()) return null
+
 
         val refreshToken = tokenManager.getRefreshToken() ?: return null
-        val newTokensData = runBlocking {
-            authRepository.refreshAccessToken(data = RefreshTokenRequestData(
-                refresh = refreshToken
-            )).body()
-        } ?: return null
+        val newTokensData = try {
+            runBlocking {
+                authRepository.refreshAccessToken(refreshToken = refreshToken)
+            }
+        } catch (e: Exception){
+            return null
+        }
 
         tokenManager.setAccessToken(newTokensData.accessToken)
         tokenManager.setRefreshToken(newTokensData.refreshToken)

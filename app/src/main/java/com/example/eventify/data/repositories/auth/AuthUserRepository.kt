@@ -1,5 +1,8 @@
-package com.example.eventify.data.repositories
+package com.example.eventify.data.repositories.auth
 
+import com.example.eventify.data.models.TokenData
+import com.example.eventify.data.models.UserCreate
+import com.example.eventify.data.models.UserCredentials
 import com.example.eventify.data.remote.models.auth.LogInRequestData
 import com.example.eventify.data.remote.models.auth.LogInResponse
 import com.example.eventify.data.remote.models.auth.PublicKeyInfoResponse
@@ -10,9 +13,8 @@ import com.example.eventify.data.remote.models.auth.RegisterUserRequestData
 import retrofit2.Response
 
 interface AuthUserRepository {
-    suspend fun refreshAccessToken(data: RefreshTokenRequestData): Response<RefreshTokenResponse>
-    suspend fun registerUser(user: RegisterUserRequestData): Response<RegisterResponse>
-    suspend fun logInUser(payload: LogInRequestData): Response<LogInResponse>
-    suspend fun getPublicKey(): Response<PublicKeyInfoResponse>
+    suspend fun refreshAccessToken(refreshToken: String): TokenData
+    suspend fun registerUser(user: UserCreate): TokenData
+    suspend fun logInUser(credentials: UserCredentials): TokenData
 }
 

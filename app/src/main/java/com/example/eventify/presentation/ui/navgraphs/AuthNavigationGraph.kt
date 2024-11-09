@@ -12,7 +12,7 @@ import com.example.eventify.presentation.viewmodels.LogInViewModel
 fun NavGraphBuilder.AuthNavigationGraph(navController: NavHostController) {
     navigation(
         route = RootRouter.AuthRoute.route,
-        startDestination = AuthRouter.LogInRoute.route
+        startDestination = AuthRouter.RegisterRoute.route
     ){
         composable(AuthRouter.LogInRoute.route) {
             LogInScreen(navController = navController)

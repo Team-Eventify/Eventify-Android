@@ -1,14 +1,14 @@
 package com.example.eventify.domain.di
 
 import android.content.Context
-import com.example.eventify.data.remote.utils.PreferencesTokenManagerImpl
-import com.example.eventify.data.remote.utils.TokenManager
+import com.example.eventify.data.repositories.tokens.PreferencesTokenManagerImpl
+import com.example.eventify.data.repositories.tokens.TokenManager
 import com.example.eventify.data.remote.utils.AccessTokenInterceptor
 import com.example.eventify.data.remote.utils.NetworkServiceFactory
 import com.example.eventify.data.remote.utils.TokenAuthenticator
 import com.example.eventify.data.remote.api.AuthAPI
-import com.example.eventify.data.repositories.AuthUserRepository
-import com.example.eventify.data.repositories.AuthUserRepositoryImpl
+import com.example.eventify.data.repositories.auth.AuthUserRepository
+import com.example.eventify.data.repositories.auth.AuthUserRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

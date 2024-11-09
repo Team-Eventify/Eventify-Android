@@ -5,9 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.eventify.data.remote.utils.TokenManager
-import com.example.eventify.data.remote.models.auth.LogInRequestData
-import com.example.eventify.data.repositories.AuthUserRepository
+import com.example.eventify.data.errors.UserNotFoundException
+import com.example.eventify.data.models.UserCredentials
+import com.example.eventify.domain.usecases.LoginUseCase
 import com.example.eventify.presentation.models.LogInUiState
 import com.example.eventify.presentation.models.LoginResult
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,8 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LogInViewModel @Inject constructor(
-    private val authRepository: AuthUserRepository,
-    private val tokenManager: TokenManager
+    private val loginUseCase: LoginUseCase,
 ) : ViewModel() {
 
     var uiState by mutableStateOf(LogInUiState.default())
@@ -38,46 +37,42 @@ class LogInViewModel @Inject constructor(
         )
     }
 
-    fun logIn(
-
-    ) = viewModelScope.launch {
+    fun logIn(): Unit {
         if (!(uiState.loginValue.isNotEmpty() && uiState.passwordValue.isNotEmpty())){
             loginResult = LoginResult.Error(message = "Заполните данные")
             uiState = uiState.copy(
                 hasErrors = true,
                 errorMessage = "Заполните данные"
             )
-            return@launch
+            return
         }
 
-        loginResult = LoginResult.Loading
+        viewModelScope.launch {
+            loginResult = LoginResult.Loading
 
-        val response = authRepository.logInUser(
-            LogInRequestData(
-                email = uiState.loginValue,
+            val credentials = UserCredentials(
+                login = uiState.loginValue,
                 password = uiState.passwordValue
             )
-        )
-        when (response.code()){
-            200 -> {
-                response.body()?.let {
-                    tokenManager.setRefreshToken(it.refreshToken)
-                    tokenManager.setAccessToken(it.accessToken)
-                }
+
+            try {
+                loginUseCase.logIn(credentials)
                 loginResult = LoginResult.Success
-            }
-            404 -> {
-                loginResult = LoginResult.Error(message = "Пользователь не найден")
+
+            } catch(e: UserNotFoundException) {
+                val errorMessage = e.message ?: "Пользователь не найден."
+                loginResult = LoginResult.Error(message = errorMessage)
                 uiState = uiState.copy(
                     hasErrors = true,
-                    errorMessage = "Пользователь не найден"
+                    errorMessage = errorMessage
                 )
-            }
-            else -> {
-                loginResult = LoginResult.Error(message = "Ошибка сервера")
+
+            } catch (e: Exception) {
+                val errorMessage = e.message ?: "Ошибка сервера."
+                loginResult = LoginResult.Error(message = errorMessage)
                 uiState = uiState.copy(
                     hasErrors = true,
-                    errorMessage = "Ошибка сервера"
+                    errorMessage = errorMessage
                 )
             }
         }

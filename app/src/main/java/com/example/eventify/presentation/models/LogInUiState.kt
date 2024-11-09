@@ -13,7 +13,6 @@ data class LogInUiState(
     val passwordValue: String,
     val hasErrors: Boolean,
     val errorMessage: String?,
-    val isValidForm: Boolean
 ){
     val isValidData: Boolean
         get() = loginValue.isNotEmpty() && passwordValue.isNotEmpty()
@@ -23,8 +22,7 @@ data class LogInUiState(
             loginValue = "",
             passwordValue = "",
             hasErrors = false,
-            errorMessage = null,
-            isValidForm = false
+            errorMessage = null
         )
     }
 }

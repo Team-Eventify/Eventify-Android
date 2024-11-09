@@ -1,4 +1,4 @@
-package com.example.eventify.data.remote.utils
+package com.example.eventify.data.repositories.tokens
 
 interface TokenManager {
     fun getAccessToken(): String?

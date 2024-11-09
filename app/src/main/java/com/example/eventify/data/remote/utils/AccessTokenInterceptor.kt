@@ -1,5 +1,6 @@
 package com.example.eventify.data.remote.utils
 
+import com.example.eventify.data.repositories.tokens.TokenManager
 import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject

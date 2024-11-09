@@ -1,4 +1,4 @@
-package com.example.eventify.data.remote.utils
+package com.example.eventify.data.repositories.tokens
 
 import android.content.Context
 import dagger.hilt.android.qualifiers.ActivityContext
