@@ -15,6 +15,7 @@ class RegisterUseCase @Inject constructor(
         tokenManager.apply {
             setAccessToken(tokenData.accessToken)
             setRefreshToken(tokenData.refreshToken)
+            setUserId(tokenData.userID)
         }
     }
 }

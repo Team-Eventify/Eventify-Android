@@ -17,7 +17,7 @@ fun HomeNavigationGraph(navController: NavHostController) {
         startDestination = HomeRouter.EventFeedRoute.route
     ){
         composable(HomeRouter.EventFeedRoute.route) {
-            EventsFeedScreen()
+            EventsFeedScreen(navController = navController)
         }
         composable(HomeRouter.FavoritesRoute.route) {
             EventDetailScreen()

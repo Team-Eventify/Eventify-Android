@@ -32,8 +32,12 @@ class TokenAuthenticator @Inject constructor(
             return null
         }
 
-        tokenManager.setAccessToken(newTokensData.accessToken)
-        tokenManager.setRefreshToken(newTokensData.refreshToken)
+        tokenManager.apply {
+            setAccessToken(newTokensData.accessToken)
+            setRefreshToken(newTokensData.refreshToken)
+            setUserId(newTokensData.userID)
+        }
+
 
         return response.request.newBuilder()
             .header(HEADER_AUTHORIZATION, "$TOKEN_TYPE ${newTokensData.accessToken}")

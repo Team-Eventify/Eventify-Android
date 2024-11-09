@@ -18,17 +18,35 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.example.eventify.data.models.EventInfo
 import com.example.eventify.presentation.ui.shared.EventCard
 import com.example.eventify.presentation.ui.shared.HeadingText
 import com.example.eventify.presentation.viewmodels.EventsViewModel
 
 @Composable
 fun EventsFeedScreen(
-    modifier: Modifier = Modifier,
+    navController: NavHostController,
     viewModel: EventsViewModel = hiltViewModel()
 ) {
+    EventsFeedComponent(
+        loadEvents = viewModel::loadEvents,
+        events = viewModel.events,
+        navController = navController
+    )
+}
+
+
+@Composable
+fun EventsFeedComponent(
+    loadEvents: () -> Unit,
+    events: List<EventInfo>,
+    navController: NavHostController,
+    modifier: Modifier = Modifier
+) {
     LaunchedEffect(true) {
-        viewModel.loadEvents()
+        loadEvents()
     }
     Column(
         verticalArrangement = Arrangement.spacedBy(20.dp),
@@ -39,8 +57,11 @@ fun EventsFeedScreen(
     ) {
         HeadingText("Популярные ивенты")
 
-        viewModel.events.forEach { event ->
-            EventCard(title = event.title)
+        events.forEach { event ->
+            EventCard(
+                title = event.title,
+                description = event.description
+            )
             Divider()
         }
 
@@ -56,5 +77,9 @@ fun EventsFeedScreen(
 @Preview(name = "EventsFeedScreen", showBackground = true, showSystemUi = true)
 @Composable
 private fun PreviewEventsFeedScreen() {
-    EventsFeedScreen()
+    EventsFeedComponent(
+        events = emptyList(),
+        loadEvents = {},
+        navController = rememberNavController()
+    )
 }
