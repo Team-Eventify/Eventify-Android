@@ -1,7 +1,9 @@
 package com.example.eventify.data.remote.api
 
 import com.example.eventify.data.remote.models.users.ChangeUserRequest
+import com.example.eventify.data.remote.models.users.UserInfoResponse
 import com.example.eventify.data.remote.utils.AuthRequired
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.PATCH
@@ -15,15 +17,15 @@ typealias CategorySlug = String
 interface UsersAPI {
 
     @PATCH("{id}")
-    suspend fun changeUser(@Path("id") userId: Int, @Body user: ChangeUserRequest)
+    suspend fun changeUser(@Path("id") userId: String, @Body user: ChangeUserRequest): Response<UserInfoResponse>
 
     @GET("{id}")
-    suspend fun getUserInfo(@Path("id") userId: Int)
+    suspend fun getUserInfo(@Path("id") userId: String): Response<UserInfoResponse>
 
-    @GET("{id}")
-    suspend fun getUserCategories(@Path("id") userId: Int)
+    @GET("{id}/categories")
+    suspend fun getUserCategories(@Path("id") userId: String)
 
-    @PUT("{id}")
-    suspend fun setUserCategories(@Path("id") userId: Int, categories: List<CategorySlug>)
+    @PUT("{id}/categories")
+    suspend fun setUserCategories(@Path("id") userId: String, categories: List<CategorySlug>)
 
 }

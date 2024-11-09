@@ -22,9 +22,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.eventify.R
+import com.example.eventify.data.models.UserInfo
 
 @Composable
 fun UserProfilePanel(
+    user: UserInfo?,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -43,7 +45,7 @@ fun UserProfilePanel(
         ) {
             Column {
                 Text(
-                    text = "Иванов Иван",
+                    text = user?.let { "${it.lastName} ${it.firstName}" } ?: "Иванов Иван",
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Medium
                 )
@@ -61,5 +63,7 @@ fun UserProfilePanel(
 @Preview(name = "UserProfilePanel", showBackground = true, showSystemUi = true)
 @Composable
 private fun PreviewUserProfilePanel() {
-    UserProfilePanel()
+    UserProfilePanel(
+        user = null
+    )
 }
