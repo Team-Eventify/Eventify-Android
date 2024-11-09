@@ -27,13 +27,17 @@ import com.example.eventify.R
 fun TextInput(
     text: String,
     placeholder: String? = null,
+    label: String? = null,
     modifier: Modifier = Modifier,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    onValueChange: (String) -> Unit
+    onValueChange: (String) -> Unit,
+    isError: Boolean = false,
 ) {
 
     OutlinedTextField(
         value = text,
+        isError = isError,
+        label = label?.let { { Text(it) } },
         onValueChange = onValueChange,
         placeholder = {Text(placeholder ?: "", fontSize = 17.sp, fontWeight = FontWeight.Normal)},
         shape = RoundedCornerShape(10.dp),
@@ -47,9 +51,12 @@ fun TextInput(
 @Composable
 fun PasswordInput(
     text: String,
+    label: String? = null,
     placeholder: String? = null,
     modifier: Modifier = Modifier,
-    onValueChange: (String) -> Unit
+    onValueChange: (String) -> Unit,
+    isError: Boolean = false,
+    errorMessage: String? = null
 ) {
     var passwordVisibility by remember { mutableStateOf(false) }
 
@@ -60,6 +67,8 @@ fun PasswordInput(
 
     OutlinedTextField(
         value = text,
+        isError = isError,
+        label = label?.let { { Text(it) } },
         onValueChange = onValueChange,
         placeholder = {Text(placeholder ?: "", fontSize = 17.sp, fontWeight = FontWeight.Normal)},
         shape = RoundedCornerShape(10.dp),

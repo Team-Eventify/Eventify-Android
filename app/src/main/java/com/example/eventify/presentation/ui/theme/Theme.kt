@@ -23,7 +23,9 @@ private val DarkColorScheme = darkColorScheme(
     secondary = PurpleGrey80,
     tertiary = Pink80,
     surface = Color(0xFF232326),
-    onSurfaceVariant = DarkGray
+    onSurfaceVariant = DarkGray,
+    errorContainer = PureRed,
+    error = PureRed
 )
 
 private val LightColorScheme = lightColorScheme(

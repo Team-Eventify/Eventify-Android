@@ -8,6 +8,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.eventify.data.remote.utils.TokenManager
 import com.example.eventify.data.remote.models.auth.LogInRequestData
 import com.example.eventify.data.repositories.AuthUserRepository
+import com.example.eventify.presentation.models.LogInUiState
+import com.example.eventify.presentation.models.LoginResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,28 +20,66 @@ class LogInViewModel @Inject constructor(
     private val tokenManager: TokenManager
 ) : ViewModel() {
 
-    var loginValue by mutableStateOf("")
-    var passwordValue by mutableStateOf("")
+    var uiState by mutableStateOf(LogInUiState.default())
+        private set
+
+    var loginResult by mutableStateOf<LoginResult>(LoginResult.Idle)
+        private set
+
+    fun changeLoginValue(value: String) {
+        uiState = uiState.copy(
+            loginValue = value
+        )
+    }
+
+    fun changePasswordValue(value: String) {
+        uiState = uiState.copy(
+            passwordValue = value
+        )
+    }
 
     fun logIn(
-        onSuccess: (() -> Unit)? = null,
-        onError: ((String) -> Unit)? = null
+
     ) = viewModelScope.launch {
+        if (!(uiState.loginValue.isNotEmpty() && uiState.passwordValue.isNotEmpty())){
+            loginResult = LoginResult.Error(message = "Заполните данные")
+            uiState = uiState.copy(
+                hasErrors = true,
+                errorMessage = "Заполните данные"
+            )
+            return@launch
+        }
+
+        loginResult = LoginResult.Loading
+
         val response = authRepository.logInUser(
             LogInRequestData(
-                email = loginValue,
-                password = passwordValue
+                email = uiState.loginValue,
+                password = uiState.passwordValue
             )
         )
-        if (response.code() == 200){
-            response.body()?.let {
-                tokenManager.setRefreshToken(it.refreshToken)
-                tokenManager.setAccessToken(it.accessToken)
+        when (response.code()){
+            200 -> {
+                response.body()?.let {
+                    tokenManager.setRefreshToken(it.refreshToken)
+                    tokenManager.setAccessToken(it.accessToken)
+                }
+                loginResult = LoginResult.Success
             }
-            onSuccess?.invoke()
-        }
-        else{
-            onError?.invoke(response.message())
+            404 -> {
+                loginResult = LoginResult.Error(message = "Пользователь не найден")
+                uiState = uiState.copy(
+                    hasErrors = true,
+                    errorMessage = "Пользователь не найден"
+                )
+            }
+            else -> {
+                loginResult = LoginResult.Error(message = "Ошибка сервера")
+                uiState = uiState.copy(
+                    hasErrors = true,
+                    errorMessage = "Ошибка сервера"
+                )
+            }
         }
     }
 

@@ -49,6 +49,7 @@ fun CategorySelectChip(
 fun PrimaryButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     content: @Composable() (RowScope.() -> Unit)
 ) {
     Button(
@@ -58,6 +59,7 @@ fun PrimaryButton(
         modifier = modifier
             .fillMaxWidth(),
         colors = ButtonDefaults.buttonColors(),
+        enabled = enabled,
         content = content
     )
 }

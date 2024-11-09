@@ -1,11 +1,13 @@
 package com.example.eventify.presentation.ui.navgraphs
 
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.eventify.presentation.ui.login.LogInScreen
 import com.example.eventify.presentation.ui.login.RegisterScreen
+import com.example.eventify.presentation.viewmodels.LogInViewModel
 
 fun NavGraphBuilder.AuthNavigationGraph(navController: NavHostController) {
     navigation(

@@ -13,3 +13,4 @@ val Pink40 = Color(0xFF7D5260)
 
 val BrandYellow = Color(0xFF74F6A7)
 val DarkGray = Color(0xFF858591)
+val PureRed = Color(0xFFFF8F88)
