@@ -16,14 +16,12 @@ fun HomeNavigationGraph(navController: NavHostController) {
         route = RootRouter.HomeRoute.route,
         startDestination = HomeRouter.EventFeedRoute.route
     ){
+        profileNavigationGraph(navController)
         composable(HomeRouter.EventFeedRoute.route) {
             EventsFeedScreen(navController = navController)
         }
         composable(HomeRouter.FavoritesRoute.route) {
             EventDetailScreen()
-        }
-        composable(HomeRouter.ProfileRoute.route) {
-            ProfileEditScreen()
         }
         composable(HomeRouter.SearchRoute.route) {
             SearchScreen()

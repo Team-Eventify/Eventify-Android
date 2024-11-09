@@ -1,16 +1,44 @@
 package com.example.eventify.presentation.ui.profile
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.example.eventify.data.models.UserInfo
+import com.example.eventify.presentation.models.UserResult
+import com.example.eventify.presentation.models.UserUiState
+import com.example.eventify.presentation.viewmodels.UserViewModel
 
 @Composable
 fun ProfileScreen(
+    navController: NavHostController,
+    viewModel: UserViewModel = hiltViewModel(),
+    modifier: Modifier = Modifier
+) {
+    ProfileScreenComponent(
+        uiState = viewModel.uiState,
+        currentUser = viewModel.user,
+        userResult = viewModel.userResult,
+        onLoadCurrentUser = viewModel::loadUserInfo,
+        navController = navController
+    )
+}
+
+
+@Composable
+fun ProfileScreenComponent(
+    uiState: UserUiState,
+    currentUser: UserInfo?,
+    userResult: UserResult,
+    onLoadCurrentUser: suspend () -> Unit,
+    navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -18,12 +46,26 @@ fun ProfileScreen(
             .fillMaxSize()
             .padding(10.dp)
     ) {
-        UserProfilePanel()
+        LaunchedEffect(true) {
+            onLoadCurrentUser()
+        }
+
+
+
+        UserProfilePanel(user = currentUser)
     }
 }
 
 @Preview(name = "ProfileScreen", showSystemUi = true, showBackground = true)
 @Composable
 private fun PreviewProfileScreen() {
-    ProfileScreen()
+    ProfileScreenComponent(
+        uiState = UserUiState(
+            firstName = "Иванов"
+        ),
+        currentUser = null,
+        userResult = UserResult.Idle,
+        onLoadCurrentUser = {},
+        navController = rememberNavController()
+    )
 }
