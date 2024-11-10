@@ -17,7 +17,7 @@ fun NavGraphBuilder.profileNavigationGraph(navController: NavHostController){
             ProfileScreen(navController)
         }
         composable(ProfileRouter.EditProfile.route) {
-            ProfileEditScreen()
+            ProfileEditScreen(navController)
         }
     }
 }

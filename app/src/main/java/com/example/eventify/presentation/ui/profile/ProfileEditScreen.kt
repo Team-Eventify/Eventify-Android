@@ -13,6 +13,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,17 +23,58 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
+import com.example.eventify.data.models.UserInfo
+import com.example.eventify.presentation.models.UserResult
+import com.example.eventify.presentation.models.UserUiState
 import com.example.eventify.presentation.ui.shared.AnnotationText
 import com.example.eventify.presentation.ui.shared.CategorySelector
 import com.example.eventify.presentation.ui.shared.PrimaryButton
 import com.example.eventify.presentation.ui.shared.PrimaryButtonText
 import com.example.eventify.presentation.ui.shared.SubHeadingText
 import com.example.eventify.presentation.ui.shared.TextInput
+import com.example.eventify.presentation.viewmodels.UserViewModel
 
 @Composable
 fun ProfileEditScreen(
+    navController: NavHostController,
+    viewModel: UserViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 ) {
+    ProfileEditScreenComponent(
+        uiState = viewModel.uiState,
+        currentUser = viewModel.user,
+        userResult = viewModel.userResult,
+        onChangeUser = viewModel::changeUser,
+        onChangeFirstName = viewModel::changeFirstName,
+        onChangeLastName = viewModel::changeLastName,
+        onChangeMiddleName = viewModel::changeMiddleName,
+        onChangeEmail = viewModel::changeEmail,
+        onChangeTelegram = viewModel::changeTelegram,
+        onLoadCurrentUser = viewModel::loadUserInfo
+    )
+}
+
+
+@Composable
+fun ProfileEditScreenComponent(
+    uiState: UserUiState,
+    currentUser: UserInfo?,
+    userResult: UserResult,
+    onChangeUser: () -> Unit,
+    onChangeFirstName: (String) -> Unit,
+    onChangeLastName: (String) -> Unit,
+    onChangeMiddleName: (String) -> Unit,
+    onChangeEmail: (String) -> Unit,
+    onChangeTelegram: (String) -> Unit,
+    onLoadCurrentUser: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    LaunchedEffect(true) {
+        onLoadCurrentUser()
+    }
+
     Column(
         horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.spacedBy(10.dp),
@@ -41,59 +83,42 @@ fun ProfileEditScreen(
             .fillMaxSize()
             .padding(10.dp)
     ) {
-        var firstName by remember { mutableStateOf("") }
-        var lastName by remember { mutableStateOf("") }
-        var middleName by remember { mutableStateOf("") }
-        var email by remember { mutableStateOf("") }
-        var telegram by remember { mutableStateOf("") }
-
-
         SubHeadingText(text = "Имя")
         TextInput(
-            text = firstName,
+            text = uiState.firstName,
             placeholder = "Иван",
-            onValueChange = {
-                firstName = it
-            }
+            onValueChange = onChangeFirstName
         )
 
         SubHeadingText(text = "Фамилия")
         TextInput(
-            text = lastName,
+            text = uiState.lastName,
             placeholder = "Иванов",
-            onValueChange = {
-                lastName = it
-            }
+            onValueChange = onChangeLastName
         )
 
         SubHeadingText(text = "Отчество")
         TextInput(
-            text = middleName,
+            text = uiState.middleName,
             placeholder = "Иванович",
-            onValueChange = {
-                middleName = it
-            }
+            onValueChange = onChangeMiddleName
         )
 
         SubHeadingText(text = "Электронная почта")
         TextInput(
-            text = email,
+            text = uiState.email,
             placeholder = "ivanov@gmail.com",
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Email
             ),
-            onValueChange = {
-                email = it
-            }
+            onValueChange = onChangeEmail
         )
 
         SubHeadingText(text = "Telegram")
         TextInput(
-            text = telegram,
+            text = uiState.telegramName,
             placeholder = "@ivanov",
-            onValueChange = {
-                telegram = it
-            }
+            onValueChange = onChangeTelegram
         )
 
         Spacer(Modifier.height(10.dp))
@@ -104,7 +129,7 @@ fun ProfileEditScreen(
 
         CategorySelector()
 
-        PrimaryButton(onClick = { /*TODO*/ }) {
+        PrimaryButton(onClick = onChangeUser ) {
             PrimaryButtonText(text = "Сохранить изменения")
 
         }
@@ -115,5 +140,29 @@ fun ProfileEditScreen(
 @Preview(name = "ProfileEditScreen", showBackground = true, showSystemUi = true)
 @Composable
 private fun PreviewProfileEditScreen() {
-    ProfileEditScreen()
+    ProfileEditScreenComponent(
+        uiState = UserUiState(
+            email = "werwer",
+            firstName = "xxcv",
+            lastName = "vfvf",
+            middleName = "asda",
+            telegramName = "vsdvds",
+        ),
+        currentUser = UserInfo(
+            email = "werwer",
+            firstName = "xxcv",
+            id = "qweqwe",
+            lastName = "vfvf",
+            middleName = "asda",
+            telegramName = "vsdvds",
+        ),
+        userResult = UserResult.Idle,
+        onChangeFirstName = {},
+        onChangeLastName = {},
+        onChangeMiddleName = {},
+        onChangeEmail = {},
+        onChangeTelegram = {},
+        onChangeUser = {},
+        onLoadCurrentUser = {}
+    )
 }

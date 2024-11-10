@@ -1,5 +1,6 @@
 package com.example.eventify.presentation.ui.profile
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,13 +28,16 @@ import com.example.eventify.data.models.UserInfo
 @Composable
 fun UserProfilePanel(
     user: UserInfo?,
+    onClick: (() -> Unit)? = null,
     modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = modifier,
+        modifier = modifier
+            .clickable { onClick?.invoke() },
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.primary,
+
         )
     ){
         Row(

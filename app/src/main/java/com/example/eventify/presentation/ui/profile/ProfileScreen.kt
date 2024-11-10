@@ -14,6 +14,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.eventify.data.models.UserInfo
 import com.example.eventify.presentation.models.UserResult
 import com.example.eventify.presentation.models.UserUiState
+import com.example.eventify.presentation.ui.navgraphs.ProfileRouter
 import com.example.eventify.presentation.viewmodels.UserViewModel
 
 @Composable
@@ -37,7 +38,7 @@ fun ProfileScreenComponent(
     uiState: UserUiState,
     currentUser: UserInfo?,
     userResult: UserResult,
-    onLoadCurrentUser: suspend () -> Unit,
+    onLoadCurrentUser: () -> Unit,
     navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
@@ -52,7 +53,12 @@ fun ProfileScreenComponent(
 
 
 
-        UserProfilePanel(user = currentUser)
+        UserProfilePanel(
+            user = currentUser,
+            onClick = {
+                navController.navigate(ProfileRouter.EditProfile.route)
+            }
+        )
     }
 }
 
@@ -61,7 +67,11 @@ fun ProfileScreenComponent(
 private fun PreviewProfileScreen() {
     ProfileScreenComponent(
         uiState = UserUiState(
-            firstName = "Иванов"
+            email = "werwer",
+            firstName = "xxcv",
+            lastName = "vfvf",
+            middleName = "asda",
+            telegramName = "vsdvds",
         ),
         currentUser = null,
         userResult = UserResult.Idle,

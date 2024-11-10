@@ -3,11 +3,19 @@ package com.example.eventify.presentation.models
 
 
 data class UserUiState(
-    val firstName: String
+    val email: String,
+    val firstName: String,
+    val lastName: String,
+    val middleName: String,
+    val telegramName: String
 ){
     companion object {
         fun default(): UserUiState = UserUiState(
-            firstName = ""
+            firstName = "",
+            middleName = "",
+            lastName = "",
+            telegramName = "",
+            email = ""
         )
     }
 }
