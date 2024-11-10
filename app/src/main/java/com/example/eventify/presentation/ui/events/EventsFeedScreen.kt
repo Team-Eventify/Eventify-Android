@@ -1,5 +1,6 @@
 package com.example.eventify.presentation.ui.events
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -64,6 +65,7 @@ fun EventsFeedComponent(
                 title = event.title,
                 description = event.description,
                 modifier = modifier
+                    .animateContentSize()
                     .clickable {
                         navController.navigate(HomeRouter.EventDetail(event.id))
                     }

@@ -1,5 +1,6 @@
 package com.example.eventify.presentation.ui.shared
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -166,5 +167,6 @@ fun ShortenedBodyText(
         maxLines = if (textState) maxLines else Int.MAX_VALUE,
         overflow = if (textState) TextOverflow.Ellipsis else TextOverflow.Clip,
         modifier = modifier
+            .animateContentSize()
     )
 }
