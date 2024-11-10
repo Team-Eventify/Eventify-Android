@@ -77,21 +77,6 @@ fun BottomNavigationBar(
         tonalElevation = 0.dp
     ) {
         items.forEachIndexed { index, item ->
-//            NavigationBarItem(
-//                selected = index == selectedItem,
-//                icon = {
-//                    Icon(
-//                        painter = item.icon,
-//                        contentDescription = "painter",
-//                    )
-//                },
-//                label = { Text(text = item.title, fontSize = 12.sp) },
-//                onClick = {
-//                    selectedItem = index
-//                    navController.navigate(item.route)
-//                }
-//
-//            )
             AddItem(
                 item = item,
                 navController = navController,

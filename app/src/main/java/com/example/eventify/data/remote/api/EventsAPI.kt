@@ -18,7 +18,7 @@ interface EventsAPI {
     suspend fun getEventsList(@Query("offset") offset: Int? = null, @Query("limit") limit: Int? = null): Response<List<EventInfoResponse>>
 
     @GET("{id}")
-    suspend fun getEvent(@Path("id") eventId: Int): Response<EventInfoResponse>
+    suspend fun getEvent(@Path("id") eventId: String): Response<EventInfoResponse>
 
 
 

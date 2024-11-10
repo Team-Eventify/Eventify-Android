@@ -1,5 +1,6 @@
 package com.example.eventify.presentation.ui.events
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,6 +22,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.eventify.data.models.EventInfo
+import com.example.eventify.presentation.ui.navgraphs.HomeRouter
 import com.example.eventify.presentation.ui.shared.EventCard
 import com.example.eventify.presentation.ui.shared.HeadingText
 import com.example.eventify.presentation.viewmodels.EventsViewModel
@@ -60,7 +62,11 @@ fun EventsFeedComponent(
         events.forEach { event ->
             EventCard(
                 title = event.title,
-                description = event.description
+                description = event.description,
+                modifier = modifier
+                    .clickable {
+                        navController.navigate(HomeRouter.EventDetail(event.id))
+                    }
             )
             Divider()
         }

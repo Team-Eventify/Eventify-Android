@@ -26,6 +26,9 @@ fun HomeNavigationGraph(navController: NavHostController) {
         composable<HomeRouter.Search> {
             SearchScreen()
         }
+        composable<HomeRouter.EventDetail> {
+            EventDetailScreen()
+        }
     }
 }
 
@@ -39,5 +42,7 @@ sealed class HomeRouter{
     data object Profile : HomeRouter()
     @Serializable
     data object Search : HomeRouter()
+    @Serializable
+    data class EventDetail(val eventId: String) : HomeRouter()
 }
 

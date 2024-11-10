@@ -20,7 +20,7 @@ class EventRepositoryImpl @Inject constructor(
         return events ?: throw Exception("Ошибка сервера.")
     }
 
-    override suspend fun getEventDetail(eventId: Int): EventInfo {
+    override suspend fun getEventDetail(eventId: String): EventInfo {
         val response = dataSource.getEvent(eventId = eventId)
 
         val event = when (response.code()) {

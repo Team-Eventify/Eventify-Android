@@ -23,6 +23,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,6 +39,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.eventify.R
 import com.example.eventify.presentation.ui.shared.ActionPrimaryText
 import com.example.eventify.presentation.ui.shared.ActionText
@@ -46,12 +48,17 @@ import com.example.eventify.presentation.ui.shared.PrimaryButton
 import com.example.eventify.presentation.ui.shared.PrimaryButtonText
 import com.example.eventify.presentation.ui.shared.ShortenedBodyText
 import com.example.eventify.presentation.ui.shared.TitleText
+import com.example.eventify.presentation.viewmodels.EventDetailViewmodel
 import kotlinx.coroutines.launch
 
 @Composable
 fun EventDetailScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: EventDetailViewmodel = hiltViewModel()
 ) {
+    LaunchedEffect(true) {
+        viewModel.loadEvent()
+    }
     Column {
         ImagePager(
             listOf(
@@ -67,7 +74,7 @@ fun EventDetailScreen(
             var textState by remember { mutableStateOf(true) }
 
             ShortenedBodyText(
-                text = "Дни открытых дверей — это уникальная возможность для старшеклассников больше узнать о специальностях, которым обучают в одном из лучших технических университетов России, научной деятельности под руководством учёных с мировым именем, образовательных проектах и карьерных возможностях, которые предлагает вуз, яркой студенческой жизни в Москве. В Университете МИСИС каждый студент сможет получить профессию будущего и быть востребованным лучшими российскими и зарубежными работодателями, раскрыть свой потенциал, благодаря формируемой в вузе экосреде креативности и творчества!",
+                text = viewModel.event?.description ?: "[eq",
                 textState = textState
             )
             ActionPrimaryText(
