@@ -82,7 +82,7 @@ fun RegisterScreenComponent(
         LaunchedEffect(registerResult) {
             when (registerResult) {
                 is RegisterResult.Success -> {
-                    navController.navigate(RootRouter.HomeRoute.route)
+                    navController.navigate(RootRouter.Home)
                 }
                 is RegisterResult.Error -> {
                     snackbarHostState.showSnackbar(message = registerResult.message)
@@ -137,7 +137,7 @@ fun RegisterScreenComponent(
                 ActionPrimaryText(
                     text = "Войти",
                     onClick = {
-                        navController.navigate(AuthRouter.LogInRoute.route)
+                        navController.navigate(AuthRouter.LogIn)
                     }
                 )
             }

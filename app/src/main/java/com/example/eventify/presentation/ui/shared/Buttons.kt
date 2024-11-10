@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun CategorySelectChip(
     text: String,
-    activeColor: Color = Color.Red
+    selectedColor: Color = Color.Red
 ) {
     var selected by remember { mutableStateOf(false) }
 
@@ -40,7 +40,7 @@ fun CategorySelectChip(
         selected = selected,
         leadingIcon = null,
         colors = FilterChipDefaults.filterChipColors(
-
+            selectedContainerColor = selectedColor
         )
     )
 }

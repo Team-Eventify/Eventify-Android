@@ -56,7 +56,7 @@ fun ProfileScreenComponent(
         UserProfilePanel(
             user = currentUser,
             onClick = {
-                navController.navigate(ProfileRouter.EditProfile.route)
+                navController.navigate(ProfileRouter.EditProfile)
             }
         )
     }

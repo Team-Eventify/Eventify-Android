@@ -6,24 +6,26 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.eventify.presentation.ui.profile.ProfileEditScreen
 import com.example.eventify.presentation.ui.profile.ProfileScreen
+import kotlinx.serialization.Serializable
 
 
 fun NavGraphBuilder.profileNavigationGraph(navController: NavHostController){
-    navigation(
-        startDestination = ProfileRouter.DetailProfile.route,
-        route = HomeRouter.ProfileRoute.route
+    navigation<HomeRouter.Profile>(
+        startDestination = ProfileRouter.DetailProfile,
     ){
-        composable(ProfileRouter.DetailProfile.route) {
+        composable<ProfileRouter.DetailProfile> {
             ProfileScreen(navController)
         }
-        composable(ProfileRouter.EditProfile.route) {
+        composable<ProfileRouter.EditProfile> {
             ProfileEditScreen(navController)
         }
     }
 }
 
 
-sealed class ProfileRouter(val route: String){
-    data object DetailProfile : ProfileRouter(route = "profile_detail")
-    data object EditProfile : ProfileRouter(route = "profile_edit")
+sealed class ProfileRouter{
+    @Serializable
+    data object DetailProfile : ProfileRouter()
+    @Serializable
+    data object EditProfile : ProfileRouter()
 }
