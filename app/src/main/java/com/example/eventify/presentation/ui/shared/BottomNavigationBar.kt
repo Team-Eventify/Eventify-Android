@@ -47,7 +47,6 @@ fun BottomNavigationBar(
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
-    var selectedItem by rememberSaveable { mutableStateOf(0) }
 
     val items = listOf(
         BottomNavigationBarItem(
@@ -108,8 +107,11 @@ fun <T: HomeRouter> RowScope.AddItem(
             selectedTextColor = MaterialTheme.colorScheme.primary,
             indicatorColor = MaterialTheme.colorScheme.surface
         ),
+//        selected = currentDestination?.hierarchy?.any {
+//            it.route?.endsWith(item.route.toString()) ?: false
+//        } == true,
         selected = currentDestination?.hierarchy?.any {
-            it.route?.endsWith(item.route.toString()) ?: false
+            it.route == item.route::class.qualifiedName
         } == true,
         onClick = {
             navController.navigate(item.route)
