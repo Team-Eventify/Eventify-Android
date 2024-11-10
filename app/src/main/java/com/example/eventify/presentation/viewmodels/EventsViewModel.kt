@@ -18,6 +18,10 @@ class EventsViewModel @Inject constructor(
 ) : ViewModel() {
     var events by mutableStateOf(emptyList<EventInfo>())
         private set
+
+    init {
+        loadEvents()
+    }
     fun loadEvents(){
         viewModelScope.launch {
             val eventsResponse = eventsRepository.getEventsList()

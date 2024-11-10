@@ -48,9 +48,9 @@ fun EventsFeedComponent(
     navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
-    LaunchedEffect(true) {
-        loadEvents()
-    }
+//    LaunchedEffect(true) {
+//        loadEvents()
+//    }
     Column(
         verticalArrangement = Arrangement.spacedBy(20.dp),
         modifier = modifier
