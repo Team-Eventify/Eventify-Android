@@ -6,11 +6,11 @@ import com.example.eventify.data.repositories.tokens.TokenManager
 import com.example.eventify.data.repositories.users.UsersRepository
 import javax.inject.Inject
 
-class CurrentUserUseCase @Inject constructor(
+class GetCurrentUserUseCase @Inject constructor(
     private val tokenManager: TokenManager,
     private val usersRepository: UsersRepository
 ) {
-    suspend fun getCurrentUser(): UserInfo {
+    suspend operator fun invoke(): UserInfo {
         val userId = tokenManager.getUserId() ?: throw NotAuthenticated()
         return usersRepository.getUserInfo(userId = userId)
     }

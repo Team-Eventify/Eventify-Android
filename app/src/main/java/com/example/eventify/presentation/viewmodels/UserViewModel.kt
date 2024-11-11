@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.eventify.data.models.UserChange
 import com.example.eventify.data.models.UserInfo
 import com.example.eventify.data.repositories.users.UsersRepository
-import com.example.eventify.domain.usecases.CurrentUserUseCase
+import com.example.eventify.domain.usecases.GetCurrentUserUseCase
 import com.example.eventify.presentation.models.UserResult
 import com.example.eventify.presentation.models.UserUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UserViewModel @Inject constructor(
-    val currentUser: CurrentUserUseCase,
+    val getCurrentUserUseCase: GetCurrentUserUseCase,
     val usersRepository: UsersRepository
 ): ViewModel() {
 
@@ -69,7 +69,7 @@ class UserViewModel @Inject constructor(
         loadUserResult = UserResult.Loading
         viewModelScope.launch {
             try {
-                user = currentUser.getCurrentUser()
+                user = getCurrentUserUseCase()
                 fillUserUiValues(user!!)
                 loadUserResult = UserResult.Success
             }

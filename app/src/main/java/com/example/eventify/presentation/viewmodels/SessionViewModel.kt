@@ -1,22 +1,19 @@
 package com.example.eventify.presentation.viewmodels
 
-import androidx.compose.runtime.currentRecomposeScope
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.eventify.domain.usecases.CurrentUserUseCase
+import com.example.eventify.domain.usecases.GetCurrentUserUseCase
 import com.example.eventify.domain.usecases.LogOutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 
 @HiltViewModel
 class SessionViewModel @Inject constructor(
-    private val currentUserUseCase: CurrentUserUseCase,
+    private val getCurrentUserUseCase: GetCurrentUserUseCase,
     private val logOutUseCase: LogOutUseCase
 ) : ViewModel() {
     var isLoggedIn by mutableStateOf(false)
@@ -25,7 +22,7 @@ class SessionViewModel @Inject constructor(
     fun checkLoggedIn() {
         runBlocking {
             isLoggedIn = try {
-                currentUserUseCase.getCurrentUser()
+                getCurrentUserUseCase()
                 true
             } catch (e: Exception){
                 false

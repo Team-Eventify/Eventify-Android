@@ -53,7 +53,7 @@ class RegisterViewModel @Inject constructor(
 
         viewModelScope.launch {
             registerResult = try {
-                registerUseCase.register(user = newUserData)
+                registerUseCase(user = newUserData)
                 RegisterResult.Success
 
             } catch (e: Exception) {

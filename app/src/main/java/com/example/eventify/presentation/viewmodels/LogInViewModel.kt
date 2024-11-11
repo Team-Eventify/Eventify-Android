@@ -56,7 +56,7 @@ class LogInViewModel @Inject constructor(
             )
 
             try {
-                loginUseCase.logIn(credentials)
+                loginUseCase(credentials)
                 loginResult = LoginResult.Success
 
             } catch(e: UserNotFoundException) {

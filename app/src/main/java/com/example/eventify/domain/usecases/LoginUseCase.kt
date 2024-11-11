@@ -10,7 +10,7 @@ class LoginUseCase @Inject constructor(
     private val tokenManager: TokenManager,
     private val authRepository: AuthUserRepository
 ) {
-    suspend fun logIn(credentials: UserCredentials) {
+    suspend operator fun invoke(credentials: UserCredentials) {
         val tokenData = authRepository.logInUser(credentials)
 
         tokenManager.apply {
