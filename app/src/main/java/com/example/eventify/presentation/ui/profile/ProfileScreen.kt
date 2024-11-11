@@ -26,9 +26,9 @@ fun ProfileScreen(
     ProfileScreenComponent(
         uiState = viewModel.uiState,
         currentUser = viewModel.user,
-        userResult = viewModel.userResult,
         onLoadCurrentUser = viewModel::loadUserInfo,
-        navController = navController
+        navController = navController,
+        userResult = viewModel.loadUserResult
     )
 }
 
@@ -50,8 +50,6 @@ fun ProfileScreenComponent(
         LaunchedEffect(true) {
             onLoadCurrentUser()
         }
-
-
 
         UserProfilePanel(
             user = currentUser,

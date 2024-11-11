@@ -29,6 +29,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.eventify.presentation.models.LogInUiState
 import com.example.eventify.presentation.models.LoginResult
+import com.example.eventify.presentation.ui.SnackbarController
+import com.example.eventify.presentation.ui.SnackbarEvent
 import com.example.eventify.presentation.ui.navgraphs.AuthRouter
 import com.example.eventify.presentation.ui.navgraphs.RootRouter
 import com.example.eventify.presentation.ui.shared.ActionPrimaryText
@@ -52,86 +54,81 @@ fun LogInScreenComponent(
     onLogIn: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val scope = rememberCoroutineScope()
-    val snackbarHostState = remember { SnackbarHostState() }
-
     LaunchedEffect(loginResult) {
         when (loginResult){
             is LoginResult.Success -> {
                 navController.navigate(RootRouter.Home)
             }
             is LoginResult.Error -> {
-                snackbarHostState.showSnackbar(loginResult.message)
+                SnackbarController.sendEvent(
+                    event = SnackbarEvent(
+                        message = loginResult.message
+                    )
+                )
             }
             else -> null
         }
     }
 
-    Scaffold(
-        snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState)
-        }
-    ){ _ ->
-        Column(
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(15.dp),
+        verticalArrangement = Arrangement.Center
+    ) {
+        TitleText(text = "Вход")
+        Spacer(modifier = modifier.height(5.dp))
+
+        BodyText(text = "Пожалуйста,  войдите в свой аккаунт.")
+        BodyText(text = "Это займёт меньше минуты.")
+
+        Spacer(modifier = modifier.height(30.dp))
+
+        TextInput(
+            text = logInUiState.loginValue,
+            label = "Email",
+            placeholder = "ivanov@gmail.com",
+            isError = logInUiState.hasErrors,
+            onValueChange = onLoginValueChange
+        )
+        Spacer(modifier = modifier.height(10.dp))
+        PasswordInput(
+            text = logInUiState.passwordValue,
+            label = "Password",
+            placeholder = "mypassword",
+            isError = logInUiState.hasErrors,
+            onValueChange = onPasswordValueChange
+        )
+        ActionText(
+            text = "Забыли пароль?",
+            onClick = {},
+            textAlign = TextAlign.Right,
+            modifier = modifier.fillMaxWidth()
+        )
+        Spacer(modifier = modifier.height(30.dp))
+        PrimaryButton(
+            enabled = logInUiState.isValidData,
+            onClick = {
+              onLogIn()
+            },
             modifier = modifier
-                .fillMaxSize()
-                .padding(15.dp),
-            verticalArrangement = Arrangement.Center
+                .fillMaxWidth()
         ) {
-            TitleText(text = "Вход")
-            Spacer(modifier = modifier.height(5.dp))
-
-            BodyText(text = "Пожалуйста,  войдите в свой аккаунт.")
-            BodyText(text = "Это займёт меньше минуты.")
-
-            Spacer(modifier = modifier.height(30.dp))
-
-            TextInput(
-                text = logInUiState.loginValue,
-                label = "Email",
-                placeholder = "ivanov@gmail.com",
-                isError = logInUiState.hasErrors,
-                onValueChange = onLoginValueChange
-            )
-            Spacer(modifier = modifier.height(10.dp))
-            PasswordInput(
-                text = logInUiState.passwordValue,
-                label = "Password",
-                placeholder = "mypassword",
-                isError = logInUiState.hasErrors,
-                onValueChange = onPasswordValueChange
-            )
-            ActionText(
-                text = "Забыли пароль?",
-                onClick = {},
-                textAlign = TextAlign.Right,
-                modifier = modifier.fillMaxWidth()
-            )
-            Spacer(modifier = modifier.height(30.dp))
-            PrimaryButton(
-                enabled = logInUiState.isValidData,
+            PrimaryButtonText(text = "Войти")
+        }
+        Spacer(modifier = modifier.height(20.dp))
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally)
+        ) {
+            Text(text = "Нет аккаунта?")
+            ActionPrimaryText(
+                text = "Зарегестрироваться",
                 onClick = {
-                  onLogIn()
-                },
-                modifier = modifier
-                    .fillMaxWidth()
-            ) {
-                PrimaryButtonText(text = "Войти")
-            }
-            Spacer(modifier = modifier.height(20.dp))
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally)
-            ) {
-                Text(text = "Нет аккаунта?")
-                ActionPrimaryText(
-                    text = "Зарегестрироваться",
-                    onClick = {
-                        navController.navigate(AuthRouter.Register)
-                    }
-                )
-            }
+                    navController.navigate(AuthRouter.Register)
+                }
+            )
         }
     }
 

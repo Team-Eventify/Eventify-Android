@@ -12,6 +12,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -28,6 +29,8 @@ import androidx.navigation.NavHostController
 import com.example.eventify.data.models.UserInfo
 import com.example.eventify.presentation.models.UserResult
 import com.example.eventify.presentation.models.UserUiState
+import com.example.eventify.presentation.ui.SnackbarController
+import com.example.eventify.presentation.ui.SnackbarEvent
 import com.example.eventify.presentation.ui.shared.AnnotationText
 import com.example.eventify.presentation.ui.shared.CategorySelector
 import com.example.eventify.presentation.ui.shared.PrimaryButton
@@ -42,10 +45,12 @@ fun ProfileEditScreen(
     viewModel: UserViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 ) {
+
     ProfileEditScreenComponent(
         uiState = viewModel.uiState,
         currentUser = viewModel.user,
-        userResult = viewModel.userResult,
+        changeUserResult = viewModel.changeUserResult,
+        loadUserResult = viewModel.loadUserResult,
         onChangeUser = viewModel::changeUser,
         onChangeFirstName = viewModel::changeFirstName,
         onChangeLastName = viewModel::changeLastName,
@@ -61,7 +66,8 @@ fun ProfileEditScreen(
 fun ProfileEditScreenComponent(
     uiState: UserUiState,
     currentUser: UserInfo?,
-    userResult: UserResult,
+    loadUserResult: UserResult,
+    changeUserResult: UserResult,
     onChangeUser: () -> Unit,
     onChangeFirstName: (String) -> Unit,
     onChangeLastName: (String) -> Unit,
@@ -73,6 +79,36 @@ fun ProfileEditScreenComponent(
 ) {
     LaunchedEffect(true) {
         onLoadCurrentUser()
+    }
+
+    LaunchedEffect(loadUserResult) {
+        if (loadUserResult is UserResult.Error){
+            SnackbarController.sendEvent(
+                event = SnackbarEvent(
+                    message = "Не удалось получить данные профиля."
+                )
+            )
+        }
+    }
+
+    LaunchedEffect(changeUserResult) {
+        when (changeUserResult){
+            is UserResult.Success -> {
+                SnackbarController.sendEvent(
+                    event = SnackbarEvent(
+                        message = "Профиль обновлен."
+                    )
+                )
+            }
+            is UserResult.Error -> {
+                SnackbarController.sendEvent(
+                    event = SnackbarEvent(
+                        message = changeUserResult.message
+                    )
+                )
+            }
+            else -> null
+        }
     }
 
     Column(
@@ -156,7 +192,8 @@ private fun PreviewProfileEditScreen() {
             middleName = "asda",
             telegramName = "vsdvds",
         ),
-        userResult = UserResult.Idle,
+        changeUserResult = UserResult.Idle,
+        loadUserResult = UserResult.Idle,
         onChangeFirstName = {},
         onChangeLastName = {},
         onChangeMiddleName = {},

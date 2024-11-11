@@ -31,6 +31,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.eventify.presentation.models.RegisterResult
 import com.example.eventify.presentation.models.RegisterUiState
+import com.example.eventify.presentation.ui.SnackbarController
+import com.example.eventify.presentation.ui.SnackbarEvent
 import com.example.eventify.presentation.ui.navgraphs.AuthRouter
 import com.example.eventify.presentation.ui.navgraphs.HomeRouter
 import com.example.eventify.presentation.ui.navgraphs.RootRouter
@@ -71,77 +73,71 @@ fun RegisterScreenComponent(
     navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
-    val snackbarHostState = remember { SnackbarHostState() }
-
-    Scaffold(
-        snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState)
-        }
-    ) { _ ->
-
-        LaunchedEffect(registerResult) {
-            when (registerResult) {
-                is RegisterResult.Success -> {
-                    navController.navigate(RootRouter.Home)
-                }
-                is RegisterResult.Error -> {
-                    snackbarHostState.showSnackbar(message = registerResult.message)
-                }
-                else -> null
+    LaunchedEffect(registerResult) {
+        when (registerResult) {
+            is RegisterResult.Success -> {
+                navController.navigate(RootRouter.Home)
             }
-        }
-
-        Column(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(15.dp)
-            ,
-            verticalArrangement = Arrangement.Center
-        ) {
-            TitleText(text = "Регистрация")
-            Spacer(modifier = modifier.height(5.dp))
-            BodyText(text = "Пожалуйста, создайте новый аккаунт.")
-            BodyText(text = "Это займёт меньше минуты.")
-            Spacer(modifier = modifier.height(30.dp))
-            TextInput(
-                text = uiState.loginValue,
-                label = "Email",
-                placeholder = "ivanov@gmail.com",
-                onValueChange = onLoginChange
-            )
-            Spacer(modifier = modifier.height(10.dp))
-            PasswordInput(
-                text = uiState.passwordValue,
-                label = "Password",
-                placeholder = "yourpassword",
-                onValueChange = onPasswordChange
-            )
-
-            Spacer(modifier = modifier.height(30.dp))
-            PrimaryButton(
-                onClick = onRegister,
-                enabled = uiState.isValidData,
-                modifier = modifier
-                    .fillMaxWidth()
-            ) {
-                Text(text = "Зарегестрироваться", lineHeight = 22.sp, fontSize = 17.sp, fontWeight = FontWeight.Medium)
-            }
-            Spacer(modifier = modifier.height(20.dp))
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                ,
-                horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally)
-            ) {
-                Text(text = "Уже есть аккаунт?")
-                ActionPrimaryText(
-                    text = "Войти",
-                    onClick = {
-                        navController.navigate(AuthRouter.LogIn)
-                    }
+            is RegisterResult.Error -> {
+                SnackbarController.sendEvent(
+                    SnackbarEvent(
+                        message = registerResult.message
+                    )
                 )
             }
+            else -> null
+        }
+    }
 
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(15.dp)
+        ,
+        verticalArrangement = Arrangement.Center
+    ) {
+        TitleText(text = "Регистрация")
+        Spacer(modifier = modifier.height(5.dp))
+        BodyText(text = "Пожалуйста, создайте новый аккаунт.")
+        BodyText(text = "Это займёт меньше минуты.")
+        Spacer(modifier = modifier.height(30.dp))
+        TextInput(
+            text = uiState.loginValue,
+            label = "Email",
+            placeholder = "ivanov@gmail.com",
+            onValueChange = onLoginChange
+        )
+        Spacer(modifier = modifier.height(10.dp))
+        PasswordInput(
+            text = uiState.passwordValue,
+            label = "Password",
+            placeholder = "yourpassword",
+            onValueChange = onPasswordChange
+        )
+
+        Spacer(modifier = modifier.height(30.dp))
+        PrimaryButton(
+            onClick = onRegister,
+            enabled = uiState.isValidData,
+            modifier = modifier
+                .fillMaxWidth()
+        ) {
+            Text(text = "Зарегестрироваться", lineHeight = 22.sp, fontSize = 17.sp, fontWeight = FontWeight.Medium)
+        }
+        Spacer(modifier = modifier.height(20.dp))
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+            ,
+            horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally)
+        ) {
+            Text(text = "Уже есть аккаунт?")
+            ActionPrimaryText(
+                text = "Войти",
+                onClick = {
+                    navController.navigate(AuthRouter.LogIn)
+                }
+            )
         }
     }
 }

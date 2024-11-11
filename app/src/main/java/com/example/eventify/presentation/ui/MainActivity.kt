@@ -6,10 +6,16 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -47,10 +53,37 @@ class MainActivity : ComponentActivity() {
                 ) {
                     sessionViewModel.checkLoggedIn()
 
-                    RootNavGraph(
-                        startDestination = if (sessionViewModel.isLoggedIn) RootRouter.Home else RootRouter.Auth,
-                        navController = rememberNavController()
-                    )
+                    val snackbarHostState = remember { SnackbarHostState() }
+                    val scope = rememberCoroutineScope()
+
+                    ObserveAsState(
+                        flow = SnackbarController.events,
+                        snackbarHostState
+                    ) { event ->
+                        scope.launch {
+                            snackbarHostState.currentSnackbarData?.dismiss()
+                            val result = snackbarHostState.showSnackbar(
+                                message = event.message,
+                                actionLabel = event.action?.name,
+                                duration = event.duration
+                            )
+                            if (result == SnackbarResult.ActionPerformed){
+                                event.action?.action?.invoke()
+                            }
+                        }
+                    }
+
+                    Scaffold(
+                        snackbarHost = {
+                            SnackbarHost(hostState = snackbarHostState)
+                        }
+                    ) { innerPadding ->
+                        RootNavGraph(
+                            startDestination = if (sessionViewModel.isLoggedIn) RootRouter.Home else RootRouter.Auth,
+                            navController = rememberNavController()
+                        )
+                    }
+
                 }
             }
         }

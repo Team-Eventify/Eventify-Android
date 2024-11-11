@@ -25,7 +25,8 @@ class UserViewModel @Inject constructor(
     var uiState by mutableStateOf(UserUiState.default())
         private set
 
-    var userResult by mutableStateOf<UserResult>(UserResult.Idle)
+    var changeUserResult by mutableStateOf<UserResult>(UserResult.Idle)
+    var loadUserResult by mutableStateOf<UserResult>(UserResult.Idle)
 
     var user by mutableStateOf<UserInfo?>(null)
         private set
@@ -65,15 +66,15 @@ class UserViewModel @Inject constructor(
     fun loadUserInfo(force: Boolean = false){
         if (user != null || force) return
 
-        userResult = UserResult.Loading
+        loadUserResult = UserResult.Loading
         viewModelScope.launch {
             try {
                 user = currentUser.getCurrentUser()
                 fillUserUiValues(user!!)
-                userResult = UserResult.Success
+                loadUserResult = UserResult.Success
             }
             catch (e: Exception){
-                userResult = UserResult.Error(e.message ?: "Ошибка сервера.")
+                loadUserResult = UserResult.Error(e.message ?: "Ошибка сервера.")
             }
         }
     }
@@ -85,7 +86,7 @@ class UserViewModel @Inject constructor(
             middleName = uiState.middleName,
             telegramName = uiState.telegramName
         )
-        userResult = UserResult.Loading
+        changeUserResult = UserResult.Loading
 
         viewModelScope.launch {
             try {
@@ -93,13 +94,14 @@ class UserViewModel @Inject constructor(
                     userId = user!!.id,
                     user = userData
                 )
-                userResult = UserResult.Success
+                changeUserResult = UserResult.Success
             }
             catch (e: Exception){
-                userResult = UserResult.Error(e.message ?: "Ошибка")
+                changeUserResult = UserResult.Error(e.message ?: "Ошибка")
             }
 
         }
+        changeUserResult = UserResult.Idle
     }
 
     private fun fillUserUiValues(user: UserInfo){
