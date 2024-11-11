@@ -24,7 +24,7 @@ fun RootNavGraph(
         AuthNavigationGraph(navController)
 
         composable<RootRouter.Home> {
-            MainScreen()
+            MainScreen(rootNavController = navController)
         }
     }
 }

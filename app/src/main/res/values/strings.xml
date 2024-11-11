@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">Eventify</string>
+    <string name="home">Home</string>
+    <string name="search">Search</string>
+    <string name="my_events">My events</string>
+    <string name="profile">Profile</string>
+    <string name="edit_profile">Edit profile</string>
+    <string name="popular_events">Popular events</string>
+    <string name="categories_based_on_interests">Categories based on your interests</string>
+    <string name="save_changes">Save changes</string>
+    <string name="save">Save</string>
+    <string name="my_categories">My categories</string>
+    <string name="forgot_password">Forgot password</string>
+    <string name="login_action">Log In</string>
+    <string name="logout_action">Log Out</string>
+    <string name="register_action">Register</string>
 </resources>

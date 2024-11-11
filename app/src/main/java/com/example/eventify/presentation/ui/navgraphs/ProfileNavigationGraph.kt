@@ -14,13 +14,14 @@ import kotlinx.serialization.Serializable
 fun NavGraphBuilder.profileNavigationGraph(
     navController: NavHostController,
     viewModel: UserViewModel,
+    rootNavController: NavHostController
 ){
 
     navigation<HomeRouter.Profile>(
         startDestination = ProfileRouter.DetailProfile,
     ){
         composable<ProfileRouter.DetailProfile> {
-            ProfileScreen(navController, viewModel = viewModel)
+            ProfileScreen(navController, viewModel = viewModel, rootNavController = rootNavController)
         }
         composable<ProfileRouter.EditProfile> {
             ProfileEditScreen(navController, viewModel = viewModel)

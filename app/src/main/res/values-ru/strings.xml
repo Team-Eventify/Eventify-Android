@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Eventify</string>
+    <string name="home">Главная</string>
+    <string name="search">Поиск</string>
+    <string name="my_events">Мои ивенты</string>
+    <string name="profile">Профиль</string>
+    <string name="edit_profile">Редактировать профиль</string>
+    <string name="popular_events">Популярные ивенты</string>
+    <string name="categories_based_on_interests">Категории на основе твоих интересов</string>
+    <string name="save_changes">Сохранить изменения</string>
+    <string name="save">Сохранить</string>
+    <string name="my_categories">Мои категории</string>
+    <string name="forgot_password">Забыл пароль</string>
+    <string name="login_action">Войти</string>
+    <string name="logout_action">Выйти</string>
+    <string name="register_action">Зарегестрироваться</string>
+
+</resources>

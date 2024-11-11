@@ -3,8 +3,12 @@ package com.example.eventify.presentation.ui.profile
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -15,12 +19,14 @@ import com.example.eventify.data.models.UserInfo
 import com.example.eventify.presentation.models.UserResult
 import com.example.eventify.presentation.models.UserUiState
 import com.example.eventify.presentation.ui.navgraphs.ProfileRouter
+import com.example.eventify.presentation.ui.navgraphs.RootRouter
 import com.example.eventify.presentation.viewmodels.UserViewModel
 
 @Composable
 fun ProfileScreen(
     navController: NavHostController,
     viewModel: UserViewModel = hiltViewModel(),
+    rootNavController: NavHostController,
     modifier: Modifier = Modifier
 ) {
     ProfileScreenComponent(
@@ -28,7 +34,9 @@ fun ProfileScreen(
         currentUser = viewModel.user,
         onLoadCurrentUser = viewModel::loadUserInfo,
         navController = navController,
-        userResult = viewModel.loadUserResult
+        rootNavController = rootNavController,
+        userResult = viewModel.loadUserResult,
+        onLogOut = viewModel::logOut
     )
 }
 
@@ -39,9 +47,26 @@ fun ProfileScreenComponent(
     currentUser: UserInfo?,
     userResult: UserResult,
     onLoadCurrentUser: () -> Unit,
+    onLogOut: () -> Unit,
     navController: NavHostController,
+    rootNavController: NavHostController,
     modifier: Modifier = Modifier
 ) {
+    val showLogOutDialog = remember { mutableStateOf(false) }
+
+    if (showLogOutDialog.value){
+        LogOutDialog(
+            onDismissRequest = {
+                showLogOutDialog.value = false
+            },
+            onLogOut = {
+                onLogOut()
+                rootNavController.navigate(RootRouter.Auth)
+            }
+        )
+    }
+
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -57,6 +82,11 @@ fun ProfileScreenComponent(
                 navController.navigate(ProfileRouter.EditProfile)
             }
         )
+        Button(onClick = {
+            showLogOutDialog.value = true
+        }) {
+            Text(text = "Выйти")
+        }
     }
 }
 
@@ -74,6 +104,8 @@ private fun PreviewProfileScreen() {
         currentUser = null,
         userResult = UserResult.Idle,
         onLoadCurrentUser = {},
-        navController = rememberNavController()
+        navController = rememberNavController(),
+        onLogOut = {},
+        rootNavController = rememberNavController()
     )
 }

@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -22,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.eventify.R
 import com.example.eventify.data.models.EventInfo
 import com.example.eventify.presentation.ui.navgraphs.HomeRouter
 import com.example.eventify.presentation.ui.shared.EventCard
@@ -58,7 +60,7 @@ fun EventsFeedComponent(
             .padding(15.dp)
             .verticalScroll(rememberScrollState())
     ) {
-        HeadingText("Популярные ивенты")
+        HeadingText(stringResource(R.string.popular_events))
 
         events.forEach { event ->
             EventCard(
@@ -73,7 +75,7 @@ fun EventsFeedComponent(
             Divider()
         }
 
-        HeadingText("Категории на основе твоих интересов")
+        HeadingText(stringResource(R.string.categories_based_on_interests))
 
 
 

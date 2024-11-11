@@ -18,12 +18,16 @@ import com.example.eventify.presentation.ui.events.EventDetailScreen
 import com.example.eventify.presentation.ui.events.EventsFeedScreen
 import com.example.eventify.presentation.ui.events.SearchScreen
 import com.example.eventify.presentation.ui.profile.ProfileEditScreen
+import com.example.eventify.presentation.ui.selfevents.SelfEventsScreen
 import com.example.eventify.presentation.viewmodels.EventsViewModel
 import com.example.eventify.presentation.viewmodels.UserViewModel
 import kotlinx.serialization.Serializable
 
 @Composable
-fun HomeNavigationGraph(navController: NavHostController) {
+fun HomeNavigationGraph(
+    navController: NavHostController,
+    rootNavController: NavHostController
+) {
     val eventsViewModel = hiltViewModel<EventsViewModel>()
     val userViewModel = hiltViewModel<UserViewModel>()
 
@@ -33,12 +37,12 @@ fun HomeNavigationGraph(navController: NavHostController) {
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None }
     ){
-        profileNavigationGraph(navController, userViewModel)
+        profileNavigationGraph(navController, userViewModel, rootNavController = rootNavController)
         composable<HomeRouter.EventFeed> {
             EventsFeedScreen(navController = navController, viewModel = eventsViewModel)
         }
-        composable<HomeRouter.Favorites> {
-            EventDetailScreen()
+        composable<HomeRouter.SelfEvents> {
+            SelfEventsScreen()
         }
         composable<HomeRouter.Search> {
             SearchScreen()
@@ -54,7 +58,7 @@ sealed class HomeRouter{
     @Serializable
     data object EventFeed : HomeRouter()
     @Serializable
-    data object Favorites : HomeRouter()
+    data object SelfEvents : HomeRouter()
     @Serializable
     data object Profile : HomeRouter()
     @Serializable

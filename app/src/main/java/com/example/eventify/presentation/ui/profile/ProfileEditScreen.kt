@@ -57,7 +57,7 @@ fun ProfileEditScreen(
         onChangeMiddleName = viewModel::changeMiddleName,
         onChangeEmail = viewModel::changeEmail,
         onChangeTelegram = viewModel::changeTelegram,
-        onLoadCurrentUser = viewModel::loadUserInfo
+        onLoadCurrentUser = viewModel::loadUserInfo,
     )
 }
 
@@ -200,6 +200,6 @@ private fun PreviewProfileEditScreen() {
         onChangeEmail = {},
         onChangeTelegram = {},
         onChangeUser = {},
-        onLoadCurrentUser = {}
+        onLoadCurrentUser = {},
     )
 }

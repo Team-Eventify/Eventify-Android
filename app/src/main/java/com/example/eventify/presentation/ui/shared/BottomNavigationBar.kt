@@ -24,6 +24,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -50,22 +51,22 @@ fun BottomNavigationBar(
 
     val items = listOf(
         BottomNavigationBarItem(
-            title = "Главная",
+            title = stringResource(R.string.home),
             icon = painterResource(R.drawable.ic_house),
             route = HomeRouter.EventFeed
         ),
         BottomNavigationBarItem(
-            title = "Поиск",
+            title = stringResource(R.string.search),
             icon = painterResource(R.drawable.ic_magnifying_glass),
             route = HomeRouter.Search
         ),
         BottomNavigationBarItem(
-            title = "Мои ивенты",
+            title = stringResource(R.string.my_events),
             icon = painterResource(R.drawable.ic_bookmark),
-            route = HomeRouter.EventFeed
+            route = HomeRouter.SelfEvents
         ),
         BottomNavigationBarItem(
-            title = "Профиль",
+            title = stringResource(R.string.profile),
             icon = painterResource(R.drawable.ic_person),
             route = HomeRouter.Profile
         ),

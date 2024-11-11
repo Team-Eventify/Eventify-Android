@@ -18,6 +18,7 @@ import com.example.eventify.presentation.viewmodels.EventsViewModel
 
 @Composable
 fun MainScreen(
+    rootNavController: NavHostController,
     navController: NavHostController = rememberNavController(),
     modifier: Modifier = Modifier
 ) {
@@ -31,7 +32,7 @@ fun MainScreen(
         Box(
             modifier = Modifier.padding(PaddingValues(bottom = innerPadding.calculateBottomPadding()))
             ) {
-                HomeNavigationGraph(navController = navController)
+                HomeNavigationGraph(navController = navController, rootNavController = rootNavController)
             }
 
     }
@@ -40,5 +41,7 @@ fun MainScreen(
 @Preview(name = "MainScreen")
 @Composable
 private fun PreviewMainScreen() {
-    MainScreen()
+    MainScreen(
+        rootNavController = rememberNavController()
+    )
 }
