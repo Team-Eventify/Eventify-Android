@@ -65,9 +65,7 @@ class UserViewModel @Inject constructor(
     }
 
 
-    fun loadUserInfo(force: Boolean = false){
-        if (user != null || force) return
-
+    fun loadUserInfo(){
         loadUserResult = UserResult.Loading
         viewModelScope.launch {
             try {
@@ -91,15 +89,14 @@ class UserViewModel @Inject constructor(
         changeUserResult = UserResult.Loading
 
         viewModelScope.launch {
-            try {
+            changeUserResult = try {
                 usersRepository.changeUser(
                     userId = user!!.id,
                     user = userData
                 )
-                changeUserResult = UserResult.Success
-            }
-            catch (e: Exception){
-                changeUserResult = UserResult.Error(e.message ?: "Ошибка")
+                UserResult.Success
+            } catch (e: Exception){
+                UserResult.Error(e.message ?: "Ошибка")
             }
 
         }

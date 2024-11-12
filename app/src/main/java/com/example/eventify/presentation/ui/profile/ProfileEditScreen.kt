@@ -94,6 +94,7 @@ fun ProfileEditScreenComponent(
     LaunchedEffect(changeUserResult) {
         when (changeUserResult){
             is UserResult.Success -> {
+                onLoadCurrentUser()
                 SnackbarController.sendEvent(
                     event = SnackbarEvent(
                         message = "Профиль обновлен."
