@@ -15,5 +15,7 @@
     <string name="login_action">Войти</string>
     <string name="logout_action">Выйти</string>
     <string name="register_action">Зарегестрироваться</string>
+    <string name="default_offline_title">Нет соединения с интернетом</string>
+    <string name="default_offline_message">Офлайн доступ будет позже</string>
 
 </resources>

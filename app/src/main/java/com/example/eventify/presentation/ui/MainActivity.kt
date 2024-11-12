@@ -29,6 +29,7 @@ import androidx.navigation.compose.rememberNavController
 
 import com.example.eventify.presentation.ui.navgraphs.RootNavGraph
 import com.example.eventify.presentation.ui.navgraphs.RootRouter
+import com.example.eventify.presentation.ui.shared.OfflineComponent
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 import com.example.eventify.presentation.viewmodels.SessionViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -87,6 +88,18 @@ class MainActivity : ComponentActivity() {
                             startDestination = if (sessionViewModel.isLoggedIn) RootRouter.Home else RootRouter.Auth,
                             navController = rememberNavController()
                         )
+                    }
+
+                    val connectionState by rememberConnectivityState()
+
+                    val isConnected by remember(connectionState) {
+                        derivedStateOf {
+                            connectionState === NetworkConnectionState.Available
+                        }
+                    }
+
+                    if (!isConnected){
+                        OfflineComponent()
                     }
 
                     }

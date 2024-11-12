@@ -14,4 +14,6 @@
     <string name="login_action">Log In</string>
     <string name="logout_action">Log Out</string>
     <string name="register_action">Register</string>
+    <string name="default_offline_title">You are offline</string>
+    <string name="default_offline_message">Offline data will be later</string>
 </resources>
