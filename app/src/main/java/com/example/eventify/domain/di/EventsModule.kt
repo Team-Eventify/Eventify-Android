@@ -30,7 +30,7 @@ object EventsModule {
             .build()
 
         return Retrofit.Builder()
-            .baseUrl("http://188.225.82.113:8090/api/v1/events/")
+            .baseUrl("https://eventify.website/api/v1/events/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
