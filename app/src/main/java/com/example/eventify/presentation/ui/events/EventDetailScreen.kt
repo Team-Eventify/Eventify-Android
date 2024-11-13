@@ -23,7 +23,12 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -42,6 +47,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.example.eventify.R
 import com.example.eventify.data.models.EventInfo
 import com.example.eventify.presentation.ui.shared.ActionPrimaryText
@@ -56,14 +62,19 @@ import com.example.eventify.presentation.ui.shared.TitleText
 import com.example.eventify.presentation.viewmodels.EventDetailViewmodel
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EventDetailScreen(
+    navController: NavHostController,
     modifier: Modifier = Modifier,
     viewModel: EventDetailViewmodel = hiltViewModel()
 ) {
     if (viewModel.event != null) {
         EventDetailScreenComponent(
-            event = viewModel.event!!
+            event = viewModel.event!!,
+            onBackAction = {
+                navController.popBackStack()
+            }
         )
     } else {
         Text(text = "Not Found")
@@ -72,49 +83,86 @@ fun EventDetailScreen(
 }
 
 
-@OptIn(ExperimentalLayoutApi::class)
+@OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun EventDetailScreenComponent(
     event: EventInfo,
+    onBackAction: () -> Unit
 ) {
-    Column {
-        ImagePager(
-            listOf(
-                painterResource(R.drawable.default_event_image),
-                painterResource(R.drawable.misis_cj_image),
-                painterResource(R.drawable.default_event_image),
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(text = event.title)
+                },
+                navigationIcon = {
+                    IconButton(
+                        onClick = onBackAction
+                    ) {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_chevron_right),
+                            contentDescription = ""
+                        )
+                    }
+                },
+                actions = {
+                    IconButton(
+                        onClick = { /*Share*/ }
+                    ) {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_arrow_turn_up_right),
+                            contentDescription = ""
+                        )
+                    }
+
+                }
             )
-        )
+        }
+    ) { paddingValue ->
         Column(
-             modifier = Modifier
-                .padding(10.dp)
+            modifier = Modifier
+                .padding(top = paddingValue.calculateTopPadding())
         ) {
-            var textState by remember { mutableStateOf(true) }
-
-            FlowRow(
-                horizontalArrangement = Arrangement.spacedBy(10.dp, alignment = Alignment.Start)
+            ImagePager(
+                listOf(
+                    painterResource(R.drawable.default_event_image),
+                    painterResource(R.drawable.misis_cj_image),
+                    painterResource(R.drawable.default_event_image),
+                )
+            )
+            Column(
+                modifier = Modifier
+                    .padding(10.dp)
             ) {
-                ChipInfo(text = "2 марта")
-                ChipInfo(text = "17:30")
-                TagChip(text = "Тэг 1")
-                TagChip(text = "Тэг 2")
-                TagChip(text = "Тэг 3")
-            }
+                var textState by remember { mutableStateOf(true) }
 
-            ShortenedBodyText(
-                text = event.description,
-                textState = textState
-            )
-            ActionPrimaryText(
-                text = if (textState) "Полное описание" else "Скрыть описание",
-                onClick = { textState = !textState }
-            )
-            Spacer(modifier = Modifier.height(20.dp))
-            PrimaryButton(onClick = { }) {
-                PrimaryButtonText(text = "Я пойду!")
+                FlowRow(
+                    horizontalArrangement = Arrangement.spacedBy(10.dp, alignment = Alignment.Start)
+                ) {
+                    ChipInfo(text = "2 марта")
+                    ChipInfo(text = "17:30")
+                    TagChip(text = "Тэг 1")
+                    TagChip(text = "Тэг 2")
+                    TagChip(text = "Тэг 3")
+                }
+
+                ShortenedBodyText(
+                    text = event.description,
+                    textState = textState
+                )
+                ActionPrimaryText(
+                    text = if (textState) "Полное описание" else "Скрыть описание",
+                    onClick = { textState = !textState }
+                )
+                Spacer(modifier = Modifier.height(20.dp))
+                PrimaryButton(onClick = { }) {
+                    PrimaryButtonText(text = "Я пойду!")
+                }
             }
         }
+
     }
+
 }
 
 
@@ -178,17 +226,20 @@ fun ImagePager(
 @Preview(name = "EventDetailScreen", showSystemUi = true, showBackground = true)
 @Composable
 private fun PreviewEventDetailScreen() {
-    EventDetailScreenComponent(event = EventInfo(
-        id = "",
-        title = "День открытых дверей",
-        description = "Дни открытых дверей — это уникальная возможность для старшеклассников больше узнать о специальностях, которым обучают в одном из лучших технических университетов России, научной деятельности под руководством учёных с мировым именем, образовательных проектах и карьерных возможностях, которые предлагает вуз, яркой студенческой жизни в Москве. В Университете МИСИС каждый студент сможет получить профессию будущего и быть востребованным лучшими российскими и зарубежными работодателями, раскрыть свой потенциал, благодаря формируемой в вузе экосреде креативности и творчества!",
-        createdAt = 0,
-        modifiedAt = 0,
-        start = 0,
-        end = 0,
-        moderated = false,
-        state = "",
-        capacity = 0,
-        ownerID = ""
-    ))
+    EventDetailScreenComponent(
+        event = EventInfo(
+            id = "",
+            title = "День открытых дверей",
+            description = "Дни открытых дверей — это уникальная возможность для старшеклассников больше узнать о специальностях, которым обучают в одном из лучших технических университетов России, научной деятельности под руководством учёных с мировым именем, образовательных проектах и карьерных возможностях, которые предлагает вуз, яркой студенческой жизни в Москве. В Университете МИСИС каждый студент сможет получить профессию будущего и быть востребованным лучшими российскими и зарубежными работодателями, раскрыть свой потенциал, благодаря формируемой в вузе экосреде креативности и творчества!",
+            createdAt = 0,
+            modifiedAt = 0,
+            start = 0,
+            end = 0,
+            moderated = false,
+            state = "",
+            capacity = 0,
+            ownerID = ""
+        ),
+        onBackAction = {}
+    )
 }

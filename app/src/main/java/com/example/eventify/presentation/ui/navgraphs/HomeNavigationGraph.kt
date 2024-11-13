@@ -40,7 +40,7 @@ fun HomeNavigationGraph(
             SearchScreen()
         }
         composable<HomeRouter.EventDetail> {
-            EventDetailScreen()
+            EventDetailScreen(navController = navController)
         }
     }
 }
