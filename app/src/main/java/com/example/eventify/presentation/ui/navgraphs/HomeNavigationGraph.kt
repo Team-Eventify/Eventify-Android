@@ -1,14 +1,7 @@
 package com.example.eventify.presentation.ui.navgraphs
 
-import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
-import androidx.compose.animation.core.EaseIn
-import androidx.compose.animation.core.EaseOut
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -17,8 +10,7 @@ import androidx.navigation.compose.composable
 import com.example.eventify.presentation.ui.events.EventDetailScreen
 import com.example.eventify.presentation.ui.events.EventsFeedScreen
 import com.example.eventify.presentation.ui.events.SearchScreen
-import com.example.eventify.presentation.ui.profile.ProfileEditScreen
-import com.example.eventify.presentation.ui.selfevents.SelfEventsScreen
+import com.example.eventify.presentation.ui.myevents.MyEventsScreen
 import com.example.eventify.presentation.viewmodels.EventsViewModel
 import com.example.eventify.presentation.viewmodels.UserViewModel
 import kotlinx.serialization.Serializable
@@ -42,7 +34,7 @@ fun HomeNavigationGraph(
             EventsFeedScreen(navController = navController, viewModel = eventsViewModel)
         }
         composable<HomeRouter.SelfEvents> {
-            SelfEventsScreen()
+            MyEventsScreen()
         }
         composable<HomeRouter.Search> {
             SearchScreen()

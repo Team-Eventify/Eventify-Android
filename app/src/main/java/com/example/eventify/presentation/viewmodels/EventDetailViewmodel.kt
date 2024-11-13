@@ -25,6 +25,10 @@ class EventDetailViewmodel @Inject constructor(
 
     var event by mutableStateOf<EventInfo?>(null)
 
+    init {
+        loadEvent()
+    }
+
     fun loadEvent(){
         viewModelScope.launch {
             event = eventsRepository.getEventDetail(eventId)

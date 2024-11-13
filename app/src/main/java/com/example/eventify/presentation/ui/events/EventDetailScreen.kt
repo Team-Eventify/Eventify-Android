@@ -8,6 +8,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -41,12 +43,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.eventify.R
+import com.example.eventify.data.models.EventInfo
 import com.example.eventify.presentation.ui.shared.ActionPrimaryText
 import com.example.eventify.presentation.ui.shared.ActionText
 import com.example.eventify.presentation.ui.shared.BodyText
+import com.example.eventify.presentation.ui.shared.ChipInfo
 import com.example.eventify.presentation.ui.shared.PrimaryButton
 import com.example.eventify.presentation.ui.shared.PrimaryButtonText
 import com.example.eventify.presentation.ui.shared.ShortenedBodyText
+import com.example.eventify.presentation.ui.shared.TagChip
 import com.example.eventify.presentation.ui.shared.TitleText
 import com.example.eventify.presentation.viewmodels.EventDetailViewmodel
 import kotlinx.coroutines.launch
@@ -56,9 +61,22 @@ fun EventDetailScreen(
     modifier: Modifier = Modifier,
     viewModel: EventDetailViewmodel = hiltViewModel()
 ) {
-    LaunchedEffect(true) {
-        viewModel.loadEvent()
+    if (viewModel.event != null) {
+        EventDetailScreenComponent(
+            event = viewModel.event!!
+        )
+    } else {
+        Text(text = "Not Found")
     }
+
+}
+
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+fun EventDetailScreenComponent(
+    event: EventInfo,
+) {
     Column {
         ImagePager(
             listOf(
@@ -68,27 +86,35 @@ fun EventDetailScreen(
             )
         )
         Column(
-            modifier
+             modifier = Modifier
                 .padding(10.dp)
         ) {
             var textState by remember { mutableStateOf(true) }
 
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(10.dp, alignment = Alignment.Start)
+            ) {
+                ChipInfo(text = "2 марта")
+                ChipInfo(text = "17:30")
+                TagChip(text = "Тэг 1")
+                TagChip(text = "Тэг 2")
+                TagChip(text = "Тэг 3")
+            }
+
             ShortenedBodyText(
-                text = viewModel.event?.description ?: "[eq",
+                text = event.description,
                 textState = textState
             )
             ActionPrimaryText(
                 text = if (textState) "Полное описание" else "Скрыть описание",
                 onClick = { textState = !textState }
             )
-            Spacer(modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(20.dp))
             PrimaryButton(onClick = { }) {
                 PrimaryButtonText(text = "Я пойду!")
             }
         }
     }
-
-
 }
 
 
@@ -152,5 +178,17 @@ fun ImagePager(
 @Preview(name = "EventDetailScreen", showSystemUi = true, showBackground = true)
 @Composable
 private fun PreviewEventDetailScreen() {
-    EventDetailScreen()
+    EventDetailScreenComponent(event = EventInfo(
+        id = "",
+        title = "День открытых дверей",
+        description = "Дни открытых дверей — это уникальная возможность для старшеклассников больше узнать о специальностях, которым обучают в одном из лучших технических университетов России, научной деятельности под руководством учёных с мировым именем, образовательных проектах и карьерных возможностях, которые предлагает вуз, яркой студенческой жизни в Москве. В Университете МИСИС каждый студент сможет получить профессию будущего и быть востребованным лучшими российскими и зарубежными работодателями, раскрыть свой потенциал, благодаря формируемой в вузе экосреде креативности и творчества!",
+        createdAt = 0,
+        modifiedAt = 0,
+        start = 0,
+        end = 0,
+        moderated = false,
+        state = "",
+        capacity = 0,
+        ownerID = ""
+    ))
 }
