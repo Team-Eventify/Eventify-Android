@@ -9,7 +9,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.example.eventify.data.models.EventInfo
 import com.example.eventify.data.repositories.events.EventsRepository
-import com.example.eventify.presentation.ui.navgraphs.HomeRouter
+import com.example.eventify.presentation.navigation.HomeRouter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

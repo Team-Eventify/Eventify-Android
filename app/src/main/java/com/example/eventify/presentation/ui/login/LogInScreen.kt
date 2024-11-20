@@ -1,7 +1,6 @@
 package com.example.eventify.presentation.ui.login
 
 import android.content.res.Configuration
-import android.os.Message
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,14 +9,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -25,7 +19,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.eventify.R
@@ -33,8 +26,8 @@ import com.example.eventify.presentation.models.LogInUiState
 import com.example.eventify.presentation.models.LoginResult
 import com.example.eventify.presentation.ui.SnackbarController
 import com.example.eventify.presentation.ui.SnackbarEvent
-import com.example.eventify.presentation.ui.navgraphs.AuthRouter
-import com.example.eventify.presentation.ui.navgraphs.RootRouter
+import com.example.eventify.presentation.navigation.AuthRouter
+import com.example.eventify.presentation.navigation.RootRouter
 import com.example.eventify.presentation.ui.shared.ActionPrimaryText
 import com.example.eventify.presentation.ui.shared.ActionText
 import com.example.eventify.presentation.ui.shared.BodyText
@@ -44,7 +37,6 @@ import com.example.eventify.presentation.ui.shared.PrimaryButtonText
 import com.example.eventify.presentation.ui.shared.TextInput
 import com.example.eventify.presentation.ui.shared.TitleText
 import com.example.eventify.presentation.viewmodels.LogInViewModel
-import kotlinx.coroutines.launch
 
 @Composable
 fun LogInScreenComponent(

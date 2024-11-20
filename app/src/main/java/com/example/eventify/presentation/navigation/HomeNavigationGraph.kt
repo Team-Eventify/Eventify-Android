@@ -1,4 +1,4 @@
-package com.example.eventify.presentation.ui.navgraphs
+package com.example.eventify.presentation.navigation
 
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
@@ -31,16 +31,19 @@ fun HomeNavigationGraph(
     ){
         profileNavigationGraph(navController, userViewModel, rootNavController = rootNavController)
         composable<HomeRouter.EventFeed> {
-            EventsFeedScreen(navController = navController, viewModel = eventsViewModel)
+            EventsFeedScreen(
+                navController = navController,
+                viewModel = eventsViewModel,
+                goToEventDetail = { eventId ->
+                    rootNavController.navigate(RootRouter.EventDetail(eventId))
+                }
+            )
         }
         composable<HomeRouter.SelfEvents> {
             MyEventsScreen()
         }
         composable<HomeRouter.Search> {
             SearchScreen()
-        }
-        composable<HomeRouter.EventDetail> {
-            EventDetailScreen(navController = navController)
         }
     }
 }

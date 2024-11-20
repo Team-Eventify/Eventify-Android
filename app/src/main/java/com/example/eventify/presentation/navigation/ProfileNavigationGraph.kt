@@ -1,6 +1,5 @@
-package com.example.eventify.presentation.ui.navgraphs
+package com.example.eventify.presentation.navigation
 
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
