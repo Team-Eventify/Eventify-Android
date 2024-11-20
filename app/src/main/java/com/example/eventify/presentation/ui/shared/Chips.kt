@@ -68,9 +68,9 @@ fun TagChip(
     AssistChip(
         onClick = onClick ?: {},
         shape = RoundedCornerShape(16.dp),
-        border =  AssistChipDefaults.assistChipBorder(
-            borderColor = MaterialTheme.colorScheme.primary
-        ),
+//        border =  AssistChipDefaults.assistChipBorder(
+//            borderColor = MaterialTheme.colorScheme.primary
+//        ),
         label = {
             Text(text = text, color = MaterialTheme.colorScheme.primary)
         }

@@ -9,7 +9,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -19,11 +25,15 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.eventify.R
 import com.example.eventify.data.models.EventInfo
+import com.example.eventify.presentation.models.EventFeedResult
+import com.example.eventify.presentation.models.EventFeedUiState
 import com.example.eventify.presentation.models.ShortEventItem
 import com.example.eventify.presentation.navigation.HomeRouter
 import com.example.eventify.presentation.ui.shared.EventCard
 import com.example.eventify.presentation.ui.shared.HeadingText
 import com.example.eventify.presentation.viewmodels.EventsViewModel
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 @Composable
 fun EventsFeedScreen(
@@ -32,53 +42,66 @@ fun EventsFeedScreen(
     viewModel: EventsViewModel = hiltViewModel()
 ) {
     EventsFeedComponent(
-        loadEvents = viewModel::loadEvents,
+        onLoadEvents = viewModel::loadEvents,
+        onRefreshEvents = viewModel::refresh,
         events = viewModel.events,
         goToEventDetail = goToEventDetail,
-        navController = navController
+        eventFeedResult = viewModel.result,
+        navController = navController,
+        uiState = viewModel.uiState
     )
 }
 
 
 @Composable
 fun EventsFeedComponent(
-    loadEvents: () -> Unit,
+    onLoadEvents: () -> Unit,
+    onRefreshEvents: () -> Unit,
     events: List<ShortEventItem>,
     goToEventDetail: (String) -> Unit,
+    uiState: EventFeedUiState,
+    eventFeedResult: EventFeedResult,
     navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
+    val swipeRefreshState = rememberSwipeRefreshState(eventFeedResult is EventFeedResult.Refreshing)
 
-
-    Column(
-        verticalArrangement = Arrangement.spacedBy(20.dp),
-        modifier = modifier
-            .fillMaxSize()
-            .padding(15.dp)
-            .verticalScroll(rememberScrollState())
+    SwipeRefresh(
+        state = swipeRefreshState,
+        onRefresh = onRefreshEvents
     ) {
-        HeadingText(stringResource(R.string.popular_events))
+        Column(
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            modifier = modifier
+                .fillMaxSize()
+                .padding(15.dp)
+                .verticalScroll(rememberScrollState())
+        ) {
+            HeadingText(stringResource(R.string.popular_events))
 
-        events.forEach { event ->
-            EventCard(
-                title = event.title,
-                description = event.description,
-                modifier = modifier
-                    .animateContentSize()
-                    .clickable {
-                        goToEventDetail(event.id)
-                    }
-            )
-            Divider()
+            events.forEach { event ->
+                EventCard(
+                    title = event.title,
+                    description = event.description,
+                    modifier = modifier
+                        .animateContentSize()
+                        .clickable {
+                            goToEventDetail(event.id)
+                        }
+                )
+                Divider()
+            }
+
+            HeadingText(stringResource(R.string.categories_based_on_interests))
+
+
+
+            HeadingText("Ивенты, которые тебе понравятся")
+
         }
-
-        HeadingText(stringResource(R.string.categories_based_on_interests))
-
-
-
-        HeadingText("Ивенты, которые тебе понравятся")
-
     }
+
+
 }
 
 @Preview(name = "EventsFeedScreen", showBackground = true, showSystemUi = true)
@@ -88,8 +111,11 @@ private fun PreviewEventsFeedScreen() {
         events = emptyList(
 
         ),
-        loadEvents = {},
+        onLoadEvents = {},
+        onRefreshEvents = {},
         goToEventDetail = {},
-        navController = rememberNavController()
+        navController = rememberNavController(),
+        eventFeedResult = EventFeedResult.Idle,
+        uiState = EventFeedUiState.default()
     )
 }

@@ -37,6 +37,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -94,6 +95,9 @@ dependencies {
     testImplementation(libs.junit)
     testImplementation(libs.junit.jupiter)
     testRuntimeOnly(libs.junit.jupiter.engine)
+
+    coreLibraryDesugaring(libs.desugar.jdk.libs)
+    implementation(libs.accompanist.swiperefresh)
 
 }
 
