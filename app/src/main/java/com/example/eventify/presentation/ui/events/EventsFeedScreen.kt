@@ -10,6 +10,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
@@ -89,7 +90,7 @@ fun EventsFeedComponent(
                             goToEventDetail(event.id)
                         }
                 )
-                Divider()
+                HorizontalDivider()
             }
 
             HeadingText(stringResource(R.string.categories_based_on_interests))

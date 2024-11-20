@@ -12,6 +12,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -159,7 +160,7 @@ fun ProfileEditScreenComponent(
         )
 
         Spacer(Modifier.height(10.dp))
-        Divider()
+        HorizontalDivider()
 
         SubHeadingText(text = "Мои категории")
         AnnotationText(text = "Выбирай категории ивентов под свои интересы!")

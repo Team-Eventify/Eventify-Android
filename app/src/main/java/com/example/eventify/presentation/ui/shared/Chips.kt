@@ -68,11 +68,24 @@ fun TagChip(
     AssistChip(
         onClick = onClick ?: {},
         shape = RoundedCornerShape(16.dp),
-//        border =  AssistChipDefaults.assistChipBorder(
-//            borderColor = MaterialTheme.colorScheme.primary
-//        ),
+        border = AssistChipDefaults.assistChipBorder(enabled = true, borderColor = MaterialTheme.colorScheme.primary),
         label = {
             Text(text = text, color = MaterialTheme.colorScheme.primary)
+        }
+    )
+}
+
+@Composable
+fun EventInfoChip(
+    text: String,
+    onClick: (() -> Unit)? = null
+) {
+    AssistChip(
+        onClick = onClick ?: {},
+        shape = RoundedCornerShape(16.dp),
+        border = AssistChipDefaults.assistChipBorder(enabled = true, borderColor = Color.White),
+        label = {
+            Text(text = text, color = Color.White)
         }
     )
 }
