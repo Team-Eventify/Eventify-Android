@@ -19,6 +19,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.eventify.R
 import com.example.eventify.data.models.EventInfo
+import com.example.eventify.presentation.models.ShortEventItem
 import com.example.eventify.presentation.navigation.HomeRouter
 import com.example.eventify.presentation.ui.shared.EventCard
 import com.example.eventify.presentation.ui.shared.HeadingText
@@ -42,11 +43,12 @@ fun EventsFeedScreen(
 @Composable
 fun EventsFeedComponent(
     loadEvents: () -> Unit,
-    events: List<EventInfo>,
+    events: List<ShortEventItem>,
     goToEventDetail: (String) -> Unit,
     navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
+
 
     Column(
         verticalArrangement = Arrangement.spacedBy(20.dp),
@@ -83,7 +85,9 @@ fun EventsFeedComponent(
 @Composable
 private fun PreviewEventsFeedScreen() {
     EventsFeedComponent(
-        events = emptyList(),
+        events = emptyList(
+
+        ),
         loadEvents = {},
         goToEventDetail = {},
         navController = rememberNavController()
