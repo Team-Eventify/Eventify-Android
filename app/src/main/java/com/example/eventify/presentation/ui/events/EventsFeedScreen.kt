@@ -82,8 +82,7 @@ fun EventsFeedComponent(
 
             events.forEach { event ->
                 EventCard(
-                    title = event.title,
-                    description = event.description,
+                    event = event,
                     modifier = modifier
                         .animateContentSize()
                         .clickable {

@@ -21,12 +21,14 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import com.example.eventify.R
+import com.example.eventify.presentation.models.ShortEventItem
+import com.example.eventify.presentation.models.date
+import com.example.eventify.presentation.models.time
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun EventCard(
-    title: String,
-    description: String,
+    event: ShortEventItem,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -41,14 +43,14 @@ fun EventCard(
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(10.dp))
         )
-        EventCardTitle(title)
-        BodyText(description)
+        EventCardTitle(event.title)
+        BodyText(event.description)
         Spacer(modifier = Modifier.height(10.dp))
         FlowRow(
             horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            EventInfoChip("12 декабря")
-            EventInfoChip("17:30")
+            EventInfoChip(event.localDateTimeStart.date(short = true))
+            EventInfoChip(event.localDateTimeStart.time(short = true))
             EventInfoChip("онлайн")
         }
     }
@@ -58,7 +60,12 @@ fun EventCard(
 @Composable
 private fun PreviewEventCard() {
     EventCard(
-        title = "День открытых дверей",
-        description = "Дни открытых дверей — это уникальная возможность для старшеклассников больше узнать о специальностях, которым обучают в Унивеситете МИСИС."
+        event = ShortEventItem(
+            id = "",
+            title = "",
+            description = "",
+            start = 1324412412,
+            end = 1324419999
+        )
     )
 }
