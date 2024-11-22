@@ -33,7 +33,6 @@ class EventsViewModel @Inject constructor(
     }
 
     suspend fun _loadEvents() {
-        delay(2000)
         val eventsResponse = eventsRepository.getEventsList()
         events = eventsResponse.map {
             ShortEventItem(
