@@ -98,11 +98,15 @@ fun <T: HomeRouter> RowScope.AddItem(
                 contentDescription = "painter"
             )
         },
-        label = { Text(text = item.title, fontSize = 12.sp) },
+        label = {
+            Text(text = item.title, fontSize = 12.sp)
+        },
         colors = NavigationBarItemDefaults.colors(
             selectedIconColor = MaterialTheme.colorScheme.primary,
             selectedTextColor = MaterialTheme.colorScheme.primary,
-            indicatorColor = MaterialTheme.colorScheme.surface
+            indicatorColor = MaterialTheme.colorScheme.surface,
+            disabledTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
+            unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant
         ),
 //        selected = currentDestination?.hierarchy?.any {
 //            it.route?.endsWith(item.route.toString()) ?: false
