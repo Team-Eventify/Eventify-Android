@@ -1,7 +1,5 @@
 package com.example.eventify.presentation.ui.events
 
-import android.icu.text.CaseMap.Title
-import android.widget.Space
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -13,7 +11,6 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -26,6 +23,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -44,8 +42,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.eventify.R
@@ -62,7 +62,6 @@ import com.example.eventify.presentation.ui.shared.TitleText
 import com.example.eventify.presentation.viewmodels.EventDetailViewmodel
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EventDetailScreen(
     navController: NavHostController,
@@ -72,6 +71,7 @@ fun EventDetailScreen(
     if (viewModel.event != null) {
         EventDetailScreenComponent(
             event = viewModel.event!!,
+            onSubmit = {},
             onBackAction = {
                 navController.popBackStack()
             }
@@ -87,7 +87,8 @@ fun EventDetailScreen(
 @Composable
 fun EventDetailScreenComponent(
     event: EventInfo,
-    onBackAction: () -> Unit
+    onSubmit: (String) -> Unit,
+    onBackAction: () -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -154,10 +155,34 @@ fun EventDetailScreenComponent(
                     text = if (textState) "Полное описание" else "Скрыть описание",
                     onClick = { textState = !textState }
                 )
+                Spacer(modifier = Modifier.height(10.dp))
+                Text(
+                    text = stringResource(R.string.organizer),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    fontSize = 12.sp
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.Start),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.misis_logo),
+                        contentDescription = "organizer logo",
+                        contentScale = ContentScale.FillHeight,
+                        modifier = Modifier
+                            .height(40.dp)
+                    )
+                    Text(text = "MISIS", color = MaterialTheme.colorScheme.onSecondary, fontSize = 20.sp)
+                }
                 Spacer(modifier = Modifier.height(20.dp))
                 PrimaryButton(onClick = { }) {
                     PrimaryButtonText(text = "Я пойду!")
                 }
+
+
             }
         }
 
@@ -240,6 +265,7 @@ private fun PreviewEventDetailScreen() {
             capacity = 0,
             ownerID = ""
         ),
-        onBackAction = {}
+        onBackAction = {},
+        onSubmit = {}
     )
 }

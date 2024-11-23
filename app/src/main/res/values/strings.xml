@@ -16,4 +16,5 @@
     <string name="register_action">Register</string>
     <string name="default_offline_title">You are offline</string>
     <string name="default_offline_message">Offline data will be later</string>
+    <string name="organizer">Organizer</string>
 </resources>
