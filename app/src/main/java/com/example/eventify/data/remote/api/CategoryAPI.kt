@@ -14,7 +14,7 @@ interface CategoryAPI {
     @GET(".")
     suspend fun getCategoriesList(): Response<List<CategoryInfoResponse>>
 
-    @GET("/{id}")
+    @GET("{id}")
     suspend fun readCategory(@Path("id") categoryId: String): Response<CategoryInfoResponse>
 
     @POST(".")

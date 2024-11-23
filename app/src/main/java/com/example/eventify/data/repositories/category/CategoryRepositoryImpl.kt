@@ -26,7 +26,7 @@ class CategoryRepositoryImpl @Inject constructor(
 
         val category = when (response.code()){
             200 -> response.body()?.toCategoryInfo()
-            else -> throw Exception("Ошибка сервера.")
+            else -> throw Exception("Ошибка сервера: code=${response.code()} message=${response.message()}")
         }
         return category ?: throw Exception("Ошибка сервера.")
     }

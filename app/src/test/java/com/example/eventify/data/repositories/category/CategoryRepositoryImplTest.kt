@@ -1,28 +1,27 @@
-package com.example.eventify.data.repositories.events
+package com.example.eventify.data.repositories.category
 
-import com.example.eventify.data.models.EventInfo
 import com.example.eventify.data.models.UserCredentials
 import com.example.eventify.data.remote.api.AuthAPI
+import com.example.eventify.data.remote.api.CategoryAPI
 import com.example.eventify.data.remote.api.EventsAPI
 import com.example.eventify.data.remote.utils.AccessTokenInterceptor
 import com.example.eventify.data.remote.utils.NetworkServiceFactory
 import com.example.eventify.data.remote.utils.TokenAuthenticator
 import com.example.eventify.data.repositories.auth.AuthUserRepositoryImpl
+import com.example.eventify.data.repositories.events.EventRepositoryImpl
 import com.example.eventify.data.repositories.tokens.MockedTokenManagerImpl
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.junit.jupiter.api.BeforeEach
+import org.junit.Ignore
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.BeforeEach
 
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.Arguments
-import org.junit.jupiter.params.provider.MethodSource
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class EventRepositoryImplTest {
+class CategoryRepositoryImplTest {
     private val mockedTokenManager = MockedTokenManagerImpl()
     private val accessTokenInterceptor = AccessTokenInterceptor(tokenManager = mockedTokenManager)
     private val authDataSource = NetworkServiceFactory.getApi("https://eventify.website/api/v1/auth/", AuthAPI::class.java)
@@ -34,13 +33,14 @@ class EventRepositoryImplTest {
         .authenticator(tokenAuthenticator)
         .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
         .build()
-    private val eventsApi = Retrofit.Builder()
-        .baseUrl("https://eventify.website/api/v1/events/")
+    private val categoryApi = Retrofit.Builder()
+        .baseUrl("https://eventify.website/api/v1/category/")
         .addConverterFactory(GsonConverterFactory.create())
         .client(client)
         .build()
-        .create(EventsAPI::class.java)
-    private val eventsRepository = EventRepositoryImpl(dataSource = eventsApi)
+        .create(CategoryAPI::class.java)
+    private val categoryRepository = CategoryRepositoryImpl(dataSource = categoryApi)
+
 
     @BeforeEach
     fun setUp(): Unit = runBlocking{
@@ -53,40 +53,26 @@ class EventRepositoryImplTest {
     }
 
     @Test
-    fun getEventsList(): Unit = runBlocking {
-        val events = eventsRepository.getEventsList()
-        assertNotEquals(events.size, 0)
+    fun getCategoriesList() = runBlocking{
+        val categories = categoryRepository.getCategoriesList()
+        assertNotNull(categories)
+        assertNotEquals(categories, 0)
     }
 
-    @ParameterizedTest(name = "{index} => eventId={0}, expectedEvent={1} expectedException={2}")
-    @MethodSource("eventDetailUseCase")
-    fun getEventDetail(eventId: String, expectedEvent: EventInfo?, expectedException: Class<out Exception>?) {
-        expectedException?.let {
-            runBlocking { eventsRepository.getEventDetail(eventId = eventId) }
-        } ?: {
-            val event = runBlocking { eventsRepository.getEventDetail(eventId = eventId) }
-            assertEquals(expectedEvent, event)
-        }
+    @Test
+    fun readCategory() = runBlocking {
+        val categories = categoryRepository.getCategoriesList()
+        assertNotNull(categories)
+        assertNotEquals(categories, 0)
+        val randomCategory =  categories.shuffled().random()
+
+        val targetCategory = categoryRepository.readCategory(randomCategory.id)
+
+        assertEquals(randomCategory, targetCategory)
     }
 
-    companion object {
-        @JvmStatic
-        fun eventDetailUseCase() = listOf(
-            Arguments.of("963753c3-e8a7-4e74-8aa7-c39d738c9684", EventInfo(
-                state = "CREATED",
-                title = "Bug fixed",
-                description = "Good job!",
-                start = 1731346290,
-                end = 1731357060,
-                capacity = 0,
-                moderated = false,
-                createdAt = 1731346320405,
-                modifiedAt = 1731346320405,
-                id = "963753c3-e8a7-4e74-8aa7-c39d738c9684",
-                ownerID = "1e2e88d0-6618-478b-8f2f-ccc123aa261f"
-
-            ), null),
-        )
+    @Ignore("Think about creation test cases")
+    @Test
+    fun createCategory() {
     }
-
 }
