@@ -25,11 +25,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.eventify.R
+import com.example.eventify.data.models.CategoryInfo
 import com.example.eventify.data.models.EventInfo
 import com.example.eventify.presentation.models.EventFeedResult
 import com.example.eventify.presentation.models.EventFeedUiState
 import com.example.eventify.presentation.models.ShortEventItem
 import com.example.eventify.presentation.navigation.HomeRouter
+import com.example.eventify.presentation.ui.shared.CategoryCard
 import com.example.eventify.presentation.ui.shared.EventCard
 import com.example.eventify.presentation.ui.shared.HeadingText
 import com.example.eventify.presentation.viewmodels.EventsViewModel
@@ -43,9 +45,10 @@ fun EventsFeedScreen(
     viewModel: EventsViewModel = hiltViewModel()
 ) {
     EventsFeedComponent(
-        onLoadEvents = viewModel::loadEvents,
-        onRefreshEvents = viewModel::refresh,
+        onLoadData = viewModel::loadData,
+        onRefreshData = viewModel::refreshData,
         events = viewModel.events,
+        categories = viewModel.categories,
         goToEventDetail = goToEventDetail,
         eventFeedResult = viewModel.result,
         navController = navController,
@@ -56,9 +59,10 @@ fun EventsFeedScreen(
 
 @Composable
 fun EventsFeedComponent(
-    onLoadEvents: () -> Unit,
-    onRefreshEvents: () -> Unit,
+    onLoadData: () -> Unit,
+    onRefreshData: () -> Unit,
     events: List<ShortEventItem>,
+    categories: List<CategoryInfo>,
     goToEventDetail: (String) -> Unit,
     uiState: EventFeedUiState,
     eventFeedResult: EventFeedResult,
@@ -69,7 +73,7 @@ fun EventsFeedComponent(
 
     SwipeRefresh(
         state = swipeRefreshState,
-        onRefresh = onRefreshEvents
+        onRefresh = onRefreshData
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(20.dp),
@@ -94,6 +98,12 @@ fun EventsFeedComponent(
 
             HeadingText(stringResource(R.string.categories_based_on_interests))
 
+            categories.forEach { category ->
+                CategoryCard(
+                    category = category,
+                    onClick = { categoryid -> }
+                )
+            }
 
 
             HeadingText("Ивенты, которые тебе понравятся")
@@ -108,11 +118,23 @@ fun EventsFeedComponent(
 @Composable
 private fun PreviewEventsFeedScreen() {
     EventsFeedComponent(
-        events = emptyList(
-
+        events = listOf(
+            ShortEventItem(
+                id = "",
+                title = "",
+                description = "",
+                start = 312313123,
+                end = 231121243
+            )
         ),
-        onLoadEvents = {},
-        onRefreshEvents = {},
+        categories = listOf(
+            CategoryInfo(
+                id = "",
+                title = "Backend"
+            )
+        ),
+        onLoadData = {},
+        onRefreshData = {},
         goToEventDetail = {},
         navController = rememberNavController(),
         eventFeedResult = EventFeedResult.Idle,

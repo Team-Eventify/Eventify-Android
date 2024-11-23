@@ -5,7 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.eventify.data.models.CategoryInfo
 import com.example.eventify.data.models.EventInfo
+import com.example.eventify.data.repositories.category.CategoryRepository
 import com.example.eventify.data.repositories.events.EventsRepository
 import com.example.eventify.presentation.models.EventFeedResult
 import com.example.eventify.presentation.models.EventFeedUiState
@@ -18,10 +20,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EventsViewModel @Inject constructor(
-    private val eventsRepository: EventsRepository
+    private val eventsRepository: EventsRepository,
+    private val categoriesRepository: CategoryRepository
 ) : ViewModel() {
     var events by mutableStateOf(emptyList<ShortEventItem>())
         private set
+
+    var categories by mutableStateOf(emptyList<CategoryInfo>())
+        private set
+
     var result by mutableStateOf<EventFeedResult>(EventFeedResult.Idle)
         private set
 
@@ -29,10 +36,10 @@ class EventsViewModel @Inject constructor(
         private set
 
     init {
-        loadEvents()
+        loadData()
     }
 
-    suspend fun _loadEvents() {
+    private suspend fun _loadEvents() {
         val eventsResponse = eventsRepository.getEventsList()
         events = eventsResponse.map {
             ShortEventItem(
@@ -45,11 +52,17 @@ class EventsViewModel @Inject constructor(
         }
     }
 
-    fun loadEvents() {
+    private suspend fun _loadCategories() {
+        val _categories = categoriesRepository.getCategoriesList()
+        categories = _categories
+    }
+
+    fun loadData() {
         viewModelScope.launch {
             try {
                 result = EventFeedResult.Loading
                 _loadEvents()
+                _loadCategories()
                 result = EventFeedResult.Success
             } catch (e: Exception) {
                 result = EventFeedResult.Error(e.message ?: "Ошибка")
@@ -57,11 +70,12 @@ class EventsViewModel @Inject constructor(
         }
     }
 
-    fun refresh() {
+    fun refreshData() {
         viewModelScope.launch {
             try {
                 result = EventFeedResult.Refreshing
                 _loadEvents()
+                _loadCategories()
                 result = EventFeedResult.Success
             } catch (e: Exception) {
                 result = EventFeedResult.Error(e.message ?: "Ошибка")
