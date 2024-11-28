@@ -1,8 +1,11 @@
 package com.example.eventify.presentation.ui
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
@@ -16,6 +19,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.rememberNavController
 
 import com.example.eventify.presentation.navigation.RootNavGraph
@@ -34,13 +40,12 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             EventifyTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
 
+                window.navigationBarColor = MaterialTheme.colorScheme.background.toArgb()
+                window.statusBarColor = MaterialTheme.colorScheme.background.toArgb()
 
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -95,7 +100,7 @@ class MainActivity : ComponentActivity() {
 
                     }
 
-                }
+
             }
         }
     }

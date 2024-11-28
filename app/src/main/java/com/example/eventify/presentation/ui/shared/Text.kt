@@ -122,7 +122,7 @@ fun EventCardTitle(
         text = text,
         textAlign = TextAlign.Start,
         fontWeight = FontWeight.Medium,
-        fontSize = 20.sp,
+        fontSize = 17.sp,
         modifier = modifier
             .padding(0.dp, 5.dp)
     )

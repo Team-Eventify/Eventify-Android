@@ -79,7 +79,7 @@ fun EventsFeedComponent(
             verticalArrangement = Arrangement.spacedBy(20.dp),
             modifier = modifier
                 .fillMaxSize()
-                .padding(15.dp)
+                .padding(horizontal = 15.dp)
                 .verticalScroll(rememberScrollState())
         ) {
             HeadingText(stringResource(R.string.popular_events))

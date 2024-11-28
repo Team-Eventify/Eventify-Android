@@ -26,6 +26,7 @@ class AuthUserRepositoryImplTest {
     @Disabled("Not implemented")
     @Test
     fun registerUser() {
+
     }
 
     @ParameterizedTest(name = "{index} => credentials={0}, expectedException={1}")
