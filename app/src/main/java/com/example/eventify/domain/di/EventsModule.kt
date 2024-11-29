@@ -5,6 +5,7 @@ import com.example.eventify.data.remote.utils.TokenAuthenticator
 import com.example.eventify.data.remote.api.EventsAPI
 import com.example.eventify.data.repositories.events.EventRepositoryImpl
 import com.example.eventify.data.repositories.events.EventsRepository
+import com.example.eventify.data.repositories.events.MockedEventRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -40,5 +41,11 @@ object EventsModule {
     @Provides
     @Singleton
     fun provideEventsRepository(eventsAPI: EventsAPI): EventsRepository = EventRepositoryImpl(eventsAPI)
+
+
+    @MockedEventsRepository
+    @Provides
+    @Singleton
+    fun providesMockedEventsRepository(): EventsRepository = MockedEventRepositoryImpl()
 
 }

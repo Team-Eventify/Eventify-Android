@@ -7,6 +7,7 @@ desugar_jdk_libs = "2.1.3"
 gson = "2.11.0"
 hiltAndroidGradlePlugin = "2.51.1"
 hiltNavigationCompose = "1.2.0"
+javafaker = "1.0.2"
 junitJupiter = "5.8.1"
 junitJupiterEngine = "5.8.1"
 kotlin = "1.9.0"
@@ -34,6 +35,7 @@ gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroidGradlePlugin" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroidGradlePlugin" }
 hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hiltAndroidGradlePlugin" }
+javafaker = { module = "com.github.javafaker:javafaker", version.ref = "javafaker" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }

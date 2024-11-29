@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.eventify.data.repositories.events.EventsRepository
+import com.example.eventify.domain.di.MockedEventsRepository
 import com.example.eventify.domain.usecases.GetCurrentUserUseCase
 import com.example.eventify.presentation.models.ShortEventItem
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MyEventsViewModel @Inject constructor(
     val getCurrentUserUseCase: GetCurrentUserUseCase,
-    var eventsRepository: EventsRepository
+    @MockedEventsRepository eventsRepository: EventsRepository
 ): ViewModel() {
     var upComingEvents by mutableStateOf<List<ShortEventItem>>(emptyList())
         private set
@@ -74,6 +75,7 @@ class MyEventsViewModel @Inject constructor(
             )
         )
     }
+
 
     fun loadData(){
         viewModelScope.launch {

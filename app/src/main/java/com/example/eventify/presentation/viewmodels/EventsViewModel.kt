@@ -9,6 +9,7 @@ import com.example.eventify.data.models.CategoryInfo
 import com.example.eventify.data.models.EventInfo
 import com.example.eventify.data.repositories.category.CategoryRepository
 import com.example.eventify.data.repositories.events.EventsRepository
+import com.example.eventify.domain.di.MockedEventsRepository
 import com.example.eventify.presentation.models.EventFeedResult
 import com.example.eventify.presentation.models.EventFeedUiState
 import com.example.eventify.presentation.models.ShortEventItem
@@ -20,7 +21,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EventsViewModel @Inject constructor(
-    private val eventsRepository: EventsRepository,
+    @MockedEventsRepository private val eventsRepository: EventsRepository,
     private val categoriesRepository: CategoryRepository
 ) : ViewModel() {
     var events by mutableStateOf(emptyList<ShortEventItem>())

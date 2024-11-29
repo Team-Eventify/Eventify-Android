@@ -99,6 +99,8 @@ dependencies {
     coreLibraryDesugaring(libs.desugar.jdk.libs)
     implementation(libs.accompanist.swiperefresh)
 
+    // Fake data generation
+    implementation(libs.javafaker)
 }
 
 tasks.withType<Test>().configureEach {
