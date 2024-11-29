@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -29,6 +30,7 @@ import com.example.eventify.presentation.models.time
 @Composable
 fun EventCard(
     event: ShortEventItem,
+    onClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -43,7 +45,10 @@ fun EventCard(
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(10.dp))
         )
-        EventCardTitle(event.title)
+        EventCardTitle(
+            text = event.title,
+            textColor = MaterialTheme.colorScheme.onSurface
+        )
         BodyText(event.description)
         Spacer(modifier = Modifier.height(10.dp))
         FlowRow(
@@ -66,6 +71,7 @@ private fun PreviewEventCard() {
             description = "",
             start = 1324412412,
             end = 1324419999
-        )
+        ),
+        onClick = {}
     )
 }

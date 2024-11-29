@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -116,13 +115,15 @@ fun PrimaryButtonText(
 @Composable
 fun EventCardTitle(
     text: String,
+    textColor: Color = MaterialTheme.colorScheme.onPrimary,
     modifier: Modifier = Modifier
 ) {
     Text(
         text = text,
         textAlign = TextAlign.Start,
+        color = textColor,
         fontWeight = FontWeight.Medium,
-        fontSize = 17.sp,
+        fontSize = 20.sp,
         modifier = modifier
             .padding(0.dp, 5.dp)
     )

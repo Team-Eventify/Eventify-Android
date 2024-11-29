@@ -25,7 +25,7 @@ class MyEventsViewModel @Inject constructor(
         private set
 
 
-    private fun loadEvents(){
+    private suspend fun loadEvents(){
         upComingEvents = listOf(
             ShortEventItem(
                 id = "",
@@ -76,11 +76,13 @@ class MyEventsViewModel @Inject constructor(
     }
 
     fun loadData(){
-
+        viewModelScope.launch {
+            loadEvents()
+        }
     }
 
 
     init {
-        
+        loadData()
     }
 }
