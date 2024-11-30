@@ -4,6 +4,7 @@ import com.example.eventify.data.models.EventInfo
 import com.example.eventify.data.models.UserCredentials
 import com.example.eventify.data.remote.api.AuthAPI
 import com.example.eventify.data.remote.api.EventsAPI
+import com.example.eventify.data.remote.models.events.EventsFilterData
 import com.example.eventify.data.remote.utils.AccessTokenInterceptor
 import com.example.eventify.data.remote.utils.NetworkServiceFactory
 import com.example.eventify.data.remote.utils.TokenAuthenticator
@@ -56,6 +57,18 @@ class EventRepositoryImplTest {
     fun getEventsList(): Unit = runBlocking {
         val events = eventsRepository.getEventsList()
         assertNotEquals(events.size, 0)
+
+        val filterData = EventsFilterData(
+            limit = 15,
+            offset = 10
+        )
+        val targetEventsCount = minOf(events.size - filterData.offset!!, filterData.limit!!)
+
+        val filteredEvents = eventsRepository.getEventsList(filter = filterData)
+        assertNotEquals(filteredEvents.size, 0)
+        assertNotEquals(filteredEvents.size, events.size)
+        assertEquals(targetEventsCount, filteredEvents.size)
+
     }
 
     @ParameterizedTest(name = "{index} => eventId={0}, expectedEvent={1} expectedException={2}")

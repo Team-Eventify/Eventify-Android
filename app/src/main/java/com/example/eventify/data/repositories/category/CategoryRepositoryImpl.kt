@@ -2,6 +2,7 @@ package com.example.eventify.data.repositories.category
 
 import com.example.eventify.data.models.CategoryInfo
 import com.example.eventify.data.remote.api.CategoryAPI
+import com.example.eventify.data.remote.models.events.EventsFilterData
 import javax.inject.Inject
 
 class CategoryRepositoryImpl @Inject constructor(

@@ -15,7 +15,13 @@ import retrofit2.http.Query
 interface EventsAPI {
 
     @GET(".")
-    suspend fun getEventsList(@Query("offset") offset: Int? = null, @Query("limit") limit: Int? = null): Response<List<EventInfoResponse>>
+    suspend fun getEventsList(
+        @Query("offset") offset: Int? = null,
+        @Query("limit") limit: Int? = null,
+        @Query("ownerID") ownerID: String? = null,
+        @Query("start") start: Int? = null,
+        @Query("end") end: Int? = null,
+    ): Response<List<EventInfoResponse>>
 
     @GET("{id}")
     suspend fun getEvent(@Path("id") eventId: String): Response<EventInfoResponse>
