@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.eventify.data.models.UserChange
 import com.example.eventify.data.models.UserInfo
+import com.example.eventify.data.repositories.category.CategoryRepository
 import com.example.eventify.data.repositories.users.UsersRepository
 import com.example.eventify.domain.usecases.GetCurrentUserUseCase
 import com.example.eventify.domain.usecases.LogOutUseCase
@@ -22,7 +23,8 @@ import javax.inject.Inject
 class UserViewModel @Inject constructor(
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
     private val logOutUseCase: LogOutUseCase,
-    private val usersRepository: UsersRepository
+    private val usersRepository: UsersRepository,
+    private val categoriesRepository: CategoryRepository
 ): ViewModel() {
 
     var uiState by mutableStateOf(UserUiState.default())
@@ -78,13 +80,30 @@ class UserViewModel @Inject constructor(
         }
     }
 
+    private suspend fun loadCategories(){
+        val allCategories = categoriesRepository.getCategoriesList()
+        val _userCategories = usersRepository.getUserCategories(user!!.id).map { it.id }.toSet()
+
+        userCategories = allCategories.map { category ->
+            CategorySelectItem(
+                id = category.id,
+                title = category.title,
+                selected = _userCategories.contains(category.id)
+            )
+        }
+
+
+
+
+    }
+
 
     fun loadUserInfo(){
         loadUserResult = UserResult.Loading
         viewModelScope.launch {
             try {
                 user = getCurrentUserUseCase()
-                userCategories = usersRepository.getUserCategories(user!!.id).map { CategorySelectItem(id = it.id, title = it.title) }
+                loadCategories()
                 fillUserUiValues(user!!)
                 loadUserResult = UserResult.Success
             }
