@@ -18,4 +18,5 @@
     <string name="default_offline_title">Нет соединения с интернетом</string>
     <string name="default_offline_message">Офлайн доступ будет позже</string>
     <string name="organizer">Организатор</string>
+    <string name="not_implemented_screen_message">Этот экран будет позже.</string>
 </resources>

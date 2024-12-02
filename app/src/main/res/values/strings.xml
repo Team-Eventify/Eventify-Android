@@ -17,4 +17,5 @@
     <string name="default_offline_title">You are offline</string>
     <string name="default_offline_message">Offline data will be later</string>
     <string name="organizer">Organizer</string>
+    <string name="not_implemented_screen_message">This screen will be later.</string>
 </resources>

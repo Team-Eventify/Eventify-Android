@@ -11,6 +11,7 @@ import com.example.eventify.presentation.ui.events.EventDetailScreen
 import com.example.eventify.presentation.ui.events.EventsFeedScreen
 import com.example.eventify.presentation.ui.events.SearchScreen
 import com.example.eventify.presentation.ui.myevents.MyEventsScreen
+import com.example.eventify.presentation.ui.shared.NotImplementedScreen
 import com.example.eventify.presentation.viewmodels.EventsViewModel
 import com.example.eventify.presentation.viewmodels.UserViewModel
 import kotlinx.serialization.Serializable
@@ -43,7 +44,7 @@ fun HomeNavigationGraph(
             MyEventsScreen()
         }
         composable<HomeRouter.Search> {
-            SearchScreen()
+            NotImplementedScreen()
         }
     }
 }
