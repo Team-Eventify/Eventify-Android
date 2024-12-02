@@ -1,8 +1,10 @@
 package com.example.eventify.data.repositories.users
 
 import com.example.eventify.data.errors.UserNotFoundException
+import com.example.eventify.data.models.CategoryInfo
 import com.example.eventify.data.models.UserChange
 import com.example.eventify.data.models.UserInfo
+import com.example.eventify.data.remote.api.CategorySlug
 import com.example.eventify.data.remote.api.UsersAPI
 import com.example.eventify.data.remote.models.users.ChangeUserRequest
 import com.example.eventify.data.remote.models.users.toUserInfo
@@ -40,11 +42,16 @@ class UsersRepositoryImpl @Inject constructor(
         return user ?: throw Exception("Ошибка сервера.")
     }
 
-    override suspend fun getUserCategories(userId: String) {
-        TODO("Not yet implemented")
+    override suspend fun getUserCategories(userId: String): List<CategoryInfo> {
+        val response = dataSource.getUserCategories(userId = userId)
+        val categories = when (response.code()){
+            200 -> response.body()?.map { it.toCategoryInfo() }
+            else -> null
+        }
+        return categories ?: throw Exception("Ошибка сервера.")
     }
 
-    override suspend fun setUserCategories(userId: String) {
-        TODO("Not yet implemented")
+    override suspend fun setUserCategories(userId: String, categories: List<CategorySlug>) {
+        val response = dataSource.setUserCategories(userId = userId, categories = categories)
     }
 }
