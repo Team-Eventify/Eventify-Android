@@ -1,6 +1,6 @@
 package com.example.eventify.data.repositories.users
 
-import com.example.eventify.data.exceptions.EmptyResponseException
+import com.example.eventify.data.exceptions.NullableResponseException
 import com.example.eventify.data.exceptions.UnprocessedServerResponseException
 import com.example.eventify.data.exceptions.UserNotFoundException
 import com.example.eventify.data.models.CategoryInfo
@@ -32,7 +32,7 @@ class UsersRepositoryImpl @Inject constructor(
             else -> throw UnprocessedServerResponseException()
         }
 
-        return updatedUser ?: throw EmptyResponseException()
+        return updatedUser ?: throw NullableResponseException()
     }
 
     override suspend fun getUserInfo(userId: String): UserInfo {
@@ -42,7 +42,7 @@ class UsersRepositoryImpl @Inject constructor(
             404 -> throw UserNotFoundException()
             else -> throw UnprocessedServerResponseException()
         }
-        return user ?: throw EmptyResponseException()
+        return user ?: throw NullableResponseException()
     }
 
     override suspend fun getUserCategories(userId: String): List<CategoryInfo> {
@@ -52,7 +52,7 @@ class UsersRepositoryImpl @Inject constructor(
             404 -> emptyList()
             else -> throw UnprocessedServerResponseException()
         }
-        return categories ?: throw EmptyResponseException()
+        return categories ?: throw NullableResponseException()
     }
 
     override suspend fun setUserCategories(userId: String, categories: List<CategorySlug>) {

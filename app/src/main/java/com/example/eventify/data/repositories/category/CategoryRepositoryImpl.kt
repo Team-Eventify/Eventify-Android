@@ -1,7 +1,7 @@
 package com.example.eventify.data.repositories.category
 
 import com.example.eventify.data.exceptions.CategoryNotFoundException
-import com.example.eventify.data.exceptions.EmptyResponseException
+import com.example.eventify.data.exceptions.NullableResponseException
 import com.example.eventify.data.exceptions.UnprocessedServerResponseException
 import com.example.eventify.data.models.CategoryInfo
 import com.example.eventify.data.remote.api.CategoryAPI
@@ -22,7 +22,7 @@ class CategoryRepositoryImpl @Inject constructor(
             404 -> emptyList()
             else -> throw UnprocessedServerResponseException()
         }
-        return categories ?: throw EmptyResponseException()
+        return categories ?: throw NullableResponseException()
     }
 
     override suspend fun readCategory(categoryId: String): CategoryInfo {
@@ -33,7 +33,7 @@ class CategoryRepositoryImpl @Inject constructor(
             404 -> throw CategoryNotFoundException()
             else -> throw UnprocessedServerResponseException()
         }
-        return category ?: throw EmptyResponseException()
+        return category ?: throw NullableResponseException()
     }
 
     override suspend fun createCategory() {
