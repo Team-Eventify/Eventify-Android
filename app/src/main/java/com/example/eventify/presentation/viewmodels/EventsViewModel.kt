@@ -6,23 +6,20 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.eventify.data.models.CategoryInfo
-import com.example.eventify.data.models.EventInfo
-import com.example.eventify.data.repositories.category.CategoryRepository
-import com.example.eventify.data.repositories.events.EventsRepository
-import com.example.eventify.domain.di.MockedEventsRepository
+import com.example.eventify.domain.usecases.categories.GetCategoriesUseCase
+import com.example.eventify.domain.usecases.events.GetEventsUseCase
 import com.example.eventify.presentation.models.EventFeedResult
 import com.example.eventify.presentation.models.EventFeedUiState
 import com.example.eventify.presentation.models.ShortEventItem
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
 @HiltViewModel
 class EventsViewModel @Inject constructor(
-    private val eventsRepository: EventsRepository,
-    private val categoriesRepository: CategoryRepository
+    private val getEventsUseCase: GetEventsUseCase,
+    private val getCategoriesUseCase: GetCategoriesUseCase
 ) : ViewModel() {
     var events by mutableStateOf(emptyList<ShortEventItem>())
         private set
@@ -41,7 +38,7 @@ class EventsViewModel @Inject constructor(
     }
 
     private suspend fun _loadEvents() {
-        val eventsResponse = eventsRepository.getEventsList()
+        val eventsResponse = getEventsUseCase()
         events = eventsResponse.map {
             ShortEventItem(
                 id = it.id,
@@ -54,7 +51,7 @@ class EventsViewModel @Inject constructor(
     }
 
     private suspend fun _loadCategories() {
-        val _categories = categoriesRepository.getCategoriesList()
+        val _categories = getCategoriesUseCase()
         categories = _categories
     }
 
