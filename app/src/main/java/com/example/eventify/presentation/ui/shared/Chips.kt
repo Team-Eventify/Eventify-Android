@@ -32,12 +32,26 @@ import androidx.compose.ui.unit.sp
 import com.example.eventify.presentation.models.CategorySelectItem
 
 
+val CATEGORY_SELECT_COLORS = listOf(
+    Color(0xFFFFB3A7),
+    Color(0xFFA3C7FF),
+    Color(0xFFA3D5FF),
+    Color(0xFFFFCCE7),
+    Color(0xFFFFF4A3),
+    Color(0xFFC6A4E7),
+    Color(0xFFFFD8B1),
+    Color(0xFFD3E4C4),
+    Color(0xFFFFCEF3),
+    Color(0xFFC6A4E7),
+    Color(0xFFFFE4B3),
+    Color(0xFFFFF7E1)
+)
 
 @Composable
 fun CategorySelectChip(
     category: CategorySelectItem,
     onSelect: (String) -> Unit,
-    selectedColor: Color = Color.Red
+    selectedColor: Color? = null
 ) {
     FilterChip(
         onClick = {
@@ -51,7 +65,7 @@ fun CategorySelectChip(
         selected = category.selected,
         leadingIcon = null,
         colors = FilterChipDefaults.filterChipColors(
-            selectedContainerColor = selectedColor
+            selectedContainerColor = selectedColor ?: CATEGORY_SELECT_COLORS.random()
         )
     )
 }

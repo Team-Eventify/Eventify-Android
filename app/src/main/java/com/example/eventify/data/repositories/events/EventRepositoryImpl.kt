@@ -1,5 +1,8 @@
 package com.example.eventify.data.repositories.events
 
+import com.example.eventify.data.exceptions.EmptyResponseException
+import com.example.eventify.data.exceptions.EventNotFoundException
+import com.example.eventify.data.exceptions.UnprocessedServerResponseException
 import com.example.eventify.data.models.EventInfo
 import com.example.eventify.data.remote.api.EventsAPI
 import com.example.eventify.data.remote.models.events.EventsFilterData
@@ -22,9 +25,10 @@ class EventRepositoryImpl @Inject constructor(
             200 -> response.body()?.let { eventsList ->
                 eventsList.map { event -> event.toEventInfo() }
             }
-            else -> null
+            404 -> emptyList()
+            else -> throw UnprocessedServerResponseException()
         }
-        return events ?: throw Exception("Ошибка сервера.")
+        return events ?: throw EmptyResponseException()
     }
 
     override suspend fun getEventDetail(eventId: String): EventInfo {
@@ -32,8 +36,9 @@ class EventRepositoryImpl @Inject constructor(
 
         val event = when (response.code()) {
             200 -> response.body()?.toEventInfo()
-            else -> null
+            404 -> throw EventNotFoundException()
+            else -> throw UnprocessedServerResponseException()
         }
-        return event ?: throw Exception("Ошибка сервера.")
+        return event ?: throw EmptyResponseException("Ошибка сервера.")
     }
 }

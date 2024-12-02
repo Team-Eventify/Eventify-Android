@@ -91,7 +91,7 @@ fun ProfileEditScreenComponent(
         if (loadUserResult is UserResult.Error){
             SnackbarController.sendEvent(
                 event = SnackbarEvent(
-                    message = "Не удалось получить данные профиля."
+                    message = loadUserResult.message
                 )
             )
         }

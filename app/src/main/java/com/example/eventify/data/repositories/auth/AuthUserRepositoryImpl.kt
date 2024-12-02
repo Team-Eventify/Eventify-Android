@@ -1,6 +1,6 @@
 package com.example.eventify.data.repositories.auth
 
-import com.example.eventify.data.errors.UserNotFoundException
+import com.example.eventify.data.exceptions.UserNotFoundException
 import com.example.eventify.data.models.TokenData
 import com.example.eventify.data.models.UserCreate
 import com.example.eventify.data.models.UserCredentials

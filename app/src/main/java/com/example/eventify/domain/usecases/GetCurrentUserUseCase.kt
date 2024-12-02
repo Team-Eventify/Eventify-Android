@@ -1,6 +1,6 @@
 package com.example.eventify.domain.usecases
 
-import com.example.eventify.data.errors.NotAuthenticated
+import com.example.eventify.data.exceptions.NotAuthenticated
 import com.example.eventify.data.models.UserInfo
 import com.example.eventify.data.repositories.tokens.TokenManager
 import com.example.eventify.data.repositories.users.UsersRepository

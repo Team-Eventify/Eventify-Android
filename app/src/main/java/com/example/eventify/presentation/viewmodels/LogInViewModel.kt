@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.eventify.data.errors.UserNotFoundException
+import com.example.eventify.data.exceptions.UserNotFoundException
 import com.example.eventify.data.models.UserCredentials
 import com.example.eventify.domain.usecases.LoginUseCase
 import com.example.eventify.presentation.models.LogInUiState

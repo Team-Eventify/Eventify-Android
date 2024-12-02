@@ -1,6 +1,8 @@
 package com.example.eventify.data.repositories.users
 
-import com.example.eventify.data.errors.UserNotFoundException
+import com.example.eventify.data.exceptions.EmptyResponseException
+import com.example.eventify.data.exceptions.UnprocessedServerResponseException
+import com.example.eventify.data.exceptions.UserNotFoundException
 import com.example.eventify.data.models.CategoryInfo
 import com.example.eventify.data.models.UserChange
 import com.example.eventify.data.models.UserInfo
@@ -26,10 +28,11 @@ class UsersRepositoryImpl @Inject constructor(
 
         val updatedUser = when (response.code()){
             200 -> response.body()?.toUserInfo()
-            else -> null
+            404 -> throw UserNotFoundException()
+            else -> throw UnprocessedServerResponseException()
         }
 
-        return updatedUser ?: throw Exception("Ошибка сервера.")
+        return updatedUser ?: throw EmptyResponseException()
     }
 
     override suspend fun getUserInfo(userId: String): UserInfo {
@@ -37,18 +40,19 @@ class UsersRepositoryImpl @Inject constructor(
         val user = when (response.code()){
             200 -> response.body()?.toUserInfo()
             404 -> throw UserNotFoundException()
-            else -> null
+            else -> throw UnprocessedServerResponseException()
         }
-        return user ?: throw Exception("Ошибка сервера.")
+        return user ?: throw EmptyResponseException()
     }
 
     override suspend fun getUserCategories(userId: String): List<CategoryInfo> {
         val response = dataSource.getUserCategories(userId = userId)
         val categories = when (response.code()){
             200 -> response.body()?.map { it.toCategoryInfo() }
-            else -> null
+            404 -> emptyList()
+            else -> throw UnprocessedServerResponseException()
         }
-        return categories ?: throw Exception("Ошибка сервера.")
+        return categories ?: throw EmptyResponseException()
     }
 
     override suspend fun setUserCategories(userId: String, categories: List<CategorySlug>) {

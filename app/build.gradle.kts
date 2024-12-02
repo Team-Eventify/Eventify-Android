@@ -32,6 +32,9 @@ android {
                 "proguard-rules.pro"
             )
         }
+        debug {
+
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -71,7 +74,7 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")  // Update to the latest version for Kotlin 2.0.x
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
 
 
     //Navigation
@@ -101,6 +104,9 @@ dependencies {
 
     // Fake data generation
     implementation(libs.javafaker)
+
+    // Logging
+    implementation(libs.timber)
 }
 
 tasks.withType<Test>().configureEach {

@@ -1,8 +1,10 @@
 package com.example.eventify.data.repositories.category
 
+import com.example.eventify.data.exceptions.CategoryNotFoundException
+import com.example.eventify.data.exceptions.EmptyResponseException
+import com.example.eventify.data.exceptions.UnprocessedServerResponseException
 import com.example.eventify.data.models.CategoryInfo
 import com.example.eventify.data.remote.api.CategoryAPI
-import com.example.eventify.data.remote.models.events.EventsFilterData
 import javax.inject.Inject
 
 class CategoryRepositoryImpl @Inject constructor(
@@ -17,9 +19,10 @@ class CategoryRepositoryImpl @Inject constructor(
                     category.toCategoryInfo()
                 }
             }
-            else -> throw Exception("Ошибка сервера")
+            404 -> emptyList()
+            else -> throw UnprocessedServerResponseException()
         }
-        return categories ?: throw Exception("Ошибка")
+        return categories ?: throw EmptyResponseException()
     }
 
     override suspend fun readCategory(categoryId: String): CategoryInfo {
@@ -27,9 +30,10 @@ class CategoryRepositoryImpl @Inject constructor(
 
         val category = when (response.code()){
             200 -> response.body()?.toCategoryInfo()
-            else -> throw Exception("Ошибка сервера: code=${response.code()} message=${response.message()}")
+            404 -> throw CategoryNotFoundException()
+            else -> throw UnprocessedServerResponseException()
         }
-        return category ?: throw Exception("Ошибка сервера.")
+        return category ?: throw EmptyResponseException()
     }
 
     override suspend fun createCategory() {
