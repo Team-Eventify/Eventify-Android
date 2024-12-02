@@ -10,6 +10,7 @@ import androidx.navigation.toRoute
 import com.example.eventify.data.models.EventInfo
 import com.example.eventify.data.repositories.events.EventsRepository
 import com.example.eventify.domain.di.MockedEventsRepository
+import com.example.eventify.domain.usecases.events.GetEventDetailUseCase
 import com.example.eventify.presentation.navigation.HomeRouter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -18,11 +19,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EventDetailViewmodel @Inject constructor(
-    private val savedStateHandle: SavedStateHandle,
-    private val eventsRepository: EventsRepository
+    savedStateHandle: SavedStateHandle,
+    private val getEventDetailUseCase: GetEventDetailUseCase
 ): ViewModel() {
-    val eventDetail = savedStateHandle.toRoute<HomeRouter.EventDetail>()
-    val eventId = eventDetail.eventId
+    private val eventId = savedStateHandle.toRoute<HomeRouter.EventDetail>().eventId
 
     var event by mutableStateOf<EventInfo?>(null)
 
@@ -32,7 +32,7 @@ class EventDetailViewmodel @Inject constructor(
 
     fun loadEvent(){
         viewModelScope.launch {
-            event = eventsRepository.getEventDetail(eventId)
+            event = getEventDetailUseCase(eventId)
         }
     }
 }
