@@ -29,21 +29,26 @@ import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.eventify.presentation.models.CategorySelectItem
 
-@OptIn(ExperimentalMaterial3Api::class)
+
+
 @Composable
 fun CategorySelectChip(
-    text: String,
+    category: CategorySelectItem,
+    onSelect: (String) -> Unit,
     selectedColor: Color = Color.Red
 ) {
-    var selected by remember { mutableStateOf(false) }
-
     FilterChip(
-        onClick = { selected = !selected },
-        label = {
-            Text(text = text)
+        onClick = {
+            onSelect(
+                category.id
+            )
         },
-        selected = selected,
+        label = {
+            Text(text = category.title)
+        },
+        selected = category.selected,
         leadingIcon = null,
         colors = FilterChipDefaults.filterChipColors(
             selectedContainerColor = selectedColor
@@ -157,7 +162,12 @@ fun FinishedEventInfoChip(
 @Composable
 private fun PreviewCategorySelectChip() {
     CategorySelectChip(
-        text = "Category"
+        CategorySelectItem(
+            id = "",
+            title = "Backend",
+            selected = false
+        ),
+        {_->}
     )
 }
 

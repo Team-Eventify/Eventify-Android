@@ -14,7 +14,7 @@ fun CreateEventScreen(
     Column {
         SubHeadingText(text = "Категории")
 
-        CategorySelector()
+//        CategorySelector()
     }
 }
 

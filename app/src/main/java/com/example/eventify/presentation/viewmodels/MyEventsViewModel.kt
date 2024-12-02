@@ -17,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MyEventsViewModel @Inject constructor(
     val getCurrentUserUseCase: GetCurrentUserUseCase,
-    @MockedEventsRepository eventsRepository: EventsRepository
+    val eventsRepository: EventsRepository
 ): ViewModel() {
     var upComingEvents by mutableStateOf<List<ShortEventItem>>(emptyList())
         private set

@@ -19,7 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class EventDetailViewmodel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    @MockedEventsRepository private val eventsRepository: EventsRepository
+    private val eventsRepository: EventsRepository
 ): ViewModel() {
     val eventDetail = savedStateHandle.toRoute<HomeRouter.EventDetail>()
     val eventId = eventDetail.eventId

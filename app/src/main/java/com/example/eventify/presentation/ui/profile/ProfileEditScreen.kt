@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.eventify.data.models.UserInfo
+import com.example.eventify.presentation.models.CategorySelectItem
 import com.example.eventify.presentation.models.UserResult
 import com.example.eventify.presentation.models.UserUiState
 import com.example.eventify.presentation.ui.SnackbarController
@@ -59,6 +60,8 @@ fun ProfileEditScreen(
         onChangeEmail = viewModel::changeEmail,
         onChangeTelegram = viewModel::changeTelegram,
         onLoadCurrentUser = viewModel::loadUserInfo,
+        categories = viewModel.userCategories,
+        onCategoryClick = viewModel::toggleCategorySelection
     )
 }
 
@@ -76,6 +79,8 @@ fun ProfileEditScreenComponent(
     onChangeEmail: (String) -> Unit,
     onChangeTelegram: (String) -> Unit,
     onLoadCurrentUser: () -> Unit,
+    categories: List<CategorySelectItem>,
+    onCategoryClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LaunchedEffect(true) {
@@ -165,7 +170,10 @@ fun ProfileEditScreenComponent(
         SubHeadingText(text = "Мои категории")
         AnnotationText(text = "Выбирай категории ивентов под свои интересы!")
 
-        CategorySelector()
+        CategorySelector(
+            categories = categories,
+            onClickCategory = onCategoryClick
+        )
 
         PrimaryButton(onClick = onChangeUser ) {
             PrimaryButtonText(text = "Сохранить изменения")
@@ -203,5 +211,34 @@ private fun PreviewProfileEditScreen() {
         onChangeTelegram = {},
         onChangeUser = {},
         onLoadCurrentUser = {},
+        categories = listOf(
+            CategorySelectItem(
+                id = "",
+                title = "Backend",
+                selected = true
+            ),
+            CategorySelectItem(
+                id = "",
+                title = "Frontend",
+                selected = false
+            ),
+            CategorySelectItem(
+                id = "",
+                title = "Сопрт",
+                selected = false
+            ),
+            CategorySelectItem(
+                id = "",
+                title = "Наука",
+                selected = false
+            ),
+            CategorySelectItem(
+                id = "",
+                title = "Game Dev",
+                selected = true
+            ),
+
+            ),
+        onCategoryClick = {}
     )
 }

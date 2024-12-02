@@ -10,6 +10,7 @@ import com.example.eventify.data.models.UserInfo
 import com.example.eventify.data.repositories.users.UsersRepository
 import com.example.eventify.domain.usecases.GetCurrentUserUseCase
 import com.example.eventify.domain.usecases.LogOutUseCase
+import com.example.eventify.presentation.models.CategorySelectItem
 import com.example.eventify.presentation.models.UserResult
 import com.example.eventify.presentation.models.UserUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,9 +20,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UserViewModel @Inject constructor(
-    val getCurrentUserUseCase: GetCurrentUserUseCase,
-    val logOutUseCase: LogOutUseCase,
-    val usersRepository: UsersRepository
+    private val getCurrentUserUseCase: GetCurrentUserUseCase,
+    private val logOutUseCase: LogOutUseCase,
+    private val usersRepository: UsersRepository
 ): ViewModel() {
 
     var uiState by mutableStateOf(UserUiState.default())
@@ -31,6 +32,9 @@ class UserViewModel @Inject constructor(
     var loadUserResult by mutableStateOf<UserResult>(UserResult.Idle)
 
     var user by mutableStateOf<UserInfo?>(null)
+        private set
+
+    var userCategories by mutableStateOf<List<CategorySelectItem>>(emptyList())
         private set
 
 
@@ -64,12 +68,23 @@ class UserViewModel @Inject constructor(
         )
     }
 
+    fun toggleCategorySelection(categoryId: String) {
+        userCategories = userCategories.map { category ->
+            if (category.id == categoryId) {
+                category.copy(selected = !category.selected)
+            } else {
+                category
+            }
+        }
+    }
+
 
     fun loadUserInfo(){
         loadUserResult = UserResult.Loading
         viewModelScope.launch {
             try {
                 user = getCurrentUserUseCase()
+                userCategories = usersRepository.getUserCategories(user!!.id).map { CategorySelectItem(id = it.id, title = it.title) }
                 fillUserUiValues(user!!)
                 loadUserResult = UserResult.Success
             }
@@ -93,6 +108,10 @@ class UserViewModel @Inject constructor(
                 usersRepository.changeUser(
                     userId = user!!.id,
                     user = userData
+                )
+                usersRepository.setUserCategories(
+                    userId = user!!.id,
+                    categories = userCategories.filter { it.selected }.map { it.id }
                 )
                 UserResult.Success
             } catch (e: Exception){

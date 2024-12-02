@@ -46,7 +46,7 @@ fun CategorySelectScreen(
             Spacer(modifier = modifier.height(10.dp))
             BodyText(text = "Мы подберём рекомендации ивентов под твои вкусы.")
             Spacer(modifier = modifier.height(30.dp))
-            CategorySelector()
+//            CategorySelector()
 
         }
         Column {

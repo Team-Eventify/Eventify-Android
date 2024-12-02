@@ -21,7 +21,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EventsViewModel @Inject constructor(
-    @MockedEventsRepository private val eventsRepository: EventsRepository,
+    private val eventsRepository: EventsRepository,
     private val categoriesRepository: CategoryRepository
 ) : ViewModel() {
     var events by mutableStateOf(emptyList<ShortEventItem>())
