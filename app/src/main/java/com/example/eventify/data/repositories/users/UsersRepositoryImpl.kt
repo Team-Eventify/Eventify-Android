@@ -1,5 +1,7 @@
 package com.example.eventify.data.repositories.users
 
+import com.example.eventify.data.exceptions.AccessDeniedException
+import com.example.eventify.data.exceptions.CategoryNotFoundException
 import com.example.eventify.data.exceptions.NullableResponseException
 import com.example.eventify.data.exceptions.UnprocessedServerResponseException
 import com.example.eventify.data.exceptions.UserNotFoundException
@@ -55,7 +57,11 @@ class UsersRepositoryImpl @Inject constructor(
         return categories ?: throw NullableResponseException()
     }
 
-    override suspend fun setUserCategories(userId: String, categories: List<CategorySlug>) {
+    override suspend fun setUserCategories(userId: String, categories: List<CategorySlug>): Unit {
         val response = dataSource.setUserCategories(userId = userId, categories = categories)
+        when (response.code()) {
+            404 -> throw CategoryNotFoundException()
+            403 -> throw AccessDeniedException()
+        }
     }
 }
