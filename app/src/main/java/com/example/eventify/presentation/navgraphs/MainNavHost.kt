@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.eventify.presentation.ui.eventdetail.EventDetailRoute
 import com.example.eventify.presentation.ui.events.EventDetailScreen
 import kotlinx.serialization.Serializable
 
@@ -22,7 +23,7 @@ fun MainNavHost(
         SettingsNavGraph(navController = navController)
         
         composable<RootRouter.EventDetailRoute>{
-            EventDetailScreen(navController = navController)
+            EventDetailRoute(navController = navController)
         }
     }
 }
