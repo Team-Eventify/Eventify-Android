@@ -10,6 +10,8 @@ import androidx.navigation.compose.composable
 import com.example.eventify.presentation.ui.events.EventDetailScreen
 import com.example.eventify.presentation.ui.events.EventsFeedScreen
 import com.example.eventify.presentation.ui.events.SearchScreen
+import com.example.eventify.presentation.ui.eventsfeed.EventsFeedRoute
+import com.example.eventify.presentation.ui.eventsfeed.rememberEventsFeedCoordinator
 import com.example.eventify.presentation.ui.myevents.MyEventsScreen
 import com.example.eventify.presentation.ui.shared.NotImplementedScreen
 import com.example.eventify.presentation.viewmodels.EventsViewModel
@@ -23,6 +25,8 @@ fun HomeNavigationGraph(
 ) {
     val eventsViewModel = hiltViewModel<EventsViewModel>()
     val userViewModel = hiltViewModel<UserViewModel>()
+    val eventsFeedCoordinator = rememberEventsFeedCoordinator(navController)
+
 
     NavHost(
         navController = navController,
@@ -32,13 +36,7 @@ fun HomeNavigationGraph(
     ){
         profileNavigationGraph(navController, userViewModel, rootNavController = rootNavController)
         composable<HomeRouter.EventFeed> {
-            EventsFeedScreen(
-                navController = navController,
-                viewModel = eventsViewModel,
-                goToEventDetail = { eventId ->
-                    rootNavController.navigate(RootRouter.EventDetail(eventId))
-                }
-            )
+            EventsFeedRoute(navController = navController, coordinator = eventsFeedCoordinator)
         }
         composable<HomeRouter.SelfEvents> {
             MyEventsScreen()
