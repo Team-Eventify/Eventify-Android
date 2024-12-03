@@ -49,7 +49,7 @@ fun EventCard(
             text = event.title,
             textColor = MaterialTheme.colorScheme.onSurface
         )
-        BodyText(event.description)
+        BodyText(event.description, maxlines = 7)
         Spacer(modifier = Modifier.height(10.dp))
         FlowRow(
             horizontalArrangement = Arrangement.spacedBy(10.dp)
