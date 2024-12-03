@@ -3,6 +3,8 @@ package com.example.eventify.presentation.navgraphs
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import com.example.eventify.presentation.ui.events.EventDetailScreen
 import kotlinx.serialization.Serializable
 
 
@@ -17,6 +19,11 @@ fun MainNavHost(
     ){
         HomeNavGraph(navController = navController)
         AuthNavGraph(navController = navController)
+        SettingsNavGraph(navController = navController)
+        
+        composable<RootRouter.EventDetailRoute>{
+            EventDetailScreen(navController = navController)
+        }
     }
 }
 
@@ -26,4 +33,10 @@ sealed class RootRouter{
 
     @Serializable
     data object AuthRoute : RootRouter()
+    
+    @Serializable
+    data class EventDetailRoute(val eventId: String) : RootRouter()
+
+    @Serializable
+    data object SettingsRoute : RootRouter()
 }
