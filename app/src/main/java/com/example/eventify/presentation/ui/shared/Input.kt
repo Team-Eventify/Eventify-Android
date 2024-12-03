@@ -35,12 +35,13 @@ fun TextInput(
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     onValueChange: (String) -> Unit,
     isError: Boolean = false,
-
+    supportingText: @Composable (() -> Unit)? = null
 ) {
 
     OutlinedTextField(
         value = text,
         isError = isError,
+        supportingText = supportingText,
         label = label?.let { { Text(it) } },
         onValueChange = onValueChange,
         placeholder = {Text(placeholder ?: "", fontSize = 17.sp, fontWeight = FontWeight.Normal)},
@@ -60,7 +61,7 @@ fun PasswordInput(
     modifier: Modifier = Modifier,
     onValueChange: (String) -> Unit,
     isError: Boolean = false,
-    errorMessage: String? = null
+    supportingText: @Composable (() -> Unit)? = null
 ) {
     var passwordVisibility by remember { mutableStateOf(false) }
 
@@ -72,6 +73,7 @@ fun PasswordInput(
     OutlinedTextField(
         value = text,
         isError = isError,
+        supportingText = supportingText,
         label = label?.let { { Text(it) } },
         onValueChange = onValueChange,
         placeholder = {Text(placeholder ?: "", fontSize = 17.sp, fontWeight = FontWeight.Normal)},

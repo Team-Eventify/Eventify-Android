@@ -1,4 +1,4 @@
-package com.example.eventify.presentation.ui.login
+package com.example.eventify.presentation.ui.templogin
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement

@@ -155,26 +155,12 @@ fun SubHeadingText(
     )
 }
 
-//
-//@Composable
-//fun ShortenedBodyText(
-//    text: String,
-//    textState: Boolean,
-//    maxLines: Int = 10,
-//    rememberOverflow: State<Boole>,
-//    modifier: Modifier = Modifier
-//) {
-//    Text(
-//        text = text,
-//        fontSize = 17.sp,
-//        fontWeight = FontWeight.Normal,
-//        lineHeight = 20.sp,
-//        maxLines = if (textState) maxLines else Int.MAX_VALUE,
-//        overflow = if (textState) TextOverflow.Ellipsis else TextOverflow.Clip,
-//        onTextLayout = { textLayoutResult ->
-//            rememberOverflow = textLayoutResult.hasVisualOverflow
-//        },
-//        modifier = modifier
-//            .animateContentSize()
-//    )
-//}
+@Composable
+fun ErrorInputText(
+    text: String
+) {
+    Text(
+        text = text,
+        color = MaterialTheme.colorScheme.error
+    )
+}

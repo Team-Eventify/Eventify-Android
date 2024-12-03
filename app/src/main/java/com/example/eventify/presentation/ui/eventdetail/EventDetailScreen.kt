@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.eventify.R
 import com.example.eventify.data.models.EventInfo
-import com.example.eventify.presentation.ui.events.ImagePager
+import com.example.eventify.presentation.ui.eventdetail.components.ImagePager
 import com.example.eventify.presentation.ui.shared.BodyText
 import com.example.eventify.presentation.ui.shared.ChipInfo
 import com.example.eventify.presentation.ui.shared.PrimaryButton

@@ -4,8 +4,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.example.eventify.presentation.ui.login.LogInScreen
-import com.example.eventify.presentation.ui.login.RegisterScreen
+import com.example.eventify.presentation.ui.login.LogInRoute
+import com.example.eventify.presentation.ui.templogin.RegisterScreen
 import kotlinx.serialization.Serializable
 
 fun NavGraphBuilder.AuthNavGraph(
@@ -16,7 +16,7 @@ fun NavGraphBuilder.AuthNavGraph(
         startDestination = startDestination
     ){
         composable<AuthRouter.LogInRoute> {
-            LogInScreen(navController = navController)
+            LogInRoute(navController = navController)
         }
         composable<AuthRouter.RegisterRoute> {
             RegisterScreen(navController = navController)
