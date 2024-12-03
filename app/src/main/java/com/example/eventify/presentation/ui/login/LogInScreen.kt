@@ -24,10 +24,10 @@ import androidx.navigation.compose.rememberNavController
 import com.example.eventify.R
 import com.example.eventify.presentation.models.LogInUiState
 import com.example.eventify.presentation.models.LoginResult
+import com.example.eventify.presentation.navgraphs.AuthRouter
+import com.example.eventify.presentation.navgraphs.RootRouter
 import com.example.eventify.presentation.ui.SnackbarController
 import com.example.eventify.presentation.ui.SnackbarEvent
-import com.example.eventify.presentation.navigation.AuthRouter
-import com.example.eventify.presentation.navigation.RootRouter
 import com.example.eventify.presentation.ui.shared.ActionPrimaryText
 import com.example.eventify.presentation.ui.shared.ActionText
 import com.example.eventify.presentation.ui.shared.BodyText
@@ -51,7 +51,7 @@ fun LogInScreenComponent(
     LaunchedEffect(loginResult) {
         when (loginResult){
             is LoginResult.Success -> {
-                navController.navigate(RootRouter.Home)
+                navController.navigate(RootRouter.HomeRoute)
             }
             is LoginResult.Error -> {
                 SnackbarController.sendEvent(
@@ -120,7 +120,7 @@ fun LogInScreenComponent(
             ActionPrimaryText(
                 text = stringResource(R.string.register_action),
                 onClick = {
-                    navController.navigate(AuthRouter.Register)
+                    navController.navigate(AuthRouter.RegisterRoute)
                 }
             )
         }

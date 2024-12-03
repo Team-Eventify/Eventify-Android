@@ -1,11 +1,8 @@
 package com.example.eventify.presentation.ui
 
-import android.app.Activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
@@ -19,13 +16,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalContext
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-
-import com.example.eventify.presentation.navigation.RootNavGraph
-import com.example.eventify.presentation.navigation.RootRouter
+import com.example.eventify.presentation.navgraphs.HomeRouter
+import com.example.eventify.presentation.navgraphs.MainNavHost
+import com.example.eventify.presentation.navgraphs.RootRouter
+import com.example.eventify.presentation.ui.shared.BottomNavigationBar
 import com.example.eventify.presentation.ui.shared.OfflineComponent
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 import com.example.eventify.presentation.viewmodels.SessionViewModel
@@ -56,6 +53,8 @@ class MainActivity : ComponentActivity() {
                     val snackbarHostState = remember { SnackbarHostState() }
                     val scope = rememberCoroutineScope()
 
+                    val navController = rememberNavController()
+
                     ObserveAsState(
                         flow = SnackbarController.events,
                         snackbarHostState
@@ -77,12 +76,22 @@ class MainActivity : ComponentActivity() {
                     Scaffold(
                         snackbarHost = {
                             SnackbarHost(hostState = snackbarHostState)
+                        },
+                        bottomBar = {
+                            val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
+                            val homeRoutes = HomeRouter::class.sealedSubclasses.mapNotNull { it.objectInstance }
+                            val isHomeRoute = homeRoutes.any {
+                                it::class.java.canonicalName == currentRoute
+                            }
+                            if (isHomeRoute){
+                                BottomNavigationBar(navController = navController)
+                            }
                         }
                     ) { innerPadding ->
 
-                        RootNavGraph(
-                            startDestination = if (sessionViewModel.isLoggedIn) RootRouter.Home else RootRouter.Auth,
-                            navController = rememberNavController()
+                        MainNavHost(
+                            navController = navController,
+                            startDestination = RootRouter.AuthRoute
                         )
                     }
 
@@ -98,10 +107,9 @@ class MainActivity : ComponentActivity() {
                         OfflineComponent()
                     }
 
-                    }
-
-
+                }
             }
         }
     }
 }
+

@@ -107,6 +107,7 @@ dependencies {
 
     // Logging
     implementation(libs.timber)
+    implementation(kotlin("reflect"))
 }
 
 tasks.withType<Test>().configureEach {

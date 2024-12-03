@@ -23,10 +23,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.eventify.presentation.models.RegisterResult
 import com.example.eventify.presentation.models.RegisterUiState
+import com.example.eventify.presentation.navgraphs.AuthRouter
+import com.example.eventify.presentation.navgraphs.RootRouter
 import com.example.eventify.presentation.ui.SnackbarController
 import com.example.eventify.presentation.ui.SnackbarEvent
-import com.example.eventify.presentation.navigation.AuthRouter
-import com.example.eventify.presentation.navigation.RootRouter
 import com.example.eventify.presentation.ui.shared.ActionPrimaryText
 import com.example.eventify.presentation.ui.shared.BodyText
 import com.example.eventify.presentation.ui.shared.PasswordInput
@@ -67,7 +67,7 @@ fun RegisterScreenComponent(
     LaunchedEffect(registerResult) {
         when (registerResult) {
             is RegisterResult.Success -> {
-                navController.navigate(RootRouter.Home)
+                navController.navigate(RootRouter.HomeRoute)
             }
             is RegisterResult.Error -> {
                 SnackbarController.sendEvent(
@@ -126,7 +126,7 @@ fun RegisterScreenComponent(
             ActionPrimaryText(
                 text = "Войти",
                 onClick = {
-                    navController.navigate(AuthRouter.LogIn)
+                    navController.navigate(AuthRouter.LogInRoute)
                 }
             )
         }

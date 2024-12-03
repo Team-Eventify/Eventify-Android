@@ -27,7 +27,7 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.eventify.R
-import com.example.eventify.presentation.navigation.HomeRouter
+import com.example.eventify.presentation.navgraphs.HomeRouter
 
 
 data class BottomNavigationBarItem<T: HomeRouter>(
@@ -108,9 +108,7 @@ fun <T: HomeRouter> RowScope.AddItem(
             disabledTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
             unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant
         ),
-//        selected = currentDestination?.hierarchy?.any {
-//            it.route?.endsWith(item.route.toString()) ?: false
-//        } == true,
+
         selected = currentDestination?.hierarchy?.any {
             it.route == item.route::class.qualifiedName
         } == true,

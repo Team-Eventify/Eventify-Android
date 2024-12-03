@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.eventify.presentation.navigation.RootRouter
 
 /**
  * Screen's coordinator which is responsible for handling actions from the UI layer
@@ -16,7 +15,8 @@ class EventsFeedCoordinator(
 ) {
     val screenStateFlow = viewModel.stateFlow
 
-    fun navigateToEventDetail(eventId: String) = navController.navigate(RootRouter.EventDetail(eventId))
+//    fun navigateToEventDetail(eventId: String) = navController.navigate(RootRouter(eventId))
+    fun navigateToEventDetail(eventId: String) = {}
 
 }
 
