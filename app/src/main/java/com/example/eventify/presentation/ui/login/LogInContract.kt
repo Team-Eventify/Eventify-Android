@@ -10,9 +10,11 @@ import androidx.compose.runtime.staticCompositionLocalOf
  **/
 data class LogInState(
     val login: String,
+    val hasLoginError: Boolean = false,
     val loginError: String?,
 
     val password: String,
+    val hasPasswordError: Boolean = false,
     val passwordError: String?,
 
 ){

@@ -59,7 +59,7 @@ fun LogInScreen(
             text = state.login,
             label = "Email",
             placeholder = "ivanov@gmail.com",
-            isError = state.loginError != null,
+            isError = state.loginError != null || state.hasLoginError,
             onValueChange = actions.onChangeLogin,
             supportingText = {
                 state.loginError?.let { ErrorInputText(text = it) }
@@ -70,7 +70,7 @@ fun LogInScreen(
             text = state.password,
             label = "Password",
             placeholder = "mypassword",
-            isError = state.passwordError != null,
+            isError = state.passwordError != null || state.hasPasswordError,
             onValueChange = actions.onChangePassword,
             supportingText = {
                 state.passwordError?.let { ErrorInputText(text = it) }

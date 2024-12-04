@@ -44,34 +44,47 @@ class LogInViewModel @Inject constructor(
     }
 
     fun logIn(){
-        viewModelScope.launch {
-            try {
-                logInUser()
-            } catch (e: UserNotFoundException){
+        if (!validateFormData()) return
 
-            }
-        }
-    }
-
-    private fun validateFormData(): Boolean{
-        return _stateFlow.value.run { isValidLogin && isValidPassword  }
-    }
-
-    private suspend fun logInUser(){
         val userCredentials = stateFlow.value.run {
             UserCredentials(
                 login = login,
                 password = password
             )
         }
-        try {
-            loginUseCase(credentials = userCredentials)
-        } catch (e: Exception){
-            // TODO write handlers
-            return
-        }
+        logInUser(credentials = userCredentials)
+    }
 
-        navigator.navigate(RootRouter.HomeRoute)
+    private fun logInUser(credentials: UserCredentials){
+        viewModelScope.launch {
+            runCatching {
+                loginUseCase(credentials = credentials)
+            }.onSuccess {
+                navigator.navigate(RootRouter.HomeRoute)
+            }.onFailure { exception ->
+                handleErrors(exception)
+            }
+        }
+    }
+
+    private fun handleErrors(exception: Throwable){
+        // TODO handle detail errors
+        _stateFlow.update { currentState ->
+            when (exception){
+                is UserNotFoundException -> currentState.copy(
+                    hasLoginError = true,
+                    hasPasswordError = true
+                )
+                else -> currentState.copy(
+                    hasLoginError = true,
+                    hasPasswordError = true
+                )
+            }
+        }
+    }
+
+    private fun validateFormData(): Boolean{
+        return _stateFlow.value.run { isValidLogin && isValidPassword  }
     }
 
     fun navigateToRegister(){
