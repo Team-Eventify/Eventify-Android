@@ -5,7 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.eventify.presentation.ui.eventsfeed.EventsFeedRoute
-import com.example.eventify.presentation.ui.myevents.MyEventsScreen
+import com.example.eventify.presentation.ui.myevents.MyEventsRoute
 import com.example.eventify.presentation.ui.profile.ProfileScreen
 import com.example.eventify.presentation.ui.shared.NotImplementedScreen
 import kotlinx.serialization.Serializable
@@ -27,7 +27,7 @@ fun NavGraphBuilder.HomeNavGraph(
             NotImplementedScreen()
         }
         composable<HomeRouter.SelfEvents> {
-            MyEventsScreen()
+            MyEventsRoute()
         }
     }
 }
