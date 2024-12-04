@@ -11,25 +11,22 @@ import com.example.eventify.presentation.navigation.navgraphs.AuthRouter
  * and one-shot actions based on the new UI state
  */
 class LogInCoordinator(
-    val navController: NavHostController,
     val viewModel: LogInViewModel
 ) {
     val screenStateFlow = viewModel.stateFlow
 
     fun navigateToRegister(){
-        navController.navigate(AuthRouter.RegisterRoute)
+        viewModel.navigateToRegister()
     }
 
 }
 
 @Composable
 fun rememberLogInCoordinator(
-    navController: NavHostController,
     viewModel: LogInViewModel = hiltViewModel()
 ): LogInCoordinator {
     return remember(viewModel) {
         LogInCoordinator(
-            navController = navController,
             viewModel = viewModel
         )
     }

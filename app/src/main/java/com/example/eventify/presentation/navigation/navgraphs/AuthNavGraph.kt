@@ -16,7 +16,7 @@ fun NavGraphBuilder.AuthNavGraph(
         startDestination = startDestination
     ){
         composable<AuthRouter.LogInRoute> {
-            LogInRoute(navController = navController)
+            LogInRoute()
         }
         composable<AuthRouter.RegisterRoute> {
             RegisterScreen(navController = navController)

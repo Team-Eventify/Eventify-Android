@@ -7,6 +7,7 @@ import com.example.eventify.data.exceptions.UserNotFoundException
 import com.example.eventify.data.models.UserCredentials
 import com.example.eventify.domain.usecases.LoginUseCase
 import com.example.eventify.presentation.navigation.Navigator
+import com.example.eventify.presentation.navigation.navgraphs.AuthRouter
 import com.example.eventify.presentation.navigation.navgraphs.RootRouter
 import com.example.eventify.presentation.ui.SnackbarController
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -71,6 +72,12 @@ class LogInViewModel @Inject constructor(
         }
 
         navigator.navigate(RootRouter.HomeRoute)
+    }
+
+    fun navigateToRegister(){
+        viewModelScope.launch {
+            navigator.navigate(AuthRouter.RegisterRoute)
+        }
     }
 
 }

@@ -9,8 +9,7 @@ import androidx.navigation.NavHostController
 
 @Composable
 fun LogInRoute(
-    navController: NavHostController,
-    coordinator: LogInCoordinator = rememberLogInCoordinator(navController)
+    coordinator: LogInCoordinator = rememberLogInCoordinator()
 ) {
     // State observing and declarations
     val uiState by coordinator.screenStateFlow.collectAsStateWithLifecycle()
