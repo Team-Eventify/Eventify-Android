@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -65,36 +66,65 @@ fun EventsFeedScreen(
                     onClick = { categoryid -> }
                 )
             }
-
-//            HeadingText("Ивенты, которые тебе понравятся")
-
         }
     }
 }
 
 @Composable
-@Preview(name = "EventsFeed", showBackground = true, showSystemUi = true)
-private fun EventsFeedScreenPreview() {
-    EventifyTheme {
-        EventsFeedScreen(
-            state = EventsFeedState(
-                categories = listOf(
+@Preview(name = "EventsFeed Default Dark", showBackground = true)
+private fun EventsFeedScreenDefaultDarkPreview() {
+    EventifyTheme(
+        darkTheme = true
+    ) {
+        Surface {
+            EventsFeedScreen(
+                state = EventsFeedState(
+                    categories = listOf(
 
+                    ),
+                    events = listOf(
+                        ShortEventItem(
+                            id = "",
+                            title = "День открытых дверей НИТУ МИСИС",
+                            description = "Дни открытых дверей — это уникальная возможность для старшеклассников больше узнать о специальностях, которым обучают в Унивеситете МИСИС.",
+                            start = 312313123,
+                            end = 231121243
+                        )
+                    ),
+                    result = EventFeedResult.Idle
                 ),
-                events = listOf(
-                    ShortEventItem(
-                        id = "",
-                        title = "",
-                        description = "",
-                        start = 312313123,
-                        end = 231121243
-                    )
-                ),
-                result = EventFeedResult.Idle
-            ),
-            actions = EventsFeedActions.default()
-        )
+                actions = EventsFeedActions.default()
+            )
+        }
     }
+}
 
+@Composable
+@Preview(name = "EventsFeed Default Light", showBackground = true)
+private fun EventsFeedScreenDefaultLightPreview() {
+    EventifyTheme(
+        darkTheme = false
+    ) {
+        Surface {
+            EventsFeedScreen(
+                state = EventsFeedState(
+                    categories = listOf(
+
+                    ),
+                    events = listOf(
+                        ShortEventItem(
+                            id = "",
+                            title = "День открытых дверей НИТУ МИСИС",
+                            description = "Дни открытых дверей — это уникальная возможность для старшеклассников больше узнать о специальностях, которым обучают в Унивеситете МИСИС.",
+                            start = 312313123,
+                            end = 231121243
+                        )
+                    ),
+                    result = EventFeedResult.Idle
+                ),
+                actions = EventsFeedActions.default()
+            )
+        }
+    }
 }
 
