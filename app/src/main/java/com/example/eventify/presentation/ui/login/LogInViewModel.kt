@@ -10,6 +10,7 @@ import com.example.eventify.presentation.navigation.Navigator
 import com.example.eventify.presentation.navigation.navgraphs.AuthRouter
 import com.example.eventify.presentation.navigation.navgraphs.RootRouter
 import com.example.eventify.presentation.ui.SnackbarController
+import com.example.eventify.presentation.ui.SnackbarEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow
@@ -67,20 +68,27 @@ class LogInViewModel @Inject constructor(
         }
     }
 
-    private fun handleErrors(exception: Throwable){
+    private suspend fun handleErrors(exception: Throwable){
         // TODO handle detail errors
         _stateFlow.update { currentState ->
             when (exception){
-                is UserNotFoundException -> currentState.copy(
-                    hasLoginError = true,
-                    hasPasswordError = true
-                )
-                else -> currentState.copy(
-                    hasLoginError = true,
-                    hasPasswordError = true
-                )
+                is UserNotFoundException -> {
+                    SnackbarController.sendEvent(SnackbarEvent(message = exception.message!!))
+                    currentState.copy(
+                        hasLoginError = true,
+                        hasPasswordError = true
+                    )
+                }
+                else -> {
+                    SnackbarController.sendEvent(SnackbarEvent(message = exception.message ?: "Ошибка сервера"))
+                    currentState.copy(
+                        hasLoginError = true,
+                        hasPasswordError = true
+                    )
+                }
             }
         }
+
     }
 
     private fun validateFormData(): Boolean{

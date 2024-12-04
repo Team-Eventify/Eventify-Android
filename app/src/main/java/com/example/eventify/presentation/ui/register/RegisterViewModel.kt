@@ -10,6 +10,8 @@ import com.example.eventify.domain.usecases.RegisterUseCase
 import com.example.eventify.presentation.navigation.Navigator
 import com.example.eventify.presentation.navigation.navgraphs.AuthRouter
 import com.example.eventify.presentation.navigation.navgraphs.RootRouter
+import com.example.eventify.presentation.ui.SnackbarController
+import com.example.eventify.presentation.ui.SnackbarEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow
@@ -69,14 +71,17 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
-    private fun handleErrors(exception: Throwable){
+    private suspend fun handleErrors(exception: Throwable){
         // TODO handle detail errors
         _stateFlow.update { currentState ->
             when (exception){
-                else -> currentState.copy(
-                    hasLoginError = true,
-                    hasPasswordError = true
-                )
+                else -> {
+                    SnackbarController.sendEvent(SnackbarEvent(message = exception.message ?: "Ошибка сервера"))
+                    currentState.copy(
+                        hasLoginError = true,
+                        hasPasswordError = true
+                    )
+                }
             }
         }
     }
