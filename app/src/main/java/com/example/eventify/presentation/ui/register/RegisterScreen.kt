@@ -1,6 +1,5 @@
-package com.example.eventify.presentation.ui.templogin
+package com.example.eventify.presentation.ui.register
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,113 +8,78 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import com.example.eventify.presentation.models.RegisterResult
-import com.example.eventify.presentation.models.RegisterUiState
 import com.example.eventify.presentation.navigation.navgraphs.AuthRouter
-import com.example.eventify.presentation.navigation.navgraphs.RootRouter
-import com.example.eventify.presentation.ui.SnackbarController
-import com.example.eventify.presentation.ui.SnackbarEvent
 import com.example.eventify.presentation.ui.shared.ActionPrimaryText
 import com.example.eventify.presentation.ui.shared.BodyText
+import com.example.eventify.presentation.ui.shared.ErrorInputText
 import com.example.eventify.presentation.ui.shared.PasswordInput
 import com.example.eventify.presentation.ui.shared.PrimaryButton
 import com.example.eventify.presentation.ui.shared.TextInput
 import com.example.eventify.presentation.ui.shared.TitleText
-import com.example.eventify.presentation.viewmodels.RegisterViewModel
+import com.example.eventify.presentation.ui.theme.EventifyTheme
 
 @Composable
 fun RegisterScreen(
-    navController: NavHostController,
-    viewModel: RegisterViewModel = hiltViewModel(),
-    modifier: Modifier = Modifier
+    state: RegisterState,
+    actions: RegisterActions,
 ) {
-    RegisterScreenComponent(
-        uiState = viewModel.uiState,
-        registerResult = viewModel.registerResult,
-        onLoginChange = viewModel::changeLoginValue,
-        onPasswordChange = viewModel::changePasswordValue,
-        onRegister = viewModel::register,
-        navController = navController,
-        modifier = modifier
-    )
-
-}
-
-
-@Composable
-fun RegisterScreenComponent(
-    uiState: RegisterUiState,
-    registerResult: RegisterResult,
-    onLoginChange: (String) -> Unit,
-    onPasswordChange: (String) -> Unit,
-    onRegister: () -> Unit,
-    navController: NavHostController,
-    modifier: Modifier = Modifier
-) {
-    LaunchedEffect(registerResult) {
-        when (registerResult) {
-            is RegisterResult.Success -> {
-                navController.navigate(RootRouter.HomeRoute)
-            }
-            is RegisterResult.Error -> {
-                SnackbarController.sendEvent(
-                    SnackbarEvent(
-                        message = registerResult.message
-                    )
-                )
-            }
-            else -> null
-        }
-    }
-
     Column(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
             .padding(15.dp)
         ,
         verticalArrangement = Arrangement.Center
     ) {
         TitleText(text = "Регистрация")
-        Spacer(modifier = modifier.height(5.dp))
+        Spacer(modifier = Modifier.height(5.dp))
         BodyText(text = "Пожалуйста, создайте новый аккаунт.")
         BodyText(text = "Это займёт меньше минуты.")
-        Spacer(modifier = modifier.height(30.dp))
+        Spacer(modifier = Modifier.height(30.dp))
         TextInput(
-            text = uiState.loginValue,
+            text = state.login,
             label = "Email",
             placeholder = "ivanov@gmail.com",
-            onValueChange = onLoginChange
+            onValueChange = actions.onChangeLogin,
+            isError = state.loginError != null || state.hasLoginError,
+            supportingText = {
+                state.loginError?.let { 
+                    ErrorInputText(text = it)
+                }
+            }
         )
-        Spacer(modifier = modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(10.dp))
         PasswordInput(
-            text = uiState.passwordValue,
+            text = state.password,
             label = "Password",
             placeholder = "yourpassword",
-            onValueChange = onPasswordChange
+            onValueChange = actions.onChangePassword,
+            isError = state.passwordError != null || state.hasPasswordError,
+            supportingText = {
+                state.passwordError?.let {
+                    ErrorInputText(text = it)
+                }
+            }
         )
 
-        Spacer(modifier = modifier.height(30.dp))
+        Spacer(modifier = Modifier.height(30.dp))
         PrimaryButton(
-            onClick = onRegister,
-            enabled = uiState.isValidData,
-            modifier = modifier
+            onClick = actions.onSubmit,
+            enabled = state.isValidFormData,
+            modifier = Modifier
                 .fillMaxWidth()
         ) {
             Text(text = "Зарегестрироваться", lineHeight = 22.sp, fontSize = 17.sp, fontWeight = FontWeight.Medium)
         }
-        Spacer(modifier = modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(20.dp))
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -125,23 +89,99 @@ fun RegisterScreenComponent(
             Text(text = "Уже есть аккаунт?")
             ActionPrimaryText(
                 text = "Войти",
-                onClick = {
-                    navController.navigate(AuthRouter.LogInRoute)
-                }
+                onClick = actions.navigateToLogIn
             )
         }
     }
 }
 
-@Preview(name = "RegisterScreen", showBackground = true, showSystemUi = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-private fun PreviewRegisterScreen() {
-    RegisterScreenComponent(
-        uiState = RegisterUiState.default(),
-        registerResult = RegisterResult.Idle,
-        onRegister = {},
-        onLoginChange = {},
-        onPasswordChange = {},
-        navController = rememberNavController()
-    )
+@Preview(name = "Register Default Dark", showBackground = true)
+private fun RegisterScreenDefaultDarkPreview() {
+    EventifyTheme(
+        darkTheme = true
+    ) {
+        Surface {
+            RegisterScreen(
+                state = RegisterState.default(),
+                actions = RegisterActions(
+                    onChangeLogin = {},
+                    onChangePassword = {},
+                    onSubmit = {},
+                    navigateToLogIn = {}
+                )
+            )
+        }
+    }
 }
+
+@Composable
+@Preview(name = "Register Error Dark", showBackground = true)
+private fun RegisterScreenErrorDarkPreview() {
+    EventifyTheme(
+        darkTheme = true
+    ) {
+        Surface {
+            RegisterScreen(
+                state = RegisterState(
+                    login = "",
+                    hasLoginError = true,
+                    password = "",
+                    passwordError = "Слишком простой пароль"
+                ),
+                actions = RegisterActions(
+                    onChangeLogin = {},
+                    onChangePassword = {},
+                    onSubmit = {},
+                    navigateToLogIn = {}
+                )
+            )
+        }
+    }
+}
+
+@Composable
+@Preview(name = "Register Default Light", showBackground = true)
+private fun RegisterScreenDefaultLightPreview() {
+    EventifyTheme(
+        darkTheme = false
+    ) {
+        Surface {
+            RegisterScreen(
+                state = RegisterState.default(),
+                actions = RegisterActions(
+                    onChangeLogin = {},
+                    onChangePassword = {},
+                    onSubmit = {},
+                    navigateToLogIn = {}
+                )
+            )
+        }
+    }
+}
+
+@Composable
+@Preview(name = "Register Error Light", showBackground = true)
+private fun RegisterScreenErrorLightPreview() {
+    EventifyTheme(
+        darkTheme = false
+    ) {
+        Surface {
+            RegisterScreen(
+                state = RegisterState(
+                    login = "",
+                    hasLoginError = true,
+                    password = "",
+                    passwordError = "Слишком простой пароль"
+                ),
+                actions = RegisterActions(
+                    onChangeLogin = {},
+                    onChangePassword = {},
+                    onSubmit = {},
+                    navigateToLogIn = {}
+                )
+            )
+        }
+    }
+}
+
