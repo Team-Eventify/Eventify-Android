@@ -21,8 +21,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.eventify.R
 import com.example.eventify.presentation.models.LoginResult
-import com.example.eventify.presentation.navgraphs.AuthRouter
-import com.example.eventify.presentation.navgraphs.RootRouter
+import com.example.eventify.presentation.navigation.navgraphs.AuthRouter
+import com.example.eventify.presentation.navigation.navgraphs.RootRouter
 import com.example.eventify.presentation.ui.SnackbarController
 import com.example.eventify.presentation.ui.SnackbarEvent
 import com.example.eventify.presentation.ui.shared.ActionPrimaryText
@@ -142,12 +142,9 @@ private fun LogInScreenInvalidDarkPreview() {
             LogInScreen(
                 state = LogInState(
                     login = "",
-                    isValidLogin = false,
                     loginError = "Короткий",
                     password = "",
-                    isValidPassword = false,
                     passwordError = "Глупый",
-                    isValidForm = false
                 ),
                 actions = LogInActions(
                     onSubmit = {},
@@ -196,12 +193,9 @@ private fun LogInScreenInvalidLightPreview() {
             LogInScreen(
                 state = LogInState(
                     login = "",
-                    isValidLogin = false,
                     loginError = "Короткий",
                     password = "",
-                    isValidPassword = false,
-                    passwordError = "Глупый",
-                    isValidForm = false
+                    passwordError = "Глупый"
                 ),
                 actions = LogInActions(
                     onSubmit = {},

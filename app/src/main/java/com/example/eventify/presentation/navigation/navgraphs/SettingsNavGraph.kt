@@ -1,4 +1,4 @@
-package com.example.eventify.presentation.navgraphs
+package com.example.eventify.presentation.navigation.navgraphs
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -21,7 +21,7 @@ fun NavGraphBuilder.SettingsNavGraph(
 }
 
 
-sealed class SettingsRouter{
+sealed class SettingsRouter: Destination {
     @Serializable
     data object ProfileEditRoute : SettingsRouter()
 }

@@ -1,4 +1,4 @@
-package com.example.eventify.presentation.navgraphs
+package com.example.eventify.presentation.navigation.navgraphs
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
@@ -27,7 +27,7 @@ fun MainNavHost(
     }
 }
 
-sealed class RootRouter{
+sealed class RootRouter: Destination {
     @Serializable
     data object HomeRoute : RootRouter()
 

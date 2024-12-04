@@ -1,4 +1,4 @@
-package com.example.eventify.presentation.navgraphs
+package com.example.eventify.presentation.navigation.navgraphs
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -24,7 +24,8 @@ fun NavGraphBuilder.AuthNavGraph(
     }
 }
 
-sealed class AuthRouter{
+
+sealed class AuthRouter: Destination {
     @Serializable
     data object LogInRoute : AuthRouter()
 

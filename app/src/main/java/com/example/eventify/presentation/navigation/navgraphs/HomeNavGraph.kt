@@ -1,4 +1,4 @@
-package com.example.eventify.presentation.navgraphs
+package com.example.eventify.presentation.navigation.navgraphs
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -33,7 +33,7 @@ fun NavGraphBuilder.HomeNavGraph(
 }
 
 
-sealed class HomeRouter{
+sealed class HomeRouter: Destination {
     @Serializable
     data object EventFeed : HomeRouter()
     @Serializable

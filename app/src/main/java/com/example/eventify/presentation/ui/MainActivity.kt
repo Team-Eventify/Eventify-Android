@@ -19,21 +19,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.eventify.presentation.navgraphs.HomeRouter
-import com.example.eventify.presentation.navgraphs.MainNavHost
-import com.example.eventify.presentation.navgraphs.RootRouter
+import com.example.eventify.presentation.navigation.NavigationAction
+import com.example.eventify.presentation.navigation.Navigator
+import com.example.eventify.presentation.navigation.navgraphs.HomeRouter
+import com.example.eventify.presentation.navigation.navgraphs.MainNavHost
+import com.example.eventify.presentation.navigation.navgraphs.RootRouter
 import com.example.eventify.presentation.ui.shared.BottomNavigationBar
 import com.example.eventify.presentation.ui.shared.OfflineComponent
 import com.example.eventify.presentation.ui.theme.EventifyTheme
+import com.example.eventify.presentation.utils.ObserveAsState
 import com.example.eventify.presentation.viewmodels.SessionViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import rememberConnectivityState
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val sessionViewModel: SessionViewModel by viewModels()
+    @Inject lateinit var navigator: Navigator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +49,20 @@ class MainActivity : ComponentActivity() {
                 window.navigationBarColor = MaterialTheme.colorScheme.background.toArgb()
                 window.statusBarColor = MaterialTheme.colorScheme.background.toArgb()
 
+                val navController = rememberNavController()
+
+
+                ObserveAsState(flow = navigator.navigationActions) { action ->
+                    when(action) {
+                        is NavigationAction.Navigate -> navController.navigate(
+                            action.destination
+                        ) {
+                            action.navOptions(this)
+                        }
+                        NavigationAction.NavigateUp -> navController.navigateUp()
+                    }
+                }
+
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -53,7 +72,6 @@ class MainActivity : ComponentActivity() {
                     val snackbarHostState = remember { SnackbarHostState() }
                     val scope = rememberCoroutineScope()
 
-                    val navController = rememberNavController()
 
                     ObserveAsState(
                         flow = SnackbarController.events,

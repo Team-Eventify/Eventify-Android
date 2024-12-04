@@ -27,7 +27,7 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.eventify.R
-import com.example.eventify.presentation.navgraphs.HomeRouter
+import com.example.eventify.presentation.navigation.navgraphs.HomeRouter
 
 
 data class BottomNavigationBarItem<T: HomeRouter>(

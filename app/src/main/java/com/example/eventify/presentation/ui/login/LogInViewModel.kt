@@ -3,8 +3,12 @@ package com.example.eventify.presentation.ui.login
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.eventify.data.exceptions.UserNotFoundException
 import com.example.eventify.data.models.UserCredentials
 import com.example.eventify.domain.usecases.LoginUseCase
+import com.example.eventify.presentation.navigation.Navigator
+import com.example.eventify.presentation.navigation.navgraphs.RootRouter
+import com.example.eventify.presentation.ui.SnackbarController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow
@@ -15,8 +19,8 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class LogInViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
     private val loginUseCase: LoginUseCase,
+    private val navigator: Navigator
 ) : ViewModel() {
 
     private val _stateFlow: MutableStateFlow<LogInState> = MutableStateFlow(LogInState.default())
@@ -25,7 +29,7 @@ class LogInViewModel @Inject constructor(
     fun changeLogin(value: String) {
         _stateFlow.update { currentState ->
             currentState.copy(
-                login = value
+                login = value,
             )
         }
     }
@@ -33,15 +37,23 @@ class LogInViewModel @Inject constructor(
     fun changePassword(value: String) {
         _stateFlow.update { currentState ->
             currentState.copy(
-                password = value
+                password = value,
             )
         }
     }
 
     fun logIn(){
         viewModelScope.launch {
-            logInUser()
+            try {
+                logInUser()
+            } catch (e: UserNotFoundException){
+
+            }
         }
+    }
+
+    private fun validateFormData(): Boolean{
+        return _stateFlow.value.run { isValidLogin && isValidPassword  }
     }
 
     private suspend fun logInUser(){
@@ -55,7 +67,10 @@ class LogInViewModel @Inject constructor(
             loginUseCase(credentials = userCredentials)
         } catch (e: Exception){
             // TODO write handlers
+            return
         }
+
+        navigator.navigate(RootRouter.HomeRoute)
     }
 
 }

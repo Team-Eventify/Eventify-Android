@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.example.eventify.domain.usecases.events.GetEventDetailUseCase
-import com.example.eventify.presentation.navgraphs.RootRouter
+import com.example.eventify.presentation.navigation.navgraphs.RootRouter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow

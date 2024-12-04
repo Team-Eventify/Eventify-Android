@@ -1,4 +1,4 @@
-package com.example.eventify.presentation.ui
+package com.example.eventify.presentation.utils
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect

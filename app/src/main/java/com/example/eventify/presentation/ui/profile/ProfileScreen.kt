@@ -18,8 +18,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.eventify.data.models.UserInfo
 import com.example.eventify.presentation.models.UserResult
 import com.example.eventify.presentation.models.UserUiState
-import com.example.eventify.presentation.navgraphs.RootRouter
-import com.example.eventify.presentation.navgraphs.SettingsRouter
+import com.example.eventify.presentation.navigation.navgraphs.RootRouter
+import com.example.eventify.presentation.navigation.navgraphs.SettingsRouter
 import com.example.eventify.presentation.viewmodels.UserViewModel
 
 @Composable

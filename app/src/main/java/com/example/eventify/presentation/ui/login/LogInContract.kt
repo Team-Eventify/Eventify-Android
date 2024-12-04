@@ -10,24 +10,27 @@ import androidx.compose.runtime.staticCompositionLocalOf
  **/
 data class LogInState(
     val login: String,
-    val isValidLogin: Boolean,
     val loginError: String?,
 
     val password: String,
-    val isValidPassword: Boolean,
     val passwordError: String?,
 
-    val isValidForm: Boolean
 ){
-    companion object {
+    val isValidLogin: Boolean
+        get() = login.isNotEmpty()
+
+    val isValidPassword: Boolean
+        get() = password.isNotEmpty()
+
+    val isValidForm: Boolean
+        get() = isValidLogin && isValidPassword
+
+        companion object {
         fun default() = LogInState(
             login = "",
-            isValidLogin = false,
             loginError = null,
             password = "",
-            isValidPassword = false,
             passwordError = null,
-            isValidForm = false
         )
     }
 }

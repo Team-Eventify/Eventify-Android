@@ -23,8 +23,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.eventify.presentation.models.RegisterResult
 import com.example.eventify.presentation.models.RegisterUiState
-import com.example.eventify.presentation.navgraphs.AuthRouter
-import com.example.eventify.presentation.navgraphs.RootRouter
+import com.example.eventify.presentation.navigation.navgraphs.AuthRouter
+import com.example.eventify.presentation.navigation.navgraphs.RootRouter
 import com.example.eventify.presentation.ui.SnackbarController
 import com.example.eventify.presentation.ui.SnackbarEvent
 import com.example.eventify.presentation.ui.shared.ActionPrimaryText
