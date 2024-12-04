@@ -3,11 +3,13 @@ package com.example.eventify.presentation.ui.register
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.eventify.data.exceptions.UserNotFoundException
 import com.example.eventify.data.models.UserCreate
 import com.example.eventify.data.remote.models.events.CreateEventRequest
 import com.example.eventify.domain.usecases.RegisterUseCase
 import com.example.eventify.presentation.navigation.Navigator
 import com.example.eventify.presentation.navigation.navgraphs.AuthRouter
+import com.example.eventify.presentation.navigation.navgraphs.RootRouter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow
@@ -42,20 +44,41 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
-    fun register(){
-        viewModelScope.launch {
-            registerUser()
-        }
-    }
 
-    private suspend fun registerUser(){
-        val userData = stateFlow.value.run{
+    fun register(){
+        if (!stateFlow.value.isValidFormData) return
+
+        val userPayload = stateFlow.value.run {
             UserCreate(
                 email = login,
                 password = password
             )
         }
-        registerUseCase(user = userData)
+        registerUser(payload = userPayload)
+    }
+
+    private fun registerUser(payload: UserCreate){
+        viewModelScope.launch {
+            runCatching {
+                registerUseCase(user = payload)
+            }.onSuccess {
+                navigator.navigate(RootRouter.HomeRoute)
+            }.onFailure { exception ->
+                handleErrors(exception)
+            }
+        }
+    }
+
+    private fun handleErrors(exception: Throwable){
+        // TODO handle detail errors
+        _stateFlow.update { currentState ->
+            when (exception){
+                else -> currentState.copy(
+                    hasLoginError = true,
+                    hasPasswordError = true
+                )
+            }
+        }
     }
 
     fun navigateToLogin(){
