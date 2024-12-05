@@ -24,7 +24,7 @@ class EventRepositoryImpl @Inject constructor(
         val events = when (response.code()) {
             200 -> response.body()?.let { eventsList ->
                 eventsList.map { event -> event.toEventInfo() }
-            }
+            } ?: emptyList()
             404 -> emptyList()
             else -> throw UnprocessedServerResponseException()
         }

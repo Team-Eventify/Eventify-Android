@@ -24,7 +24,8 @@ class UsersRepositoryImpl @Inject constructor(
                 firstName = user.firstName,
                 lastName = user.lastName,
                 middleName = user.middleName,
-                telegramName = user.telegramName
+                telegramName = user.telegramName,
+                email = user.email
             )
         )
 
