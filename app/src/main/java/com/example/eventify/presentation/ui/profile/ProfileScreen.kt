@@ -4,50 +4,23 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import com.example.eventify.data.models.UserInfo
-import com.example.eventify.presentation.models.UserResult
-import com.example.eventify.presentation.models.UserUiState
-import com.example.eventify.presentation.navigation.navgraphs.RootRouter
-import com.example.eventify.presentation.navigation.navgraphs.SettingsRouter
-import com.example.eventify.presentation.viewmodels.UserViewModel
+import com.example.eventify.presentation.models.UserShortInfo
+import com.example.eventify.presentation.ui.tempprofile.LogOutDialog
+import com.example.eventify.presentation.ui.profile.components.UserProfilePanel
+import com.example.eventify.presentation.ui.theme.EventifyTheme
 
 @Composable
 fun ProfileScreen(
-    navController: NavHostController,
-    viewModel: UserViewModel = hiltViewModel(),
-    modifier: Modifier = Modifier
-) {
-    ProfileScreenComponent(
-        uiState = viewModel.uiState,
-        currentUser = viewModel.user,
-        onLoadCurrentUser = viewModel::loadUserInfo,
-        navController = navController,
-        userResult = viewModel.loadUserResult,
-        onLogOut = viewModel::logOut
-    )
-}
-
-
-@Composable
-fun ProfileScreenComponent(
-    uiState: UserUiState,
-    currentUser: UserInfo?,
-    userResult: UserResult,
-    onLoadCurrentUser: () -> Unit,
-    onLogOut: () -> Unit,
-    navController: NavHostController,
-    modifier: Modifier = Modifier
+    state: ProfileState,
+    actions: ProfileActions,
 ) {
     val showLogOutDialog = remember { mutableStateOf(false) }
 
@@ -56,28 +29,19 @@ fun ProfileScreenComponent(
             onDismissRequest = {
                 showLogOutDialog.value = false
             },
-            onLogOut = {
-                onLogOut()
-                navController.navigate(RootRouter.AuthRoute)
-            }
+            onLogOut = actions.onLogOut
         )
     }
 
 
     Column(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
             .padding(10.dp)
     ) {
-        LaunchedEffect(true) {
-            onLoadCurrentUser()
-        }
-
         UserProfilePanel(
-            user = currentUser,
-            onClick = {
-                navController.navigate(SettingsRouter.ProfileEditRoute)
-            }
+            user = state.userInfo!!,
+            onClick = actions.navigateToProfileEdit
         )
         Button(onClick = {
             showLogOutDialog.value = true
@@ -87,21 +51,24 @@ fun ProfileScreenComponent(
     }
 }
 
-@Preview(name = "ProfileScreen", showSystemUi = true, showBackground = true)
 @Composable
-private fun PreviewProfileScreen() {
-    ProfileScreenComponent(
-        uiState = UserUiState(
-            email = "werwer",
-            firstName = "xxcv",
-            lastName = "vfvf",
-            middleName = "asda",
-            telegramName = "vsdvds",
-        ),
-        currentUser = null,
-        userResult = UserResult.Idle,
-        onLoadCurrentUser = {},
-        navController = rememberNavController(),
-        onLogOut = {},
-    )
+@Preview(name = "Profile Default Dark")
+private fun ProfileScreenPreview() {
+    EventifyTheme(darkTheme = true) {
+        Surface {
+            ProfileScreen(
+                state = ProfileState(
+                    userInfo = UserShortInfo(
+                        id = "",
+                        firstName = "Иван",
+                        lastName = "Иванов",
+                        middleName = "Иванович",
+                        email = "ivanov@mail.ru"
+                    )
+                ),
+                actions = ProfileActions.default()
+            )
+        }
+    }
 }
+

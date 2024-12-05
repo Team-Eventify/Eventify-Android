@@ -16,7 +16,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.eventify.R
-import com.example.eventify.presentation.models.EventFeedResult
 import com.example.eventify.presentation.models.ShortEventItem
 import com.example.eventify.presentation.ui.shared.CategoryCard
 import com.example.eventify.presentation.ui.shared.EventCard
@@ -30,7 +29,7 @@ fun EventsFeedScreen(
     state: EventsFeedState,
     actions: EventsFeedActions,
 ) {
-    val swipeRefreshState = rememberSwipeRefreshState(state.result is EventFeedResult.Refreshing)
+    val swipeRefreshState = rememberSwipeRefreshState(state.isRefreshing)
 
     SwipeRefresh(
         state = swipeRefreshState,
@@ -91,7 +90,6 @@ private fun EventsFeedScreenDefaultDarkPreview() {
                             end = 231121243
                         )
                     ),
-                    result = EventFeedResult.Idle
                 ),
                 actions = EventsFeedActions.default()
             )
@@ -120,7 +118,6 @@ private fun EventsFeedScreenDefaultLightPreview() {
                             end = 231121243
                         )
                     ),
-                    result = EventFeedResult.Idle
                 ),
                 actions = EventsFeedActions.default()
             )

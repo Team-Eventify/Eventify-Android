@@ -1,12 +1,8 @@
 package com.example.eventify.presentation.models
 
-import java.time.Instant
-import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.ZoneId
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
-import java.util.Locale
 
 
 const val SHORT_DATE_FORMAT = "dd MMM"

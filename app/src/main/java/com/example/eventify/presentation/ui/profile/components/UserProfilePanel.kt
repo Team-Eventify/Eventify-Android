@@ -1,4 +1,4 @@
-package com.example.eventify.presentation.ui.profile
+package com.example.eventify.presentation.ui.profile.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -24,11 +22,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.eventify.R
-import com.example.eventify.data.models.UserInfo
+import com.example.eventify.presentation.models.UserShortInfo
 
 @Composable
 fun UserProfilePanel(
-    user: UserInfo?,
+    user: UserShortInfo,
     onClick: (() -> Unit)? = null,
     modifier: Modifier = Modifier
 ) {
@@ -50,7 +48,7 @@ fun UserProfilePanel(
         ) {
             Column {
                 Text(
-                    text = user?.let { "${it.lastName} ${it.firstName}" } ?: "Иванов Иван",
+                    text = "${user.lastName} ${user.firstName}",
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Medium
                 )
@@ -69,6 +67,12 @@ fun UserProfilePanel(
 @Composable
 private fun PreviewUserProfilePanel() {
     UserProfilePanel(
-        user = null
+        user = UserShortInfo(
+            id = "",
+            firstName = "Иван",
+            lastName = "Иванов",
+            middleName = "Иванович",
+            email = "ivanov@mail.ru"
+        )
     )
 }

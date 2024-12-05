@@ -19,7 +19,7 @@ fun MainNavHost(
     ){
         HomeNavGraph(navController = navController)
         AuthNavGraph()
-        SettingsNavGraph(navController = navController)
+        SettingsNavGraph()
         
         composable<RootRouter.EventDetailRoute>{
             EventDetailRoute(navController = navController)
