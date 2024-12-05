@@ -13,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.eventify.presentation.models.UserShortInfo
-import com.example.eventify.presentation.ui.tempprofile.LogOutDialog
 import com.example.eventify.presentation.ui.profile.components.UserProfilePanel
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 
@@ -22,17 +21,6 @@ fun ProfileScreen(
     state: ProfileState,
     actions: ProfileActions,
 ) {
-    val showLogOutDialog = remember { mutableStateOf(false) }
-
-    if (showLogOutDialog.value){
-        LogOutDialog(
-            onDismissRequest = {
-                showLogOutDialog.value = false
-            },
-            onLogOut = actions.onLogOut
-        )
-    }
-
 
     Column(
         modifier = Modifier
@@ -44,7 +32,8 @@ fun ProfileScreen(
             onClick = actions.navigateToProfileEdit
         )
         Button(onClick = {
-            showLogOutDialog.value = true
+            actions.onLogOut()
+            // TODO rewrite show logOut dialog
         }) {
             Text(text = "Выйти")
         }

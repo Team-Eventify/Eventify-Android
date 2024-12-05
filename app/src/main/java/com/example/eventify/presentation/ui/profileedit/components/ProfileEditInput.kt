@@ -1,6 +1,5 @@
 package com.example.eventify.presentation.ui.profileedit.components
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -35,7 +34,7 @@ fun ProfileEditInput(
         singleLine = singleLine,
         label = label?.let { { Text(it) } },
         placeholder = { Text(placeholder ?: "", fontSize = 17.sp, fontWeight = FontWeight.Normal) },
-        prefix = { Text(prefix ?: "", modifier = Modifier.padding(0.dp)) },
+        prefix = { Text(prefix ?: "") },
         supportingText = {
             supportingText?.let {
                 ErrorInputText(

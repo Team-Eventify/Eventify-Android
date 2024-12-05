@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.eventify.data.repositories.tokens.TokenManager
+import com.example.eventify.domain.SessionManager
 import com.example.eventify.presentation.navigation.NavigationAction
 import com.example.eventify.presentation.navigation.Navigator
 import com.example.eventify.presentation.navigation.navgraphs.HomeRouter
@@ -30,7 +31,6 @@ import com.example.eventify.presentation.ui.shared.BottomNavigationBar
 import com.example.eventify.presentation.ui.shared.OfflineComponent
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 import com.example.eventify.presentation.utils.ObserveAsState
-import com.example.eventify.presentation.viewmodels.SessionViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import rememberConnectivityState
@@ -39,9 +39,8 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private val sessionViewModel: SessionViewModel by viewModels()
     @Inject lateinit var navigator: Navigator
-    @Inject lateinit var tokenManager: TokenManager
+    @Inject lateinit var sessionManager: SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +52,7 @@ class MainActivity : ComponentActivity() {
                 window.statusBarColor = MaterialTheme.colorScheme.background.toArgb()
 
                 val navController = rememberNavController()
-                val currentDist = if (tokenManager.isValidData()) RootRouter.HomeRoute else RootRouter.HomeRoute
+                val currentDist = if (sessionManager.isLoggedIn()) RootRouter.HomeRoute else RootRouter.AuthRoute
 
 
                 ObserveAsState(flow = navigator.navigationActions) { action ->
@@ -71,7 +70,6 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    sessionViewModel.checkLoggedIn()
 
                     val snackbarHostState = remember { SnackbarHostState() }
                     val scope = rememberCoroutineScope()
