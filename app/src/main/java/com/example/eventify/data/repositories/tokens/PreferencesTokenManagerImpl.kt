@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.SharedPreferences
 import dagger.hilt.android.qualifiers.ActivityContext
 import javax.inject.Inject
+import com.auth0.jwt.JWT
+import com.auth0.jwt.interfaces.DecodedJWT
 
 private const val ACCESS_TOKEN_KEY = "access_token"
 private const val REFRESH_TOKEN_KEY = "refresh_token"
@@ -47,6 +49,24 @@ class PreferencesTokenManagerImpl @Inject constructor(
         with(sharedPref.edit()){
             clear()
             apply()
+        }
+    }
+
+    override fun isValidData(): Boolean {
+        val accessToken = getAccessToken()?.let { decodeToken(it) } ?: return false
+        val refreshToken = getRefreshToken()?.let { decodeToken(it) } ?: return false
+        getUserId() ?: return false
+
+        val currentDate = System.currentTimeMillis()
+
+        return !(accessToken.expiresAt.time < currentDate && refreshToken.expiresAt.time < currentDate)
+    }
+    private fun decodeToken(token: String): DecodedJWT? {
+        return try {
+            JWT.decode(token)
+        } catch (e: Exception){
+            // TODO write logs
+            null
         }
     }
 }

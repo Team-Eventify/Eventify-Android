@@ -1,4 +1,4 @@
-package com.example.eventify.presentation.ui
+package com.example.eventify.presentation
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

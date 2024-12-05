@@ -1,5 +1,8 @@
 package com.example.eventify.data.repositories.tokens
 
+import com.auth0.jwt.JWT
+import com.auth0.jwt.interfaces.DecodedJWT
+
 class MockedTokenManagerImpl: TokenManager {
     private var accessToken: String? = null
     private var refreshToken: String? = null
@@ -26,5 +29,23 @@ class MockedTokenManagerImpl: TokenManager {
         accessToken = null
         refreshToken = null
         userId = null
+    }
+
+    override fun isValidData(): Boolean {
+        val accessToken = getAccessToken()?.let { decodeToken(it) } ?: return false
+        val refreshToken = getRefreshToken()?.let { decodeToken(it) } ?: return false
+        getUserId() ?: return false
+
+        val currentDate = System.currentTimeMillis()
+
+        return !(accessToken.expiresAt.time < currentDate && refreshToken.expiresAt.time < currentDate)
+    }
+    private fun decodeToken(token: String): DecodedJWT? {
+        return try {
+            JWT.decode(token)
+        } catch (e: Exception){
+            // TODO write logs
+            null
+        }
     }
 }

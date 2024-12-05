@@ -74,7 +74,7 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+    implementation(libs.kotlinx.serialization.json.v151)
 
 
     //Navigation
@@ -108,6 +108,9 @@ dependencies {
     // Logging
     implementation(libs.timber)
     implementation(kotlin("reflect"))
+
+    // JWT
+    implementation(libs.java.jwt)
 }
 
 tasks.withType<Test>().configureEach {

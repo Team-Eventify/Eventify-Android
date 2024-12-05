@@ -1,4 +1,4 @@
-package com.example.eventify.presentation.ui
+package com.example.eventify.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -19,11 +19,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.eventify.data.repositories.tokens.TokenManager
 import com.example.eventify.presentation.navigation.NavigationAction
 import com.example.eventify.presentation.navigation.Navigator
 import com.example.eventify.presentation.navigation.navgraphs.HomeRouter
 import com.example.eventify.presentation.navigation.navgraphs.MainNavHost
 import com.example.eventify.presentation.navigation.navgraphs.RootRouter
+import com.example.eventify.presentation.ui.SnackbarController
 import com.example.eventify.presentation.ui.shared.BottomNavigationBar
 import com.example.eventify.presentation.ui.shared.OfflineComponent
 import com.example.eventify.presentation.ui.theme.EventifyTheme
@@ -39,6 +41,7 @@ import javax.inject.Inject
 class MainActivity : ComponentActivity() {
     private val sessionViewModel: SessionViewModel by viewModels()
     @Inject lateinit var navigator: Navigator
+    @Inject lateinit var tokenManager: TokenManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +53,7 @@ class MainActivity : ComponentActivity() {
                 window.statusBarColor = MaterialTheme.colorScheme.background.toArgb()
 
                 val navController = rememberNavController()
+                val currentDist = if (tokenManager.isValidData()) RootRouter.HomeRoute else RootRouter.HomeRoute
 
 
                 ObserveAsState(flow = navigator.navigationActions) { action ->
@@ -109,7 +113,7 @@ class MainActivity : ComponentActivity() {
 
                         MainNavHost(
                             navController = navController,
-                            startDestination = RootRouter.AuthRoute
+                            startDestination = currentDist
                         )
                     }
 

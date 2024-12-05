@@ -9,6 +9,8 @@ import com.example.eventify.data.remote.utils.TokenAuthenticator
 import com.example.eventify.data.remote.api.AuthAPI
 import com.example.eventify.data.repositories.auth.AuthUserRepository
 import com.example.eventify.data.repositories.auth.AuthUserRepositoryImpl
+import com.example.eventify.domain.SessionManager
+import com.example.eventify.domain.SessionManagerImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -41,5 +43,9 @@ object AuthModule {
     @Provides
     @Singleton
     fun provideTokenManager(@ApplicationContext context: Context): TokenManager = PreferencesTokenManagerImpl(context)
+
+    @Provides
+    @Singleton
+    fun provideSessionManager(tokenManager: TokenManager): SessionManager = SessionManagerImpl(tokenManager = tokenManager)
 
 }
