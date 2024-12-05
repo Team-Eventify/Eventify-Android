@@ -53,14 +53,18 @@ fun ProfileEditScreen(
         SubHeadingText(text = "Электронная поста")
         ProfileEditInput(
             text = state.email,
-            onChange = actions.onChangeEmail
+            onChange = actions.onChangeEmail,
+            isError = state.emailError != null || state.hasEmailError,
+            supportingText = state.emailError
         )
 
         SubHeadingText(text = "Telegram")
         ProfileEditInput(
             text = state.telegramName,
             onChange = actions.onChangeTelegram,
-            prefix = "@"
+            prefix = "@",
+            isError = state.telegramNameError != null || state.hasTelegramNameError,
+            supportingText = state.telegramNameError
         )
 
         SubHeadingText(text = "Мои категории")

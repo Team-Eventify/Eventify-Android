@@ -54,6 +54,7 @@ class PreferencesTokenManagerImpl @Inject constructor(
 
     override fun isValidData(): Boolean {
         val accessToken = getAccessToken()?.let { decodeToken(it) } ?: return false
+        // TODO cant decode
         val refreshToken = getRefreshToken()?.let { decodeToken(it) } ?: return false
         getUserId() ?: return false
 

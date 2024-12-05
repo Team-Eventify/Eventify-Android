@@ -17,6 +17,7 @@ data class ProfileEditState(
     val isRefreshing: Boolean = false,
 
     val email: String,
+    val hasEmailError: Boolean = false,
     val emailError: String? = null,
 
     val firstName: String,
@@ -29,6 +30,7 @@ data class ProfileEditState(
     val middleNameError: String? = null,
 
     val telegramName: String,
+    val hasTelegramNameError: Boolean = false,
     val telegramNameError: String? = null,
 
     val categoryItems: List<CategorySelectItem>

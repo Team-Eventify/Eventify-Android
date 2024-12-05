@@ -9,6 +9,8 @@ import com.example.eventify.domain.usecases.GetCategoriesWithUserSelection
 import com.example.eventify.domain.usecases.account.ChangeUserUseCase
 import com.example.eventify.domain.usecases.account.GetCurrentUserUseCase
 import com.example.eventify.domain.usecases.account.SetUserCategoriesUseCase
+import com.example.eventify.domain.validation.ValidateEmail
+import com.example.eventify.domain.validation.ValidateTelegramName
 import com.example.eventify.presentation.ui.SnackbarController
 import com.example.eventify.presentation.ui.SnackbarEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,6 +28,8 @@ class ProfileEditViewModel @Inject constructor(
     private val changeUserUseCase: ChangeUserUseCase,
     private val setUserCategoriesUseCase: SetUserCategoriesUseCase
 ) : ViewModel() {
+    private val validateTelegramName = ValidateTelegramName()
+    private val validateEmail = ValidateEmail()
 
     private val _currentUser: MutableStateFlow<UserInfo?> = MutableStateFlow(null)
     val currentUser: StateFlow<UserInfo?> = _currentUser.asStateFlow()
@@ -61,7 +65,7 @@ class ProfileEditViewModel @Inject constructor(
 
 
     fun saveUser(){
-        // TODO needs validation
+        if (validateForm()) return
 
         val userData = stateFlow.value.run {
             UserChange(
@@ -110,6 +114,27 @@ class ProfileEditViewModel @Inject constructor(
                 }
             )
         }
+    }
+
+    private fun validateForm(): Boolean {
+        val isValidEmail = validateEmail(stateFlow.value.email)
+        val isValidTelegramName = validateTelegramName(stateFlow.value.telegramName)
+
+        val hasErrors = listOf(
+            isValidEmail,
+            isValidTelegramName
+        ).any { !it.successful }
+
+        _stateFlow.update { currentState ->
+            currentState.copy(
+                hasTelegramNameError = !isValidTelegramName.successful,
+                telegramNameError = isValidTelegramName.errorMessage,
+                hasEmailError = !isValidEmail.successful,
+                emailError = isValidEmail.errorMessage
+            )
+        }
+
+        return hasErrors
     }
 
 
