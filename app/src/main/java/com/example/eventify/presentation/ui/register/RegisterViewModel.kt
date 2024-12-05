@@ -4,6 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.eventify.data.models.UserCreate
 import com.example.eventify.domain.usecases.account.RegisterUseCase
+import com.example.eventify.domain.validation.ValidateEmail
+import com.example.eventify.domain.validation.ValidatePassword
+import com.example.eventify.domain.validation.Validator
 import com.example.eventify.presentation.navigation.Navigator
 import com.example.eventify.presentation.navigation.navgraphs.AuthRouter
 import com.example.eventify.presentation.navigation.navgraphs.RootRouter
@@ -20,8 +23,10 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
     private val registerUseCase: RegisterUseCase,
-    private val navigator: Navigator
+    private val navigator: Navigator,
 ) : ViewModel() {
+    private val validateEmail: ValidateEmail = ValidateEmail()
+    private val validatePassword: ValidatePassword = ValidatePassword()
 
     private val _stateFlow: MutableStateFlow<RegisterState> = MutableStateFlow(RegisterState.default())
     val stateFlow: StateFlow<RegisterState> = _stateFlow.asStateFlow()
@@ -43,9 +48,32 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
+    private fun validateForm(): Boolean{
+        val isValidEmail = validateEmail(_stateFlow.value.login)
+        val isValidPassword = validatePassword(_stateFlow.value.password)
+
+        val hasError = listOf(
+            isValidEmail,
+            isValidPassword
+        ).any { !it.successful }
+
+        if (hasError){
+            _stateFlow.update { currentState ->
+                currentState.copy(
+                    hasLoginError = !isValidEmail.successful,
+                    loginError = isValidEmail.errorMessage,
+                    hasPasswordError = !isValidPassword.successful,
+                    passwordError = isValidPassword.errorMessage
+                )
+            }
+        }
+
+        return hasError
+    }
+
 
     fun register(){
-        if (!stateFlow.value.isValidFormData) return
+        if (validateForm()) return
 
         val userPayload = stateFlow.value.run {
             UserCreate(
