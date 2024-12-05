@@ -60,7 +60,7 @@ fun CategoryCard(
     }
 }
 
-@Preview(name = "CategoryCard", showSystemUi = true, showBackground = true)
+@Preview(name = "CategoryCard", showBackground = true)
 @Composable
 private fun PreviewCategoryCard() {
     CategoryCard(

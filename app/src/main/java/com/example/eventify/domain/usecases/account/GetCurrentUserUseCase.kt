@@ -1,4 +1,4 @@
-package com.example.eventify.domain.usecases
+package com.example.eventify.domain.usecases.account
 
 import com.example.eventify.data.exceptions.NotAuthenticated
 import com.example.eventify.data.models.UserInfo

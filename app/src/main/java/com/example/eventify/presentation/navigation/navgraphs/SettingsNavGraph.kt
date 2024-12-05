@@ -3,6 +3,7 @@ package com.example.eventify.presentation.navigation.navgraphs
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.example.eventify.presentation.ui.profileedit.ProfileEditRoute
 import kotlinx.serialization.Serializable
 
 fun NavGraphBuilder.SettingsNavGraph(
@@ -12,6 +13,7 @@ fun NavGraphBuilder.SettingsNavGraph(
         startDestination = startDestination
     ){
         composable<SettingsRouter.ProfileEditRoute>{
+            ProfileEditRoute()
         }
     }
 }

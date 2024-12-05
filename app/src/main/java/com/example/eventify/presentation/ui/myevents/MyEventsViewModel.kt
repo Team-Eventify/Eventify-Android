@@ -1,9 +1,8 @@
 package com.example.eventify.presentation.ui.myevents
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.example.eventify.data.repositories.events.EventsRepository
-import com.example.eventify.domain.usecases.GetCurrentUserUseCase
+import com.example.eventify.domain.usecases.account.GetCurrentUserUseCase
 import com.example.eventify.presentation.models.ShortEventItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

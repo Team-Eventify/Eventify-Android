@@ -4,8 +4,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.example.eventify.domain.usecases.GetCurrentUserUseCase
-import com.example.eventify.domain.usecases.LogOutUseCase
+import com.example.eventify.domain.usecases.account.GetCurrentUserUseCase
+import com.example.eventify.domain.usecases.account.LogOutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject

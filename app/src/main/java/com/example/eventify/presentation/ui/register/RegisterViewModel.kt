@@ -1,12 +1,9 @@
 package com.example.eventify.presentation.ui.register
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.eventify.data.exceptions.UserNotFoundException
 import com.example.eventify.data.models.UserCreate
-import com.example.eventify.data.remote.models.events.CreateEventRequest
-import com.example.eventify.domain.usecases.RegisterUseCase
+import com.example.eventify.domain.usecases.account.RegisterUseCase
 import com.example.eventify.presentation.navigation.Navigator
 import com.example.eventify.presentation.navigation.navgraphs.AuthRouter
 import com.example.eventify.presentation.navigation.navgraphs.RootRouter

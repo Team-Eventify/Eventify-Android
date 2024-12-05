@@ -1,11 +1,10 @@
 package com.example.eventify.presentation.ui.login
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.eventify.data.exceptions.UserNotFoundException
 import com.example.eventify.data.models.UserCredentials
-import com.example.eventify.domain.usecases.LoginUseCase
+import com.example.eventify.domain.usecases.account.LoginUseCase
 import com.example.eventify.presentation.navigation.Navigator
 import com.example.eventify.presentation.navigation.navgraphs.AuthRouter
 import com.example.eventify.presentation.navigation.navgraphs.RootRouter
