@@ -53,14 +53,10 @@ class PreferencesTokenManagerImpl @Inject constructor(
     }
 
     override fun isValidData(): Boolean {
-        val accessToken = getAccessToken()?.let { decodeToken(it) } ?: return false
-        // TODO cant decode
-        val refreshToken = getRefreshToken()?.let { decodeToken(it) } ?: return false
+        getAccessToken()?.let { decodeToken(it) } ?: return false
+        getRefreshToken() ?: return false
         getUserId() ?: return false
-
-        val currentDate = System.currentTimeMillis()
-
-        return !(accessToken.expiresAt.time < currentDate && refreshToken.expiresAt.time < currentDate)
+        return true
     }
     private fun decodeToken(token: String): DecodedJWT? {
         return try {

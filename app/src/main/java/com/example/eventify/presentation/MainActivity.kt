@@ -17,10 +17,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
+import androidx.lifecycle.coroutineScope
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.eventify.data.repositories.tokens.TokenManager
 import com.example.eventify.domain.SessionManager
+import com.example.eventify.domain.di.RequestsSessionManager
 import com.example.eventify.presentation.navigation.NavigationAction
 import com.example.eventify.presentation.navigation.Navigator
 import com.example.eventify.presentation.navigation.navgraphs.HomeRouter
@@ -32,7 +34,9 @@ import com.example.eventify.presentation.ui.shared.OfflineComponent
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 import com.example.eventify.presentation.utils.ObserveAsState
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import rememberConnectivityState
 import javax.inject.Inject
 
@@ -40,7 +44,10 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     @Inject lateinit var navigator: Navigator
-    @Inject lateinit var sessionManager: SessionManager
+
+    @RequestsSessionManager
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,8 +59,8 @@ class MainActivity : ComponentActivity() {
                 window.statusBarColor = MaterialTheme.colorScheme.background.toArgb()
 
                 val navController = rememberNavController()
-                val currentDist = if (sessionManager.isLoggedIn()) RootRouter.HomeRoute else RootRouter.AuthRoute
 
+                    val currentDist = runBlocking { if (sessionManager.isLoggedIn()) RootRouter.HomeRoute else RootRouter.AuthRoute}
 
                 ObserveAsState(flow = navigator.navigationActions) { action ->
                     when(action) {
