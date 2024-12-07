@@ -8,9 +8,5 @@
     </style>
 
     <style name="Theme.Eventify" parent="android:Theme.Material.Light.NoActionBar" >
-        <item name="windowSplashScreenBackground">#FF74F6A7</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/launch_text</item>
-        <item name="postSplashScreenTheme">@style/Theme.Eventify</item>
-
     </style>
 </resources>
