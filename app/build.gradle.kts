@@ -120,6 +120,9 @@ dependencies {
     // Permissions
     implementation(libs.accompanist.permissions)
 
+    // Splash screen
+    implementation(libs.androidx.core.splashscreen)
+
 }
 
 tasks.withType<Test>().configureEach {

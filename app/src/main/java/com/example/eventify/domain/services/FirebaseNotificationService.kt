@@ -20,10 +20,7 @@ import javax.inject.Inject
 import kotlin.random.Random
 
 
-@AndroidEntryPoint
 class FirebaseNotificationService: FirebaseMessagingService() {
-    @Inject lateinit var m: EventsRepository
-
     override fun onMessageReceived(message: RemoteMessage) {
         // Respond to received message
         Timber.d("<onMessageReceived ${message.notification?.title}>")
@@ -57,10 +54,8 @@ class FirebaseNotificationService: FirebaseMessagingService() {
 
         val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(channelId, channelId, NotificationManager.IMPORTANCE_DEFAULT)
-            manager.createNotificationChannel(channel)
-        }
+        val channel = NotificationChannel(channelId, channelId, NotificationManager.IMPORTANCE_DEFAULT)
+        manager.createNotificationChannel(channel)
 
         manager.notify(Random.nextInt(), notificationBuilder.build())
     }

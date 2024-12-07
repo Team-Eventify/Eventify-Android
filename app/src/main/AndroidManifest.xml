@@ -14,13 +14,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Eventify"
+        android:theme="@style/Theme.SplashScreen.Started"
         tools:targetApi="31">
         <activity
             android:name=".presentation.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Eventify">
+            android:theme="@style/Theme.SplashScreen.Started">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
