@@ -5,6 +5,7 @@ plugins {
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
     id("kotlinx-serialization")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -67,6 +68,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.firebase.messaging)
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -111,6 +113,13 @@ dependencies {
 
     // JWT
     implementation(libs.java.jwt)
+
+    // Firebase
+    implementation(libs.firebase.bom)
+
+    // Permissions
+    implementation(libs.accompanist.permissions)
+
 }
 
 tasks.withType<Test>().configureEach {
