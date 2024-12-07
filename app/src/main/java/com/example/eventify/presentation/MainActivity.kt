@@ -1,6 +1,8 @@
 package com.example.eventify.presentation
 
 import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -20,6 +22,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -64,6 +68,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        RequestNotificationPermission()
 
         setContent {
             EventifyTheme {
@@ -163,5 +168,23 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+    private fun RequestNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+            val hasPermission = ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_GRANTED
+
+            if (!hasPermission){
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                    0
+                )
+            }
+        }
+    }
+    
 }
 
