@@ -9,6 +9,9 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -16,6 +19,8 @@ import com.example.eventify.presentation.models.UserShortInfo
 import com.example.eventify.presentation.ui.profile.components.ActionSettingsItem
 import com.example.eventify.presentation.ui.profile.components.SettingsBlock
 import com.example.eventify.presentation.ui.profile.components.BaseSettingsItem
+import com.example.eventify.presentation.ui.profile.components.DeleteAccountDialog
+import com.example.eventify.presentation.ui.profile.components.LogOutDialog
 import com.example.eventify.presentation.ui.profile.components.NavigationSettingsItem
 import com.example.eventify.presentation.ui.profile.components.UserProfilePanel
 import com.example.eventify.presentation.ui.theme.EventifyTheme
@@ -25,6 +30,33 @@ fun ProfileScreen(
     state: ProfileState,
     actions: ProfileActions,
 ) {
+    val openLogOutDialog = remember { mutableStateOf(false) }
+    val openDeleteAccountDialog = remember { mutableStateOf(false) }
+
+
+    when {
+        openLogOutDialog.value -> {
+            LogOutDialog(
+                onDismissRequest = {
+                    openLogOutDialog.value = false
+                },
+                onConfirmation = {
+                    openLogOutDialog.value = false
+                    actions.onLogOut()
+                }
+            )
+        }
+        openDeleteAccountDialog.value -> {
+            DeleteAccountDialog(
+                onDismissRequest = {
+                    openDeleteAccountDialog.value = false
+                },
+                onConfirmation = {
+                    openLogOutDialog.value = false
+                }
+            )
+        }
+    }
 
     Column(
         verticalArrangement = Arrangement.spacedBy(12.dp),
@@ -52,7 +84,7 @@ fun ProfileScreen(
             ActionSettingsItem(
                 text = "Выйти из аккаунта",
                 onClick = {
-                    actions.onLogOut()
+                    openLogOutDialog.value = true
                 }
             )
         }
@@ -60,7 +92,9 @@ fun ProfileScreen(
         SettingsBlock {
             ActionSettingsItem(
                 text = "Удалить аккаунт",
-                onClick = {}
+                onClick = {
+                    openDeleteAccountDialog.value = true
+                }
             )
         }
     }
