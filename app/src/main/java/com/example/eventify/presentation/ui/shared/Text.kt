@@ -31,13 +31,12 @@ fun AnnotationText(
     textDecoration: TextDecoration = TextDecoration.None,
     textAlign: TextAlign = TextAlign.Left,
     modifier: Modifier = Modifier,
-
 ) {
     Text(
         text = text,
-        fontSize = 17.sp,
-        fontWeight = FontWeight.Normal,
-        lineHeight = 17.sp,
+        fontSize = 15.sp,
+        fontWeight = FontWeight.Light,
+        lineHeight = 20.sp,
         textDecoration = textDecoration,
         textAlign = textAlign,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
