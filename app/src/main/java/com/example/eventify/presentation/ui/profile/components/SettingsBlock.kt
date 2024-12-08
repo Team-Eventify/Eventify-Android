@@ -77,9 +77,10 @@ fun BaseSettingsItem(
 
 @Composable
 fun SettingsItemText(
-    text: String
+    text: String,
+    color: Color = MaterialTheme.colorScheme.onSurface
 ) {
-    Text(text = text)
+    Text(text = text, color = color)
 }
 
 @Composable
@@ -126,7 +127,18 @@ fun ActionSettingsItem(
     )
 }
 
-
+@Composable
+fun ImportantActionSettingsItem(
+    text: String,
+    onClick: (() -> Unit)?
+) {
+    BaseSettingsItem(
+        content = {
+            SettingsItemText(text, color = MaterialTheme.colorScheme.error)
+        },
+        onClick = onClick
+    )
+}
 
 
 @Preview(name = "SettingsBlock")

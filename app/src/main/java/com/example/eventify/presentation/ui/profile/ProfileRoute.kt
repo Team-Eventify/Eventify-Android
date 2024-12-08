@@ -28,6 +28,7 @@ fun rememberProfileActions(coordinator: ProfileCoordinator): ProfileActions {
     return remember(coordinator) {
         ProfileActions(
             onLogOut = coordinator.viewModel::logOut,
+            onDeleteAccount = coordinator.viewModel::deleteAccount,
             navigateToProfileEdit = coordinator.viewModel::navigateToEditProfile
         )
     }

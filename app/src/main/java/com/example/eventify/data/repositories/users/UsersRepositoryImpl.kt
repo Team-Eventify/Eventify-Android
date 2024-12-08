@@ -60,7 +60,7 @@ class UsersRepositoryImpl @Inject constructor(
         return categories ?: throw NullableResponseException()
     }
 
-    override suspend fun setUserCategories(userId: String, categories: List<CategorySlug>): Unit {
+    override suspend fun setUserCategories(userId: String, categories: List<CategorySlug>) {
         val response = dataSource.setUserCategories(userId = userId, categories = categories)
         when (response.code()) {
             404 -> throw CategoryNotFoundException()
@@ -70,11 +70,19 @@ class UsersRepositoryImpl @Inject constructor(
 
     override suspend fun getUserSubscribedEvents(userId: String): List<EventInfo> {
         val response = dataSource.getUserSubscribedEvents(userId = userId)
-        val events = when (response.code()){
+        val events = when (response.code()) {
             200 -> response.body()?.map { it.toEventInfo() }
             404 -> emptyList()
             else -> null
         }
         return events ?: throw UnprocessedServerResponseException()
+    }
+
+    override suspend fun deleteUser(userId: String) {
+        val response = dataSource.deleteUserById(userId = userId)
+        when (response.code()){
+            200 -> {}
+            else -> throw UnprocessedServerResponseException()
+        }
     }
 }
