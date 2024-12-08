@@ -46,7 +46,7 @@ class TokenAuthenticator @Inject constructor(
     companion object {
         const val HEADER_AUTHORIZATION = "Authorization"
         const val TOKEN_TYPE = "Bearer"
-        const val MAX_RETRIES = 3
+        const val MAX_RETRIES = 4
     }
 
 }

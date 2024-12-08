@@ -2,6 +2,7 @@ package com.example.eventify.data.remote.api
 
 import com.example.eventify.data.models.CategoryInfo
 import com.example.eventify.data.remote.models.category.CategoryInfoResponse
+import com.example.eventify.data.remote.models.events.EventInfoResponse
 import com.example.eventify.data.remote.models.users.ChangeUserRequest
 import com.example.eventify.data.remote.models.users.UserInfoResponse
 import com.example.eventify.data.remote.utils.AuthRequired
@@ -29,5 +30,8 @@ interface UsersAPI {
 
     @PUT("{id}/categories")
     suspend fun setUserCategories(@Path("id") userId: String, @Body categories: List<CategorySlug>): Response<Unit>
+
+    @GET("{id}/events")
+    suspend fun getUserSubscribedEvents(@Path("id") userId: String): Response<List<EventInfoResponse>>
 
 }
