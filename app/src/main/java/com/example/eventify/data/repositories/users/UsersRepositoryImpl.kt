@@ -6,10 +6,12 @@ import com.example.eventify.data.exceptions.NullableResponseException
 import com.example.eventify.data.exceptions.UnprocessedServerResponseException
 import com.example.eventify.data.exceptions.UserNotFoundException
 import com.example.eventify.data.models.CategoryInfo
+import com.example.eventify.data.models.EventInfo
 import com.example.eventify.data.models.UserChange
 import com.example.eventify.data.models.UserInfo
 import com.example.eventify.data.remote.api.CategorySlug
 import com.example.eventify.data.remote.api.UsersAPI
+import com.example.eventify.data.remote.models.events.toEventInfo
 import com.example.eventify.data.remote.models.users.ChangeUserRequest
 import com.example.eventify.data.remote.models.users.toUserInfo
 import javax.inject.Inject
@@ -64,5 +66,15 @@ class UsersRepositoryImpl @Inject constructor(
             404 -> throw CategoryNotFoundException()
             403 -> throw AccessDeniedException()
         }
+    }
+
+    override suspend fun getUserSubscribedEvents(userId: String): List<EventInfo> {
+        val response = dataSource.getUserSubscribedEvents(userId = userId)
+        val events = when (response.code()){
+            200 -> response.body()?.map { it.toEventInfo() }
+            404 -> emptyList()
+            else -> null
+        }
+        return events ?: throw UnprocessedServerResponseException()
     }
 }
