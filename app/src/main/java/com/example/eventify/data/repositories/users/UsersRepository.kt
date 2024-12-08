@@ -9,5 +9,6 @@ interface UsersRepository {
     suspend fun changeUser(userId: String, user: UserChange): UserInfo
     suspend fun getUserInfo(userId: String): UserInfo
     suspend fun getUserCategories(userId: String): List<CategoryInfo>
-    suspend fun setUserCategories(userId: String, categories: List<CategorySlug>): Unit
+    suspend fun setUserCategories(userId: String, categories: List<CategorySlug>)
+    suspend fun deleteUser(userId: String)
 }

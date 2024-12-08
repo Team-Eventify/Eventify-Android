@@ -53,6 +53,7 @@ fun ProfileScreen(
                 },
                 onConfirmation = {
                     openLogOutDialog.value = false
+                    actions.onDeleteAccount()
                 }
             )
         }

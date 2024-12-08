@@ -58,11 +58,19 @@ class UsersRepositoryImpl @Inject constructor(
         return categories ?: throw NullableResponseException()
     }
 
-    override suspend fun setUserCategories(userId: String, categories: List<CategorySlug>): Unit {
+    override suspend fun setUserCategories(userId: String, categories: List<CategorySlug>) {
         val response = dataSource.setUserCategories(userId = userId, categories = categories)
         when (response.code()) {
             404 -> throw CategoryNotFoundException()
             403 -> throw AccessDeniedException()
+        }
+    }
+
+    override suspend fun deleteUser(userId: String) {
+        val response = dataSource.deleteUserById(userId = userId)
+        when (response.code()){
+            200 -> {}
+            else -> throw UnprocessedServerResponseException()
         }
     }
 }

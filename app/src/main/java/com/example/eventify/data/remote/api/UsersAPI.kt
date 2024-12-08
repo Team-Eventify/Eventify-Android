@@ -7,6 +7,7 @@ import com.example.eventify.data.remote.models.users.UserInfoResponse
 import com.example.eventify.data.remote.utils.AuthRequired
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.PATCH
 import retrofit2.http.PUT
@@ -29,5 +30,8 @@ interface UsersAPI {
 
     @PUT("{id}/categories")
     suspend fun setUserCategories(@Path("id") userId: String, @Body categories: List<CategorySlug>): Response<Unit>
+
+    @DELETE("{id}")
+    suspend fun deleteUserById(@Path("id") userId: String): Response<Unit>
 
 }
