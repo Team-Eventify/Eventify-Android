@@ -16,7 +16,11 @@ fun MyEventsRoute(
     val actions = rememberMyEventsActions(coordinator)
 
     // UI Rendering
-    MyEventsScreen(uiState, actions)
+    if (uiState.finishedEvents.isEmpty() && uiState.upComingEvents.isEmpty()){
+        EmptyMyEventsScreen()
+    } else {
+        MyEventsScreen(uiState, actions)
+    }
 }
 
 
