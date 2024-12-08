@@ -20,6 +20,7 @@ import com.example.eventify.presentation.ui.profile.components.ActionSettingsIte
 import com.example.eventify.presentation.ui.profile.components.SettingsBlock
 import com.example.eventify.presentation.ui.profile.components.BaseSettingsItem
 import com.example.eventify.presentation.ui.profile.components.DeleteAccountDialog
+import com.example.eventify.presentation.ui.profile.components.ImportantActionSettingsItem
 import com.example.eventify.presentation.ui.profile.components.LogOutDialog
 import com.example.eventify.presentation.ui.profile.components.NavigationSettingsItem
 import com.example.eventify.presentation.ui.profile.components.UserProfilePanel
@@ -91,7 +92,7 @@ fun ProfileScreen(
         }
 
         SettingsBlock {
-            ActionSettingsItem(
+            ImportantActionSettingsItem(
                 text = "Удалить аккаунт",
                 onClick = {
                     openDeleteAccountDialog.value = true
