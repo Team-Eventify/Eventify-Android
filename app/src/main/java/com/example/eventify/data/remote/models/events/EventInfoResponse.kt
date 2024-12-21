@@ -15,7 +15,9 @@ data class EventInfoResponse(
     val state: String,
     val title: String,
     val cover: String,
-    val location: String
+    val location: String,
+    val subscribed: Boolean,
+    val categories: List<String>? = null
 )
 
 fun EventInfoResponse.toEventInfo(): EventInfo = EventInfo(
