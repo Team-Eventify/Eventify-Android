@@ -13,6 +13,13 @@ class MockedEventRepositoryImpl : EventsRepository {
 
     override suspend fun getEventsList(filter: EventsFilterData?): List<EventInfo> = events
     override suspend fun getEventDetail(eventId: String): EventInfo = events.find { it.id == eventId } ?: throw Exception("Ивент с id=$eventId не найден.")
+    override suspend fun subscribeForEvent(eventId: String) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun unsubscribeForEvent(eventId: String, userId: String) {
+        TODO("Not yet implemented")
+    }
 
     private fun getRandomEventInfo(faker: Faker): EventInfo = EventInfo(
         id = UUID.randomUUID().toString(),
@@ -27,7 +34,8 @@ class MockedEventRepositoryImpl : EventsRepository {
         start = (faker.date().past(30, TimeUnit.DAYS).time / 1000).toInt(),
         end = (faker.date().past(60, TimeUnit.DAYS).time / 1000).toInt(),
         location = "",
-        cover = ""
+        cover = "",
+        subscribed = false
     )
 
 }

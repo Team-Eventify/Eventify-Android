@@ -6,4 +6,7 @@ import com.example.eventify.data.remote.models.events.EventsFilterData
 interface EventsRepository {
     suspend fun getEventsList(filter: EventsFilterData? = null): List<EventInfo>
     suspend fun getEventDetail(eventId: String): EventInfo
+
+    suspend fun subscribeForEvent(eventId: String): Unit
+    suspend fun unsubscribeForEvent(eventId: String, userId: String): Unit
 }

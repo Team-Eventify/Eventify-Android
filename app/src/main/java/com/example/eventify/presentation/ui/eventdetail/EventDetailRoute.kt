@@ -28,7 +28,9 @@ fun EventDetailRoute(
 fun rememberEventDetailActions(coordinator: EventDetailCoordinator): EventDetailActions {
     return remember(coordinator) {
         EventDetailActions(
-            navigateUp = coordinator::navigateUp
+            navigateUp = coordinator::navigateUp,
+            onSubscribe = coordinator.viewModel::subscribeForEvent,
+            onUnsubscribe = coordinator.viewModel::unsubscribeForEvent
         )
     }
 }

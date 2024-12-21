@@ -13,5 +13,7 @@ data class EventInfo(
     val start: Int,
     val state: String,
     val title: String,
-    val location: String
+    val location: String,
+    val subscribed: Boolean,
+    val categories: List<String>? = null
 )

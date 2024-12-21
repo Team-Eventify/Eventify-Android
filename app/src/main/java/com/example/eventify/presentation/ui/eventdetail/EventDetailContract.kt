@@ -16,4 +16,6 @@ data class EventDetailState(
  **/
 data class EventDetailActions(
     val navigateUp: () -> Unit,
+    val onSubscribe: () -> Unit,
+    val onUnsubscribe: () -> Unit
 )

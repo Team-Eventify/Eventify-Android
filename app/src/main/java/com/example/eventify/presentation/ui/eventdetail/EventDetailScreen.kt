@@ -126,10 +126,12 @@ fun EventDetailScreen(
                     Text(text = "MISIS", color = MaterialTheme.colorScheme.onSecondary, fontSize = 20.sp)
                 }
                 Spacer(modifier = Modifier.height(20.dp))
-                PrimaryButton(onClick = { }) {
+                PrimaryButton(onClick = actions.onSubscribe) {
                     PrimaryButtonText(text = "Я пойду!")
                 }
-
+                PrimaryButton(onClick = actions.onUnsubscribe) {
+                    PrimaryButtonText(text = "Я не пойду!")
+                }
 
             }
         }
@@ -156,11 +158,14 @@ private fun EventDetailScreenPreview() {
                 capacity = 0,
                 ownerID = "",
                 location = "",
-                cover = ""
+                cover = "",
+                subscribed = false
             )
         ),
         actions = EventDetailActions(
-            navigateUp = {}
+            navigateUp = {},
+            onUnsubscribe = {},
+            onSubscribe = {}
         )
     )
 }

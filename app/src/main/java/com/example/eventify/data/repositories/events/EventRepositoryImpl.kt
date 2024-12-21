@@ -41,4 +41,24 @@ class EventRepositoryImpl @Inject constructor(
         }
         return event ?: throw NullableResponseException("Ошибка сервера.")
     }
+
+    override suspend fun subscribeForEvent(eventId: String) {
+        val response = dataSource.subscribeForEvent(eventId = eventId)
+
+        when (response.code()){
+            200 -> {}
+            404 -> throw EventNotFoundException()
+            else -> throw UnprocessedServerResponseException()
+        }
+    }
+
+    override suspend fun unsubscribeForEvent(eventId: String, userId: String) {
+        val response = dataSource.unsubscribeForEvent(eventId = eventId, userId = userId)
+
+        when (response.code()){
+            200 -> {}
+            404 -> throw EventNotFoundException()
+            else -> throw UnprocessedServerResponseException()
+        }
+    }
 }

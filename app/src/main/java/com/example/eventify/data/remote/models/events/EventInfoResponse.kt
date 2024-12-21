@@ -33,5 +33,7 @@ fun EventInfoResponse.toEventInfo(): EventInfo = EventInfo(
     state = state,
     title = title,
     location = location,
-    cover = cover
+    cover = cover,
+    subscribed = subscribed,
+    categories = categories
 )
