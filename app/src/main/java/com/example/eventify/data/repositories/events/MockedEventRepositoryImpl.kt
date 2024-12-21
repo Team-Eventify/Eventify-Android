@@ -26,6 +26,8 @@ class MockedEventRepositoryImpl : EventsRepository {
         capacity = Random.nextInt(10, 200),
         start = (faker.date().past(30, TimeUnit.DAYS).time / 1000).toInt(),
         end = (faker.date().past(60, TimeUnit.DAYS).time / 1000).toInt(),
+        location = "",
+        cover = ""
     )
 
 }

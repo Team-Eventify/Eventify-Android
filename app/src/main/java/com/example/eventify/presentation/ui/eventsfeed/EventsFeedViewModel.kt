@@ -1,8 +1,8 @@
 package com.example.eventify.presentation.ui.eventsfeed
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import coil3.ImageLoader
 import com.example.eventify.domain.usecases.categories.GetCategoriesUseCase
 import com.example.eventify.domain.usecases.events.GetEventsUseCase
 import com.example.eventify.presentation.models.ShortEventItem
@@ -17,7 +17,8 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class EventsFeedViewModel @Inject constructor(
     private val getEventsUseCase: GetEventsUseCase,
-    private val getCategoriesUseCase: GetCategoriesUseCase
+    private val getCategoriesUseCase: GetCategoriesUseCase,
+    val imageLoader: ImageLoader
 ) : ViewModel() {
 
     private val _stateFlow: MutableStateFlow<EventsFeedState> = MutableStateFlow(EventsFeedState.default())
@@ -38,6 +39,7 @@ class EventsFeedViewModel @Inject constructor(
                         id = it.id,
                         title = it.title,
                         description = it.description,
+                        cover = it.cover,
                         start = it.start,
                         end = it.end
                     ) },
@@ -48,7 +50,7 @@ class EventsFeedViewModel @Inject constructor(
     }
 
     fun refreshData() {
-
+        loadData()
     }
 
 }

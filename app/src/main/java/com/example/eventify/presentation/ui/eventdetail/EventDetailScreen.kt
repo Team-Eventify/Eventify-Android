@@ -154,7 +154,9 @@ private fun EventDetailScreenPreview() {
                 moderated = false,
                 state = "",
                 capacity = 0,
-                ownerID = ""
+                ownerID = "",
+                location = "",
+                cover = ""
             )
         ),
         actions = EventDetailActions(

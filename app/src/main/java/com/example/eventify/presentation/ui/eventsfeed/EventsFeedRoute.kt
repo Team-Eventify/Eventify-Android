@@ -18,7 +18,7 @@ fun EventsFeedRoute(
     val actions = rememberEventsFeedActions(coordinator)
 
     // UI Rendering
-    EventsFeedScreen(uiState, actions)
+    EventsFeedScreen(uiState, actions, coordinator.imageLoader)
 }
 
 

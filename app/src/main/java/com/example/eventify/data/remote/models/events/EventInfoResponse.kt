@@ -13,7 +13,9 @@ data class EventInfoResponse(
     val ownerID: String,
     val start: Int,
     val state: String,
-    val title: String
+    val title: String,
+    val cover: String,
+    val location: String
 )
 
 fun EventInfoResponse.toEventInfo(): EventInfo = EventInfo(
@@ -27,5 +29,7 @@ fun EventInfoResponse.toEventInfo(): EventInfo = EventInfo(
     ownerID = ownerID,
     start = start,
     state = state,
-    title = title
+    title = title,
+    location = location,
+    cover = cover
 )

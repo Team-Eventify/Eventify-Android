@@ -82,8 +82,6 @@ dependencies {
     //Navigation
     implementation(libs.androidx.navigation.compose)
 
-    //Images
-    implementation(libs.coil.compose)
 
     // Network API
     implementation(libs.retrofit)
@@ -122,6 +120,10 @@ dependencies {
 
     // Splash screen
     implementation(libs.androidx.core.splashscreen)
+
+    // Coil images
+    implementation(libs.coil3.coil.compose)
+    implementation(libs.coil.network.okhttp)
 
 }
 
