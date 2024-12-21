@@ -24,5 +24,6 @@ data class MyEventsState(
  * passed to the coordinator to handle
  **/
 data class MyEventsActions(
-    val onRefresh: () -> Unit
+    val onRefresh: () -> Unit,
+    val navigateToEvent: (String) -> Unit
 )

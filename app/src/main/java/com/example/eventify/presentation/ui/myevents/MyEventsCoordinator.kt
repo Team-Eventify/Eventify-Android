@@ -3,6 +3,7 @@ package com.example.eventify.presentation.ui.myevents
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.eventify.presentation.navigation.navgraphs.RootRouter
 
 /**
  * Screen's coordinator which is responsible for handling actions from the UI layer
@@ -12,6 +13,7 @@ class MyEventsCoordinator(
     val viewModel: MyEventsViewModel
 ) {
     val screenStateFlow = viewModel.stateFlow
+
 }
 
 @Composable

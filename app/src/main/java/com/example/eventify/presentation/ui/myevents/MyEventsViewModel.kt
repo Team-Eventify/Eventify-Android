@@ -2,12 +2,15 @@ package com.example.eventify.presentation.ui.myevents
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import com.example.eventify.data.models.UserInfo
 import com.example.eventify.data.repositories.events.EventsRepository
 import com.example.eventify.data.repositories.tokens.TokenManager
 import com.example.eventify.domain.usecases.account.GetCurrentUserUseCase
 import com.example.eventify.domain.usecases.events.GetSubscribedEventsUseCase
 import com.example.eventify.presentation.models.ShortEventItem
+import com.example.eventify.presentation.navigation.Navigator
+import com.example.eventify.presentation.navigation.navgraphs.RootRouter
 import com.example.eventify.presentation.ui.SnackbarController
 import com.example.eventify.presentation.ui.SnackbarEvent
 import com.example.eventify.presentation.ui.profileedit.ProfileEditState
@@ -26,7 +29,8 @@ import java.util.Date
 @HiltViewModel
 class MyEventsViewModel @Inject constructor(
     private val getSubscribedEventsUseCase: GetSubscribedEventsUseCase,
-    private val tokenManager: TokenManager
+    private val tokenManager: TokenManager,
+    private val navigator: Navigator
 ) : ViewModel() {
 
     private val _stateFlow: MutableStateFlow<MyEventsState> = MutableStateFlow(MyEventsState.default())
@@ -93,6 +97,12 @@ class MyEventsViewModel @Inject constructor(
 
     fun refresh(){
         loadData()
+    }
+
+    fun navigateToEvent(eventId: String) {
+        viewModelScope.launch {
+            navigator.navigate(RootRouter.EventDetailRoute(eventId))
+        }
     }
 
 }

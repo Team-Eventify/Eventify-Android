@@ -28,6 +28,7 @@ fun MyEventsScreen(
     state: MyEventsState,
     actions: MyEventsActions,
 ) {
+
     val swipeRefreshState = rememberSwipeRefreshState(state.isRefreshing)
 
     SwipeRefresh(
@@ -44,17 +45,24 @@ fun MyEventsScreen(
                     HeadingText(text = "Предстоящие мероприятия")
             }
             items(state.upComingEvents) { event ->
-                UpComingEventCard(event = event)
+                UpComingEventCard(
+                    event = event,
+                    onClick = actions.navigateToEvent
+                )
             }
 
 
             item {
-                if (state.finishedEvents.isNotEmpty())
+                if (state.finishedEvents.isNotEmpty()){
                     Spacer(modifier = Modifier.height(10.dp))
                     HeadingText(text = "Прошедшие мероприятия")
+                }
             }
             items(state.finishedEvents) { event ->
-                FinishedEventCard(event = event)
+                FinishedEventCard(
+                    event = event,
+                    onClick = actions.navigateToEvent
+                )
             }
         }
 
@@ -119,7 +127,8 @@ private fun MyEventsScreenDefaultDarkPreview() {
                     )
                 ),
                 actions = MyEventsActions(
-                    onRefresh = {}
+                    onRefresh = {},
+                    navigateToEvent = {}
                 )
             )
         }
@@ -181,7 +190,8 @@ private fun MyEventsScreenDefaultLightPreview() {
                     )
                 ),
                 actions = MyEventsActions(
-                    onRefresh = {}
+                    onRefresh = {},
+                    navigateToEvent = {}
                 )
             )
         }

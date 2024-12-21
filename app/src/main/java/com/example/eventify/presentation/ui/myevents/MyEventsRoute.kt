@@ -28,7 +28,8 @@ fun MyEventsRoute(
 fun rememberMyEventsActions(coordinator: MyEventsCoordinator): MyEventsActions {
     return remember(coordinator) {
         MyEventsActions(
-            onRefresh = coordinator.viewModel::refresh
+            onRefresh = coordinator.viewModel::refresh,
+            navigateToEvent = coordinator.viewModel::navigateToEvent
         )
     }
 }
