@@ -1,9 +1,13 @@
 package com.example.eventify.presentation.ui.myevents
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Surface
@@ -30,29 +34,30 @@ fun MyEventsScreen(
         state = swipeRefreshState,
         onRefresh = actions.onRefresh
     ){
-        Column(
-            modifier = Modifier
-                .padding(horizontal = 10.dp)
-                .verticalScroll(rememberScrollState())
+
+        LazyColumn(
+            contentPadding = PaddingValues(horizontal = 10.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            if (state.upComingEvents.isNotEmpty()) {
-                HeadingText(text = "Предстоящие мероприятия")
+            item {
+                if (state.upComingEvents.isNotEmpty())
+                    HeadingText(text = "Предстоящие мероприятия")
             }
-            Spacer(modifier = Modifier.height(20.dp))
-            state.upComingEvents.forEach { event ->
+            items(state.upComingEvents) { event ->
                 UpComingEventCard(event = event)
-                Spacer(modifier = Modifier.height(10.dp))
             }
 
-            if (state.finishedEvents.isNotEmpty()){
-                HeadingText(text = "Прошедшие мероприятия")
+
+            item {
+                if (state.finishedEvents.isNotEmpty())
+                    Spacer(modifier = Modifier.height(10.dp))
+                    HeadingText(text = "Прошедшие мероприятия")
             }
-            Spacer(modifier = Modifier.height(20.dp))
-            state.finishedEvents.forEach { event ->
+            items(state.finishedEvents) { event ->
                 FinishedEventCard(event = event)
-                Spacer(modifier = Modifier.height(10.dp))
             }
         }
+
     }
 
 }

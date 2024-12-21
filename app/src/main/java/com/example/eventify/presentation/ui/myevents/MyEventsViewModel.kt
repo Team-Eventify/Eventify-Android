@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.eventify.data.models.UserInfo
 import com.example.eventify.data.repositories.events.EventsRepository
+import com.example.eventify.data.repositories.tokens.TokenManager
 import com.example.eventify.domain.usecases.account.GetCurrentUserUseCase
 import com.example.eventify.domain.usecases.events.GetSubscribedEventsUseCase
 import com.example.eventify.presentation.models.ShortEventItem
@@ -19,18 +20,18 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.lang.Exception
+import java.time.LocalDate
+import java.util.Date
 
 @HiltViewModel
 class MyEventsViewModel @Inject constructor(
-    val getCurrentUserUseCase: GetCurrentUserUseCase,
-    val getSubscribedEventsUseCase: GetSubscribedEventsUseCase
+    private val getSubscribedEventsUseCase: GetSubscribedEventsUseCase,
+    private val tokenManager: TokenManager
 ) : ViewModel() {
 
     private val _stateFlow: MutableStateFlow<MyEventsState> = MutableStateFlow(MyEventsState.default())
     val stateFlow: StateFlow<MyEventsState> = _stateFlow.asStateFlow()
 
-    private val _currentUser: MutableStateFlow<UserInfo?> = MutableStateFlow(null)
-    val currentUser: StateFlow<UserInfo?> = _currentUser.asStateFlow()
 
     init {
         loadData()
@@ -66,19 +67,21 @@ class MyEventsViewModel @Inject constructor(
     private suspend fun loadSubscribedEvents(){
         // TODO refactor this block
 
-        _currentUser.value = getCurrentUserUseCase()
         _stateFlow.update { currentState ->
-            currentUser.value?.run {
+            tokenManager.getUserId()?.let { userId ->
+                val currentDateTime = Date().time
+                val events = getSubscribedEventsUseCase(userId).map {
+                    ShortEventItem(
+                        id = it.id,
+                        title = it.title,
+                        description = it.description,
+                        start = it.start,
+                        end = it.end
+                    )
+                }
                 currentState.copy(
-                    upComingEvents = getSubscribedEventsUseCase(id).map {
-                        ShortEventItem(
-                            id = it.id,
-                            title = it.title,
-                            description = it.description,
-                            start = it.start,
-                            end = it.end
-                        )
-                    }
+                    upComingEvents = events.filter { it.start >= currentDateTime },
+                    finishedEvents = events.filter { it.end < currentDateTime }
                 )
             } ?: MyEventsState.default()
         }
