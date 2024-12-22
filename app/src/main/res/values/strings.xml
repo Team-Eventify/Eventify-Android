@@ -20,4 +20,8 @@
     <string name="not_implemented_screen_message">This screen will be later.</string>
     <string name="firebase_notification_channel_id" translatable="false">firebase_notification_channel</string>
     <string name="update">Update</string>
+    <string name="events_feed_title">Events feed</string>
+    <string name="search_title">Search</string>
+    <string name="my_events_title">My events</string>
+    <string name="profile_title">Profile</string>
 </resources>

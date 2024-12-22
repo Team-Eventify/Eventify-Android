@@ -20,4 +20,8 @@
     <string name="organizer">Организатор</string>
     <string name="not_implemented_screen_message">Этот экран будет позже.</string>
     <string name="update">Обновить</string>
+    <string name="events_feed_title">Главная</string>
+    <string name="search_title">Поиск</string>
+    <string name="my_events_title">Мои события</string>
+    <string name="profile_title">Профиль</string>
 </resources>

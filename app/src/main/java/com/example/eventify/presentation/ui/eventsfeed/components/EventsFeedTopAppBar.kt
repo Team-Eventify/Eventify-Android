@@ -8,7 +8,9 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.eventify.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -24,7 +26,7 @@ fun EventsFeedTopAppBar(
         ),
         modifier = modifier,
         title = {
-            Text("Events Feed")
+            Text(stringResource(R.string.events_feed_title))
         }
     )
 }

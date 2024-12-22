@@ -6,6 +6,8 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.res.stringResource
+import com.example.eventify.R
 import com.example.eventify.presentation.models.ScaffoldViewState
 import com.example.eventify.presentation.ui.shared.DefaultTopAppBar
 
@@ -24,7 +26,7 @@ fun ProfileRoute(
         scaffoldViewState.value = scaffoldViewState.value.copy(
             showBottomBar = true,
             topBar = {
-                DefaultTopAppBar(title = "Profile")
+                DefaultTopAppBar(title = stringResource(R.string.profile))
             }
         )
     }
