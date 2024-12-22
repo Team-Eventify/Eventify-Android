@@ -125,6 +125,8 @@ dependencies {
     implementation(libs.coil3.coil.compose)
     implementation(libs.coil.network.okhttp)
 
+    implementation(libs.androidx.activity.ktx)
+
 }
 
 tasks.withType<Test>().configureEach {
