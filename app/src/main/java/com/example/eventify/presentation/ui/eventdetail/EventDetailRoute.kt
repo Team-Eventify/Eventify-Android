@@ -30,6 +30,7 @@ fun EventDetailRoute(
 
     LaunchedEffect(Unit) {
         scaffoldViewState.value = scaffoldViewState.value.copy(
+            showBottomBar = false,
             topBar = {
                 EventDetailTopAppBar(
                     title = uiState.event!!.title,

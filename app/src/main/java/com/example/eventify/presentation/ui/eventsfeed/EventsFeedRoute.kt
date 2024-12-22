@@ -32,6 +32,7 @@ fun EventsFeedRoute(
 
     LaunchedEffect(Unit) {
         scaffoldViewState.value = scaffoldViewState.value.copy(
+            showBottomBar = true,
             topBar = {
                 EventsFeedTopAppBar(
                     scrollBehavior = scrollBehavior

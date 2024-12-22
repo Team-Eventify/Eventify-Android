@@ -24,8 +24,8 @@ fun MainNavHost(
         modifier = Modifier.then(modifier)
     ){
         HomeNavGraph(navController = navController, scaffoldViewState = scaffoldViewState)
-        AuthNavGraph()
-        SettingsNavGraph()
+        AuthNavGraph(scaffoldViewState = scaffoldViewState)
+        SettingsNavGraph(scaffoldViewState = scaffoldViewState)
         
         composable<RootRouter.EventDetailRoute>{
             EventDetailRoute(

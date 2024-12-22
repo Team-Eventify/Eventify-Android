@@ -22,6 +22,7 @@ fun MyEventsRoute(
 
     LaunchedEffect(Unit) {
         scaffoldViewState.value = scaffoldViewState.value.copy(
+            showBottomBar = true,
             topBar = {
                 DefaultTopAppBar(
                     title = "My Events"

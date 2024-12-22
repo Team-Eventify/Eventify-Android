@@ -1,13 +1,17 @@
 package com.example.eventify.presentation.ui.profileedit
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.eventify.presentation.models.ScaffoldViewState
 
 @Composable
 fun ProfileEditRoute(
+    scaffoldViewState: MutableState<ScaffoldViewState>,
     coordinator: ProfileEditCoordinator = rememberProfileEditCoordinator()
 ) {
     // State observing and declarations
@@ -17,6 +21,12 @@ fun ProfileEditRoute(
 
     // UI Actions
     val actions = rememberProfileEditActions(coordinator)
+
+    LaunchedEffect(Unit) {
+        scaffoldViewState.value = scaffoldViewState.value.copy(
+            showBottomBar = false
+        )
+    }
 
     // UI Rendering
     if (currentUserState != null){

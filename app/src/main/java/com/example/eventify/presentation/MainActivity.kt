@@ -144,14 +144,16 @@ class MainActivity : ComponentActivity() {
                         }
                     }
 
-                    val scaffoldState = remember { mutableStateOf(ScaffoldViewState(
-                        bottomBar = { BottomNavigationBar(navController) },
-                    )) }
+                    val scaffoldState = remember { mutableStateOf(ScaffoldViewState()) }
+
 
                     Scaffold(
                         modifier = scaffoldState.value.modifier,
                         topBar = scaffoldState.value.topBar,
-                        bottomBar = scaffoldState.value.bottomBar,
+                        bottomBar = {
+                            if (scaffoldState.value.showBottomBar)
+                                BottomNavigationBar(navController)
+                        },
                         snackbarHost = scaffoldState.value.snackbarHost,
                         floatingActionButton = scaffoldState.value.floatingActionButton,
                         floatingActionButtonPosition = scaffoldState.value.floatingActionButtonPosition

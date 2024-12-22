@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 data class ScaffoldViewState(
     val modifier: Modifier = Modifier,
     val topBar: @Composable () -> Unit = {},
-    val bottomBar: @Composable () -> Unit = {},
+    val showBottomBar: Boolean = true,
     val snackbarHost: @Composable () -> Unit = {},
     val floatingActionButton: @Composable () -> Unit = {},
     val floatingActionButtonPosition: FabPosition = FabPosition.End,
