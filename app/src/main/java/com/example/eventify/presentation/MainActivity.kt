@@ -89,7 +89,6 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             EventifyTheme {
-
                 LaunchedEffect(true) {
                     lifecycleScope.launch {
                         val token = Firebase.messaging.token.await()
@@ -147,13 +146,12 @@ class MainActivity : ComponentActivity() {
 
                     val scaffoldState = remember { mutableStateOf(ScaffoldViewState(
                         bottomBar = { BottomNavigationBar(navController) },
-                        showBottomBar = true
                     )) }
 
                     Scaffold(
                         modifier = scaffoldState.value.modifier,
                         topBar = scaffoldState.value.topBar,
-                        bottomBar = { if (scaffoldState.value.showBottomBar) scaffoldState.value.bottomBar else {} },
+                        bottomBar = scaffoldState.value.bottomBar,
                         snackbarHost = scaffoldState.value.snackbarHost,
                         floatingActionButton = scaffoldState.value.floatingActionButton,
                         floatingActionButtonPosition = scaffoldState.value.floatingActionButtonPosition
@@ -165,30 +163,6 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier.padding(innerPadding)
                         )
                     }
-
-//                    Scaffold(
-//                        snackbarHost = {
-//                            SnackbarHost(hostState = snackbarHostState)
-//                        },
-//                        bottomBar = {
-//                            val currentRoute =
-//                                navController.currentBackStackEntryAsState().value?.destination?.route
-//                            val homeRoutes =
-//                                HomeRouter::class.sealedSubclasses.mapNotNull { it.objectInstance }
-//                            val isHomeRoute = homeRoutes.any {
-//                                it::class.java.canonicalName == currentRoute
-//                            }
-//                            if (isHomeRoute) {
-//                                BottomNavigationBar(navController = navController)
-//                            }
-//                        }
-//                    ) { innerPadding ->
-//
-//                        MainNavHost(
-//                            navController = navController,
-//                            startDestination = currentDist
-//                        )
-//                    }
 
                     val connectionState by rememberConnectivityState()
 

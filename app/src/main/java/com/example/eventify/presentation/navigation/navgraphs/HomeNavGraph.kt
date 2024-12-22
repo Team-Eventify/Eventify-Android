@@ -30,7 +30,9 @@ fun NavGraphBuilder.HomeNavGraph(
             NotImplementedScreen()
         }
         composable<HomeRouter.SelfEvents> {
-            MyEventsRoute()
+            MyEventsRoute(
+                scaffoldViewState = scaffoldViewState
+            )
         }
     }
 }
