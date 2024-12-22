@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -32,6 +33,7 @@ import com.example.eventify.presentation.models.time
 import com.example.eventify.presentation.ui.shared.BodyText
 import com.example.eventify.presentation.ui.shared.EventCardTitle
 import com.example.eventify.presentation.ui.shared.EventInfoChip
+import com.example.eventify.presentation.ui.theme.EventifyTheme
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -79,17 +81,42 @@ fun EventCard(
     }
 }
 
-//@Preview(name = "EventCard", showSystemUi = true, showBackground = true)
-//@Composable
-//private fun PreviewEventCard() {
-//    EventCard(
-//        event = ShortEventItem(
-//            id = "",
-//            title = "",
-//            description = "",
-//            start = 1324412412,
-//            end = 1324419999
-//        ),
-//        onClick = {}
-//    )
-//}
+@Preview(name = "EventCardDark")
+@Composable
+private fun PreviewEventCardDark() {
+    EventifyTheme(darkTheme = true) {
+        Surface {
+            EventCard(
+                event = ShortEventItem(
+                    id = "",
+                    title = "День открытых дверей",
+                    description = "Дни открытых дверей — это уникальная возможность для старшеклассников больше узнать о специальностях, которым обучают в Унивеситете МИСИС.",
+                    start = 1324412412,
+                    end = 1324419999
+                ),
+                onClick = {},
+                imageLoader = ImageLoader(LocalContext.current)
+            )
+        }
+    }
+}
+
+@Preview(name = "EventCardLight")
+@Composable
+private fun PreviewEventCardLight() {
+    EventifyTheme(darkTheme = false) {
+        Surface {
+            EventCard(
+                event = ShortEventItem(
+                    id = "",
+                    title = "День открытых дверей",
+                    description = "Дни открытых дверей — это уникальная возможность для старшеклассников больше узнать о специальностях, которым обучают в Унивеситете МИСИС.",
+                    start = 1324412412,
+                    end = 1324419999
+                ),
+                onClick = {},
+                imageLoader = ImageLoader(LocalContext.current)
+            )
+        }
+    }
+}
