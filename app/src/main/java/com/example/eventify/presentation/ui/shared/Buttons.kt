@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,10 +37,59 @@ fun PrimaryButton(
     )
 }
 
+
+@Composable
+fun PrimaryDeclineButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    content: @Composable() (RowScope.() -> Unit)
+) {
+    Button(
+        onClick = onClick,
+        shape = RoundedCornerShape(10.dp),
+        contentPadding = PaddingValues(40.dp, 12.dp),
+        modifier = modifier
+            .fillMaxWidth(),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.errorContainer
+        ),
+        enabled = enabled,
+        content = content
+    )
+}
+
+@Preview
+@Composable
+private fun PrimaryDeclineButtonDarkPreview() {
+    EventifyTheme(darkTheme = true) {
+        Surface {
+            PrimaryDeclineButton(
+                onClick = {}
+            ){
+                PrimaryButtonText(text = "Text")
+            }
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun PrimaryDeclineButtonLightPreview() {
+    EventifyTheme {
+        Surface {
+            PrimaryDeclineButton(
+                onClick = {}
+            ){
+                PrimaryButtonText(text = "Text")
+            }
+        }
+    }
+}
+
 @Composable
 fun UpdateStatusButton(
     text: String,
-
     onClick: () -> Unit
 ) {
     Button(
@@ -55,9 +105,35 @@ fun UpdateStatusButton(
     }
 }
 
+@Preview
+@Composable
+private fun PrimaryButtonDarkPreview() {
+    EventifyTheme(darkTheme = true) {
+        Surface {
+            PrimaryButton(onClick = { /*TODO*/ }) {
+                PrimaryButtonText(text = "Text")
+            }
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun PrimaryButtonLightPreview() {
+    EventifyTheme {
+        Surface {
+            PrimaryButton(onClick = { /*TODO*/ }) {
+                PrimaryButtonText(text = "Text")
+            }
+        }
+    }
+}
+
+
+
 @Preview("UpdateStatusButtonDark")
 @Composable
-private fun UpdateStatusButtonDark() {
+private fun UpdateStatusButtonDarkPreview() {
     EventifyTheme(darkTheme = true) {
         Surface {
             UpdateStatusButton(
@@ -69,15 +145,15 @@ private fun UpdateStatusButtonDark() {
 }
 
 
-//@Composable
-//fun FavouriteButton(
-//    isChecked: Boolean,
-//    onCheckChanged: (Boolean) -> Unit
-//) {
-//    IconToggleButton(
-//        checked = isChecked,
-//        onCheckedChange = onCheckChanged
-//    ){
-//        Icon(painter = , contentDescription = )
-//    }
-//}
+@Preview("UpdateStatusButtonLight")
+@Composable
+private fun UpdateStatusButtonLightPreview() {
+    EventifyTheme {
+        Surface {
+            UpdateStatusButton(
+                text = "Text",
+                onClick = {}
+            )
+        }
+    }
+}

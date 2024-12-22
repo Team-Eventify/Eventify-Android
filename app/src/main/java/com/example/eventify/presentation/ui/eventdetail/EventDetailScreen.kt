@@ -31,6 +31,7 @@ import com.example.eventify.presentation.ui.shared.BodyText
 import com.example.eventify.presentation.ui.shared.ChipInfo
 import com.example.eventify.presentation.ui.shared.PrimaryButton
 import com.example.eventify.presentation.ui.shared.PrimaryButtonText
+import com.example.eventify.presentation.ui.shared.PrimaryDeclineButton
 import com.example.eventify.presentation.ui.shared.TagChip
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 
@@ -92,13 +93,16 @@ fun EventDetailScreen(
                 Text(text = "MISIS", color = MaterialTheme.colorScheme.onSecondary, fontSize = 20.sp)
             }
             Spacer(modifier = Modifier.height(20.dp))
-            PrimaryButton(onClick = actions.onSubscribe) {
-                PrimaryButtonText(text = "Я пойду!")
-            }
-            PrimaryButton(onClick = actions.onUnsubscribe) {
-                PrimaryButtonText(text = "Я не пойду!")
-            }
 
+            if (state.event.subscribed){
+                PrimaryDeclineButton(onClick = actions.onUnsubscribe) {
+                    PrimaryButtonText(text = "Отменить запись на мероприятие")
+                }
+            } else {
+                PrimaryButton(onClick = actions.onSubscribe) {
+                    PrimaryButtonText(text = "Я пойду!")
+                }
+            }
         }
     }
 }
