@@ -24,7 +24,7 @@ fun NavGraphBuilder.HomeNavGraph(
             EventsFeedRoute(navController = navController, scaffoldViewState = scaffoldViewState)
         }
         composable<HomeRouter.Profile> {
-            ProfileRoute()
+            ProfileRoute(scaffoldViewState = scaffoldViewState)
         }
         composable<HomeRouter.Search> {
             NotImplementedScreen()

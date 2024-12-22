@@ -14,4 +14,8 @@ data class ScaffoldViewState(
     val snackbarHost: @Composable () -> Unit = {},
     val floatingActionButton: @Composable () -> Unit = {},
     val floatingActionButtonPosition: FabPosition = FabPosition.End,
-)
+){
+    companion object {
+        fun default() = ScaffoldViewState()
+    }
+}

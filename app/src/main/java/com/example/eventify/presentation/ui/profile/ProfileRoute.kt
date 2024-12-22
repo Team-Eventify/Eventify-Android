@@ -1,12 +1,17 @@
 package com.example.eventify.presentation.ui.profile
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import com.example.eventify.presentation.models.ScaffoldViewState
+import com.example.eventify.presentation.ui.shared.DefaultTopAppBar
 
 @Composable
 fun ProfileRoute(
+    scaffoldViewState: MutableState<ScaffoldViewState>,
     coordinator: ProfileCoordinator = rememberProfileCoordinator()
 ) {
     // State observing and declarations
@@ -14,6 +19,14 @@ fun ProfileRoute(
 
     // UI Actions
     val actions = rememberProfileActions(coordinator)
+    
+    LaunchedEffect(Unit) {
+        scaffoldViewState.value = scaffoldViewState.value.copy(
+            topBar = {
+                DefaultTopAppBar(title = "Profile")
+            }
+        )
+    }
 
     // UI Rendering
     if (uiState.userInfo != null){
