@@ -40,7 +40,6 @@ data class BottomNavigationBarItem<T: HomeRouter>(
 @Composable
 fun BottomNavigationBar(
     navController: NavHostController,
-    modifier: Modifier = Modifier
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination

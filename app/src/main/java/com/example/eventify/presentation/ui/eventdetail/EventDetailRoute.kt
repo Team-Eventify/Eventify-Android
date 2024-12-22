@@ -1,14 +1,19 @@
 package com.example.eventify.presentation.ui.eventdetail
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import com.example.eventify.presentation.models.ScaffoldViewState
+import com.example.eventify.presentation.ui.eventdetail.components.EventDetailTopAppBar
 
 @Composable
 fun EventDetailRoute(
     navController: NavHostController,
+    scaffoldViewState: MutableState<ScaffoldViewState>,
     coordinator: EventDetailCoordinator = rememberEventDetailCoordinator(navController)
 ) {
     // State observing and declarations
@@ -17,10 +22,24 @@ fun EventDetailRoute(
     // UI Actions
     val actions = rememberEventDetailActions(coordinator)
 
+
+
     // UI Rendering
-    if (uiState.event != null){
-        EventDetailScreen(uiState, actions)
+    if (uiState.event == null) return
+
+
+    LaunchedEffect(Unit) {
+        scaffoldViewState.value = scaffoldViewState.value.copy(
+            topBar = {
+                EventDetailTopAppBar(
+                    title = uiState.event!!.title,
+                    onNavigateUp = actions.navigateUp
+                )
+            }
+        )
     }
+    EventDetailScreen(uiState, actions)
+
 }
 
 

@@ -44,34 +44,34 @@ fun EventDetailScreen(
     actions: EventDetailActions,
 ) {
     Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(text = state.event!!.title)
-                },
-                navigationIcon = {
-                    IconButton(
-                        onClick = actions.navigateUp
-                    ) {
-                        Icon(
-                            painter = painterResource(R.drawable.ic_chevron_right),
-                            contentDescription = ""
-                        )
-                    }
-                },
-                actions = {
-                    IconButton(
-                        onClick = { /*Share*/ }
-                    ) {
-                        Icon(
-                            painter = painterResource(R.drawable.ic_arrow_turn_up_right),
-                            contentDescription = ""
-                        )
-                    }
-
-                }
-            )
-        }
+//        topBar = {
+//            TopAppBar(
+//                title = {
+//                    Text(text = state.event!!.title)
+//                },
+//                navigationIcon = {
+//                    IconButton(
+//                        onClick = actions.navigateUp
+//                    ) {
+//                        Icon(
+//                            painter = painterResource(R.drawable.ic_chevron_right),
+//                            contentDescription = ""
+//                        )
+//                    }
+//                },
+//                actions = {
+//                    IconButton(
+//                        onClick = { /*Share*/ }
+//                    ) {
+//                        Icon(
+//                            painter = painterResource(R.drawable.ic_arrow_turn_up_right),
+//                            contentDescription = ""
+//                        )
+//                    }
+//
+//                }
+//            )
+//        }
     ) { paddingValue ->
         Column(
             modifier = Modifier

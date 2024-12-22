@@ -1,9 +1,11 @@
 package com.example.eventify.presentation.navigation.navgraphs
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.eventify.presentation.models.ScaffoldViewState
 import com.example.eventify.presentation.ui.eventdetail.EventDetailRoute
 import kotlinx.serialization.Serializable
 
@@ -11,7 +13,8 @@ import kotlinx.serialization.Serializable
 @Composable
 fun MainNavHost(
     navController: NavHostController,
-    startDestination: RootRouter = RootRouter.AuthRoute
+    startDestination: RootRouter = RootRouter.AuthRoute,
+    scaffoldViewState: MutableState<ScaffoldViewState>
 ) {
     NavHost(
         navController = navController,
@@ -22,7 +25,10 @@ fun MainNavHost(
         SettingsNavGraph()
         
         composable<RootRouter.EventDetailRoute>{
-            EventDetailRoute(navController = navController)
+            EventDetailRoute(
+                navController = navController,
+                scaffoldViewState = scaffoldViewState
+            )
         }
     }
 }

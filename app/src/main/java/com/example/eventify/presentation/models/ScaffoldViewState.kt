@@ -1,0 +1,19 @@
+package com.example.eventify.presentation.models
+
+import androidx.compose.material3.FabPosition
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
+import androidx.compose.ui.Modifier
+
+
+@Stable
+data class ScaffoldViewState(
+    val modifier: Modifier = Modifier,
+    val topBar: @Composable () -> Unit = {},
+    val showTopBar: Boolean = false,
+    val bottomBar: @Composable () -> Unit = {},
+    val showBottomBar: Boolean = false,
+    val snackbarHost: @Composable () -> Unit = {},
+    val floatingActionButton: @Composable () -> Unit = {},
+    val floatingActionButtonPosition: FabPosition = FabPosition.End,
+)

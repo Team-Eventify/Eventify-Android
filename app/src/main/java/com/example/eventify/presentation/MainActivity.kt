@@ -8,6 +8,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.magnifier
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -18,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -32,6 +34,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.eventify.data.repositories.tokens.TokenManager
 import com.example.eventify.domain.SessionManager
 import com.example.eventify.domain.di.RequestsSessionManager
+import com.example.eventify.presentation.models.ScaffoldViewState
 import com.example.eventify.presentation.navigation.NavigationAction
 import com.example.eventify.presentation.navigation.Navigator
 import com.example.eventify.presentation.navigation.navgraphs.HomeRouter
@@ -130,29 +133,49 @@ class MainActivity : ComponentActivity() {
                         }
                     }
 
-                    Scaffold(
-                        snackbarHost = {
-                            SnackbarHost(hostState = snackbarHostState)
-                        },
-                        bottomBar = {
-                            val currentRoute =
-                                navController.currentBackStackEntryAsState().value?.destination?.route
-                            val homeRoutes =
-                                HomeRouter::class.sealedSubclasses.mapNotNull { it.objectInstance }
-                            val isHomeRoute = homeRoutes.any {
-                                it::class.java.canonicalName == currentRoute
-                            }
-                            if (isHomeRoute) {
-                                BottomNavigationBar(navController = navController)
-                            }
-                        }
-                    ) { innerPadding ->
+                    val scaffoldState = remember { mutableStateOf(ScaffoldViewState(
+                        bottomBar = { BottomNavigationBar(navController) },
+                        showBottomBar = true
+                    )) }
 
+                    Scaffold(
+                        modifier = scaffoldState.value.modifier,
+                        topBar = scaffoldState.value.topBar,
+                        bottomBar = { if (scaffoldState.value.showBottomBar) scaffoldState.value.bottomBar else {} },
+                        snackbarHost = scaffoldState.value.snackbarHost,
+                        floatingActionButton = scaffoldState.value.floatingActionButton,
+                        floatingActionButtonPosition = scaffoldState.value.floatingActionButtonPosition
+                    ) { innerPadding ->
                         MainNavHost(
                             navController = navController,
-                            startDestination = currentDist
+                            startDestination = currentDist,
+                            scaffoldViewState = scaffoldState
                         )
                     }
+
+//                    Scaffold(
+//                        snackbarHost = {
+//                            SnackbarHost(hostState = snackbarHostState)
+//                        },
+//                        bottomBar = {
+//                            val currentRoute =
+//                                navController.currentBackStackEntryAsState().value?.destination?.route
+//                            val homeRoutes =
+//                                HomeRouter::class.sealedSubclasses.mapNotNull { it.objectInstance }
+//                            val isHomeRoute = homeRoutes.any {
+//                                it::class.java.canonicalName == currentRoute
+//                            }
+//                            if (isHomeRoute) {
+//                                BottomNavigationBar(navController = navController)
+//                            }
+//                        }
+//                    ) { innerPadding ->
+//
+//                        MainNavHost(
+//                            navController = navController,
+//                            startDestination = currentDist
+//                        )
+//                    }
 
                     val connectionState by rememberConnectivityState()
 
