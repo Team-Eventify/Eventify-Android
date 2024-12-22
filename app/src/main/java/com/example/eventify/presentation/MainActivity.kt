@@ -22,6 +22,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
@@ -64,14 +65,6 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
-        enableEdgeToEdge(
-            statusBarStyle = SystemBarStyle.light(
-                Color.Transparent.toArgb(), Color.Transparent.toArgb()
-            ),
-            navigationBarStyle = SystemBarStyle.light(
-                Color.Transparent.toArgb(), Color.Transparent.toArgb()
-            )
-        )
         super.onCreate(savedInstanceState)
         RequestNotificationPermission()
 
@@ -82,6 +75,17 @@ class MainActivity : ComponentActivity() {
                         val token = Firebase.messaging.token.await()
                         Timber.d(token)
                     }
+                }
+
+                LaunchedEffect(Unit) {
+                    enableEdgeToEdge(
+                        statusBarStyle = SystemBarStyle.light(
+                            Color.Transparent.toArgb(), Color.Transparent.toArgb()
+                        ),
+                        navigationBarStyle = SystemBarStyle.light(
+                            Color(0xFF232326).toArgb(), Color(0xFF232326).toArgb()
+                        )
+                    )
                 }
 
 

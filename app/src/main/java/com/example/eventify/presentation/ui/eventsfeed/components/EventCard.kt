@@ -13,6 +13,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -59,10 +60,12 @@ fun EventCard(
             error = painterResource(R.drawable.underfind_event_image),
             placeholder = painterResource(R.drawable.underfind_event_image),
             contentDescription = null,
-            contentScale = ContentScale.FillWidth,
+            contentScale = ContentScale.Crop,
+            alignment = Alignment.Center,
             imageLoader = imageLoader,
             modifier = Modifier
                 .fillMaxWidth()
+                .height(200.dp)
                 .clip(RoundedCornerShape(10.dp))
         )
         EventCardTitle(
