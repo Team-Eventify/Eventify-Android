@@ -10,7 +10,7 @@ class AccessTokenInterceptor @Inject constructor(
 ): Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request().newBuilder()
-
+        // TODO devide realization to with and without auth required checking
 //        if (chain.request().isAuthRequired()){
         val token = tokenManager.getAccessToken() ?: ""
         request.addHeader(HEADER_AUTHORIZATION, "$TOKEN_TYPE $token")

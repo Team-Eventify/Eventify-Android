@@ -12,15 +12,20 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.ImageLoader
 import com.example.eventify.R
+import com.example.eventify.presentation.models.ShortEventItem
 import com.example.eventify.presentation.ui.shared.CategoryCard
 import com.example.eventify.presentation.ui.eventsfeed.components.EventCard
 import com.example.eventify.presentation.ui.shared.HeadingText
+import com.example.eventify.presentation.ui.theme.EventifyTheme
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
@@ -76,91 +81,65 @@ fun EventsFeedScreen(
                 )
             }
         }
-//        Column(
-//
-//                .verticalScroll(rememberScrollState())
-//        ) {
-//            HeadingText(stringResource(R.string.popular_events))
-//
-//            state.events.forEach { event ->
-//                EventCard(
-//                    event = event,
-//                    onClick = {},
-//                    imageLoader = imageLoader,
-//                    modifier = Modifier
-//                        .animateContentSize()
-//                        .clickable {
-//                            actions.onEventClick(event.id)
-//                        }
-//                )
-//                HorizontalDivider()
-//            }
-//
-//            HeadingText(stringResource(R.string.categories_based_on_interests))
-//
-//            state.categories.forEach { category ->
-//                CategoryCard(
-//                    category = category,
-//                    onClick = { categoryid -> }
-//                )
-//            }
-//        }
     }
 }
 
-//@Composable
-//@Preview(name = "EventsFeed Default Dark", showBackground = true)
-//private fun EventsFeedScreenDefaultDarkPreview() {
-//    EventifyTheme(
-//        darkTheme = true
-//    ) {
-//        Surface {
-//            EventsFeedScreen(
-//                state = EventsFeedState(
-//                    categories = listOf(
-//
-//                    ),
-//                    events = listOf(
-//                        ShortEventItem(
-//                            id = "",
-//                            title = "День открытых дверей НИТУ МИСИС",
-//                            description = "Дни открытых дверей — это уникальная возможность для старшеклассников больше узнать о специальностях, которым обучают в Унивеситете МИСИС.",
-//                            start = 312313123,
-//                            end = 231121243
-//                        )
-//                    ),
-//                ),
-//                actions = EventsFeedActions.default()
-//            )
-//        }
-//    }
-//}
-//
-//@Composable
-//@Preview(name = "EventsFeed Default Light", showBackground = true)
-//private fun EventsFeedScreenDefaultLightPreview() {
-//    EventifyTheme(
-//        darkTheme = false
-//    ) {
-//        Surface {
-//            EventsFeedScreen(
-//                state = EventsFeedState(
-//                    categories = listOf(
-//
-//                    ),
-//                    events = listOf(
-//                        ShortEventItem(
-//                            id = "",
-//                            title = "День открытых дверей НИТУ МИСИС",
-//                            description = "Дни открытых дверей — это уникальная возможность для старшеклассников больше узнать о специальностях, которым обучают в Унивеситете МИСИС.",
-//                            start = 312313123,
-//                            end = 231121243
-//                        )
-//                    ),
-//                ),
-//                actions = EventsFeedActions.default()
-//            )
-//        }
-//    }
-//}
-//
+@Composable
+@Preview(name = "EventsFeed Default Dark", showBackground = true)
+private fun EventsFeedScreenDefaultDarkPreview() {
+    EventifyTheme(
+        darkTheme = true
+    ) {
+        Surface {
+            EventsFeedScreen(
+                state = EventsFeedState(
+                    categories = listOf(
+
+                    ),
+                    events = listOf(
+                        ShortEventItem(
+                            id = "",
+                            title = "День открытых дверей НИТУ МИСИС",
+                            description = "Дни открытых дверей — это уникальная возможность для старшеклассников больше узнать о специальностях, которым обучают в Унивеситете МИСИС.",
+                            start = 312313123,
+                            end = 231121243
+                        )
+                    ),
+                ),
+                actions = EventsFeedActions.default(),
+                imageLoader = ImageLoader(LocalContext.current)
+            )
+        }
+    }
+}
+
+@Composable
+@Preview(name = "EventsFeed Default Light", showBackground = true)
+private fun EventsFeedScreenDefaultLightPreview() {
+    EventifyTheme(
+        darkTheme = false
+    ) {
+        Surface {
+            EventsFeedScreen(
+                state = EventsFeedState(
+                    categories = listOf(
+
+                    ),
+                    events = listOf(
+                        ShortEventItem(
+                            id = "",
+                            title = "День открытых дверей НИТУ МИСИС",
+                            description = "Дни открытых дверей — это уникальная возможность для старшеклассников больше узнать о специальностях, которым обучают в Унивеситете МИСИС.",
+                            start = 312313123,
+                            end = 231121243
+                        )
+                    ),
+                ),
+                actions = EventsFeedActions.default(),
+                imageLoader = ImageLoader(LocalContext.current)
+
+            )
+        }
+    }
+}
+
