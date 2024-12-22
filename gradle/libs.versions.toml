@@ -1,6 +1,7 @@
 [versions]
 accompanistPermissions = "0.30.1"
 accompanistSwiperefresh = "0.25.0"
+activityKtx = "1.9.0"
 agp = "8.3.0"
 coilCompose = "2.0.0-rc01"
 coilComposeVersion = "3.0.4"
@@ -38,6 +39,7 @@ firebaseMessaging = "24.1.0"
 [libraries]
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissions" }
 accompanist-swiperefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "accompanistSwiperefresh" }
+androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activityKtx" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 androidx-core-splashscreen-v100 = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreenVersion" }
