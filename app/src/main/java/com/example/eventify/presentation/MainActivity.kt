@@ -8,17 +8,13 @@ import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.magnifier
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -31,32 +27,23 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.eventify.data.repositories.tokens.TokenManager
 import com.example.eventify.domain.SessionManager
 import com.example.eventify.domain.di.RequestsSessionManager
 import com.example.eventify.presentation.models.ScaffoldViewState
 import com.example.eventify.presentation.navigation.NavigationAction
 import com.example.eventify.presentation.navigation.Navigator
-import com.example.eventify.presentation.navigation.navgraphs.HomeRouter
 import com.example.eventify.presentation.navigation.navgraphs.MainNavHost
 import com.example.eventify.presentation.navigation.navgraphs.RootRouter
 import com.example.eventify.presentation.ui.SnackbarController
 import com.example.eventify.presentation.ui.shared.BottomNavigationBar
-import com.example.eventify.presentation.ui.shared.OfflineComponent
+import com.example.eventify.presentation.ui.shared.OfflineScreen
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 import com.example.eventify.presentation.utils.ObserveAsState
-import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.isGranted
-import com.google.accompanist.permissions.rememberPermissionState
-import com.google.accompanist.permissions.shouldShowRationale
 import com.google.firebase.Firebase
 import com.google.firebase.messaging.messaging
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
@@ -175,7 +162,9 @@ class MainActivity : ComponentActivity() {
                     }
 
                     if (!isConnected) {
-                        OfflineComponent()
+                        OfflineScreen(
+                            onRefreshState = {}
+                        )
                     }
 
                 }

@@ -20,24 +20,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.eventify.R
 import com.example.eventify.presentation.ui.shared.AnnotationText
+import com.example.eventify.presentation.ui.shared.BorderedImage
 import com.example.eventify.presentation.ui.shared.TitleText
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 
 @Composable
 fun EmptyMyEventsScreen() {
     Column(
-        verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterVertically),
+        verticalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterVertically),
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxSize()
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.empty_my_events_icon),
-            contentDescription = null,
-            contentScale = ContentScale.FillWidth,
-            modifier = Modifier
-                .fillMaxWidth(.2f)
-        )
+
+        BorderedImage(painter = painterResource(id = R.drawable.round_watch_later_24))
         Text(
             text = "Предстоящих событий нет",
             fontWeight = FontWeight.SemiBold,

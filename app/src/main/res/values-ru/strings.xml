@@ -19,4 +19,5 @@
     <string name="default_offline_message">Офлайн доступ будет позже</string>
     <string name="organizer">Организатор</string>
     <string name="not_implemented_screen_message">Этот экран будет позже.</string>
+    <string name="update">Обновить</string>
 </resources>

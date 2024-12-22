@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -22,39 +24,38 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.eventify.R
+import com.example.eventify.presentation.ui.theme.EventifyTheme
 
 @Composable
 fun NotImplementedScreen(
     modifier: Modifier = Modifier
 ) {
     Column(
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterVertically),
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxSize()
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.outline_watch_later_24),
+        BorderedImage(
+            painter = painterResource(id = R.drawable.round_watch_later_24),
             contentDescription = null,
-            contentScale = ContentScale.FillWidth,
-            modifier = Modifier
-                .fillMaxWidth(.4f)
         )
-        Spacer(modifier = Modifier.height(20.dp))
+
         Text(
             text = stringResource(id = R.string.not_implemented_screen_message),
-            fontSize = 24.sp,
-            lineHeight = 25.sp,
-            fontWeight = FontWeight.SemiBold,
-            textAlign = TextAlign.Center,
-            modifier = Modifier
-                .fillMaxWidth()
+            color = MaterialTheme.colorScheme.onSurface,
+            fontSize = 20.sp,
+            fontWeight = FontWeight.SemiBold
         )
     }
 }
 
-@Preview(name = "NotImplementedScreen")
+@Preview(name = "NotImplementedScreenDark")
 @Composable
-private fun PreviewNotImplementedScreen() {
-    NotImplementedScreen()
+private fun PreviewNotImplementedScreenDarkPreview() {
+    EventifyTheme(darkTheme = true) {
+        Surface {
+            NotImplementedScreen()
+        }
+    }
 }
