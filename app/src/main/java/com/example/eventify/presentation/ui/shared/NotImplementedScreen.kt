@@ -27,9 +27,7 @@ import com.example.eventify.R
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 
 @Composable
-fun NotImplementedScreen(
-    modifier: Modifier = Modifier
-) {
+fun NotImplementedScreen() {
     Column(
         verticalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterVertically),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -54,6 +52,16 @@ fun NotImplementedScreen(
 @Composable
 private fun PreviewNotImplementedScreenDarkPreview() {
     EventifyTheme(darkTheme = true) {
+        Surface {
+            NotImplementedScreen()
+        }
+    }
+}
+
+@Preview(name = "NotImplementedScreenLight")
+@Composable
+private fun PreviewNotImplementedScreenLightPreview() {
+    EventifyTheme {
         Surface {
             NotImplementedScreen()
         }

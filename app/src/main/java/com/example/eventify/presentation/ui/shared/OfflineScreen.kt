@@ -56,10 +56,24 @@ fun OfflineScreen(
     }
 }
 
-@Preview(name = "OfflineComponent", showBackground = true)
+@Preview(name = "OfflineScreenDark", showBackground = true)
 @Composable
-private fun PreviewOfflineComponent() {
+private fun PreviewOfflineScreenDarkPreview() {
     EventifyTheme(darkTheme = true) {
+        Surface {
+            OfflineScreen(
+                title = "You are offline",
+                message = "Offline data will be later",
+                onRefreshState = {}
+            )
+        }
+    }
+}
+
+@Preview(name = "OfflineScreenLight", showBackground = true)
+@Composable
+private fun PreviewOfflineScreenLightPreview() {
+    EventifyTheme {
         Surface {
             OfflineScreen(
                 title = "You are offline",
