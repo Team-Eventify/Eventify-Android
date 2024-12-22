@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Surface
@@ -141,7 +142,9 @@ class MainActivity : ComponentActivity() {
                             if (scaffoldState.value.showBottomBar)
                                 BottomNavigationBar(navController)
                         },
-                        snackbarHost = scaffoldState.value.snackbarHost,
+                        snackbarHost = {
+                           SnackbarHost(hostState = snackbarHostState)
+                        },
                         floatingActionButton = scaffoldState.value.floatingActionButton,
                         floatingActionButtonPosition = scaffoldState.value.floatingActionButtonPosition
                     ) { innerPadding ->

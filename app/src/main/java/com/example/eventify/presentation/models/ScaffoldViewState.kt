@@ -11,7 +11,6 @@ data class ScaffoldViewState(
     val modifier: Modifier = Modifier,
     val topBar: @Composable () -> Unit = {},
     val showBottomBar: Boolean = true,
-    val snackbarHost: @Composable () -> Unit = {},
     val floatingActionButton: @Composable () -> Unit = {},
     val floatingActionButtonPosition: FabPosition = FabPosition.End,
 ){
