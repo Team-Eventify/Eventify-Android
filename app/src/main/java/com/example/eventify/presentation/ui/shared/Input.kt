@@ -3,6 +3,7 @@ package com.example.eventify.presentation.ui.shared
 import android.provider.SyncStateContract.Helpers.insert
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -33,9 +34,10 @@ fun TextInput(
     label: String? = null,
     modifier: Modifier = Modifier,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
     onValueChange: (String) -> Unit,
     isError: Boolean = false,
-    supportingText: @Composable (() -> Unit)? = null
+    supportingText: @Composable (() -> Unit)? = null,
 ) {
 
     OutlinedTextField(
@@ -47,9 +49,11 @@ fun TextInput(
         placeholder = {Text(placeholder ?: "", fontSize = 17.sp, fontWeight = FontWeight.Normal)},
         shape = RoundedCornerShape(10.dp),
         keyboardOptions = keyboardOptions,
+        keyboardActions = keyboardActions,
         singleLine = true,
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
+            .then(modifier)
     )
 }
 
@@ -60,6 +64,8 @@ fun PasswordInput(
     placeholder: String? = null,
     modifier: Modifier = Modifier,
     onValueChange: (String) -> Unit,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
     isError: Boolean = false,
     supportingText: @Composable (() -> Unit)? = null
 ) {
@@ -89,11 +95,13 @@ fun PasswordInput(
                 )
             }
         },
-        keyboardOptions = KeyboardOptions(
+        keyboardOptions = keyboardOptions.copy(
             keyboardType = KeyboardType.Password
         ),
+        keyboardActions = keyboardActions,
         visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
+            .then(modifier)
     )
 }
