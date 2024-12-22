@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -68,19 +69,22 @@ fun EventCard(
                 .height(200.dp)
                 .clip(RoundedCornerShape(10.dp))
         )
+        FlowRow(
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+            modifier = Modifier
+                .padding(top = 10.dp)
+        ) {
+            EventInfoChip(event.localDateTimeStart.date(short = true))
+            EventInfoChip(event.localDateTimeStart.time(short = true))
+            EventInfoChip("онлайн")
+        }
         EventCardTitle(
             text = event.title,
             textColor = MaterialTheme.colorScheme.onSurface
         )
         BodyText(event.description, maxlines = 7)
         Spacer(modifier = Modifier.height(10.dp))
-        FlowRow(
-            horizontalArrangement = Arrangement.spacedBy(10.dp)
-        ) {
-            EventInfoChip(event.localDateTimeStart.date(short = true))
-            EventInfoChip(event.localDateTimeStart.time(short = true))
-            EventInfoChip("онлайн")
-        }
+
     }
 }
 

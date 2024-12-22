@@ -16,6 +16,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -30,6 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.eventify.presentation.models.CategorySelectItem
+import com.example.eventify.presentation.ui.theme.EventifyTheme
 
 
 val CATEGORY_SELECT_COLORS = listOf(
@@ -117,17 +119,15 @@ fun TagChip(
 @Composable
 fun EventInfoChip(
     text: String,
-    onClick: (() -> Unit)? = null
 ) {
-    AssistChip(
-        onClick = onClick ?: {},
-        modifier = Modifier.padding(0.dp),
-        shape = RoundedCornerShape(16.dp),
-        border = AssistChipDefaults.assistChipBorder(enabled = true, borderColor = Color.White),
-        label = {
-            Text(text = text, color = Color.White, modifier = Modifier.padding(0.dp))
-        }
-    )
+    Box(
+        modifier = Modifier
+            .border(1.dp, MaterialTheme.colorScheme.onSurface, RoundedCornerShape(16.dp))
+            .padding(horizontal = 10.dp, vertical = 2.dp)
+    ) {
+        Text(text = text, color = MaterialTheme.colorScheme.onSurface)
+    }
+
 }
 
 @Composable
@@ -205,9 +205,13 @@ private fun PreviewTagChip() {
 @Preview(name = "EventInfoChip")
 @Composable
 private fun PreviewEventInfoChip() {
-    EventInfoChip(
-        text = "Category"
-    )
+    EventifyTheme(darkTheme = true) {
+        Surface {
+            EventInfoChip(
+                text = "Category"
+            )
+        }
+    }
 }
 
 @Preview(name = "UpComingEventInfoChip")
