@@ -1,4 +1,4 @@
-package com.example.eventify.presentation.ui.login
+package com.example.eventify.presentation.ui.auth.login
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember

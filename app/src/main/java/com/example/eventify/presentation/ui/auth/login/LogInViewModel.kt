@@ -1,4 +1,4 @@
-package com.example.eventify.presentation.ui.login
+package com.example.eventify.presentation.ui.auth.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -87,7 +87,6 @@ class LogInViewModel @Inject constructor(
                 }
             }
         }
-
     }
 
     private fun validateFormData(): Boolean{
@@ -97,6 +96,12 @@ class LogInViewModel @Inject constructor(
     fun navigateToRegister(){
         viewModelScope.launch {
             navigator.navigate(AuthRouter.RegisterRoute)
+        }
+    }
+
+    fun navigateToResetPassword(){
+        viewModelScope.launch {
+            navigator.navigate(AuthRouter.ResetPasswordRoute(stateFlow.value.login))
         }
     }
 

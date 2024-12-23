@@ -5,8 +5,9 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.eventify.presentation.models.ScaffoldViewState
-import com.example.eventify.presentation.ui.login.LogInRoute
-import com.example.eventify.presentation.ui.register.RegisterRoute
+import com.example.eventify.presentation.ui.auth.login.LogInRoute
+import com.example.eventify.presentation.ui.auth.register.RegisterRoute
+import com.example.eventify.presentation.ui.auth.resetpassword.ResetPasswordRoute
 import kotlinx.serialization.Serializable
 
 fun NavGraphBuilder.AuthNavGraph(
@@ -22,6 +23,9 @@ fun NavGraphBuilder.AuthNavGraph(
         composable<AuthRouter.RegisterRoute> {
             RegisterRoute(scaffoldViewState = scaffoldViewState)
         }
+        composable<AuthRouter.ResetPasswordRoute> {
+            ResetPasswordRoute()
+        }
     }
 }
 
@@ -32,4 +36,7 @@ sealed class AuthRouter: Destination {
 
     @Serializable
     data object RegisterRoute : AuthRouter()
+
+    @Serializable
+    data class ResetPasswordRoute(val email: String? = null) : AuthRouter()
 }

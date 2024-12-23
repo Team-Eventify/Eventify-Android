@@ -1,4 +1,4 @@
-package com.example.eventify.presentation.ui.register
+package com.example.eventify.presentation.ui.auth.register
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

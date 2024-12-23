@@ -1,4 +1,4 @@
-package com.example.eventify.presentation.ui.login
+package com.example.eventify.presentation.ui.auth.login
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -42,8 +42,9 @@ data class LogInState(
  * passed to the coordinator to handle
  **/
 data class LogInActions(
-    val onChangeLogin: (String) -> Unit,
-    val onChangePassword: (String) -> Unit,
-    val onSubmit: () -> Unit,
-    val navigateToRegister: () -> Unit,
+    val onChangeLogin: (String) -> Unit = {},
+    val onChangePassword: (String) -> Unit = {},
+    val onSubmit: () -> Unit = {},
+    val navigateToRegister: () -> Unit = {},
+    val navigateToResetPassword: () -> Unit = {}
 )

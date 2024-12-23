@@ -1,4 +1,4 @@
-package com.example.eventify.presentation.ui.register
+package com.example.eventify.presentation.ui.auth.register
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

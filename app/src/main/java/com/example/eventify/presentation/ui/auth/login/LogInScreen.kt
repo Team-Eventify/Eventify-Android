@@ -1,4 +1,4 @@
-package com.example.eventify.presentation.ui.login
+package com.example.eventify.presentation.ui.auth.login
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -103,7 +103,7 @@ fun LogInScreen(
         )
         ActionText(
             text = stringResource(R.string.forgot_password),
-            onClick = {},
+            onClick = actions.navigateToResetPassword,
             textAlign = TextAlign.Right,
             modifier = Modifier.fillMaxWidth()
         )
