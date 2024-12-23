@@ -24,4 +24,12 @@
     <string name="search_title">Search</string>
     <string name="my_events_title">My events</string>
     <string name="profile_title">Profile</string>
+    <string name="notifications">Notifications</string>
+    <string name="help_and_support">Help and support</string>
+    <string name="to_rate">Rate</string>
+    <string name="log_out">Log out</string>
+    <string name="delete_account">Delete account</string>
+    <string name="about_app">About app</string>
+    <string name="no_upcoming_events">There are no upcoming events</string>
+    <string name="no_upcoming_events_description">There are currently no events scheduled. Check back later.</string>
 </resources>

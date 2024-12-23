@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,12 +36,12 @@ fun EmptyMyEventsScreen() {
 
         BorderedImage(painter = painterResource(id = R.drawable.round_watch_later_24))
         Text(
-            text = "Предстоящих событий нет",
+            text = stringResource(R.string.no_upcoming_events),
             fontWeight = FontWeight.SemiBold,
             fontSize = 20.sp
         )
         AnnotationText(
-            text = "Сейчас нет запланированных мероприятий. Загляните позже!",
+            text = stringResource(R.string.no_upcoming_events_description),
             textAlign = TextAlign.Center
         )
     }

@@ -24,4 +24,12 @@
     <string name="search_title">Поиск</string>
     <string name="my_events_title">Мои события</string>
     <string name="profile_title">Профиль</string>
+    <string name="notifications">Уведомления</string>
+    <string name="help_and_support">Помощь и поддержка</string>
+    <string name="to_rate">Оценить</string>
+    <string name="log_out">Выйти из аккаунта</string>
+    <string name="delete_account">Удалить аккаунт</string>
+    <string name="about_app">О приложении</string>
+    <string name="no_upcoming_events">Предстоящих событий нет</string>
+    <string name="no_upcoming_events_description">Сейчас нет запланированных мероприятий. Загляните позже или выберете новое мероприятие.</string>
 </resources>

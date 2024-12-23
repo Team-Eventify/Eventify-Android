@@ -13,8 +13,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.eventify.R
 import com.example.eventify.presentation.models.UserShortInfo
 import com.example.eventify.presentation.ui.profile.components.ActionSettingsItem
 import com.example.eventify.presentation.ui.profile.components.SettingsBlock
@@ -71,20 +73,20 @@ fun ProfileScreen(
             onClick = actions.navigateToProfileEdit
         )
         SettingsBlock {
-            NavigationSettingsItem("Уведомления", onClick = {})
+            NavigationSettingsItem(stringResource(R.string.notifications), onClick = {})
             HorizontalDivider()
-            NavigationSettingsItem("Помощь и поддержка")
+            NavigationSettingsItem(stringResource(R.string.help_and_support))
         }
 
         SettingsBlock {
-            NavigationSettingsItem("О Прилоожении", onClick = {})
+            NavigationSettingsItem(stringResource(R.string.about_app), onClick = {})
             HorizontalDivider()
-            NavigationSettingsItem("Оценить")
+            NavigationSettingsItem(stringResource(R.string.to_rate))
         }
 
         SettingsBlock {
             ActionSettingsItem(
-                text = "Выйти из аккаунта",
+                text = stringResource(R.string.log_out),
                 onClick = {
                     openLogOutDialog.value = true
                 }
@@ -93,7 +95,7 @@ fun ProfileScreen(
 
         SettingsBlock {
             ImportantActionSettingsItem(
-                text = "Удалить аккаунт",
+                text = stringResource(R.string.delete_account),
                 onClick = {
                     openDeleteAccountDialog.value = true
                 }
