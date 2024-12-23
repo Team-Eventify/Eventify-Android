@@ -1,13 +1,13 @@
 package com.example.eventify.presentation.ui.eventdetail
 
-import com.example.eventify.data.models.EventInfo
+import com.example.eventify.domain.models.EventWithCategories
 
 
 /**
  * UI State that represents EventDetailScreen
  **/
 data class EventDetailState(
-    val event: EventInfo? = null
+    val event: EventWithCategories? = null
 )
 
 /**

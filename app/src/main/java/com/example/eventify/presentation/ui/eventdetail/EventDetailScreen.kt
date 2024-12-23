@@ -16,6 +16,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -26,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.eventify.R
 import com.example.eventify.data.models.EventInfo
+import com.example.eventify.domain.models.EventWithCategories
 import com.example.eventify.presentation.ui.eventdetail.components.ImagePager
 import com.example.eventify.presentation.ui.shared.BodyText
 import com.example.eventify.presentation.ui.shared.ChipInfo
@@ -41,6 +43,7 @@ fun EventDetailScreen(
     state: EventDetailState,
     actions: EventDetailActions,
 ) {
+
     Column(
         modifier = Modifier
             .verticalScroll(rememberScrollState())
@@ -62,9 +65,10 @@ fun EventDetailScreen(
             ) {
                 ChipInfo(text = "2 марта")
                 ChipInfo(text = "17:30")
-                TagChip(text = "Тэг 1")
-                TagChip(text = "Тэг 2")
-                TagChip(text = "Тэг 3")
+
+                state.event!!.categories.forEach{ tag ->
+                    TagChip(text = tag.title)
+                }
             }
 
             BodyText(text = state.event!!.description)
@@ -114,7 +118,7 @@ private fun EventDetailScreenDarkPreview() {
         Scaffold { _ ->
             EventDetailScreen(
                 state = EventDetailState(
-                    event = EventInfo(
+                    event = EventWithCategories(
                         id = "",
                         title = "День открытых дверей",
                         description = "Дни открытых дверей — это уникальная возможность для старшеклассников больше узнать о специальностях, которым обучают в одном из лучших технических университетов России, научной деятельности под руководством учёных с мировым именем, образовательных проектах и карьерных возможностях, которые предлагает вуз, яркой студенческой жизни в Москве. В Университете МИСИС каждый студент сможет получить профессию будущего и быть востребованным лучшими российскими и зарубежными работодателями, раскрыть свой потенциал, благодаря формируемой в вузе экосреде креативности и творчества!",
@@ -128,7 +132,8 @@ private fun EventDetailScreenDarkPreview() {
                         ownerID = "",
                         location = "",
                         cover = "",
-                        subscribed = false
+                        subscribed = false,
+                        categories = emptyList()
                     )
                 ),
                 actions = EventDetailActions(
@@ -148,7 +153,7 @@ private fun EventDetailScreenLightPreview() {
         Scaffold { _ ->
             EventDetailScreen(
                 state = EventDetailState(
-                    event = EventInfo(
+                    event = EventWithCategories(
                         id = "",
                         title = "День открытых дверей",
                         description = "Дни открытых дверей — это уникальная возможность для старшеклассников больше узнать о специальностях, которым обучают в одном из лучших технических университетов России, научной деятельности под руководством учёных с мировым именем, образовательных проектах и карьерных возможностях, которые предлагает вуз, яркой студенческой жизни в Москве. В Университете МИСИС каждый студент сможет получить профессию будущего и быть востребованным лучшими российскими и зарубежными работодателями, раскрыть свой потенциал, благодаря формируемой в вузе экосреде креативности и творчества!",
@@ -162,7 +167,9 @@ private fun EventDetailScreenLightPreview() {
                         ownerID = "",
                         location = "",
                         cover = "",
-                        subscribed = false
+                        subscribed = false,
+                        categories = emptyList()
+
                     )
                 ),
                 actions = EventDetailActions(
