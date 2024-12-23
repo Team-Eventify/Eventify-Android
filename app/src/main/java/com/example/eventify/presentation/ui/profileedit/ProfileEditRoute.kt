@@ -6,8 +6,11 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.eventify.R
 import com.example.eventify.presentation.models.ScaffoldViewState
+import com.example.eventify.presentation.ui.shared.DefaultTopAppBar
 
 @Composable
 fun ProfileEditRoute(
@@ -24,7 +27,13 @@ fun ProfileEditRoute(
 
     LaunchedEffect(Unit) {
         scaffoldViewState.value = scaffoldViewState.value.copy(
-            showBottomBar = false
+            showBottomBar = false,
+            topBar = {
+                DefaultTopAppBar(
+                    title = stringResource(R.string.profile_edit_title),
+                    onNavigateUp = coordinator::navigateBack
+                )
+            }
         )
     }
 

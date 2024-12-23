@@ -13,9 +13,7 @@ class ProfileEditCoordinator(
 ) {
     val screenStateFlow = viewModel.stateFlow
 
-    fun doStuff() {
-        // TODO Handle UI Action
-    }
+    fun navigateBack() = viewModel.navigateBack()
 }
 
 @Composable

@@ -11,6 +11,7 @@ import com.example.eventify.domain.usecases.account.GetCurrentUserUseCase
 import com.example.eventify.domain.usecases.account.SetUserCategoriesUseCase
 import com.example.eventify.domain.validation.ValidateEmail
 import com.example.eventify.domain.validation.ValidateTelegramName
+import com.example.eventify.presentation.navigation.Navigator
 import com.example.eventify.presentation.ui.SnackbarController
 import com.example.eventify.presentation.ui.SnackbarEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,7 +27,8 @@ class ProfileEditViewModel @Inject constructor(
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
     private val getCategoriesWithUserSelection: GetCategoriesWithUserSelection,
     private val changeUserUseCase: ChangeUserUseCase,
-    private val setUserCategoriesUseCase: SetUserCategoriesUseCase
+    private val setUserCategoriesUseCase: SetUserCategoriesUseCase,
+    private val navigator: Navigator
 ) : ViewModel() {
     private val validateTelegramName = ValidateTelegramName()
     private val validateEmail = ValidateEmail()
@@ -135,6 +137,12 @@ class ProfileEditViewModel @Inject constructor(
         }
 
         return hasErrors
+    }
+
+    fun navigateBack(){
+        viewModelScope.launch {
+            navigator.navigateUp()
+        }
     }
 
 

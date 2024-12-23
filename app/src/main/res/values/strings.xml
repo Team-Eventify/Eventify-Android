@@ -32,4 +32,5 @@
     <string name="about_app">About app</string>
     <string name="no_upcoming_events">There are no upcoming events</string>
     <string name="no_upcoming_events_description">There are currently no events scheduled. Check back later.</string>
+    <string name="profile_edit_title">Profile edit</string>
 </resources>

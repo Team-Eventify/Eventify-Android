@@ -32,4 +32,5 @@
     <string name="about_app">О приложении</string>
     <string name="no_upcoming_events">Предстоящих событий нет</string>
     <string name="no_upcoming_events_description">Сейчас нет запланированных мероприятий. Загляните позже или выберете новое мероприятие.</string>
+    <string name="profile_edit_title">Редактирование профиля</string>
 </resources>
