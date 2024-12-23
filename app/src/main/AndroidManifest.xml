@@ -16,6 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SplashScreen.Started"
         tools:targetApi="31">
+        <meta-data
+            android:name="androidx.credentials.CredentialProvider"
+            android:value="com.google.android.gms.auth.api.credentials.CredentialProvider" />
         <activity
             android:name=".presentation.MainActivity"
             android:exported="true"

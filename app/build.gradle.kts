@@ -10,12 +10,12 @@ plugins {
 
 android {
     namespace = "com.example.eventify"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.eventify"
         minSdk = 29
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -126,6 +126,10 @@ dependencies {
     implementation(libs.coil.network.okhttp)
 
     implementation(libs.androidx.activity.ktx)
+
+    // Credential Management
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
 
 }
 

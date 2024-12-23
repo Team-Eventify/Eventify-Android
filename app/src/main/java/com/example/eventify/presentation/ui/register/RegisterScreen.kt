@@ -1,5 +1,6 @@
 package com.example.eventify.presentation.ui.register
 
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,17 +15,20 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.eventify.domain.services.AccountCredentialManager
 import com.example.eventify.presentation.navigation.navgraphs.AuthRouter
 import com.example.eventify.presentation.ui.shared.ActionPrimaryText
 import com.example.eventify.presentation.ui.shared.BodyText
@@ -34,6 +38,7 @@ import com.example.eventify.presentation.ui.shared.PrimaryButton
 import com.example.eventify.presentation.ui.shared.TextInput
 import com.example.eventify.presentation.ui.shared.TitleText
 import com.example.eventify.presentation.ui.theme.EventifyTheme
+import kotlinx.coroutines.launch
 
 @Composable
 fun RegisterScreen(
@@ -44,6 +49,11 @@ fun RegisterScreen(
         FocusRequester()
     }
     val focusManager = LocalFocusManager.current
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    val accountCredentialManager = remember {
+        AccountCredentialManager(context as ComponentActivity)
+    }
 
     Column(
         modifier = Modifier
@@ -103,7 +113,12 @@ fun RegisterScreen(
 
         Spacer(modifier = Modifier.height(30.dp))
         PrimaryButton(
-            onClick = actions.onSubmit,
+            onClick = {
+                scope.launch{
+                    accountCredentialManager.signUp(state.login, state.password)
+                }
+                actions.onSubmit()
+            },
             enabled = state.isValidFormData,
             modifier = Modifier
                 .fillMaxWidth()

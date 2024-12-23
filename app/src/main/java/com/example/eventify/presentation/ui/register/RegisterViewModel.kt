@@ -6,7 +6,6 @@ import com.example.eventify.data.models.UserCreate
 import com.example.eventify.domain.usecases.account.RegisterUseCase
 import com.example.eventify.domain.validation.ValidateEmail
 import com.example.eventify.domain.validation.ValidatePassword
-import com.example.eventify.domain.validation.Validator
 import com.example.eventify.presentation.navigation.Navigator
 import com.example.eventify.presentation.navigation.navgraphs.AuthRouter
 import com.example.eventify.presentation.navigation.navgraphs.RootRouter
@@ -19,6 +18,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
@@ -97,6 +97,7 @@ class RegisterViewModel @Inject constructor(
     }
 
     private suspend fun handleErrors(exception: Throwable){
+        Timber.e(exception)
         // TODO handle detail errors
         _stateFlow.update { currentState ->
             when (exception){

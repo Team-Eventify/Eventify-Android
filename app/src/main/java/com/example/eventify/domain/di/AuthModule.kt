@@ -1,5 +1,6 @@
 package com.example.eventify.domain.di
 
+import android.app.Activity
 import android.content.Context
 import com.example.eventify.data.repositories.tokens.PreferencesTokenManagerImpl
 import com.example.eventify.data.repositories.tokens.TokenManager
@@ -13,9 +14,11 @@ import com.example.eventify.data.repositories.users.UsersRepository
 import com.example.eventify.domain.SessionManager
 import com.example.eventify.domain.SessionManagerImpl
 import com.example.eventify.domain.SessionManagerRequestsImpl
+import com.example.eventify.domain.services.AccountCredentialManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ActivityContext
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Authenticator
