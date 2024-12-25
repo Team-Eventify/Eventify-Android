@@ -88,9 +88,6 @@ class MainActivity : ComponentActivity() {
                 }
 
 
-                window.navigationBarColor = MaterialTheme.colorScheme.background.toArgb()
-                window.statusBarColor = MaterialTheme.colorScheme.background.toArgb()
-
                 val navController = rememberNavController()
 
                 val currentDist =

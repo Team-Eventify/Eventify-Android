@@ -10,12 +10,10 @@ import com.example.eventify.presentation.models.ShortEventItem
 data class EventsFeedState(
     val isRefreshing: Boolean = false,
     val events: List<ShortEventItem>,
-    val categories: List<CategoryInfo>,
 ){
     companion object {
         fun default() = EventsFeedState(
             events = emptyList(),
-            categories = emptyList(),
         )
     }
 }

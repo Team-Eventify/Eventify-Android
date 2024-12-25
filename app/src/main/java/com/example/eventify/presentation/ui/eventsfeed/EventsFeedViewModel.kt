@@ -17,7 +17,6 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class EventsFeedViewModel @Inject constructor(
     private val getEventsUseCase: GetEventsUseCase,
-    private val getCategoriesUseCase: GetCategoriesUseCase,
     val imageLoader: ImageLoader
 ) : ViewModel() {
 
@@ -30,7 +29,6 @@ class EventsFeedViewModel @Inject constructor(
 
     fun loadData() {
         viewModelScope.launch {
-            val categories = getCategoriesUseCase()
             val events = getEventsUseCase()
 
             _stateFlow.update { curentState ->
@@ -42,8 +40,7 @@ class EventsFeedViewModel @Inject constructor(
                         cover = it.cover,
                         start = it.start,
                         end = it.end
-                    ) },
-                    categories = categories
+                    ) }
                 )
             }
         }

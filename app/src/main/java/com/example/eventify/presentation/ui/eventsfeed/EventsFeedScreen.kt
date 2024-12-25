@@ -66,20 +66,6 @@ fun EventsFeedScreen(
                 )
                 HorizontalDivider()
             }
-
-            item {
-                HeadingText(stringResource(R.string.categories_based_on_interests))
-            }
-
-            items(
-                state.categories,
-                key = { it.id }
-            ) { category ->
-                CategoryCard(
-                    category = category,
-                    onClick = { categoryid -> }
-                )
-            }
         }
     }
 }
@@ -93,9 +79,6 @@ private fun EventsFeedScreenDefaultDarkPreview() {
         Surface {
             EventsFeedScreen(
                 state = EventsFeedState(
-                    categories = listOf(
-
-                    ),
                     events = listOf(
                         ShortEventItem(
                             id = "",
@@ -122,9 +105,6 @@ private fun EventsFeedScreenDefaultLightPreview() {
         Surface {
             EventsFeedScreen(
                 state = EventsFeedState(
-                    categories = listOf(
-
-                    ),
                     events = listOf(
                         ShortEventItem(
                             id = "",
