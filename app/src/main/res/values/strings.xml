@@ -33,4 +33,9 @@
     <string name="no_upcoming_events">There are no upcoming events</string>
     <string name="no_upcoming_events_description">There are currently no events scheduled. Check back later.</string>
     <string name="profile_edit_title">Profile edit</string>
+    <string name="skip">Skip</string>
+    <string name="next">Next</string>
+    <string name="you_can_always_change_your_choice">You can always change your choice in the settings</string>
+    <string name="we_will_select_event_recommendations">We will select event recommendations to suit your tastes</string>
+    <string name="choose_categories_that_interest_you">Choose the categories that interest you!</string>
 </resources>

@@ -89,7 +89,7 @@ class RegisterViewModel @Inject constructor(
             runCatching {
                 registerUseCase(user = payload)
             }.onSuccess {
-                navigator.navigate(RootRouter.HomeRoute)
+                navigator.navigate(AuthRouter.ChooseCategoriesRoute)
             }.onFailure { exception ->
                 handleErrors(exception)
             }

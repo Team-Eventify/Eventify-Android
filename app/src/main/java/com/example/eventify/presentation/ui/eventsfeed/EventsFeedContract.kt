@@ -1,6 +1,5 @@
 package com.example.eventify.presentation.ui.eventsfeed
 
-import com.example.eventify.data.models.CategoryInfo
 import com.example.eventify.presentation.models.ShortEventItem
 
 
