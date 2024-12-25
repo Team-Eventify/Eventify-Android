@@ -21,6 +21,7 @@ import com.example.eventify.presentation.ui.shared.BodyText
 import com.example.eventify.presentation.ui.shared.CategorySelector
 import com.example.eventify.presentation.ui.shared.PrimaryButton
 import com.example.eventify.presentation.ui.shared.PrimaryButtonText
+import com.example.eventify.presentation.ui.shared.SkipTextButton
 import com.example.eventify.presentation.ui.shared.TitleText
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 
@@ -61,13 +62,7 @@ fun ChooseCategoriesScreen(
                 PrimaryButtonText(text = stringResource(R.string.next))
             }
 
-            TextButton(onClick = actions.onSkip) {
-                Text(
-                    text = stringResource(R.string.skip),
-                    textDecoration = TextDecoration.Underline,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
+            SkipTextButton(onClick = actions.onSkip)
         }
     }
 }
