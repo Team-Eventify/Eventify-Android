@@ -3,15 +3,11 @@ package com.example.eventify.presentation.ui.auth.choosecategories
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.eventify.R
@@ -19,7 +15,7 @@ import com.example.eventify.presentation.models.CategorySelectItem
 import com.example.eventify.presentation.ui.shared.AnnotationText
 import com.example.eventify.presentation.ui.shared.BodyText
 import com.example.eventify.presentation.ui.shared.CategorySelector
-import com.example.eventify.presentation.ui.shared.PrimaryButton
+import com.example.eventify.presentation.ui.shared.buttons.PrimaryButton
 import com.example.eventify.presentation.ui.shared.PrimaryButtonText
 import com.example.eventify.presentation.ui.shared.SkipTextButton
 import com.example.eventify.presentation.ui.shared.TitleText

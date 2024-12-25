@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.eventify.presentation.ui.shared.BodyText
-import com.example.eventify.presentation.ui.shared.PrimaryButton
+import com.example.eventify.presentation.ui.shared.buttons.PrimaryButton
 import com.example.eventify.presentation.ui.shared.PrimaryButtonText
 import com.example.eventify.presentation.ui.shared.TextInput
 import com.example.eventify.presentation.ui.shared.TitleText

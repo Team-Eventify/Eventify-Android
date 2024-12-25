@@ -14,7 +14,7 @@ import com.example.eventify.presentation.models.CategorySelectItem
 import com.example.eventify.presentation.ui.profileedit.components.ProfileEditInput
 import com.example.eventify.presentation.ui.shared.AnnotationText
 import com.example.eventify.presentation.ui.shared.CategorySelector
-import com.example.eventify.presentation.ui.shared.PrimaryButton
+import com.example.eventify.presentation.ui.shared.buttons.PrimaryButton
 import com.example.eventify.presentation.ui.shared.PrimaryButtonText
 import com.example.eventify.presentation.ui.shared.SubHeadingText
 

@@ -16,7 +16,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -26,14 +25,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.eventify.R
-import com.example.eventify.data.models.EventInfo
 import com.example.eventify.domain.models.EventWithCategories
 import com.example.eventify.presentation.ui.eventdetail.components.ImagePager
 import com.example.eventify.presentation.ui.shared.BodyText
 import com.example.eventify.presentation.ui.shared.ChipInfo
-import com.example.eventify.presentation.ui.shared.PrimaryButton
+import com.example.eventify.presentation.ui.shared.buttons.PrimaryButton
 import com.example.eventify.presentation.ui.shared.PrimaryButtonText
-import com.example.eventify.presentation.ui.shared.PrimaryDeclineButton
+import com.example.eventify.presentation.ui.shared.buttons.PrimaryDeclineButton
 import com.example.eventify.presentation.ui.shared.TagChip
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 

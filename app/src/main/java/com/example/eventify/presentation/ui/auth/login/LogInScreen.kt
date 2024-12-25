@@ -32,7 +32,7 @@ import com.example.eventify.presentation.ui.shared.ActionText
 import com.example.eventify.presentation.ui.shared.BodyText
 import com.example.eventify.presentation.ui.shared.ErrorInputText
 import com.example.eventify.presentation.ui.shared.PasswordInput
-import com.example.eventify.presentation.ui.shared.PrimaryButton
+import com.example.eventify.presentation.ui.shared.buttons.PrimaryButton
 import com.example.eventify.presentation.ui.shared.PrimaryButtonText
 import com.example.eventify.presentation.ui.shared.TextInput
 import com.example.eventify.presentation.ui.shared.TitleText
