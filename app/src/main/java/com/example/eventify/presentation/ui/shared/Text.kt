@@ -19,9 +19,10 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun TitleText(
     text: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    textAlign: TextAlign = TextAlign.Start
 ) {
-    Text(text = text, lineHeight = 47.sp, fontSize = 40.sp, fontWeight = FontWeight.SemiBold, modifier = modifier)
+    Text(text = text, lineHeight = 47.sp, fontSize = 40.sp, fontWeight = FontWeight.SemiBold, modifier = modifier, textAlign = textAlign)
 }
 
 
