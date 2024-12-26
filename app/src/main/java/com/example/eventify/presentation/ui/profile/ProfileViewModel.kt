@@ -53,14 +53,22 @@ class ProfileViewModel @Inject constructor(
     fun logOut(){
         viewModelScope.launch {
             logOutUseCase()
-            navigator.navigate(AuthRouter.LogInRoute)
+            navigator.navigate(AuthRouter.LogInRoute){
+                popUpTo(0) {
+                    inclusive = true
+                }
+            }
         }
     }
 
     fun deleteAccount(){
         viewModelScope.launch {
             deleteAccountUseCase()
-            navigator.navigate(RootRouter.AuthRoute)
+            navigator.navigate(RootRouter.AuthRoute){
+                popUpTo(0) {
+                    inclusive = true
+                }
+            }
         }
     }
 

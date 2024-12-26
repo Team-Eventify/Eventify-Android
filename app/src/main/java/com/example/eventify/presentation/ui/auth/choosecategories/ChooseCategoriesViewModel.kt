@@ -52,7 +52,11 @@ class ChooseCategoriesViewModel @Inject constructor(
 
     fun skipStep(){
         viewModelScope.launch {
-            navigator.navigate(RootRouter.HomeRoute)
+            navigator.navigate(RootRouter.HomeRoute){
+                popUpTo(0) {
+                    inclusive = true
+                }
+            }
         }
     }
 
@@ -62,7 +66,11 @@ class ChooseCategoriesViewModel @Inject constructor(
 
         viewModelScope.launch {
             tokenManager.getUserId()?.let { setCategoriesUseCase(it, selectedCategoryIds) }
-            navigator.navigate(RootRouter.HomeRoute)
+            navigator.navigate(RootRouter.HomeRoute){
+                popUpTo(0) {
+                    inclusive = true
+                }
+            }
         }
     }
 

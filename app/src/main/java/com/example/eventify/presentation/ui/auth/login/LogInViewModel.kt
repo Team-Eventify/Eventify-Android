@@ -2,6 +2,7 @@ package com.example.eventify.presentation.ui.auth.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.navOptions
 import com.example.eventify.data.exceptions.UserNotFoundException
 import com.example.eventify.data.models.UserCredentials
 import com.example.eventify.domain.usecases.account.LoginUseCase
@@ -60,7 +61,13 @@ class LogInViewModel @Inject constructor(
             runCatching {
                 loginUseCase(credentials = credentials)
             }.onSuccess {
-                navigator.navigate(RootRouter.HomeRoute)
+                navigator.navigate(
+                    RootRouter.HomeRoute
+                ) {
+                    popUpTo(0) {
+                        inclusive = true
+                    }
+                }
             }.onFailure { exception ->
                 handleErrors(exception)
             }
