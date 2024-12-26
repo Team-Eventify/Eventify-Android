@@ -38,4 +38,11 @@
     <string name="you_can_always_change_your_choice">Вы всегда можете изменить свой выбор в настройках</string>
     <string name="we_will_select_event_recommendations">Мы подберём рекомендации ивентов под твои вкусы</string>
     <string name="choose_categories_that_interest_you">Выбери интересные тебе категории!</string>
+    <string name="log_in">Вход</string>
+    <string name="pleace_login">Пожалуйста,  войдите в свой аккаунт</string>
+    <string name="it_takes_less_then_minute">Это займет меньше минуты</string>
+    <string name="no_account_question">Нет аккаунта?</string>
+    <string name="register">Регистрация</string>
+    <string name="already_have_account_question">Уже есть аккаунт?</string>
+    <string name="register_request">Пожалуйста, создайте новый аккаунт</string>
 </resources>

@@ -20,11 +20,13 @@ import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.eventify.R
 import com.example.eventify.presentation.ui.shared.ActionPrimaryText
 import com.example.eventify.presentation.ui.shared.BodyText
 import com.example.eventify.presentation.ui.shared.ErrorInputText
@@ -52,10 +54,10 @@ fun RegisterScreen(
         ,
         verticalArrangement = Arrangement.Center
     ) {
-        TitleText(text = "Регистрация")
+        TitleText(text = stringResource(R.string.register))
         Spacer(modifier = Modifier.height(5.dp))
-        BodyText(text = "Пожалуйста, создайте новый аккаунт.")
-        BodyText(text = "Это займёт меньше минуты.")
+        BodyText(text = stringResource(R.string.register_request))
+        BodyText(text = stringResource(R.string.it_takes_less_then_minute))
         Spacer(modifier = Modifier.height(30.dp))
         TextInput(
             text = state.login,
@@ -108,7 +110,7 @@ fun RegisterScreen(
             modifier = Modifier
                 .fillMaxWidth()
         ) {
-            Text(text = "Зарегестрироваться", lineHeight = 22.sp, fontSize = 17.sp, fontWeight = FontWeight.Medium)
+            Text(text = stringResource(R.string.register_action), lineHeight = 22.sp, fontSize = 17.sp, fontWeight = FontWeight.Medium)
         }
         Spacer(modifier = Modifier.height(20.dp))
         Row(
@@ -117,9 +119,9 @@ fun RegisterScreen(
             ,
             horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally)
         ) {
-            Text(text = "Уже есть аккаунт?")
+            Text(text = stringResource(R.string.already_have_account_question))
             ActionPrimaryText(
-                text = "Войти",
+                text = stringResource(R.string.login_action),
                 onClick = actions.navigateToLogIn
             )
         }

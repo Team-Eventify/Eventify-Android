@@ -54,11 +54,11 @@ fun LogInScreen(
             .padding(15.dp),
         verticalArrangement = Arrangement.Center
     ) {
-        TitleText(text = "Вход")
+        TitleText(text = stringResource(R.string.log_in))
         Spacer(modifier = Modifier.height(5.dp))
 
-        BodyText(text = "Пожалуйста,  войдите в свой аккаунт.")
-        BodyText(text = "Это займёт меньше минуты.")
+        BodyText(text = stringResource(R.string.pleace_login))
+        BodyText(text = stringResource(R.string.it_takes_less_then_minute))
 
         Spacer(modifier = Modifier.height(30.dp))
 
@@ -122,7 +122,7 @@ fun LogInScreen(
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally)
         ) {
-            Text(text = "Нет аккаунта?")
+            Text(text = stringResource(R.string.no_account_question))
             ActionPrimaryText(
                 text = stringResource(R.string.register_action),
                 onClick = actions.navigateToRegister
