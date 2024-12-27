@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.eventify.data.models.UserChange
 import com.example.eventify.data.models.UserCredentials
 import com.example.eventify.data.models.UserInfo
+import com.example.eventify.domain.Result
 import com.example.eventify.domain.usecases.GetCategoriesWithUserSelection
 import com.example.eventify.domain.usecases.account.ChangeUserUseCase
 import com.example.eventify.domain.usecases.account.GetCurrentUserUseCase
@@ -14,6 +15,7 @@ import com.example.eventify.domain.validation.ValidateTelegramName
 import com.example.eventify.presentation.navigation.Navigator
 import com.example.eventify.presentation.ui.SnackbarController
 import com.example.eventify.presentation.ui.SnackbarEvent
+import com.example.eventify.presentation.utils.asUiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow
@@ -30,8 +32,8 @@ class ProfileEditViewModel @Inject constructor(
     private val setUserCategoriesUseCase: SetUserCategoriesUseCase,
     private val navigator: Navigator
 ) : ViewModel() {
-    private val validateTelegramName = ValidateTelegramName()
-    private val validateEmail = ValidateEmail()
+    private val validateTelegramNameUseCase = ValidateTelegramName()
+    private val validateEmailUseCase = ValidateEmail()
 
     private val _currentUser: MutableStateFlow<UserInfo?> = MutableStateFlow(null)
     val currentUser: StateFlow<UserInfo?> = _currentUser.asStateFlow()
@@ -67,7 +69,12 @@ class ProfileEditViewModel @Inject constructor(
 
 
     fun saveUser(){
-        if (validateForm()) return
+        val isValidaData = listOf(
+            validateEmail(),
+            validateTelegramName()
+        ).all { it }
+
+        if (!isValidaData) return
 
         val userData = stateFlow.value.run {
             UserChange(
@@ -118,26 +125,6 @@ class ProfileEditViewModel @Inject constructor(
         }
     }
 
-    private fun validateForm(): Boolean {
-        val isValidEmail = validateEmail(stateFlow.value.email)
-        val isValidTelegramName = validateTelegramName(stateFlow.value.telegramName)
-
-        val hasErrors = listOf(
-            isValidEmail,
-            isValidTelegramName
-        ).any { !it.successful }
-
-        _stateFlow.update { currentState ->
-            currentState.copy(
-                hasTelegramNameError = !isValidTelegramName.successful,
-                telegramNameError = isValidTelegramName.errorMessage,
-                hasEmailError = !isValidEmail.successful,
-                emailError = isValidEmail.errorMessage
-            )
-        }
-
-        return hasErrors
-    }
 
     fun navigateBack(){
         viewModelScope.launch {
@@ -153,6 +140,22 @@ class ProfileEditViewModel @Inject constructor(
             )
         }
     }
+
+    private fun validateEmail(): Boolean{
+        val validationResult = validateEmailUseCase(stateFlow.value.email)
+        val (error, hasError) = when (validationResult) {
+            is Result.Error -> validationResult.error.asUiText() to true
+            is Result.Success -> null to false
+        }
+        _stateFlow.update { currentState ->
+            currentState.copy(
+                emailError = error,
+                hasEmailError = hasError
+            )
+        }
+        return validationResult is Result.Success
+    }
+
     fun changeUserFirstName(value: String){
         _stateFlow.update { currentState ->
             currentState.copy(
@@ -180,6 +183,22 @@ class ProfileEditViewModel @Inject constructor(
                 telegramName = value
             )
         }
+    }
+
+    private fun validateTelegramName(): Boolean{
+        val validationResult = validateTelegramNameUseCase(stateFlow.value.telegramName)
+        val (error, hasError) = when (validationResult){
+            is Result.Error -> validationResult.error.asUiText() to true
+            is Result.Success -> null to false
+        }
+        _stateFlow.update { currentState ->
+            currentState.copy(
+                telegramNameError = error,
+                hasTelegramNameError = hasError
+            )
+        }
+
+        return validationResult is Result.Success
     }
 
 

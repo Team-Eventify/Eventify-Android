@@ -1,5 +1,9 @@
 package com.example.eventify.domain.validation
 
-interface Validator<T> {
-    operator fun invoke(value: T): ValidationResult
+import com.example.eventify.domain.Error
+import com.example.eventify.domain.Result
+
+
+interface Validator<T, out E: Error> {
+    operator fun invoke(value: T): Result<Unit, E>
 }

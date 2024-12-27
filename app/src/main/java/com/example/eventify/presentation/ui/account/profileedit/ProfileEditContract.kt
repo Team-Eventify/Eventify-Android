@@ -2,15 +2,17 @@ package com.example.eventify.presentation.ui.account.profileedit
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.staticCompositionLocalOf
 import com.example.eventify.presentation.models.CategorySelectItem
+import com.example.eventify.presentation.utils.UiText
 
 
 /**
  * UI State that represents ProfileEditScreen
  **/
 
-
+@Stable
 data class ProfileEditState(
     val error: String? = null,
     val isLoading: Boolean = false,
@@ -18,7 +20,7 @@ data class ProfileEditState(
 
     val email: String,
     val hasEmailError: Boolean = false,
-    val emailError: String? = null,
+    val emailError: UiText? = null,
 
     val firstName: String,
     val firstNameError: String? = null,
@@ -31,7 +33,7 @@ data class ProfileEditState(
 
     val telegramName: String,
     val hasTelegramNameError: Boolean = false,
-    val telegramNameError: String? = null,
+    val telegramNameError: UiText? = null,
 
     val categoryItems: List<CategorySelectItem>
 ){

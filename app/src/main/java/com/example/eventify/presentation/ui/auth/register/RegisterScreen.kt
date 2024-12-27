@@ -35,6 +35,7 @@ import com.example.eventify.presentation.ui.shared.buttons.PrimaryButton
 import com.example.eventify.presentation.ui.shared.TextInput
 import com.example.eventify.presentation.ui.shared.TitleText
 import com.example.eventify.presentation.ui.theme.EventifyTheme
+import com.example.eventify.presentation.utils.UiText
 
 
 @Composable
@@ -67,7 +68,7 @@ fun RegisterScreen(
             isError = state.loginError != null || state.hasLoginError,
             supportingText = {
                 state.loginError?.let { 
-                    ErrorInputText(text = it)
+                    ErrorInputText(text = it.asString())
                 }
             },
             modifier = Modifier
@@ -90,7 +91,7 @@ fun RegisterScreen(
             isError = state.passwordError != null || state.hasPasswordError,
             supportingText = {
                 state.passwordError?.let {
-                    ErrorInputText(text = it)
+                    ErrorInputText(text = it.asString())
                 }
             },
             keyboardOptions = KeyboardOptions(
@@ -160,7 +161,7 @@ private fun RegisterScreenErrorDarkPreview() {
                     login = "",
                     hasLoginError = true,
                     password = "",
-                    passwordError = "Слишком простой пароль"
+                    passwordError = UiText.DynamicString("Ошибка")
                 ),
                 actions = RegisterActions(
                     onChangeLogin = {},
@@ -205,7 +206,7 @@ private fun RegisterScreenErrorLightPreview() {
                     login = "",
                     hasLoginError = true,
                     password = "",
-                    passwordError = "Слишком простой пароль"
+                    passwordError = UiText.DynamicString("Ошибка")
                 ),
                 actions = RegisterActions(
                     onChangeLogin = {},

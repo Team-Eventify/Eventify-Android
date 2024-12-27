@@ -45,4 +45,10 @@
     <string name="register">Sign Up</string>
     <string name="already_have_account_question">Already have account?</string>
     <string name="register_request">Pleace, register new account</string>
+    <string name="password_no_digits_error">Password must contain numbers</string>
+    <string name="password_no_uppercase_error">Password must contain uppercase</string>
+    <string name="password_to_short_error">Password must be more than %1$d characters</string>
+    <string name="this_field_must_be_filled">This field must be field</string>
+    <string name="this_field_must_not_contain_spaces">This field must not contain spaces</string>
+    <string name="incorrect_email">Incorrect email</string>
 </resources>

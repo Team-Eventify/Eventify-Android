@@ -2,20 +2,23 @@ package com.example.eventify.presentation.ui.auth.register
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.staticCompositionLocalOf
+import com.example.eventify.presentation.utils.UiText
 
 
 /**
  * UI State that represents RegisterScreen
  **/
+@Stable
 data class RegisterState(
     val login: String,
     val hasLoginError: Boolean = false,
-    val loginError: String? = null,
+    val loginError: UiText? = null,
 
     val password: String,
     val hasPasswordError: Boolean = false,
-    val passwordError: String? = null
+    val passwordError: UiText? = null
 ){
     val isValidLogin: Boolean
         get() = login.isNotEmpty()

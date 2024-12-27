@@ -1,23 +1,33 @@
 package com.example.eventify.domain.validation
 
-class ValidatePassword: Validator<String> {
-    override fun invoke(value: String): ValidationResult {
+import com.example.eventify.domain.Error
+import com.example.eventify.domain.Result
+
+class ValidatePassword: Validator<String, PasswordValidationError> {
+    override fun invoke(value: String): Result<Unit, PasswordValidationError> {
         if (value.isBlank())
-            return ValidationResult(successful = false, errorMessage = "Password cant be blank")
+            return Result.Error(PasswordValidationError.IS_EMPTY)
 
         if (!value.any { it.isUpperCase() })
-            return ValidationResult(successful = false, errorMessage = "Password must contains uppercase")
+            return Result.Error(PasswordValidationError.NO_UPPERCASE)
 
         if (!value.any {it.isDigit()})
-            return ValidationResult(successful = false, errorMessage = "Password must contains digits")
+            return Result.Error(PasswordValidationError.NO_DIGITS)
 
         if (value.length < MIN_CHARACTERS)
-            return ValidationResult(successful = false, errorMessage = "Password must be longer than 8")
+            return Result.Error(PasswordValidationError.TOO_SHORT)
 
-        return ValidationResult(successful = true)
+        return Result.Success(Unit)
     }
 
     companion object{
         const val MIN_CHARACTERS = 8
     }
+}
+
+enum class PasswordValidationError: Error{
+    IS_EMPTY,
+    NO_DIGITS,
+    NO_UPPERCASE,
+    TOO_SHORT
 }

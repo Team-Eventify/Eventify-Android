@@ -45,4 +45,10 @@
     <string name="register">Регистрация</string>
     <string name="already_have_account_question">Уже есть аккаунт?</string>
     <string name="register_request">Пожалуйста, создайте новый аккаунт</string>
+    <string name="password_no_digits_error">Пароль должен содержать цифры</string>
+    <string name="password_no_uppercase_error">Пароль должен содержать заглавные буквы</string>
+    <string name="password_to_short_error">Пароль должен быть длиннее %1$d символов</string>
+    <string name="this_field_must_be_filled">Поле должно быть заполнено</string>
+    <string name="this_field_must_not_contain_spaces">Поле не должно содержать пробелы</string>
+    <string name="incorrect_email">Некоректный формат почты</string>
 </resources>

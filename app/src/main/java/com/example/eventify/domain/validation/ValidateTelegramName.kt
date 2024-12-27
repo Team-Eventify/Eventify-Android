@@ -1,11 +1,18 @@
 package com.example.eventify.domain.validation
 
-class ValidateTelegramName : Validator<String> {
-    override fun invoke(value: String): ValidationResult {
-        if (value.trim().any { it.isWhitespace() })
-            return ValidationResult(successful = false, errorMessage = "Telegram name can't contains whitespace")
+import com.example.eventify.domain.Error
+import com.example.eventify.domain.Result
 
-        return ValidationResult(successful = true)
+class ValidateTelegramName : Validator<String, TelegramNameValidationError> {
+    override fun invoke(value: String): Result<Unit, TelegramNameValidationError> {
+        if (value.trim().any { it.isWhitespace() })
+            return Result.Error(TelegramNameValidationError.HAS_WHITE_SPACE)
+
+        return Result.Success(Unit)
     }
 
+}
+
+enum class TelegramNameValidationError: Error{
+    HAS_WHITE_SPACE
 }
