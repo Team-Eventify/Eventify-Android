@@ -3,6 +3,7 @@ package com.example.eventify.presentation.ui.events.search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
+import com.example.eventify.data.models.CategoryInfo
 
 
 /**
@@ -10,7 +11,8 @@ import androidx.compose.runtime.staticCompositionLocalOf
  **/
 data class SearchState(
     val searchText: String = "",
-    val isActiveSearchBar: Boolean = false
+    val isActiveSearchBar: Boolean = false,
+    val  categories: List<CategoryInfo> = emptyList()
 )
 
 /**
@@ -20,5 +22,7 @@ data class SearchState(
 data class SearchActions(
     val onSearchTextChanged: (String) -> Unit = {},
     val onChangeActiveSearchBar: (Boolean) -> Unit = {},
-    val onSearch: () -> Unit = {}
+    val onSearch: () -> Unit = {},
+    val onToggleSearch: () -> Unit = {},
+    val onClearSearchText: () -> Unit = {}
 )

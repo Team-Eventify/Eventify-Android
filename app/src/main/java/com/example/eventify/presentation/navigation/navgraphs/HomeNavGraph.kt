@@ -27,7 +27,7 @@ fun NavGraphBuilder.HomeNavGraph(
             ProfileRoute(scaffoldViewState = scaffoldViewState)
         }
         composable<HomeRouter.Search> {
-            SearchRoute()
+            SearchRoute(scaffoldViewState = scaffoldViewState)
         }
         composable<HomeRouter.SelfEvents> {
             MyEventsRoute(
