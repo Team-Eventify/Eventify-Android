@@ -6,10 +6,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.eventify.presentation.models.ScaffoldViewState
-import com.example.eventify.presentation.ui.eventsfeed.EventsFeedRoute
-import com.example.eventify.presentation.ui.myevents.MyEventsRoute
-import com.example.eventify.presentation.ui.profile.ProfileRoute
-import com.example.eventify.presentation.ui.shared.NotImplementedScreen
+import com.example.eventify.presentation.ui.account.profile.ProfileRoute
+import com.example.eventify.presentation.ui.events.eventsfeed.EventsFeedRoute
+import com.example.eventify.presentation.ui.events.myevents.MyEventsRoute
+import com.example.eventify.presentation.ui.events.search.SearchRoute
 import kotlinx.serialization.Serializable
 
 fun NavGraphBuilder.HomeNavGraph(
@@ -27,7 +27,7 @@ fun NavGraphBuilder.HomeNavGraph(
             ProfileRoute(scaffoldViewState = scaffoldViewState)
         }
         composable<HomeRouter.Search> {
-            NotImplementedScreen()
+            SearchRoute()
         }
         composable<HomeRouter.SelfEvents> {
             MyEventsRoute(
@@ -46,5 +46,5 @@ sealed class HomeRouter: Destination {
     @Serializable
     data object Profile : HomeRouter()
     @Serializable
-    data object Search : HomeRouter()
+    data class Search(val query: String? = null) : HomeRouter()
 }

@@ -53,7 +53,7 @@ fun BottomNavigationBar(
         BottomNavigationBarItem(
             title = stringResource(R.string.search),
             icon = painterResource(R.drawable.ic_magnifying_glass),
-            route = HomeRouter.Search
+            route = HomeRouter.Search()
         ),
         BottomNavigationBarItem(
             title = stringResource(R.string.my_events),

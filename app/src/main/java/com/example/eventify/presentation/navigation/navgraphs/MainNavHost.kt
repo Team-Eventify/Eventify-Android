@@ -7,7 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.eventify.presentation.models.ScaffoldViewState
-import com.example.eventify.presentation.ui.eventdetail.EventDetailRoute
+import com.example.eventify.presentation.ui.events.eventdetail.EventDetailRoute
 import kotlinx.serialization.Serializable
 
 
