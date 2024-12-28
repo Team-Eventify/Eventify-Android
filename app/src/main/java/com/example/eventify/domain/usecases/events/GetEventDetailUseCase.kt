@@ -7,10 +7,18 @@ import com.example.eventify.domain.models.EventWithCategories
 import javax.inject.Inject
 import com.example.eventify.domain.Result
 
+/**
+ * Use case to get event with attached categories data.
+ */
 class GetEventDetailUseCase @Inject constructor(
     private val eventsApiRepository: EventsRepository,
     private val categoryRepository: CategoryRepository
 ) {
+    /***
+     * Returns Result with EventWithCategories data
+     * which contain information about event and his attached categories
+     * @param eventId string UUID of event
+     */
     suspend operator fun invoke(eventId: String): Result<EventWithCategories, DataError>{
         val event = when (val result = eventsApiRepository.getEventDetail(eventId = eventId)){
             is Result.Error -> return Result.Error(result.error)
