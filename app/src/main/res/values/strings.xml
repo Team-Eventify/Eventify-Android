@@ -62,4 +62,5 @@
     <string name="bad_request">Bad request</string>
     <string name="user_not_found">User not found</string>
     <string name="user_updated">User updated</string>
+    <string name="not_found">Not found</string>
 </resources>

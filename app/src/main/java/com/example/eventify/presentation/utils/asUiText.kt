@@ -48,6 +48,9 @@ fun DataError.asUiText(): UiText = when (this){
             DataError.API.FORBIDDEN -> UiText.StringResource(
                 R.string.forbidden
             )
+            DataError.API.NOT_FOUND -> UiText.StringResource(
+                R.string.not_found
+            )
 
             else -> UiText.DynamicString(this.toString())
         }
