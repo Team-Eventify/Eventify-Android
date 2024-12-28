@@ -1,5 +1,7 @@
 package com.example.eventify.presentation.ui.account.profile
 
+import android.content.Context
+import androidx.compose.material3.Snackbar
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.eventify.domain.Result
@@ -11,7 +13,11 @@ import com.example.eventify.presentation.navigation.Navigator
 import com.example.eventify.presentation.navigation.navgraphs.AuthRouter
 import com.example.eventify.presentation.navigation.navgraphs.RootRouter
 import com.example.eventify.presentation.navigation.navgraphs.SettingsRouter
+import com.example.eventify.presentation.ui.SnackbarController
+import com.example.eventify.presentation.ui.SnackbarEvent
+import com.example.eventify.presentation.utils.asUiText
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,7 +33,8 @@ class ProfileViewModel @Inject constructor(
     private val navigator: Navigator,
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
     private val logOutUseCase: LogOutUseCase,
-    private val deleteAccountUseCase: DeleteAccountUseCase
+    private val deleteAccountUseCase: DeleteAccountUseCase,
+    @ApplicationContext private val context: Context
 ) : ViewModel() {
 
     private val _stateFlow: MutableStateFlow<ProfileState> = MutableStateFlow(ProfileState.default())
@@ -40,9 +47,12 @@ class ProfileViewModel @Inject constructor(
         )
 
     fun loadData(){
+        _stateFlow.update { it.copy(isLoading = true) }
         viewModelScope.launch {
             when (val currentUser = getCurrentUserUseCase()){
-                is Result.Error -> TODO()
+                is Result.Error -> SnackbarController.sendEvent(
+                    SnackbarEvent(message = currentUser.error.asUiText().asString(context))
+                )
                 is Result.Success -> {
                     _stateFlow.update { currentState ->
                         currentState.copy(
@@ -58,6 +68,7 @@ class ProfileViewModel @Inject constructor(
                 }
             }
         }
+        _stateFlow.update { it.copy(isLoading = false) }
     }
 
     fun navigateToEditProfile() = viewModelScope.launch {

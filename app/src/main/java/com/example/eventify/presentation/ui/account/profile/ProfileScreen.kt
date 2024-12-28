@@ -26,6 +26,7 @@ import com.example.eventify.presentation.ui.account.profile.components.Important
 import com.example.eventify.presentation.ui.account.profile.components.LogOutDialog
 import com.example.eventify.presentation.ui.account.profile.components.NavigationSettingsItem
 import com.example.eventify.presentation.ui.account.profile.components.UserProfilePanel
+import com.example.eventify.presentation.ui.shared.shimmer
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 
 @Composable
@@ -71,7 +72,11 @@ fun ProfileScreen(
         UserProfilePanel(
             firstName = state.userInfo?.firstName,
             lastName = state.userInfo?.lastName,
-            onClick = actions.navigateToProfileEdit
+            onClick = actions.navigateToProfileEdit,
+            modifier = Modifier
+                .shimmer(
+                    showShimmer = state.isLoading
+                )
         )
         SettingsBlock {
             NavigationSettingsItem(stringResource(R.string.notifications), onClick = {})

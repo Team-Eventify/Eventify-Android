@@ -13,10 +13,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -26,7 +26,6 @@ import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.eventify.R
-import com.example.eventify.presentation.models.UserShortInfo
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 
 @Composable
@@ -44,8 +43,10 @@ fun UserProfilePanel(
             context.getString(R.string.empty_profile_name)
     }
     Card(
-        modifier = modifier
-            .clickable { onClick?.invoke() },
+        modifier = Modifier
+            .clickable { onClick?.invoke() }
+            .composed { modifier }
+        ,
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.primary,

@@ -61,4 +61,5 @@
     <string name="too_many_requests">Слишком много запросов</string>
     <string name="bad_request">Некоректный запрос</string>
     <string name="user_not_found">Пользователь не найден</string>
+    <string name="user_updated">Пользователь обновлен</string>
 </resources>
