@@ -16,7 +16,6 @@ import com.example.eventify.presentation.utils.UiText
 data class ProfileEditState(
     val error: String? = null,
     val isLoading: Boolean = false,
-    val isRefreshing: Boolean = false,
 
     val email: String,
     val hasEmailError: Boolean = false,

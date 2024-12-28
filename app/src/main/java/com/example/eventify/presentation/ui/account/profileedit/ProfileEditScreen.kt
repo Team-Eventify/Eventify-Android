@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,6 +18,8 @@ import com.example.eventify.presentation.ui.shared.CategorySelector
 import com.example.eventify.presentation.ui.shared.buttons.PrimaryButton
 import com.example.eventify.presentation.ui.shared.PrimaryButtonText
 import com.example.eventify.presentation.ui.shared.SubHeadingText
+import com.example.eventify.presentation.ui.shared.shimmer
+import com.example.eventify.presentation.ui.theme.EventifyTheme
 
 @Composable
 fun ProfileEditScreen(
@@ -35,19 +38,25 @@ fun ProfileEditScreen(
         SubHeadingText(text = "Имя")
         ProfileEditInput(
             text = state.firstName,
-            onChange = actions.onChangeFirstName
+            onChange = actions.onChangeFirstName,
+            modifier = Modifier
+                .shimmer(showShimmer = state.isLoading)
         )
 
         SubHeadingText(text = "Фамилия")
         ProfileEditInput(
             text = state.lastName,
-            onChange = actions.onChangeLastName
+            onChange = actions.onChangeLastName,
+            modifier = Modifier
+                .shimmer(showShimmer = state.isLoading)
         )
 
         SubHeadingText(text = "Отчество")
         ProfileEditInput(
             text = state.middleName,
-            onChange = actions.onChangeMiddleName
+            onChange = actions.onChangeMiddleName,
+            modifier = Modifier
+                .shimmer(showShimmer = state.isLoading)
         )
 
         SubHeadingText(text = "Электронная поста")
@@ -55,7 +64,9 @@ fun ProfileEditScreen(
             text = state.email,
             onChange = actions.onChangeEmail,
             isError = state.emailError != null || state.hasEmailError,
-            supportingText = state.emailError?.asString()
+            supportingText = state.emailError?.asString(),
+            modifier = Modifier
+                .shimmer(showShimmer = state.isLoading)
         )
 
         SubHeadingText(text = "Telegram")
@@ -64,14 +75,18 @@ fun ProfileEditScreen(
             onChange = actions.onChangeTelegram,
             prefix = "@",
             isError = state.telegramNameError != null || state.hasTelegramNameError,
-            supportingText = state.telegramNameError?.asString()
+            supportingText = state.telegramNameError?.asString(),
+            modifier = Modifier
+                .shimmer(showShimmer = state.isLoading)
         )
 
         SubHeadingText(text = "Мои категории")
         AnnotationText(text = "Выбирай категории ивентов под свои интересы!")
         CategorySelector(
             categories = state.categoryItems,
-            onClickCategory = actions.onToggleCategoryItem
+            onClickCategory = actions.onToggleCategoryItem,
+            modifier = Modifier
+                .shimmer(showShimmer = state.isLoading)
         )
 
         PrimaryButton(onClick = actions.onSubmit) {
@@ -82,50 +97,106 @@ fun ProfileEditScreen(
 }
 
 @Composable
-@Preview(name = "ProfileEdit", showBackground = true, showSystemUi = true)
-private fun ProfileEditScreenPreview() {
-    ProfileEditScreen(
-        state = ProfileEditState(
-            firstName = "Ivan",
-            lastName = "Ivanov",
-            middleName = "Ivanovich",
-            email = "ivan@mail.ru",
-            telegramName = "ivan",
-            categoryItems = listOf(
-                CategorySelectItem(
-                    id = "",
-                    title = "Sport",
-                    selected = false
-                ),
-                CategorySelectItem(
-                    id = "",
-                    title = "Game Dev",
-                    selected = true
-                ),
-                CategorySelectItem(
-                    id = "",
-                    title = "Communication",
-                    selected = false
-                ),
-                CategorySelectItem(
-                    id = "",
-                    title = "Backend",
-                    selected = true
-                ),
-                CategorySelectItem(
-                    id = "",
-                    title = "Mobile",
-                    selected = true
-                ),
-                CategorySelectItem(
-                    id = "",
-                    title = "Frontend",
-                    selected = false
-                ),
+@Preview(name = "ProfileEdit", showBackground = true)
+private fun ProfileEditScreenDarkPreview() {
+    EventifyTheme(darkTheme = true) {
+        Surface {
+            ProfileEditScreen(
+                state = ProfileEditState(
+                    firstName = "Ivan",
+                    lastName = "Ivanov",
+                    middleName = "Ivanovich",
+                    email = "ivan@mail.ru",
+                    telegramName = "ivan",
+                    categoryItems = listOf(
+                        CategorySelectItem(
+                            id = "",
+                            title = "Sport",
+                            selected = false
+                        ),
+                        CategorySelectItem(
+                            id = "",
+                            title = "Game Dev",
+                            selected = true
+                        ),
+                        CategorySelectItem(
+                            id = "",
+                            title = "Communication",
+                            selected = false
+                        ),
+                        CategorySelectItem(
+                            id = "",
+                            title = "Backend",
+                            selected = true
+                        ),
+                        CategorySelectItem(
+                            id = "",
+                            title = "Mobile",
+                            selected = true
+                        ),
+                        CategorySelectItem(
+                            id = "",
+                            title = "Frontend",
+                            selected = false
+                        ),
 
+                        )
+                ),
+                actions = ProfileEditActions.default()
             )
-        ),
-        actions = ProfileEditActions.default()
-    )
+        }
+    }
+}
+
+@Composable
+@Preview(name = "ProfileEdit", showBackground = true, showSystemUi = true)
+private fun ProfileEditScreenLightPreview() {
+    EventifyTheme {
+        Surface {
+            ProfileEditScreen(
+                state = ProfileEditState(
+                    firstName = "Ivan",
+                    lastName = "Ivanov",
+                    middleName = "Ivanovich",
+                    email = "ivan@mail.ru",
+                    telegramName = "ivan",
+                    categoryItems = listOf(
+                        CategorySelectItem(
+                            id = "",
+                            title = "Sport",
+                            selected = false
+                        ),
+                        CategorySelectItem(
+                            id = "",
+                            title = "Game Dev",
+                            selected = true
+                        ),
+                        CategorySelectItem(
+                            id = "",
+                            title = "Communication",
+                            selected = false
+                        ),
+                        CategorySelectItem(
+                            id = "",
+                            title = "Backend",
+                            selected = true
+                        ),
+                        CategorySelectItem(
+                            id = "",
+                            title = "Mobile",
+                            selected = true
+                        ),
+                        CategorySelectItem(
+                            id = "",
+                            title = "Frontend",
+                            selected = false
+                        ),
+
+                        )
+                ),
+                actions = ProfileEditActions.default()
+            )
+        }
+    }
 }
 

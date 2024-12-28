@@ -56,6 +56,8 @@ class ProfileEditViewModel @Inject constructor(
 
 
     private fun loadData(){
+        _stateFlow.update { it.copy(isLoading = true) }
+
         viewModelScope.launch {
             when (val userResult = getCurrentUserUseCase()){
                 is Result.Error -> SnackbarController.sendEvent(
@@ -88,6 +90,8 @@ class ProfileEditViewModel @Inject constructor(
                 }
             }
         }
+
+        _stateFlow.update { it.copy(isLoading = false) }
     }
 
 
@@ -137,27 +141,6 @@ class ProfileEditViewModel @Inject constructor(
                 SnackbarEvent(message = context.getString(R.string.user_updated))
             )
         }
-
-
-//        viewModelScope.launch {
-//            runCatching {
-//                currentUser.value?.run {
-//                    changeUserUseCase(userId = id, data = userData)
-//                    setUserCategoriesUseCase(userId = id, categoryIds = categoryIds)
-//                }
-//            }.onSuccess {
-//                SnackbarController.sendEvent(
-//                    SnackbarEvent(message = "Пользователь обновлен")
-//                )
-//                loadData()
-//            }.onFailure {  exception ->
-//                // TODO show errors detail
-//                SnackbarController.sendEvent(
-//                    SnackbarEvent(message = exception.message ?: "Не удалось обновить данные")
-//                )
-//            }
-//        }
-
     }
 
 

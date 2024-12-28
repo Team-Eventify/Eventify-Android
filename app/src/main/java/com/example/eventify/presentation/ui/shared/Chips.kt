@@ -63,7 +63,10 @@ fun CategorySelectChip(
             )
         },
         label = {
-            Text(text = category.title)
+            Text(
+                text = category.title,
+                color = MaterialTheme.colorScheme.onPrimary
+            )
         },
         selected = category.selected,
         leadingIcon = null,
