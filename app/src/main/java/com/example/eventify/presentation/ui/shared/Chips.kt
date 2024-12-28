@@ -65,7 +65,7 @@ fun CategorySelectChip(
         label = {
             Text(
                 text = category.title,
-                color = MaterialTheme.colorScheme.onPrimary
+                color = if (category.selected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface
             )
         },
         selected = category.selected,
