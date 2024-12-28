@@ -1,11 +1,13 @@
 package com.example.eventify.presentation.ui.account.profileedit
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.eventify.data.models.UserChange
 import com.example.eventify.data.models.UserCredentials
 import com.example.eventify.data.models.UserInfo
+import com.example.eventify.domain.DataError
 import com.example.eventify.domain.Result
 import com.example.eventify.domain.usecases.GetCategoriesWithUserSelection
 import com.example.eventify.domain.usecases.account.ChangeUserUseCase
@@ -18,6 +20,7 @@ import com.example.eventify.presentation.ui.SnackbarController
 import com.example.eventify.presentation.ui.SnackbarEvent
 import com.example.eventify.presentation.utils.asUiText
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -34,7 +37,8 @@ class ProfileEditViewModel @Inject constructor(
     private val getCategoriesWithUserSelection: GetCategoriesWithUserSelection,
     private val changeUserUseCase: ChangeUserUseCase,
     private val setUserCategoriesUseCase: SetUserCategoriesUseCase,
-    private val navigator: Navigator
+    private val navigator: Navigator,
+    @ApplicationContext private val context: Context
 ) : ViewModel() {
     private val validateTelegramNameUseCase = ValidateTelegramName()
     private val validateEmailUseCase = ValidateEmail()
@@ -55,58 +59,76 @@ class ProfileEditViewModel @Inject constructor(
 
     private fun loadData(){
         // TODO refactor this block
-        viewModelScope.launch {
-            when (val result = getCurrentUserUseCase()) {
-                is Result.Error -> TODO()
-                is Result.Success -> {
-                    val user = result.data
-                    _currentUser.value = user
-                    _stateFlow.update { currentState ->
-                        currentState.copy(
-                            firstName = user.firstName,
-                            lastName = user.lastName,
-                            middleName = user.middleName,
-                            email = user.email,
-                            telegramName = user.telegramName,
-                        )
-                    }
-                }
-            }
-
-            when (val result = getCategoriesWithUserSelection(_currentUser.value!!.id)){
-                is Result.Error -> TODO()
-                is Result.Success -> {
-                    _stateFlow.update { currentState ->
-                        currentState.copy(
-                            categoryItems = result.data
-                        )
-                    }
-                }
-            }
-        }
+//        viewModelScope.launch {
+//            when (val result = getCurrentUserUseCase()) {
+//                is Result.Error -> TODO()
+//                is Result.Success -> {
+//                    val user = result.data
+//                    _currentUser.value = user
+//                    _stateFlow.update { currentState ->
+//                        currentState.copy(
+//                            firstName = user.firstName,
+//                            lastName = user.lastName,
+//                            middleName = user.middleName,
+//                            email = user.email,
+//                            telegramName = user.telegramName,
+//                        )
+//                    }
+//                }
+//            }
+//
+//            when (val result = getCategoriesWithUserSelection(_currentUser.value!!.id)){
+//                is Result.Error -> {
+//                    when (result.error){
+//                        is DataError.API -> {
+//                            when (result.error){
+//                                DataError.API.NOT_FOUND -> _stateFlow.update { currentState ->
+//                                    currentState.copy(
+//                                        categoryItems = emptyList()
+//                                    )
+//                                }
+//                                else -> SnackbarController.sendEvent(
+//                                    SnackbarEvent(message = result.error.asUiText().asString(context))
+//                                )
+//                            }
+//                        }
+//                        else -> SnackbarController.sendEvent(
+//                            SnackbarEvent(message = result.error.asUiText().asString(context))
+//                        )
+//                    }
+//                }
+//                is Result.Success -> {
+//                    _stateFlow.update { currentState ->
+//                        currentState.copy(
+//                            categoryItems = result.data
+//                        )
+//                    }
+//                }
+//            }
+//        }
     }
 
 
     fun saveUser(){
-        val isValidaData = listOf(
-            validateEmail(),
-            validateTelegramName()
-        ).all { it }
-
-        if (!isValidaData) return
-
-        val userData = stateFlow.value.run {
-            UserChange(
-                firstName = firstName,
-                lastName = lastName,
-                middleName = middleName,
-                email = email,
-                telegramName = telegramName
-            )
-        }
-        val categoryIds = stateFlow.value.run {
-            categoryItems.filter { categoryItem -> categoryItem.selected }.map { categoryItem -> categoryItem.id }
-        }
+//        val isValidaData = listOf(
+//            validateEmail(),
+//            validateTelegramName()
+//        ).all { it }
+//
+//        if (!isValidaData) return
+//
+//        val userData = stateFlow.value.run {
+//            UserChange(
+//                firstName = firstName,
+//                lastName = lastName,
+//                middleName = middleName,
+//                email = email,
+//                telegramName = telegramName
+//            )
+//        }
+//        val categoryIds = stateFlow.value.run {
+//            categoryItems.filter { categoryItem -> categoryItem.selected }.map { categoryItem -> categoryItem.id }
+//        }
 
 //        viewModelScope.launch {
 //            runCatching {

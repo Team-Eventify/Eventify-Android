@@ -12,10 +12,6 @@ class ChooseCategoriesCoordinator(
     val viewModel: ChooseCategoriesViewModel
 ) {
     val screenStateFlow = viewModel.stateFlow
-
-    fun doStuff() {
-        // TODO Handle UI Action
-    }
 }
 
 @Composable

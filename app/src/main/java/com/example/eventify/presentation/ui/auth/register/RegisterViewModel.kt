@@ -1,8 +1,10 @@
 package com.example.eventify.presentation.ui.auth.register
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.eventify.data.models.UserCreate
+import com.example.eventify.domain.DataError
 import com.example.eventify.domain.Result
 import com.example.eventify.domain.usecases.account.RegisterUseCase
 import com.example.eventify.domain.validation.EmailValidationError
@@ -15,6 +17,7 @@ import com.example.eventify.presentation.ui.SnackbarController
 import com.example.eventify.presentation.ui.SnackbarEvent
 import com.example.eventify.presentation.utils.asUiText
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,6 +30,7 @@ import timber.log.Timber
 class RegisterViewModel @Inject constructor(
     private val registerUseCase: RegisterUseCase,
     private val navigator: Navigator,
+    @ApplicationContext private val context: Context
 ) : ViewModel() {
     private val validateEmailUseCase: ValidateEmail = ValidateEmail()
     private val validatePasswordUseCase: ValidatePassword = ValidatePassword()
@@ -97,37 +101,29 @@ class RegisterViewModel @Inject constructor(
                 password = password
             )
         }
-        registerUser(payload = userPayload)
-    }
 
-    private fun registerUser(payload: UserCreate){
         viewModelScope.launch {
-            runCatching {
-                registerUseCase(user = payload)
-            }.onSuccess {
-                navigator.navigate(AuthRouter.ChooseCategoriesRoute){
-                    popUpTo(0) {
-                        inclusive = true
+            when (val result = registerUseCase(user = userPayload)){
+                is Result.Error -> handleErrors(result.error)
+                is Result.Success -> {
+                    navigator.navigate(AuthRouter.ChooseCategoriesRoute){
+                        popUpTo(0) {
+                            inclusive = true
+                        }
                     }
                 }
-            }.onFailure { exception ->
-                handleErrors(exception)
             }
         }
     }
+    
 
-    private suspend fun handleErrors(exception: Throwable){
-        Timber.e(exception)
-        // TODO handle detail errors
-        _stateFlow.update { currentState ->
-            when (exception){
-                else -> {
-                    SnackbarController.sendEvent(SnackbarEvent(message = exception.message ?: "Ошибка сервера"))
-                    currentState.copy(
-                        hasLoginError = true,
-                        hasPasswordError = true
-                    )
-                }
+    private suspend fun handleErrors(error: DataError){
+        when (error){
+            is DataError.API -> {}
+            else -> {
+                SnackbarController.sendEvent(
+                    SnackbarEvent(message = error.asUiText().asString(context))
+                )
             }
         }
     }
