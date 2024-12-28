@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.eventify.R
 import com.example.eventify.data.models.UserChange
 import com.example.eventify.data.models.UserCredentials
 import com.example.eventify.data.models.UserInfo
@@ -43,9 +44,6 @@ class ProfileEditViewModel @Inject constructor(
     private val validateTelegramNameUseCase = ValidateTelegramName()
     private val validateEmailUseCase = ValidateEmail()
 
-    private val _currentUser: MutableStateFlow<UserInfo?> = MutableStateFlow(null)
-    val currentUser: StateFlow<UserInfo?> = _currentUser.asStateFlow()
-
     private val _stateFlow: MutableStateFlow<ProfileEditState> = MutableStateFlow(ProfileEditState.default())
     val stateFlow: StateFlow<ProfileEditState> = _stateFlow
         .onStart { loadData() }
@@ -58,77 +56,88 @@ class ProfileEditViewModel @Inject constructor(
 
 
     private fun loadData(){
-        // TODO refactor this block
-//        viewModelScope.launch {
-//            when (val result = getCurrentUserUseCase()) {
-//                is Result.Error -> TODO()
-//                is Result.Success -> {
-//                    val user = result.data
-//                    _currentUser.value = user
-//                    _stateFlow.update { currentState ->
-//                        currentState.copy(
-//                            firstName = user.firstName,
-//                            lastName = user.lastName,
-//                            middleName = user.middleName,
-//                            email = user.email,
-//                            telegramName = user.telegramName,
-//                        )
-//                    }
-//                }
-//            }
-//
-//            when (val result = getCategoriesWithUserSelection(_currentUser.value!!.id)){
-//                is Result.Error -> {
-//                    when (result.error){
-//                        is DataError.API -> {
-//                            when (result.error){
-//                                DataError.API.NOT_FOUND -> _stateFlow.update { currentState ->
-//                                    currentState.copy(
-//                                        categoryItems = emptyList()
-//                                    )
-//                                }
-//                                else -> SnackbarController.sendEvent(
-//                                    SnackbarEvent(message = result.error.asUiText().asString(context))
-//                                )
-//                            }
-//                        }
-//                        else -> SnackbarController.sendEvent(
-//                            SnackbarEvent(message = result.error.asUiText().asString(context))
-//                        )
-//                    }
-//                }
-//                is Result.Success -> {
-//                    _stateFlow.update { currentState ->
-//                        currentState.copy(
-//                            categoryItems = result.data
-//                        )
-//                    }
-//                }
-//            }
-//        }
+        viewModelScope.launch {
+            when (val userResult = getCurrentUserUseCase()){
+                is Result.Error -> SnackbarController.sendEvent(
+                    SnackbarEvent(message = userResult.error.asUiText().asString(context))
+                )
+                is Result.Success -> {
+                    val user = userResult.data
+                    _stateFlow.update { currentState ->
+                        currentState.copy(
+                            firstName = user.firstName,
+                            middleName = user.middleName,
+                            lastName = user.lastName,
+                            email = user.email,
+                            telegramName = user.telegramName
+                        )
+                    }
+                }
+            }
+
+            when (val categoriesResult = getCategoriesWithUserSelection()){
+                is Result.Error -> SnackbarController.sendEvent(
+                    SnackbarEvent(message = categoriesResult.error.asUiText().asString(context))
+                )
+                is Result.Success -> {
+                    _stateFlow.update { currentState ->
+                        currentState.copy(
+                            categoryItems = categoriesResult.data
+                        )
+                    }
+                }
+            }
+        }
     }
 
 
     fun saveUser(){
-//        val isValidaData = listOf(
-//            validateEmail(),
-//            validateTelegramName()
-//        ).all { it }
-//
-//        if (!isValidaData) return
-//
-//        val userData = stateFlow.value.run {
-//            UserChange(
-//                firstName = firstName,
-//                lastName = lastName,
-//                middleName = middleName,
-//                email = email,
-//                telegramName = telegramName
-//            )
-//        }
-//        val categoryIds = stateFlow.value.run {
-//            categoryItems.filter { categoryItem -> categoryItem.selected }.map { categoryItem -> categoryItem.id }
-//        }
+        val isValidaData = listOf(
+            validateEmail(),
+            validateTelegramName()
+        ).all { it }
+
+        if (!isValidaData) return
+
+        val userData = stateFlow.value.run {
+            UserChange(
+                firstName = firstName,
+                lastName = lastName,
+                middleName = middleName,
+                email = email,
+                telegramName = telegramName
+            )
+        }
+        val categoryIds = stateFlow.value.run {
+            categoryItems.filter { categoryItem -> categoryItem.selected }.map { categoryItem -> categoryItem.id }
+        }
+
+        viewModelScope.launch {
+            when (val userResult = changeUserUseCase(userData)){
+                is Result.Error -> {
+                    SnackbarController.sendEvent(
+                        SnackbarEvent(message = userResult.error.asUiText().asString(context))
+                    )
+                    return@launch
+                }
+                is Result.Success -> {}
+            }
+
+            when (val categoriesResult = setUserCategoriesUseCase(categoryIds = categoryIds)){
+                is Result.Error -> {
+                    SnackbarController.sendEvent(
+                        SnackbarEvent(message = categoriesResult.error.asUiText().asString(context))
+                    )
+                    return@launch
+                }
+                is Result.Success -> {}
+            }
+
+            SnackbarController.sendEvent(
+                SnackbarEvent(message = context.getString(R.string.user_updated))
+            )
+        }
+
 
 //        viewModelScope.launch {
 //            runCatching {

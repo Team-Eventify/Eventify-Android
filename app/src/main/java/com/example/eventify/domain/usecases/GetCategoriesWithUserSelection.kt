@@ -11,8 +11,11 @@ import javax.inject.Inject
 class GetCategoriesWithUserSelection @Inject constructor(
     private val usersRepository: UsersRepository,
     private val categoriesRepository: CategoryRepository,
+    private val tokenManager: TokenManager
 ){
-    suspend operator fun invoke(userId: String): Result<List<CategorySelectItem>, DataError>{
+    suspend operator fun invoke(): Result<List<CategorySelectItem>, DataError>{
+        val userId = tokenManager.getUserId() ?: throw Exception()
+
         val allCategories = when (val result = categoriesRepository.getCategoriesList()){
             is Result.Error -> return Result.Error(result.error)
             is Result.Success -> result.data

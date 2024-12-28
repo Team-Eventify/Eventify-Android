@@ -61,4 +61,5 @@
     <string name="too_many_requests">Too many requests</string>
     <string name="bad_request">Bad request</string>
     <string name="user_not_found">User not found</string>
+    <string name="user_updated">User updated</string>
 </resources>

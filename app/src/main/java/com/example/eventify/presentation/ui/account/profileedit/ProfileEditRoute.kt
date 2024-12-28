@@ -20,8 +20,6 @@ fun ProfileEditRoute(
     // State observing and declarations
     val uiState by coordinator.screenStateFlow.collectAsStateWithLifecycle()
 
-    val currentUserState by coordinator.viewModel.currentUser.collectAsStateWithLifecycle()
-
     // UI Actions
     val actions = rememberProfileEditActions(coordinator)
 
@@ -38,9 +36,8 @@ fun ProfileEditRoute(
     }
 
     // UI Rendering
-    if (currentUserState != null){
-        ProfileEditScreen(uiState, actions)
-    }
+    ProfileEditScreen(uiState, actions)
+
 }
 
 
