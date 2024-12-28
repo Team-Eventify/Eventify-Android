@@ -14,9 +14,15 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -35,6 +41,7 @@ import com.example.eventify.presentation.models.time
 import com.example.eventify.presentation.ui.shared.BodyText
 import com.example.eventify.presentation.ui.shared.EventCardTitle
 import com.example.eventify.presentation.ui.shared.EventInfoChip
+import com.example.eventify.presentation.ui.shared.shimmer
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -52,6 +59,7 @@ fun EventCard(
                 onClick(event.id)
             }
     ) {
+        var showShimmer by remember { mutableStateOf(false) }
 
         AsyncImage(
             model = ImageRequest.Builder(context = LocalContext.current)
@@ -64,10 +72,23 @@ fun EventCard(
             contentScale = ContentScale.Crop,
             alignment = Alignment.Center,
             imageLoader = imageLoader,
+            onLoading = {
+                showShimmer = true
+            },
+            onError = {
+                showShimmer = false
+            },
+            onSuccess = {
+                showShimmer = false
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
                 .clip(RoundedCornerShape(10.dp))
+                .shimmer(
+                    showShimmer = showShimmer,
+                    blendMode = BlendMode.SrcAtop
+                )
         )
         FlowRow(
             horizontalArrangement = Arrangement.spacedBy(10.dp),

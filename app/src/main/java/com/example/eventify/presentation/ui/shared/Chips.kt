@@ -25,6 +25,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -124,6 +125,7 @@ fun EventInfoChip(
         modifier = Modifier
             .border(1.dp, MaterialTheme.colorScheme.onSurface, RoundedCornerShape(16.dp))
             .padding(horizontal = 10.dp, vertical = 2.dp)
+
     ) {
         Text(text = text, color = MaterialTheme.colorScheme.onSurface)
     }
