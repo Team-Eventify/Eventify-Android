@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.eventify.data.repositories.tokens.TokenManager
+import com.example.eventify.domain.Result
 import com.example.eventify.domain.usecases.account.SetUserCategoriesUseCase
 import com.example.eventify.domain.usecases.categories.GetCategoriesUseCase
 import com.example.eventify.presentation.models.CategorySelectItem
@@ -37,15 +38,20 @@ class ChooseCategoriesViewModel @Inject constructor(
 
     fun loadData(){
         viewModelScope.launch {
-            _stateFlow.update { currentState ->
-                currentState.copy(
-                    categoryItems = getCategoriesUseCase().map {
-                        CategorySelectItem(
-                            id = it.id,
-                            title = it.title
+            when (val categories = getCategoriesUseCase()){
+                is Result.Error -> TODO()
+                is Result.Success -> {
+                    _stateFlow.update { currentState ->
+                        currentState.copy(
+                            categoryItems = categories.data.map {
+                                CategorySelectItem(
+                                    id = it.id,
+                                    title = it.title
+                                )
+                            }
                         )
                     }
-                )
+                }
             }
         }
     }

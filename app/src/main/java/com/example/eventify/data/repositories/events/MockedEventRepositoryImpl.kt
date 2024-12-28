@@ -2,6 +2,8 @@ package com.example.eventify.data.repositories.events
 
 import com.example.eventify.data.models.EventInfo
 import com.example.eventify.data.remote.models.events.EventsFilterData
+import com.example.eventify.domain.DataError
+import com.example.eventify.domain.Result
 import com.github.javafaker.Faker
 import java.util.UUID
 import java.util.concurrent.TimeUnit
@@ -11,13 +13,15 @@ class MockedEventRepositoryImpl : EventsRepository {
     private val faker = Faker()
     private var events = List(10) { getRandomEventInfo(faker) }
 
-    override suspend fun getEventsList(filter: EventsFilterData?): List<EventInfo> = events
-    override suspend fun getEventDetail(eventId: String): EventInfo = events.find { it.id == eventId } ?: throw Exception("Ивент с id=$eventId не найден.")
-    override suspend fun subscribeForEvent(eventId: String) {
+    override suspend fun getEventsList(filter: EventsFilterData?): Result<List<EventInfo>, DataError> = Result.Success(events)
+    override suspend fun getEventDetail(eventId: String): Result<EventInfo, DataError> = events.find { it.id == eventId }?.let {
+        Result.Success(it)
+    } ?: Result.Error(DataError.API.NOT_FOUND)
+    override suspend fun subscribeForEvent(eventId: String): Result<Unit, DataError> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun unsubscribeForEvent(eventId: String, userId: String) {
+    override suspend fun unsubscribeForEvent(eventId: String, userId: String): Result<Unit, DataError> {
         TODO("Not yet implemented")
     }
 

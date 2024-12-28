@@ -6,6 +6,7 @@ import androidx.navigation.NavController
 import com.example.eventify.data.models.UserInfo
 import com.example.eventify.data.repositories.events.EventsRepository
 import com.example.eventify.data.repositories.tokens.TokenManager
+import com.example.eventify.domain.Result
 import com.example.eventify.domain.usecases.account.GetCurrentUserUseCase
 import com.example.eventify.domain.usecases.events.GetSubscribedEventsUseCase
 import com.example.eventify.presentation.models.ShortEventItem
@@ -53,18 +54,34 @@ class MyEventsViewModel @Inject constructor(
                     isRefreshing = true
                 )
             }
+            val currentDateTime = Date().time
 
-            runCatching {
-                loadSubscribedEvents()
-            }.onSuccess {
-
-            }.onFailure { exception ->
-                Timber.e(exception)
-                handleErrors(exception)
-                SnackbarController.sendEvent(SnackbarEvent(
-                    message = "Cant load events ${exception.message}"
-                ))
+            when (val result = getSubscribedEventsUseCase()){
+                is Result.Error -> {
+                    SnackbarController.sendEvent(
+                        SnackbarEvent(message = result.error.toString())
+                    )
+                }
+                is Result.Success -> {
+                    _stateFlow.update { currentState ->
+                        val events = result.data.map {
+                            ShortEventItem(
+                                id = it.id,
+                                title = it.title,
+                                description = it.description,
+                                start = it.start,
+                                end = it.end
+                            )
+                        }
+                        currentState.copy(
+                            upComingEvents = events.filter { it.start >= currentDateTime },
+                            finishedEvents = events.filter { it.end < currentDateTime }
+                        )
+                    }
+                }
             }
+
+
             _stateFlow.update { currentState ->
                 currentState.copy(
                     isRefreshing = false
@@ -73,32 +90,32 @@ class MyEventsViewModel @Inject constructor(
         }
     }
 
-    private suspend fun loadSubscribedEvents(){
-        // TODO refactor this block
-
-        _stateFlow.update { currentState ->
-            tokenManager.getUserId()?.let { userId ->
-                val currentDateTime = Date().time
-                val events = getSubscribedEventsUseCase(userId).map {
-                    ShortEventItem(
-                        id = it.id,
-                        title = it.title,
-                        description = it.description,
-                        start = it.start,
-                        end = it.end
-                    )
-                }
-                currentState.copy(
-                    upComingEvents = events.filter { it.start >= currentDateTime },
-                    finishedEvents = events.filter { it.end < currentDateTime }
-                )
-            } ?: MyEventsState.default()
-        }
-    }
-
-    private fun handleErrors(exception: Throwable){
-        // TODO handle errors
-    }
+//    private suspend fun loadSubscribedEvents(){
+//        // TODO refactor this block
+//
+//        _stateFlow.update { currentState ->
+//            tokenManager.getUserId()?.let { userId ->
+//                val currentDateTime = Date().time
+//                val events = getSubscribedEventsUseCase(userId).map {
+//                    ShortEventItem(
+//                        id = it.id,
+//                        title = it.title,
+//                        description = it.description,
+//                        start = it.start,
+//                        end = it.end
+//                    )
+//                }
+//                currentState.copy(
+//                    upComingEvents = events.filter { it.start >= currentDateTime },
+//                    finishedEvents = events.filter { it.end < currentDateTime }
+//                )
+//            } ?: MyEventsState.default()
+//        }
+//    }
+//
+//    private fun handleErrors(exception: Throwable){
+//        // TODO handle errors
+//    }
 
     fun refresh(){
         loadData()

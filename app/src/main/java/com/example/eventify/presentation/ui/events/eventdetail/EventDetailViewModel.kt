@@ -4,6 +4,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
+import com.example.eventify.domain.DataError
+import com.example.eventify.domain.Result
 import com.example.eventify.domain.usecases.events.GetEventDetailUseCase
 import com.example.eventify.domain.usecases.events.GetSubscribedEventsUseCase
 import com.example.eventify.domain.usecases.events.SubscribeForEventUseCase
@@ -44,33 +46,52 @@ class EventDetailViewModel @Inject constructor(
 
     private fun loadEvent(){
         viewModelScope.launch {
-            val currentEvent = getEventDetailUseCase(eventId)
-
-            _stateFlow.update { currentState ->
-                currentState.copy(
-                    event = currentEvent
-                )
+            when (val currentEvent = getEventDetailUseCase(eventId)){
+                is Result.Error -> TODO()
+                is Result.Success -> {
+                    _stateFlow.update { currentState ->
+                        currentState.copy(
+                            event = currentEvent.data
+                        )
+                    }
+                }
             }
         }
     }
 
-    fun subscribeForEvent(): Unit{
+    fun subscribeForEvent(){
+//        viewModelScope.launch {
+//            runCatching {
+//                subscribedEventsUseCase(eventId)
+//            }.onSuccess {
+//                loadEvent()
+//                SnackbarController.sendEvent(
+//                    SnackbarEvent(
+//                        message = "Вы подписались на событие"
+//                    )
+//                )
+//            }.onFailure { exception ->
+//                SnackbarController.sendEvent(
+//                    SnackbarEvent(
+//                        message = exception.message ?: "Ошибка"
+//                    )
+//                )
+//            }
+//        }
+
         viewModelScope.launch {
-            runCatching {
-                subscribedEventsUseCase(eventId)
-            }.onSuccess {
-                loadEvent()
-                SnackbarController.sendEvent(
-                    SnackbarEvent(
-                        message = "Вы подписались на событие"
+            when (val result = subscribedEventsUseCase(eventId)) {
+                is Result.Error -> {
+                    SnackbarController.sendEvent(
+                        SnackbarEvent(message = result.error.toString())
                     )
-                )
-            }.onFailure { exception ->
-                SnackbarController.sendEvent(
-                    SnackbarEvent(
-                        message = exception.message ?: "Ошибка"
+                }
+                is Result.Success -> {
+                    loadEvent()
+                    SnackbarController.sendEvent(
+                        SnackbarEvent(message = "Вы подписались на событие")
                     )
-                )
+                }
             }
         }
     }

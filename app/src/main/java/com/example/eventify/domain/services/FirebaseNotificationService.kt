@@ -49,7 +49,7 @@ class FirebaseNotificationService: FirebaseMessagingService() {
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
             .setContentTitle(message.title)
             .setContentText(message.body)
-            .setSmallIcon(R.mipmap.ic_launcher)
+            .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentIntent(pendingIntent)
 
         val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager

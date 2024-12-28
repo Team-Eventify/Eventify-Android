@@ -3,9 +3,12 @@ package com.example.eventify.presentation.ui.events.eventsfeed
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import coil3.ImageLoader
+import com.example.eventify.domain.Result
 import com.example.eventify.domain.usecases.categories.GetCategoriesUseCase
 import com.example.eventify.domain.usecases.events.GetEventsUseCase
 import com.example.eventify.presentation.models.ShortEventItem
+import com.example.eventify.presentation.ui.SnackbarController
+import com.example.eventify.presentation.ui.SnackbarEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -34,20 +37,48 @@ class EventsFeedViewModel @Inject constructor(
         )
 
     fun loadData() {
-        viewModelScope.launch {
-            val events = getEventsUseCase()
+//        viewModelScope.launch {
+//            val events = getEventsUseCase()
+//
+//            _stateFlow.update { curentState ->
+//                curentState.copy(
+//                    events = events.map { ShortEventItem(
+//                        id = it.id,
+//                        title = it.title,
+//                        description = it.description,
+//                        cover = it.cover,
+//                        start = it.start,
+//                        end = it.end
+//                    ) }
+//                )
+//            }
+//        }
 
-            _stateFlow.update { curentState ->
-                curentState.copy(
-                    events = events.map { ShortEventItem(
-                        id = it.id,
-                        title = it.title,
-                        description = it.description,
-                        cover = it.cover,
-                        start = it.start,
-                        end = it.end
-                    ) }
-                )
+        viewModelScope.launch {
+            when (val events = getEventsUseCase()){
+                is Result.Error -> {
+                    SnackbarController.sendEvent(
+                        SnackbarEvent(
+                            message = events.error.toString()
+                        )
+                    )
+                }
+                is Result.Success -> {
+                    _stateFlow.update { currentState ->
+                        currentState.copy(
+                            events = events.data.map {
+                                ShortEventItem(
+                                    id = it.id,
+                                    title = it.title,
+                                    description = it.description,
+                                    cover = it.cover,
+                                    start = it.start,
+                                    end = it.end
+                                )
+                            }
+                        )
+                    }
+                }
             }
         }
     }

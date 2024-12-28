@@ -2,6 +2,7 @@ package com.example.eventify.presentation.ui.account.profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.eventify.domain.Result
 import com.example.eventify.domain.usecases.account.DeleteAccountUseCase
 import com.example.eventify.domain.usecases.account.GetCurrentUserUseCase
 import com.example.eventify.domain.usecases.account.LogOutUseCase
@@ -40,17 +41,21 @@ class ProfileViewModel @Inject constructor(
 
     fun loadData(){
         viewModelScope.launch {
-            val currentUser = getCurrentUserUseCase()
-            _stateFlow.update { currentState ->
-                currentState.copy(
-                    userInfo = UserShortInfo(
-                        id = currentUser.id,
-                        firstName = currentUser.firstName,
-                        lastName = currentUser.lastName,
-                        middleName = currentUser.middleName,
-                        email = currentUser.email
-                    )
-                )
+            when (val currentUser = getCurrentUserUseCase()){
+                is Result.Error -> TODO()
+                is Result.Success -> {
+                    _stateFlow.update { currentState ->
+                        currentState.copy(
+                            userInfo = UserShortInfo(
+                                id = currentUser.data.id,
+                                firstName = currentUser.data.firstName,
+                                lastName = currentUser.data.lastName,
+                                middleName = currentUser.data.middleName,
+                                email = currentUser.data.email
+                            )
+                        )
+                    }
+                }
             }
         }
     }

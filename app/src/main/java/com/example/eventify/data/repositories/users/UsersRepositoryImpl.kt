@@ -1,5 +1,6 @@
 package com.example.eventify.data.repositories.users
 
+import android.provider.ContactsContract.Data
 import com.example.eventify.data.exceptions.AccessDeniedException
 import com.example.eventify.data.exceptions.CategoryNotFoundException
 import com.example.eventify.data.exceptions.NullableResponseException
@@ -14,13 +15,17 @@ import com.example.eventify.data.remote.api.UsersAPI
 import com.example.eventify.data.remote.models.events.toEventInfo
 import com.example.eventify.data.remote.models.users.ChangeUserRequest
 import com.example.eventify.data.remote.models.users.toUserInfo
+import com.example.eventify.data.remote.utils.handle
+import com.example.eventify.domain.DataError
+import com.example.eventify.domain.Result
+import timber.log.Timber
 import javax.inject.Inject
 
 class UsersRepositoryImpl @Inject constructor(
     val dataSource: UsersAPI
 ): UsersRepository {
-    override suspend fun changeUser(userId: String, user: UserChange): UserInfo {
-        val response = dataSource.changeUser(
+    override suspend fun changeUser(userId: String, user: UserChange): Result<UserInfo, DataError> = try {
+        dataSource.changeUser(
             userId = userId,
             user = ChangeUserRequest(
                 firstName = user.firstName,
@@ -29,60 +34,53 @@ class UsersRepositoryImpl @Inject constructor(
                 telegramName = user.telegramName,
                 email = user.email
             )
-        )
-
-        val updatedUser = when (response.code()){
-            200 -> response.body()?.toUserInfo()
-            404 -> throw UserNotFoundException()
-            else -> throw UnprocessedServerResponseException()
+        ).handle{
+            it.toUserInfo()
         }
 
-        return updatedUser ?: throw NullableResponseException()
+    } catch (e: Exception){
+        Timber.e(e)
+        Result.Error(DataError.Network.UNKNOWN)
     }
 
-    override suspend fun getUserInfo(userId: String): UserInfo {
-        val response = dataSource.getUserInfo(userId = userId)
-        val user = when (response.code()){
-            200 -> response.body()?.toUserInfo()
-            404 -> throw UserNotFoundException()
-            else -> throw UnprocessedServerResponseException()
+    override suspend fun getUserInfo(userId: String): Result<UserInfo, DataError> = try {
+        dataSource.getUserInfo(userId = userId).handle{
+            it.toUserInfo()
         }
-        return user ?: throw NullableResponseException()
+    } catch (e: Exception){
+        Timber.e(e)
+        Result.Error(DataError.Network.UNKNOWN)
     }
 
-    override suspend fun getUserCategories(userId: String): List<CategoryInfo> {
-        val response = dataSource.getUserCategories(userId = userId)
-        val categories = when (response.code()){
-            200 -> response.body()?.map { it.toCategoryInfo() }
-            404 -> emptyList()
-            else -> throw UnprocessedServerResponseException()
+    override suspend fun getUserCategories(userId: String): Result<List<CategoryInfo>, DataError> = try {
+        dataSource.getUserCategories(userId = userId).handle{ response ->
+            response.map { it.toCategoryInfo() }
         }
-        return categories ?: throw NullableResponseException()
+    } catch (e: Exception){
+        Timber.d(e)
+        Result.Error(DataError.Network.UNKNOWN)
     }
 
-    override suspend fun setUserCategories(userId: String, categories: List<CategorySlug>) {
-        val response = dataSource.setUserCategories(userId = userId, categories = categories)
-        when (response.code()) {
-            404 -> throw CategoryNotFoundException()
-            403 -> throw AccessDeniedException()
-        }
+    override suspend fun setUserCategories(userId: String, categories: List<CategorySlug>): Result<Unit, DataError> = try {
+        dataSource.setUserCategories(userId = userId, categories = categories).handle()
+    } catch (e: Exception){
+        Timber.e(e)
+        Result.Error(DataError.Network.UNKNOWN)
     }
 
-    override suspend fun getUserSubscribedEvents(userId: String): List<EventInfo> {
-        val response = dataSource.getUserSubscribedEvents(userId = userId)
-        val events = when (response.code()) {
-            200 -> response.body()?.map { it.toEventInfo() }
-            404 -> emptyList()
-            else -> null
+    override suspend fun getUserSubscribedEvents(userId: String): Result<List<EventInfo>, DataError> = try {
+        dataSource.getUserSubscribedEvents(userId = userId).handle{ response ->
+            response.map { it.toEventInfo() }
         }
-        return events ?: throw UnprocessedServerResponseException()
+    } catch (e: Exception){
+        Timber.e(e)
+        Result.Error(DataError.Network.UNKNOWN)
     }
 
-    override suspend fun deleteUser(userId: String) {
-        val response = dataSource.deleteUserById(userId = userId)
-        when (response.code()){
-            200 -> {}
-            else -> throw UnprocessedServerResponseException()
-        }
+    override suspend fun deleteUser(userId: String): Result<Unit, DataError> = try {
+        dataSource.deleteUserById(userId = userId).handle()
+    } catch (e: Exception){
+        Timber.e(e)
+        Result.Error(DataError.Network.UNKNOWN)
     }
 }

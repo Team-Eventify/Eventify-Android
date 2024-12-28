@@ -55,23 +55,52 @@ class ProfileEditViewModel @Inject constructor(
 
     private fun loadData(){
         // TODO refactor this block
-
         viewModelScope.launch {
-            _currentUser.value = getCurrentUserUseCase()
-            _stateFlow.update { currentState ->
-                currentUser.value?.run {
-                    currentState.copy(
-                        firstName = firstName,
-                        lastName = lastName,
-                        middleName = middleName,
-                        email = email,
-                        telegramName = telegramName,
-                        categoryItems = getCategoriesWithUserSelection(id)
-                    )
-                } ?: ProfileEditState.default()
+            when (val result = getCurrentUserUseCase()) {
+                is Result.Error -> TODO()
+                is Result.Success -> {
+                    val user = result.data
+                    _currentUser.value = user
+                    _stateFlow.update { currentState ->
+                        currentState.copy(
+                            firstName = user.firstName,
+                            lastName = user.lastName,
+                            middleName = user.middleName,
+                            email = user.email,
+                            telegramName = user.telegramName,
+                        )
+                    }
+                }
+            }
 
+            when (val result = getCategoriesWithUserSelection(_currentUser.value!!.id)){
+                is Result.Error -> TODO()
+                is Result.Success -> {
+                    _stateFlow.update { currentState ->
+                        currentState.copy(
+                            categoryItems = result.data
+                        )
+                    }
+                }
             }
         }
+
+//        viewModelScope.launch {
+//            _currentUser.value = getCurrentUserUseCase()
+//            _stateFlow.update { currentState ->
+//                currentUser.value?.run {
+//                    currentState.copy(
+//                        firstName = firstName,
+//                        lastName = lastName,
+//                        middleName = middleName,
+//                        email = email,
+//                        telegramName = telegramName,
+//                        categoryItems = getCategoriesWithUserSelection(id)
+//                    )
+//                } ?: ProfileEditState.default()
+//
+//            }
+//        }
     }
 
 
