@@ -84,23 +84,6 @@ class ProfileEditViewModel @Inject constructor(
                 }
             }
         }
-
-//        viewModelScope.launch {
-//            _currentUser.value = getCurrentUserUseCase()
-//            _stateFlow.update { currentState ->
-//                currentUser.value?.run {
-//                    currentState.copy(
-//                        firstName = firstName,
-//                        lastName = lastName,
-//                        middleName = middleName,
-//                        email = email,
-//                        telegramName = telegramName,
-//                        categoryItems = getCategoriesWithUserSelection(id)
-//                    )
-//                } ?: ProfileEditState.default()
-//
-//            }
-//        }
     }
 
 
@@ -125,24 +108,25 @@ class ProfileEditViewModel @Inject constructor(
             categoryItems.filter { categoryItem -> categoryItem.selected }.map { categoryItem -> categoryItem.id }
         }
 
-        viewModelScope.launch {
-            runCatching {
-                currentUser.value?.run {
-                    changeUserUseCase(userId = id, data = userData)
-                    setUserCategoriesUseCase(userId = id, categoryIds = categoryIds)
-                }
-            }.onSuccess {
-                SnackbarController.sendEvent(
-                    SnackbarEvent(message = "Пользователь обновлен")
-                )
-                loadData()
-            }.onFailure {  exception ->
-                // TODO show errors detail
-                SnackbarController.sendEvent(
-                    SnackbarEvent(message = exception.message ?: "Не удалось обновить данные")
-                )
-            }
-        }
+//        viewModelScope.launch {
+//            runCatching {
+//                currentUser.value?.run {
+//                    changeUserUseCase(userId = id, data = userData)
+//                    setUserCategoriesUseCase(userId = id, categoryIds = categoryIds)
+//                }
+//            }.onSuccess {
+//                SnackbarController.sendEvent(
+//                    SnackbarEvent(message = "Пользователь обновлен")
+//                )
+//                loadData()
+//            }.onFailure {  exception ->
+//                // TODO show errors detail
+//                SnackbarController.sendEvent(
+//                    SnackbarEvent(message = exception.message ?: "Не удалось обновить данные")
+//                )
+//            }
+//        }
+
     }
 
 

@@ -1,10 +1,13 @@
 package com.example.eventify.presentation.ui.auth.login
 
+import android.provider.ContactsContract.Data
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.navOptions
 import com.example.eventify.data.exceptions.UserNotFoundException
 import com.example.eventify.data.models.UserCredentials
+import com.example.eventify.domain.DataError
+import com.example.eventify.domain.Result
 import com.example.eventify.domain.usecases.account.LoginUseCase
 import com.example.eventify.presentation.navigation.Navigator
 import com.example.eventify.presentation.navigation.navgraphs.AuthRouter
@@ -53,46 +56,42 @@ class LogInViewModel @Inject constructor(
                 password = password
             )
         }
-        logInUser(credentials = userCredentials)
-    }
 
-    private fun logInUser(credentials: UserCredentials){
         viewModelScope.launch {
-            runCatching {
-                loginUseCase(credentials = credentials)
-            }.onSuccess {
-                navigator.navigate(
-                    RootRouter.HomeRoute
-                ) {
-                    popUpTo(0) {
-                        inclusive = true
+            when (val result = loginUseCase(credentials = userCredentials)){
+                is Result.Error -> handleErrors(result.error)
+                is Result.Success -> {
+                    navigator.navigate(
+                        RootRouter.HomeRoute
+                    ) {
+                        popUpTo(0) {
+                            inclusive = true
+                        }
                     }
                 }
-            }.onFailure { exception ->
-                handleErrors(exception)
             }
         }
     }
 
-    private suspend fun handleErrors(exception: Throwable){
-        // TODO handle detail errors
-        _stateFlow.update { currentState ->
-            when (exception){
-                is UserNotFoundException -> {
-                    SnackbarController.sendEvent(SnackbarEvent(message = exception.message!!))
-                    currentState.copy(
-                        hasLoginError = true,
-                        hasPasswordError = true
-                    )
-                }
-                else -> {
-                    SnackbarController.sendEvent(SnackbarEvent(message = exception.message ?: "Ошибка сервера"))
-                    currentState.copy(
-                        hasLoginError = true,
-                        hasPasswordError = true
-                    )
+    private suspend fun handleErrors(error: DataError){
+        when (error){
+            is DataError.API -> {
+                when (error){
+                    DataError.API.NOT_FOUND -> {
+                        SnackbarController.sendEvent(
+                            SnackbarEvent(message = error.toString())
+                        )
+                    }
+                    DataError.API.BAD_REQUEST -> TODO()
+                    DataError.API.FORBIDDEN -> TODO()
                 }
             }
+            is DataError.Network -> {
+                SnackbarController.sendEvent(
+                    SnackbarEvent(message = error.toString())
+                )
+            }
+            else -> {}
         }
     }
 

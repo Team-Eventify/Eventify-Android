@@ -41,18 +41,6 @@ class SearchViewModel @Inject constructor(
         )
 
     private fun loadData(){
-//        viewModelScope.launch {
-//            _stateFlow.update { currentState ->
-//                currentState.copy(
-//                    categories = try {
-//                        getCategoriesUseCase()
-//                    } catch (e: Exception){
-//                        emptyList()
-//                    }
-//                )
-//            }
-//        }
-
         viewModelScope.launch {
             when (val result = getCategoriesUseCase()){
                 is Result.Error -> {

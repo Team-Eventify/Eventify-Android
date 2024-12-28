@@ -37,23 +37,6 @@ class EventsFeedViewModel @Inject constructor(
         )
 
     fun loadData() {
-//        viewModelScope.launch {
-//            val events = getEventsUseCase()
-//
-//            _stateFlow.update { curentState ->
-//                curentState.copy(
-//                    events = events.map { ShortEventItem(
-//                        id = it.id,
-//                        title = it.title,
-//                        description = it.description,
-//                        cover = it.cover,
-//                        start = it.start,
-//                        end = it.end
-//                    ) }
-//                )
-//            }
-//        }
-
         viewModelScope.launch {
             when (val events = getEventsUseCase()){
                 is Result.Error -> {

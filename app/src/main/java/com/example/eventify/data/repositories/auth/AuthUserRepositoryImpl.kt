@@ -1,5 +1,6 @@
 package com.example.eventify.data.repositories.auth
 
+import androidx.compose.ui.util.trace
 import com.example.eventify.data.exceptions.UserNotFoundException
 import com.example.eventify.data.models.TokenData
 import com.example.eventify.data.models.UserCreate
@@ -8,71 +9,70 @@ import com.example.eventify.data.remote.api.AuthAPI
 import com.example.eventify.data.remote.models.auth.LogInRequestData
 import com.example.eventify.data.remote.models.auth.RefreshTokenRequestData
 import com.example.eventify.data.remote.models.auth.RegisterUserRequestData
+import com.example.eventify.data.remote.utils.handle
+import com.example.eventify.domain.DataError
+import com.example.eventify.domain.Result
+import timber.log.Timber
 import javax.inject.Inject
 
 class AuthUserRepositoryImpl @Inject constructor (
     private val dataSource: AuthAPI
 ): AuthUserRepository {
-    override suspend fun refreshAccessToken(refreshToken: String): TokenData {
-        val response = dataSource.refreshAccessToken(
+    override suspend fun refreshAccessToken(refreshToken: String): Result<TokenData, DataError> = try {
+        dataSource.refreshAccessToken(
             data =  RefreshTokenRequestData(
                 refresh = refreshToken
             )
-        )
-        val tokenData = when (response.code()) {
-            200 -> response.body()?.let {
-                TokenData(
-                    accessToken = it.accessToken,
-                    refreshToken = it.refreshToken,
-                    userID = it.userID
-                )
-            }
-            else -> null
+        ).handle{
+            TokenData(
+                refreshToken = it.refreshToken,
+                accessToken = it.accessToken,
+                userID = it.userID
+            )
         }
-        return tokenData ?: throw Exception("Ошибка сервера.")
+
+    } catch (e: Exception){
+        Timber.e(e)
+        Result.Error(DataError.Network.UNKNOWN)
     }
 
-    override suspend fun registerUser(user: UserCreate): TokenData {
-        val response = dataSource.registerUser(
+    override suspend fun registerUser(user: UserCreate): Result<TokenData, DataError> = try {
+        dataSource.registerUser(
             user = RegisterUserRequestData(
                 email = user.email,
                 password = user.password
             )
-        )
-
-        val tokenData = when (response.code()) {
-            201 -> response.body()?.let {
-                TokenData(
-                    accessToken = it.accessToken,
-                    refreshToken = it.refreshToken,
-                    userID = it.userID
-                )
-            }
-            else -> null
+        ).handle{
+            TokenData(
+                refreshToken = it.refreshToken,
+                accessToken = it.accessToken,
+                userID = it.userID
+            )
         }
 
-        return tokenData ?: throw Exception("Ошибка сервера.")
+    } catch (e: Exception){
+        Timber.e(e)
+        Result.Error(DataError.Network.UNKNOWN)
     }
-    override suspend fun logInUser(credentials: UserCredentials): TokenData {
-        val response = dataSource.logInUser(
+
+
+    override suspend fun logInUser(credentials: UserCredentials): Result<TokenData, DataError> = try {
+        dataSource.logInUser(
             payload = LogInRequestData(
                 email = credentials.login,
                 password = credentials.password
             )
-        )
-        val tokenData = when (response.code()) {
-            200 -> response.body()?.let {
-                TokenData(
-                    accessToken = it.accessToken,
-                    refreshToken = it.refreshToken,
-                    userID = it.userID
-                )
-            }
-            404 -> throw UserNotFoundException("Пользователь не найден.")
-            else -> null
+        ).handle{
+            TokenData(
+                refreshToken = it.refreshToken,
+                accessToken = it.accessToken,
+                userID = it.userID
+            )
         }
 
-        return tokenData ?: throw UserNotFoundException("Пользователь не найден.")
+    } catch (e: Exception){
+        Timber.e(e)
+        Result.Error(DataError.Network.UNKNOWN)
     }
 
 }

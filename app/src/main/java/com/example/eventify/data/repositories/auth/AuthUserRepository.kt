@@ -10,11 +10,13 @@ import com.example.eventify.data.remote.models.auth.RefreshTokenRequestData
 import com.example.eventify.data.remote.models.auth.RefreshTokenResponse
 import com.example.eventify.data.remote.models.auth.RegisterResponse
 import com.example.eventify.data.remote.models.auth.RegisterUserRequestData
+import com.example.eventify.domain.DataError
+import com.example.eventify.domain.Result
 import retrofit2.Response
 
 interface AuthUserRepository {
-    suspend fun refreshAccessToken(refreshToken: String): TokenData
-    suspend fun registerUser(user: UserCreate): TokenData
-    suspend fun logInUser(credentials: UserCredentials): TokenData
+    suspend fun refreshAccessToken(refreshToken: String): Result<TokenData, DataError>
+    suspend fun registerUser(user: UserCreate): Result<TokenData, DataError>
+    suspend fun logInUser(credentials: UserCredentials): Result<TokenData, DataError>
 }
 

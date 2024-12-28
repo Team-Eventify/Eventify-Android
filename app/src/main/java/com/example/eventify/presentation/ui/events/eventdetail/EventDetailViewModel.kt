@@ -60,25 +60,6 @@ class EventDetailViewModel @Inject constructor(
     }
 
     fun subscribeForEvent(){
-//        viewModelScope.launch {
-//            runCatching {
-//                subscribedEventsUseCase(eventId)
-//            }.onSuccess {
-//                loadEvent()
-//                SnackbarController.sendEvent(
-//                    SnackbarEvent(
-//                        message = "Вы подписались на событие"
-//                    )
-//                )
-//            }.onFailure { exception ->
-//                SnackbarController.sendEvent(
-//                    SnackbarEvent(
-//                        message = exception.message ?: "Ошибка"
-//                    )
-//                )
-//            }
-//        }
-
         viewModelScope.launch {
             when (val result = subscribedEventsUseCase(eventId)) {
                 is Result.Error -> {
@@ -96,23 +77,23 @@ class EventDetailViewModel @Inject constructor(
         }
     }
 
-    fun unsubscribeForEvent(): Unit{
+    fun unsubscribeForEvent(){
         viewModelScope.launch {
-            runCatching {
-                unsubscribeForEventUseCase(eventId)
-            }.onSuccess {
-                loadEvent()
-                SnackbarController.sendEvent(
-                    SnackbarEvent(
-                        message = "Вы отписались от события"
+            when (val result = unsubscribeForEventUseCase(eventId)){
+                is Result.Error -> {
+                    SnackbarController.sendEvent(
+                        SnackbarEvent(
+                            message = result.error.toString()
+                        )
                     )
-                )
-            }.onFailure { exception ->
-                SnackbarController.sendEvent(
-                    SnackbarEvent(
-                        message = exception.message ?: "Ошибка"
+                }
+                is Result.Success -> {
+                    SnackbarController.sendEvent(
+                        SnackbarEvent(
+                            message = "Вы отписались от события"
+                        )
                     )
-                )
+                }
             }
         }
     }

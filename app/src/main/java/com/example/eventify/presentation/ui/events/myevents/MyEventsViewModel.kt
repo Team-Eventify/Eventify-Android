@@ -33,7 +33,6 @@ import java.util.Date
 @HiltViewModel
 class MyEventsViewModel @Inject constructor(
     private val getSubscribedEventsUseCase: GetSubscribedEventsUseCase,
-    private val tokenManager: TokenManager,
     private val navigator: Navigator
 ) : ViewModel() {
 
@@ -89,33 +88,6 @@ class MyEventsViewModel @Inject constructor(
             }
         }
     }
-
-//    private suspend fun loadSubscribedEvents(){
-//        // TODO refactor this block
-//
-//        _stateFlow.update { currentState ->
-//            tokenManager.getUserId()?.let { userId ->
-//                val currentDateTime = Date().time
-//                val events = getSubscribedEventsUseCase(userId).map {
-//                    ShortEventItem(
-//                        id = it.id,
-//                        title = it.title,
-//                        description = it.description,
-//                        start = it.start,
-//                        end = it.end
-//                    )
-//                }
-//                currentState.copy(
-//                    upComingEvents = events.filter { it.start >= currentDateTime },
-//                    finishedEvents = events.filter { it.end < currentDateTime }
-//                )
-//            } ?: MyEventsState.default()
-//        }
-//    }
-//
-//    private fun handleErrors(exception: Throwable){
-//        // TODO handle errors
-//    }
 
     fun refresh(){
         loadData()
