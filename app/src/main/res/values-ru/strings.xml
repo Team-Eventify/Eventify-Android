@@ -52,4 +52,13 @@
     <string name="this_field_must_not_contain_spaces">Поле не должно содержать пробелы</string>
     <string name="incorrect_email">Некоректный формат почты</string>
     <string name="empty_profile_name">Твое Имя</string>
+    <string name="forbidden">Доступ запрещен</string>
+    <string name="server_error">Ошибка сервера</string>
+    <string name="disk_full">Хранилище заполнено</string>
+    <string name="request_timeout">Превышено время ожидания</string>
+    <string name="no_internet">Нет интернета</string>
+    <string name="unknown_error">Неизвестная ошибка</string>
+    <string name="too_many_requests">Слишком много запросов</string>
+    <string name="bad_request">Некоректный запрос</string>
+    <string name="user_not_found">Пользователь не найден</string>
 </resources>

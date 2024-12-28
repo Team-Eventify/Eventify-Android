@@ -52,4 +52,13 @@
     <string name="this_field_must_not_contain_spaces">This field must not contain spaces</string>
     <string name="incorrect_email">Incorrect email</string>
     <string name="empty_profile_name">Your Name</string>
+    <string name="forbidden">Access denied</string>
+    <string name="server_error">Server error</string>
+    <string name="disk_full">Local storage is full</string>
+    <string name="request_timeout">Request timeout</string>
+    <string name="no_internet">No internet connection</string>
+    <string name="unknown_error">Unknown error</string>
+    <string name="too_many_requests">Too many requests</string>
+    <string name="bad_request">Bad request</string>
+    <string name="user_not_found">User not found</string>
 </resources>

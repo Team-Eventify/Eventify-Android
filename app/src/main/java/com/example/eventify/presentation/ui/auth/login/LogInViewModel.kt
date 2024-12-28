@@ -1,9 +1,11 @@
 package com.example.eventify.presentation.ui.auth.login
 
+import android.content.Context
 import android.provider.ContactsContract.Data
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.navOptions
+import com.example.eventify.R
 import com.example.eventify.data.exceptions.UserNotFoundException
 import com.example.eventify.data.models.UserCredentials
 import com.example.eventify.domain.DataError
@@ -14,7 +16,9 @@ import com.example.eventify.presentation.navigation.navgraphs.AuthRouter
 import com.example.eventify.presentation.navigation.navgraphs.RootRouter
 import com.example.eventify.presentation.ui.SnackbarController
 import com.example.eventify.presentation.ui.SnackbarEvent
+import com.example.eventify.presentation.utils.asUiText
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,7 +29,8 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class LogInViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
-    private val navigator: Navigator
+    private val navigator: Navigator,
+    @ApplicationContext private val context: Context
 ) : ViewModel() {
 
     private val _stateFlow: MutableStateFlow<LogInState> = MutableStateFlow(LogInState.default())
@@ -77,21 +82,17 @@ class LogInViewModel @Inject constructor(
         when (error){
             is DataError.API -> {
                 when (error){
-                    DataError.API.NOT_FOUND -> {
-                        SnackbarController.sendEvent(
-                            SnackbarEvent(message = error.toString())
-                        )
-                    }
-                    DataError.API.BAD_REQUEST -> TODO()
-                    DataError.API.FORBIDDEN -> TODO()
+                    DataError.API.NOT_FOUND -> SnackbarController.sendEvent(
+                        SnackbarEvent(message = context.getString(R.string.user_not_found))
+                    )
+                    else -> SnackbarController.sendEvent(
+                        SnackbarEvent(message = error.asUiText().asString(context = context))
+                    )
                 }
             }
-            is DataError.Network -> {
-                SnackbarController.sendEvent(
-                    SnackbarEvent(message = error.toString())
-                )
-            }
-            else -> {}
+            else -> SnackbarController.sendEvent(
+                SnackbarEvent(message = error.asUiText().asString(context = context))
+            )
         }
     }
 

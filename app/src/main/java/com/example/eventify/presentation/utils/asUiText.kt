@@ -1,6 +1,7 @@
 package com.example.eventify.presentation.utils
 
 import com.example.eventify.R
+import com.example.eventify.domain.DataError
 import com.example.eventify.domain.validation.EmailValidationError
 import com.example.eventify.domain.validation.PasswordValidationError
 import com.example.eventify.domain.validation.TelegramNameValidationError
@@ -36,6 +37,50 @@ fun TelegramNameValidationError.asUiText(): UiText = when (this){
     TelegramNameValidationError.HAS_WHITE_SPACE -> UiText.StringResource(
         R.string.this_field_must_not_contain_spaces
     )
+}
+
+fun DataError.asUiText(): UiText = when (this){
+    is DataError.API -> {
+        when (this){
+            DataError.API.BAD_REQUEST -> UiText.StringResource(
+                R.string.bad_request
+            )
+            DataError.API.FORBIDDEN -> UiText.StringResource(
+                R.string.forbidden
+            )
+
+            else -> UiText.DynamicString(this.toString())
+        }
+    }
+    is DataError.Network -> {
+        when (this){
+            DataError.Network.REQUEST_TIMEOUT -> UiText.StringResource(
+                R.string.request_timeout
+            )
+            DataError.Network.TOO_MANY_REQUESTS -> UiText.StringResource(
+                R.string.too_many_requests
+            )
+            DataError.Network.NO_INTERNET -> UiText.StringResource(
+                R.string.no_internet
+            )
+            DataError.Network.SERVER_ERROR -> UiText.StringResource(
+                R.string.server_error
+            )
+            DataError.Network.UNKNOWN -> UiText.StringResource(
+                R.string.unknown_error
+            )
+            else -> UiText.DynamicString(this.toString())
+        }
+    }
+    is DataError.Local -> {
+        when (this){
+            DataError.Local.DISK_FULL -> UiText.StringResource(
+                R.string.disk_full
+            )
+        }
+    }
+
+    else -> UiText.DynamicString(this.toString())
 }
 
 
