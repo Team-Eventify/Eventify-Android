@@ -31,6 +31,10 @@ fun ProfileRoute(
         )
     }
 
+    LaunchedEffect(Unit) {
+        coordinator.viewModel.loadData()
+    }
+
     // UI Rendering
     if (uiState.userInfo != null){
         ProfileScreen(uiState, actions)

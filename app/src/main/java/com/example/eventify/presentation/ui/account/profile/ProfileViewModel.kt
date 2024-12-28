@@ -29,7 +29,7 @@ class ProfileViewModel @Inject constructor(
     private val _stateFlow: MutableStateFlow<ProfileState> = MutableStateFlow(ProfileState.default())
     val stateFlow: StateFlow<ProfileState> = _stateFlow.asStateFlow()
 
-    init {
+    fun loadData(){
         viewModelScope.launch {
             val currentUser = getCurrentUserUseCase()
             _stateFlow.update { currentState ->

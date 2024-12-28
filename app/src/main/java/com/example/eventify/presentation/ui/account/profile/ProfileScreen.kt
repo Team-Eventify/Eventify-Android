@@ -69,7 +69,8 @@ fun ProfileScreen(
             .padding(10.dp)
     ) {
         UserProfilePanel(
-            user = state.userInfo!!,
+            firstName = state.userInfo?.firstName,
+            lastName = state.userInfo?.lastName,
             onClick = actions.navigateToProfileEdit
         )
         SettingsBlock {

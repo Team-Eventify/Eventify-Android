@@ -51,4 +51,5 @@
     <string name="this_field_must_be_filled">Поле должно быть заполнено</string>
     <string name="this_field_must_not_contain_spaces">Поле не должно содержать пробелы</string>
     <string name="incorrect_email">Некоректный формат почты</string>
+    <string name="empty_profile_name">Твое Имя</string>
 </resources>
