@@ -7,10 +7,14 @@ import com.example.eventify.domain.usecases.categories.GetCategoriesUseCase
 import com.example.eventify.domain.usecases.events.GetEventsUseCase
 import com.example.eventify.presentation.models.ShortEventItem
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -21,11 +25,13 @@ class EventsFeedViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _stateFlow: MutableStateFlow<EventsFeedState> = MutableStateFlow(EventsFeedState.default())
-    val stateFlow: StateFlow<EventsFeedState> = _stateFlow.asStateFlow()
-
-    init {
-        loadData()
-    }
+    val stateFlow: StateFlow<EventsFeedState> = _stateFlow
+        .onStart { loadData() }
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000L),
+            EventsFeedState.default()
+        )
 
     fun loadData() {
         viewModelScope.launch {

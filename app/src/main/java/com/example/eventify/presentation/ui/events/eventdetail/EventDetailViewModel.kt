@@ -15,7 +15,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.security.PrivateKey
@@ -31,13 +34,15 @@ class EventDetailViewModel @Inject constructor(
     private val _stateFlow: MutableStateFlow<EventDetailState> =
         MutableStateFlow(EventDetailState())
 
-    val stateFlow: StateFlow<EventDetailState> = _stateFlow.asStateFlow()
+    val stateFlow: StateFlow<EventDetailState> = _stateFlow
+        .onStart { loadEvent() }
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000L),
+            EventDetailState()
+        )
 
-    init {
-        loadEvent()
-    }
-
-    fun loadEvent(){
+    private fun loadEvent(){
         viewModelScope.launch {
             val currentEvent = getEventDetailUseCase(eventId)
 

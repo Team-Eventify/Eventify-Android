@@ -14,7 +14,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -27,7 +30,13 @@ class ProfileViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _stateFlow: MutableStateFlow<ProfileState> = MutableStateFlow(ProfileState.default())
-    val stateFlow: StateFlow<ProfileState> = _stateFlow.asStateFlow()
+    val stateFlow: StateFlow<ProfileState> = _stateFlow
+        .onStart { loadData() }
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000L),
+            ProfileState.default()
+        )
 
     fun loadData(){
         viewModelScope.launch {

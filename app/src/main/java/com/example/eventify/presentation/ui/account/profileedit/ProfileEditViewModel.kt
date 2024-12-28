@@ -2,6 +2,7 @@ package com.example.eventify.presentation.ui.account.profileedit
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.eventify.data.models.UserChange
 import com.example.eventify.data.models.UserCredentials
 import com.example.eventify.data.models.UserInfo
@@ -20,7 +21,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -39,12 +43,15 @@ class ProfileEditViewModel @Inject constructor(
     val currentUser: StateFlow<UserInfo?> = _currentUser.asStateFlow()
 
     private val _stateFlow: MutableStateFlow<ProfileEditState> = MutableStateFlow(ProfileEditState.default())
-    val stateFlow: StateFlow<ProfileEditState> = _stateFlow.asStateFlow()
+    val stateFlow: StateFlow<ProfileEditState> = _stateFlow
+        .onStart { loadData() }
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000L),
+            ProfileEditState.default()
+        )
 
 
-    init {
-        loadData()
-    }
 
     private fun loadData(){
         // TODO refactor this block

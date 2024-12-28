@@ -11,7 +11,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -26,11 +29,13 @@ class SearchViewModel @Inject constructor(
     private val _stateFlow: MutableStateFlow<SearchState> = MutableStateFlow(SearchState(
         searchText = sharedQuery ?: ""
     ))
-    val stateFlow: StateFlow<SearchState> = _stateFlow.asStateFlow()
-
-    init {
-        loadData()
-    }
+    val stateFlow: StateFlow<SearchState> = _stateFlow
+        .onStart { loadData() }
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000L),
+            SearchState(searchText = sharedQuery ?: "")
+        )
 
     private fun loadData(){
         viewModelScope.launch {

@@ -7,6 +7,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.eventify.R
 import com.example.eventify.presentation.models.ScaffoldViewState
 import com.example.eventify.presentation.ui.shared.DefaultTopAppBar
@@ -17,7 +18,7 @@ fun MyEventsRoute(
     coordinator: MyEventsCoordinator = rememberMyEventsCoordinator()
 ) {
     // State observing and declarations
-    val uiState by coordinator.screenStateFlow.collectAsState()
+    val uiState by coordinator.screenStateFlow.collectAsStateWithLifecycle()
 
     // UI Actions
     val actions = rememberMyEventsActions(coordinator)

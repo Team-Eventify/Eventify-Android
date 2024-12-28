@@ -6,6 +6,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.eventify.presentation.models.ScaffoldViewState
 import com.example.eventify.presentation.ui.events.search.components.EventsSearchBar
 
@@ -15,7 +16,7 @@ fun SearchRoute(
     coordinator: SearchCoordinator = rememberSearchCoordinator()
 ) {
     // State observing and declarations
-    val uiState by coordinator.screenStateFlow.collectAsState(SearchState())
+    val uiState by coordinator.screenStateFlow.collectAsStateWithLifecycle()
 
     // UI Actions
     val actions = rememberSearchActions(coordinator)

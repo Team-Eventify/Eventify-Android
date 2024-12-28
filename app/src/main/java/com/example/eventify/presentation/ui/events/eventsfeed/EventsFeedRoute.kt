@@ -11,6 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.example.eventify.presentation.models.ScaffoldViewState
 import com.example.eventify.presentation.ui.events.eventsfeed.components.EventsFeedTopAppBar
@@ -24,7 +25,7 @@ fun EventsFeedRoute(
     coordinator: EventsFeedCoordinator = rememberEventsFeedCoordinator(navController)
 ) {
     // State observing and declarations
-    val uiState by coordinator.screenStateFlow.collectAsState()
+    val uiState by coordinator.screenStateFlow.collectAsStateWithLifecycle()
 
     // UI Actions
     val actions = rememberEventsFeedActions(coordinator)
