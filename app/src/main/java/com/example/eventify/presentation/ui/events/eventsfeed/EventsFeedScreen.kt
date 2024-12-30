@@ -4,6 +4,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import coil3.ImageLoader
 import com.example.eventify.presentation.models.ShortEventItem
 import com.example.eventify.presentation.ui.events.eventsfeed.components.EventCard
@@ -12,6 +13,8 @@ import com.example.eventify.presentation.ui.events.eventsfeed.components.Loading
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import java.util.UUID
+import kotlin.random.Random
 
 @Composable
 fun EventsFeedScreen(
@@ -53,15 +56,40 @@ private fun EventsFeedScreenDefaultDarkPreview() {
         Surface {
             EventsFeedScreen(
                 state = EventsFeedState(
-                    events = listOf(
+                    events = List(3){
                         ShortEventItem(
-                            id = "",
-                            title = "День открытых дверей НИТУ МИСИС",
-                            description = "Дни открытых дверей — это уникальная возможность для старшеклассников больше узнать о специальностях, которым обучают в Унивеситете МИСИС.",
-                            start = 312313123,
-                            end = 231121243
+                            id = UUID.randomUUID().toString(),
+                            title = LoremIpsum(3)
+                                .values
+                                .toList()
+                                .joinToString { it },
+                            description = LoremIpsum(20)
+                                .values
+                                .toList()
+                                .joinToString { it },
+                            cover = "",
+                            start = Random.nextInt(),
+                            end = Random.nextInt()
                         )
-                    ),
+                    },
+                    isLoading = false
+                ),
+                actions = EventsFeedActions.default(),
+                imageLoader = ImageLoader(LocalContext.current)
+            )
+        }
+    }
+}
+
+@Preview(name = "EventsFeed Loading Dark", showBackground = true)
+@Composable
+private fun EventsFeedScreenDarkLoadingPreview() {
+    EventifyTheme(darkTheme = true) {
+        Surface {
+            EventsFeedScreen(
+                state = EventsFeedState(
+                    events = emptyList(),
+                    isLoading = true
                 ),
                 actions = EventsFeedActions.default(),
                 imageLoader = ImageLoader(LocalContext.current)
@@ -79,15 +107,23 @@ private fun EventsFeedScreenDefaultLightPreview() {
         Surface {
             EventsFeedScreen(
                 state = EventsFeedState(
-                    events = listOf(
+                    events = List(3){
                         ShortEventItem(
-                            id = "",
-                            title = "День открытых дверей НИТУ МИСИС",
-                            description = "Дни открытых дверей — это уникальная возможность для старшеклассников больше узнать о специальностях, которым обучают в Унивеситете МИСИС.",
-                            start = 312313123,
-                            end = 231121243
+                            id = UUID.randomUUID().toString(),
+                            title = LoremIpsum(3)
+                                .values
+                                .toList()
+                                .joinToString { it },
+                            description = LoremIpsum(20)
+                                .values
+                                .toList()
+                                .joinToString { it },
+                            cover = "",
+                            start = Random.nextInt(),
+                            end = Random.nextInt()
                         )
-                    ),
+                    },
+                    isLoading = false
                 ),
                 actions = EventsFeedActions.default(),
                 imageLoader = ImageLoader(LocalContext.current)
@@ -96,4 +132,23 @@ private fun EventsFeedScreenDefaultLightPreview() {
         }
     }
 }
+
+@Preview(name = "EventsFeed Loading Light", showBackground = true)
+@Composable
+private fun EventsFeedScreenLightLoadingPreview() {
+    EventifyTheme(darkTheme = false) {
+        Surface {
+            EventsFeedScreen(
+                state = EventsFeedState(
+                    events = emptyList(),
+                    isLoading = true
+                ),
+                actions = EventsFeedActions.default(),
+                imageLoader = ImageLoader(LocalContext.current)
+            )
+        }
+    }
+}
+
+
 
