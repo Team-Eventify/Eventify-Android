@@ -1,29 +1,14 @@
 package com.example.eventify.presentation.ui.events.eventsfeed
 
-import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import coil3.ImageLoader
-import com.example.eventify.R
 import com.example.eventify.presentation.models.ShortEventItem
 import com.example.eventify.presentation.ui.events.eventsfeed.components.EventCard
-import com.example.eventify.presentation.ui.shared.HeadingText
+import com.example.eventify.presentation.ui.events.eventsfeed.components.EventsFeedLazyColumn
+import com.example.eventify.presentation.ui.events.eventsfeed.components.LoadingEventCard
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
@@ -40,32 +25,22 @@ fun EventsFeedScreen(
         state = swipeRefreshState,
         onRefresh = actions.onRefreshData
     ) {
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(20.dp),
-            contentPadding = PaddingValues(horizontal = 15.dp),
-            modifier = Modifier
-                .fillMaxSize()
-        ) {
-            item {
-                HeadingText(stringResource(R.string.popular_events))
-            }
-            items(
-                state.events,
-                key = { it.id }
-            ){ event ->
+        EventsFeedLazyColumn(
+            events = state.events,
+            isLoading = state.isLoading,
+            loadingEventItem = {
+                LoadingEventCard()
+            },
+            eventItem = { event ->
                 EventCard(
                     event = event,
                     onClick = {
                         actions.onEventClick(event.id)
                     },
-                    imageLoader = imageLoader,
-                    modifier = Modifier
-                        .animateContentSize()
-
+                    imageLoader = imageLoader
                 )
-                HorizontalDivider()
             }
-        }
+        )
     }
 }
 

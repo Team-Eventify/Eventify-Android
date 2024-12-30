@@ -38,36 +38,46 @@ class EventsFeedViewModel @Inject constructor(
 
     fun loadData() {
         viewModelScope.launch {
-            when (val events = getEventsUseCase()){
-                is Result.Error -> {
-                    SnackbarController.sendEvent(
-                        SnackbarEvent(
-                            message = events.error.toString()
-                        )
-                    )
-                }
-                is Result.Success -> {
-                    _stateFlow.update { currentState ->
-                        currentState.copy(
-                            events = events.data.map {
-                                ShortEventItem(
-                                    id = it.id,
-                                    title = it.title,
-                                    description = it.description,
-                                    cover = it.cover,
-                                    start = it.start,
-                                    end = it.end
-                                )
-                            }
-                        )
-                    }
-                }
-            }
+            _stateFlow.update { it.copy(isLoading = true) }
+            loadEvents()
+            _stateFlow.update { it.copy(isLoading = false) }
+
         }
     }
 
     fun refreshData() {
-        loadData()
+        viewModelScope.launch {
+            _stateFlow.update { it.copy(isRefreshing = true) }
+            loadEvents()
+            _stateFlow.update { it.copy(isRefreshing = false) }
+        }
     }
 
+    private suspend fun loadEvents(){
+        when (val events = getEventsUseCase()){
+            is Result.Error -> {
+                SnackbarController.sendEvent(
+                    SnackbarEvent(
+                        message = events.error.toString()
+                    )
+                )
+            }
+            is Result.Success -> {
+                _stateFlow.update { currentState ->
+                    currentState.copy(
+                        events = events.data.map {
+                            ShortEventItem(
+                                id = it.id,
+                                title = it.title,
+                                description = it.description,
+                                cover = it.cover,
+                                start = it.start,
+                                end = it.end
+                            )
+                        }
+                    )
+                }
+            }
+        }
+    }
 }

@@ -7,6 +7,7 @@ import com.example.eventify.presentation.models.ShortEventItem
  * UI State that represents EventsFeedScreen
  **/
 data class EventsFeedState(
+    val isLoading: Boolean = true,
     val isRefreshing: Boolean = false,
     val events: List<ShortEventItem>,
 ){
