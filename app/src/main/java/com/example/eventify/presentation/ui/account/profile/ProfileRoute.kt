@@ -37,10 +37,7 @@ fun ProfileRoute(
     }
 
     // UI Rendering
-    if (uiState.userInfo != null){
-        ProfileScreen(uiState, actions)
-
-    }
+    ProfileScreen(uiState, actions)
 }
 
 
