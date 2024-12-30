@@ -19,7 +19,8 @@ class EventRepositoryImpl @Inject constructor(
             offset = filter?.offset,
             ownerID = filter?.ownerId,
             start = filter?.start,
-            end = filter?.start
+            end = filter?.start,
+            categoryIds = filter?.categoryIds?.joinToString(separator = ",")
         ).handle { events ->
             events.map { it.toEventInfo() }
         }
