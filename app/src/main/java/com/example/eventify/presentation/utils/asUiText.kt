@@ -40,21 +40,6 @@ fun TelegramNameValidationError.asUiText(): UiText = when (this){
 }
 
 fun DataError.asUiText(): UiText = when (this){
-    is DataError.API -> {
-        when (this){
-            DataError.API.BAD_REQUEST -> UiText.StringResource(
-                R.string.bad_request
-            )
-            DataError.API.FORBIDDEN -> UiText.StringResource(
-                R.string.forbidden
-            )
-            DataError.API.NOT_FOUND -> UiText.StringResource(
-                R.string.not_found
-            )
-
-            else -> UiText.DynamicString(this.toString())
-        }
-    }
     is DataError.Network -> {
         when (this){
             DataError.Network.REQUEST_TIMEOUT -> UiText.StringResource(
@@ -71,6 +56,15 @@ fun DataError.asUiText(): UiText = when (this){
             )
             DataError.Network.UNKNOWN -> UiText.StringResource(
                 R.string.unknown_error
+            )
+            DataError.Network.NOT_FOUND -> UiText.StringResource(
+                R.string.not_found
+            )
+            DataError.Network.BAD_REQUEST -> UiText.StringResource(
+                R.string.bad_request
+            )
+            DataError.Network.FORBIDDEN -> UiText.StringResource(
+                R.string.forbidden
             )
             else -> UiText.DynamicString(this.toString())
         }

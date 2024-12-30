@@ -16,7 +16,7 @@ class MockedEventRepositoryImpl : EventsRepository {
     override suspend fun getEventsList(filter: EventsFilterData?): Result<List<EventInfo>, DataError> = Result.Success(events)
     override suspend fun getEventDetail(eventId: String): Result<EventInfo, DataError> = events.find { it.id == eventId }?.let {
         Result.Success(it)
-    } ?: Result.Error(DataError.API.NOT_FOUND)
+    } ?: Result.Error(DataError.Network.NOT_FOUND)
     override suspend fun subscribeForEvent(eventId: String): Result<Unit, DataError> {
         TODO("Not yet implemented")
     }

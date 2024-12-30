@@ -8,16 +8,10 @@ import com.example.eventify.presentation.models.ShortEventItem
  **/
 data class MyEventsState(
     val isRefreshing: Boolean = false,
-    val upComingEvents: List<ShortEventItem>,
-    val finishedEvents: List<ShortEventItem>,
-) {
-    companion object {
-        fun default() = MyEventsState(
-            upComingEvents = emptyList(),
-            finishedEvents = emptyList()
-        )
-    }
-}
+    val isLoading: Boolean = false,
+    val upComingEvents: List<ShortEventItem> = emptyList(),
+    val finishedEvents: List<ShortEventItem> = emptyList(),
+)
 
 /**
  * MyEvents Actions emitted from the UI Layer

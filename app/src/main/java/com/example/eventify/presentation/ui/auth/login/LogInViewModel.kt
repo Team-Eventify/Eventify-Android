@@ -80,9 +80,9 @@ class LogInViewModel @Inject constructor(
 
     private suspend fun handleErrors(error: DataError){
         when (error){
-            is DataError.API -> {
+            is DataError.Network -> {
                 when (error){
-                    DataError.API.NOT_FOUND -> SnackbarController.sendEvent(
+                    DataError.Network.NOT_FOUND -> SnackbarController.sendEvent(
                         SnackbarEvent(message = context.getString(R.string.user_not_found))
                     )
                     else -> SnackbarController.sendEvent(

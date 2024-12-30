@@ -8,14 +8,12 @@ interface DataError: Error {
         PAYLOAD_TOO_LARGE,
         SERVER_ERROR,
         SERIALIZATION,
-        UNKNOWN
-    }
-    enum class Local: DataError {
-        DISK_FULL
-    }
-    enum class API: DataError{
+        UNKNOWN,
         NOT_FOUND,
         BAD_REQUEST,
         FORBIDDEN
+    }
+    enum class Local: DataError {
+        DISK_FULL
     }
 }
