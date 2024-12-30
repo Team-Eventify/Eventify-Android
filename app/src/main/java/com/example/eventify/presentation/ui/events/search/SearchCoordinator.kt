@@ -12,10 +12,6 @@ class SearchCoordinator(
     val viewModel: SearchViewModel
 ) {
     val screenStateFlow = viewModel.stateFlow
-
-    fun doStuff() {
-        // TODO Handle UI Action
-    }
 }
 
 @Composable

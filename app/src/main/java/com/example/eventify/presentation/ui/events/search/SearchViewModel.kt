@@ -40,22 +40,28 @@ class SearchViewModel @Inject constructor(
             SearchState(searchText = sharedQuery ?: "")
         )
 
-    private fun loadData(){
-        viewModelScope.launch {
-            when (val result = getCategoriesUseCase()){
-                is Result.Error -> {
-                    SnackbarController.sendEvent(
-                        SnackbarEvent(message = result.error.toString())
+    private suspend fun loadSearchData(){
+        when (val result = getCategoriesUseCase()){
+            is Result.Error -> {
+                SnackbarController.sendEvent(
+                    SnackbarEvent(message = result.error.toString())
+                )
+            }
+            is Result.Success -> {
+                _stateFlow.update { currentState ->
+                    currentState.copy(
+                        categories = result.data
                     )
                 }
-                is Result.Success -> {
-                    _stateFlow.update { currentState ->
-                        currentState.copy(
-                            categories = result.data
-                        )
-                    }
-                }
             }
+        }
+    }
+
+    private fun loadData(){
+        viewModelScope.launch {
+            _stateFlow.update { it.copy(isLoading = true) }
+            loadSearchData()
+            _stateFlow.update { it.copy(isLoading = false) }
         }
     }
 
@@ -113,6 +119,14 @@ class SearchViewModel @Inject constructor(
                     searchText = ""
                 )
             }
+        }
+    }
+
+    fun refresh() {
+        viewModelScope.launch {
+            _stateFlow.update { it.copy(isRefreshing = true) }
+            loadSearchData()
+            _stateFlow.update { it.copy(isRefreshing = false) }
         }
     }
 }

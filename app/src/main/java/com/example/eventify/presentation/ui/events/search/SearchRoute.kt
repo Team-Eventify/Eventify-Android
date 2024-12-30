@@ -51,7 +51,8 @@ fun rememberSearchActions(coordinator: SearchCoordinator): SearchActions {
             onSearchTextChanged = coordinator.viewModel::changeSearchText,
             onChangeActiveSearchBar = coordinator.viewModel::changeSearchBarActive,
             onToggleSearch = coordinator.viewModel::toggleSearchBar,
-            onClearSearchText = coordinator.viewModel::clearSearchText
+            onClearSearchText = coordinator.viewModel::clearSearchText,
+            onRefreshData = coordinator.viewModel::refresh
         )
     }
 }
