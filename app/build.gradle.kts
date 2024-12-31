@@ -59,7 +59,6 @@ android {
         }
     }
 
-
 }
 
 dependencies {
@@ -143,9 +142,6 @@ dependencies {
 
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
-    doFirst{
-        tasks.findByName("processDebugGoogleServices")?.enabled = false
-    }
 }
 
 
