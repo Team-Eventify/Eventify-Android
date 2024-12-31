@@ -1,105 +1,138 @@
 package com.example.eventify.data.repositories.events
 
-import com.example.eventify.data.models.EventInfo
-import com.example.eventify.data.models.UserCredentials
-import com.example.eventify.data.remote.api.AuthAPI
 import com.example.eventify.data.remote.api.EventsAPI
-import com.example.eventify.data.remote.models.events.EventsFilterData
-import com.example.eventify.data.remote.utils.AccessTokenInterceptor
-import com.example.eventify.data.remote.utils.NetworkServiceFactory
-import com.example.eventify.data.remote.utils.TokenAuthenticator
-import com.example.eventify.data.repositories.auth.AuthUserRepositoryImpl
-import com.example.eventify.data.repositories.tokens.MockedTokenManagerImpl
-import kotlinx.coroutines.runBlocking
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
+import com.example.eventify.data.remote.models.events.EventInfoResponse
+import com.example.eventify.data.remote.models.events.toEventInfo
+import com.example.eventify.domain.DataError
+import com.example.eventify.domain.Result
+import com.example.eventify.emptyResponseError
+import com.example.eventify.responseSuccess
+import com.github.javafaker.Faker
+import io.mockk.impl.annotations.MockK
+import com.google.common.truth.Truth.assertThat
+import io.mockk.coEvery
+import io.mockk.junit5.MockKExtension
+import kotlinx.coroutines.test.runTest
+
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Assertions.*
-
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.Arguments
-import org.junit.jupiter.params.provider.MethodSource
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import org.junit.jupiter.api.extension.ExtendWith
+import java.util.UUID
+import kotlin.random.Random
 
+
+@ExtendWith(MockKExtension::class)
 class EventRepositoryImplTest {
-    private val mockedTokenManager = MockedTokenManagerImpl()
-    private val accessTokenInterceptor = AccessTokenInterceptor(tokenManager = mockedTokenManager)
-    private val authDataSource = NetworkServiceFactory.getApi("https://eventify.website/api/v1/auth/", AuthAPI::class.java)
-    private val authRepository = AuthUserRepositoryImpl(authDataSource)
-    private val tokenAuthenticator = TokenAuthenticator(tokenManager = mockedTokenManager, authRepository = authRepository)
-    private val client = OkHttpClient
-        .Builder()
-        .addInterceptor(accessTokenInterceptor)
-        .authenticator(tokenAuthenticator)
-        .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-        .build()
-    private val eventsApi = Retrofit.Builder()
-        .baseUrl("https://eventify.website/api/v1/events/")
-        .addConverterFactory(GsonConverterFactory.create())
-        .client(client)
-        .build()
-        .create(EventsAPI::class.java)
-    private val eventsRepository = EventRepositoryImpl(dataSource = eventsApi)
+
+    @MockK
+    private lateinit var api: EventsAPI
+
+    private lateinit var repository: EventRepositoryImpl
+    private val faker = Faker()
+    private val lorem = faker.lorem()
+
+    private fun getFakeEventInfoResponse() = EventInfoResponse(
+        id = UUID.randomUUID().toString(),
+        title = lorem.words(3).joinToString(" "),
+        description = lorem.paragraph(),
+        start = Random.nextInt(),
+        end = Random.nextInt(),
+        cover = "",
+        state = lorem.word(),
+        CreatedAt = Random.nextLong(),
+        ModifiedAt = Random.nextLong(),
+        capacity = Random.nextInt(0, 100),
+        moderated = Random.nextBoolean(),
+        ownerID = UUID.randomUUID().toString(),
+        location = lorem.words(4).joinToString(" "),
+        subscribed = Random.nextBoolean(),
+        categories = List(Random.nextInt(1, 4)){
+                UUID.randomUUID().toString()
+            },
+        )
 
     @BeforeEach
-    fun setUp(): Unit = runBlocking{
-        val tokenData = authRepository.logInUser(UserCredentials("r", "r"))
-        mockedTokenManager.apply {
-            setAccessToken(tokenData.accessToken)
-            setRefreshToken(tokenData.refreshToken)
-            setUserId(tokenData.userID)
+    fun setUp() {
+        repository = EventRepositoryImpl(api)
+    }
+
+    @Test
+    fun `getEventsList should return not found result error if API return 404 response code`() = runTest {
+        coEvery { api.getEventsList() } returns emptyResponseError(404)
+
+        val result = repository.getEventsList()
+
+        assertThat(result).apply {
+            isInstanceOf(Result.Error::class.java)
+        }
+
+        val errorResult = result as Result.Error
+
+        assertThat(errorResult.error).apply {
+            isEqualTo(DataError.Network.NOT_FOUND)
         }
     }
 
     @Test
-    fun getEventsList(): Unit = runBlocking {
-        val events = eventsRepository.getEventsList()
-        assertNotEquals(events.size, 0)
+    fun `getEventDetail should return result success data when found Event and transform it to EventInfo`() = runTest {
+        val eventResponse = getFakeEventInfoResponse()
 
-        val filterData = EventsFilterData(
-            limit = 15,
-            offset = 10
-        )
-        val targetEventsCount = minOf(events.size - filterData.offset!!, filterData.limit!!)
+        coEvery { api.getEvent(eventId = eventResponse.id) } returns responseSuccess(eventResponse)
 
-        val filteredEvents = eventsRepository.getEventsList(filter = filterData)
-        assertNotEquals(filteredEvents.size, 0)
-        assertNotEquals(filteredEvents.size, events.size)
-        assertEquals(targetEventsCount, filteredEvents.size)
+        val result = repository.getEventDetail(eventId = eventResponse.id)
 
-    }
+        assertThat(result).apply {
+            isInstanceOf(Result.Success::class.java)
+        }
 
-    @ParameterizedTest(name = "{index} => eventId={0}, expectedEvent={1} expectedException={2}")
-    @MethodSource("eventDetailUseCase")
-    fun getEventDetail(eventId: String, expectedEvent: EventInfo?, expectedException: Class<out Exception>?) {
-        expectedException?.let {
-            runBlocking { eventsRepository.getEventDetail(eventId = eventId) }
-        } ?: {
-            val event = runBlocking { eventsRepository.getEventDetail(eventId = eventId) }
-            assertEquals(expectedEvent, event)
+        val successResult = result as Result.Success
+
+        assertThat(successResult.data).apply {
+            isEqualTo(eventResponse.toEventInfo())
         }
     }
 
-    companion object {
-        @JvmStatic
-        fun eventDetailUseCase() = listOf(
-            Arguments.of("963753c3-e8a7-4e74-8aa7-c39d738c9684", EventInfo(
-                state = "CREATED",
-                title = "Bug fixed",
-                description = "Good job!",
-                start = 1731346290,
-                end = 1731357060,
-                capacity = 0,
-                moderated = false,
-                createdAt = 1731346320405,
-                modifiedAt = 1731346320405,
-                id = "963753c3-e8a7-4e74-8aa7-c39d738c9684",
-                ownerID = "1e2e88d0-6618-478b-8f2f-ccc123aa261f"
+    @Test
+    fun `getEventDetail should return result error when not found`() = runTest {
+        coEvery { api.getEvent(any()) } returns emptyResponseError(404)
 
-            ), null),
-        )
+        val result = repository.getEventDetail(UUID.randomUUID().toString())
+
+        assertThat(result).apply {
+            isInstanceOf(Result.Error::class.java)
+        }
+
+        val errorResult = result as Result.Error
+
+        assertThat(errorResult.error).apply {
+            isEqualTo(DataError.Network.NOT_FOUND)
+        }
     }
 
+    @Test
+    fun `subscribeForEvent always returns success result`() = runTest {
+        coEvery { api.subscribeForEvent(any()) } returns responseSuccess(Unit)
+
+        val result = repository.subscribeForEvent(UUID.randomUUID().toString())
+
+        assertThat(result).apply {
+            isInstanceOf(Result.Success::class.java)
+        }
+
+        val successResult = result as Result.Success
+
+        assertThat(successResult.data).apply {
+            isEqualTo(Unit)
+        }
+    }
+
+    // TODO написать тест для отписки, уточнить поведение ручки
+
+//    @Test
+//    fun subscribeForEvent() {
+//    }
+//
+//    @Test
+//    fun unsubscribeForEvent() {
+//    }
 }

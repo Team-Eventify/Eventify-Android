@@ -57,6 +57,8 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
+
 }
 
 dependencies {
@@ -99,6 +101,10 @@ dependencies {
     testImplementation(libs.junit)
     testImplementation(libs.junit.jupiter)
     testRuntimeOnly(libs.junit.jupiter.engine)
+    testImplementation(libs.mockk)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.truth)
+    testImplementation(libs.byte.buddy)
 
     coreLibraryDesugaring(libs.desugar.jdk.libs)
     implementation(libs.accompanist.swiperefresh)
@@ -142,3 +148,6 @@ tasks.withType<Test>().configureEach {
 kapt {
     correctErrorTypes = true
 }
+
+
+
