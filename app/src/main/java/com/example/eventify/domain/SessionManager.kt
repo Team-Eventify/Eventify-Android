@@ -2,6 +2,7 @@ package com.example.eventify.domain
 
 import com.example.eventify.data.repositories.tokens.TokenManager
 import com.example.eventify.data.repositories.users.UsersRepository
+import timber.log.Timber
 import javax.inject.Inject
 
 interface SessionManager {
@@ -18,15 +19,20 @@ class SessionManagerRequestsImpl @Inject constructor(
     private val usersRepository: UsersRepository,
     private val tokenManager: TokenManager
 ) : SessionManager{
-    override suspend fun isLoggedIn(): Boolean {
-        if (!tokenManager.isValidData()) return false
-        val userId = tokenManager.getUserId()
 
-        return try {
-            val user = userId?.let { usersRepository.getUserInfo(userId = it) }
-            user != null
+    override suspend fun isLoggedIn(): Boolean {
+        try {
+            if (!tokenManager.isValidData()) return false
+            val userId = tokenManager.getUserId() ?: return false
+
+            return when (usersRepository.getUserInfo(userId)){
+                is Result.Error -> false
+                is Result.Success -> true
+            }
+
         } catch (e: Exception){
-            false
+            Timber.e(e)
+            return false
         }
     }
 
