@@ -23,6 +23,7 @@ jobs:
         with:
           java-version: '17' # Set the Java version as required for your project
           distribution: 'temurin'
+          cache: 'gradle'
 
       - name: Load Google Service file
         run: echo $DATA | base64 -di > app/google-services.json
@@ -43,6 +44,6 @@ jobs:
             gradle-${{ runner.os }}
 
       - name: Run Tests
-        run: ./gradlew test
+        run: ./gradlew testDebugUnitTest
         env:
           JAVA_TOOL_OPTIONS: "-Dnet.bytebuddy.experimental=true" # ignore deprecated bytebuddy warning
