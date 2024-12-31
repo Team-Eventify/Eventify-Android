@@ -44,6 +44,6 @@ jobs:
             gradle-${{ runner.os }}
 
       - name: Run Tests
-        run: ./gradlew testDebugUnitTest
+        run: ./gradlew testDebugUnitTest -x lint -x check -x assembleDebug
         env:
           JAVA_TOOL_OPTIONS: "-Dnet.bytebuddy.experimental=true" # ignore deprecated bytebuddy warning
