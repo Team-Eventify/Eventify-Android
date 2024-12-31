@@ -38,6 +38,18 @@ android {
 
         }
     }
+
+    testOptions {
+        unitTests.all {
+            // Disable google-services task when running unit tests
+            if (project.hasProperty("isUnitTest")) {
+                tasks.named("processDebugGoogleServices").configure {
+                    enabled = false
+                }
+            }
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8

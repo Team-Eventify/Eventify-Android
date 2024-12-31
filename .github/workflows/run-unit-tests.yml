@@ -37,4 +37,4 @@ jobs:
       - name: Run Tests
         run: ./gradlew test
         env:
-          JAVA_TOOL_OPTIONS: "-Dnet.bytebuddy.experimental=true"
+          JAVA_TOOL_OPTIONS: "-Dnet.bytebuddy.experimental=true" # ignore deprecated bytebuddy warning
