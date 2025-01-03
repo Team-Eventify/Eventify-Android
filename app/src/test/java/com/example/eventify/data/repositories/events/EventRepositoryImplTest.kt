@@ -2,9 +2,11 @@ package com.example.eventify.data.repositories.events
 
 import com.example.eventify.data.remote.api.EventsAPI
 import com.example.eventify.data.remote.models.events.EventInfoResponse
+import com.example.eventify.data.remote.models.events.EventsFilterData
 import com.example.eventify.data.remote.models.events.toEventInfo
 import com.example.eventify.domain.DataError
 import com.example.eventify.domain.Result
+import com.example.eventify.domain.models.Event
 import com.example.eventify.emptyResponseError
 import com.example.eventify.responseSuccess
 import com.github.javafaker.Faker
@@ -123,6 +125,40 @@ class EventRepositoryImplTest {
 
         assertThat(successResult.data).apply {
             isEqualTo(Unit)
+        }
+    }
+
+    @Test
+    fun `getEventsList try passing all method params`() = runTest {
+        val filterData = EventsFilterData(
+            limit = Random.nextInt(1, 100),
+            offset = Random.nextInt(1, 100),
+            ownerId = UUID.randomUUID().toString(),
+            start = Random.nextInt(),
+            end = Random.nextInt(),
+            categoryIds = List(3){ UUID.randomUUID().toString() }
+            )
+
+        coEvery { filterData.let{
+            api.getEventsList(
+                limit = it.limit,
+                offset = it.offset,
+                ownerID = it.ownerId,
+                start = it.start,
+                end = it.end,
+                categoryIds = it.validCategoryIds
+            )
+        } } returns responseSuccess(emptyList())
+        val result = repository.getEventsList(filter = filterData)
+
+        assertThat(result).apply {
+            isInstanceOf(Result.Success::class.java)
+        }
+
+        val successResult = result as Result.Success
+
+        assertThat(successResult.data).apply {
+            isEqualTo(emptyList<List<Event>>())
         }
     }
 

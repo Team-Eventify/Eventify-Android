@@ -8,4 +8,11 @@ data class EventsFilterData(
     val start: Int? = null,
     val end: Int? = null,
     val categoryIds: List<String>? = null
-)
+){
+    /**
+     * Returns raw value that can be passed to api query call
+     * @return Joined string of categoryIds separated by comma
+     */
+    val validCategoryIds: String?
+        get() = categoryIds?.joinToString(",")
+}

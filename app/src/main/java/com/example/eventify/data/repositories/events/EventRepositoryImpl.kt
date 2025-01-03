@@ -20,14 +20,13 @@ class EventRepositoryImpl @Inject constructor(
             ownerID = filter?.ownerId,
             start = filter?.start,
             end = filter?.end,
-            categoryIds = filter?.categoryIds?.joinToString(separator = ",")
+            categoryIds = filter?.validCategoryIds
         ).handle { events ->
             events.map { it.toEventInfo() }
         }
 
     } catch (e:Exception){
         Timber.e(e)
-        throw e
         Result.Error(DataError.Network.UNKNOWN)
     }
 
