@@ -4,12 +4,28 @@ import com.example.eventify.domain.DataError
 import com.example.eventify.domain.Result
 import retrofit2.Response
 
+
+/**
+ * Converts retrofit [Response] to project [Result] instance
+ * by handling http status codes. The method also handles errors during all process.
+ * @param transform function that transform response body
+ * to expected generic type. If null body is casted to returned type via **as** operator.
+ * @return Returns [Result.Success] if the status code is between 200 and 399,
+ * else returns [Result.Error] with related network error of [DataError.Network]
+ *
+ * ```kotlin
+ * api.getEvent(eventId = eventId).handle { event ->
+ *     event.toEventInfo()
+ *  }
+ * ```
+ */
 fun <T, V> Response<T>.handle(transform: ((T) -> V)? = null): Result<V, DataError> = try {
     when(this.code()){
         in 200..399 -> this.body()?.let { responseBody ->
             val transformedData = transform?.invoke(responseBody) ?: responseBody
             Result.Success(transformedData as V)
         } ?: Result.Error(DataError.Network.NOT_FOUND)
+        401 -> Result.Error(DataError.Network.UNAUTHORIZED)
         403 -> Result.Error(DataError.Network.FORBIDDEN)
         404 -> Result.Error(DataError.Network.NOT_FOUND)
         in 500..Int.MAX_VALUE -> Result.Error(DataError.Network.SERVER_ERROR)
