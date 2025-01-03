@@ -1,7 +1,6 @@
 package com.example.eventify.domain.models
 
 import androidx.compose.runtime.Stable
-import com.example.eventify.data.models.CategoryInfo
 
 @Stable
 data class EventWithCategories(
@@ -19,5 +18,5 @@ data class EventWithCategories(
     val title: String,
     val location: String,
     val subscribed: Boolean,
-    val categories: List<CategoryInfo>
+    val categories: List<Category>
 )

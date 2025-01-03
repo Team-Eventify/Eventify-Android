@@ -1,9 +1,6 @@
 package com.example.eventify.presentation.ui.events.search
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.staticCompositionLocalOf
-import com.example.eventify.data.models.CategoryInfo
+import com.example.eventify.domain.models.Category
 
 
 /**
@@ -14,7 +11,7 @@ data class SearchState(
     val isRefreshing: Boolean = false,
     val searchText: String = "",
     val isActiveSearchBar: Boolean = false,
-    val categories: List<CategoryInfo> = emptyList()
+    val categories: List<Category> = emptyList()
 )
 
 /**

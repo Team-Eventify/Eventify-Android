@@ -1,10 +1,8 @@
 package com.example.eventify.data.repositories.auth
 
-import androidx.compose.ui.util.trace
-import com.example.eventify.data.exceptions.UserNotFoundException
-import com.example.eventify.data.models.TokenData
-import com.example.eventify.data.models.UserCreate
-import com.example.eventify.data.models.UserCredentials
+import com.example.eventify.domain.models.TokenData
+import com.example.eventify.domain.models.UserCreate
+import com.example.eventify.domain.models.UserCredentials
 import com.example.eventify.data.remote.api.AuthAPI
 import com.example.eventify.data.remote.models.auth.LogInRequestData
 import com.example.eventify.data.remote.models.auth.RefreshTokenRequestData

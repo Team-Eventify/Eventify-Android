@@ -3,12 +3,8 @@ package com.example.eventify.presentation.ui.account.profileedit
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.eventify.R
-import com.example.eventify.data.models.UserChange
-import com.example.eventify.data.models.UserCredentials
-import com.example.eventify.data.models.UserInfo
-import com.example.eventify.domain.DataError
+import com.example.eventify.domain.models.UserChange
 import com.example.eventify.domain.Result
 import com.example.eventify.domain.usecases.GetCategoriesWithUserSelection
 import com.example.eventify.domain.usecases.account.ChangeUserUseCase
@@ -26,7 +22,6 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update

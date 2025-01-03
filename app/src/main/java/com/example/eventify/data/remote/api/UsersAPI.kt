@@ -1,6 +1,5 @@
 package com.example.eventify.data.remote.api
 
-import com.example.eventify.data.models.CategoryInfo
 import com.example.eventify.data.remote.models.category.CategoryInfoResponse
 import com.example.eventify.data.remote.models.events.EventInfoResponse
 import com.example.eventify.data.remote.models.users.ChangeUserRequest

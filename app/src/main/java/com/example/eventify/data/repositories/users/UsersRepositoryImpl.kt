@@ -1,15 +1,9 @@
 package com.example.eventify.data.repositories.users
 
-import android.provider.ContactsContract.Data
-import com.example.eventify.data.exceptions.AccessDeniedException
-import com.example.eventify.data.exceptions.CategoryNotFoundException
-import com.example.eventify.data.exceptions.NullableResponseException
-import com.example.eventify.data.exceptions.UnprocessedServerResponseException
-import com.example.eventify.data.exceptions.UserNotFoundException
-import com.example.eventify.data.models.CategoryInfo
-import com.example.eventify.data.models.EventInfo
-import com.example.eventify.data.models.UserChange
-import com.example.eventify.data.models.UserInfo
+import com.example.eventify.domain.models.Category
+import com.example.eventify.domain.models.Event
+import com.example.eventify.domain.models.UserChange
+import com.example.eventify.domain.models.User
 import com.example.eventify.data.remote.api.CategorySlug
 import com.example.eventify.data.remote.api.UsersAPI
 import com.example.eventify.data.remote.models.events.toEventInfo
@@ -24,7 +18,7 @@ import javax.inject.Inject
 class UsersRepositoryImpl @Inject constructor(
     val dataSource: UsersAPI
 ): UsersRepository {
-    override suspend fun changeUser(userId: String, user: UserChange): Result<UserInfo, DataError> = try {
+    override suspend fun changeUser(userId: String, user: UserChange): Result<User, DataError> = try {
         dataSource.changeUser(
             userId = userId,
             user = ChangeUserRequest(
@@ -43,7 +37,7 @@ class UsersRepositoryImpl @Inject constructor(
         Result.Error(DataError.Network.UNKNOWN)
     }
 
-    override suspend fun getUserInfo(userId: String): Result<UserInfo, DataError> = try {
+    override suspend fun getUserInfo(userId: String): Result<User, DataError> = try {
         dataSource.getUserInfo(userId = userId).handle{
             it.toUserInfo()
         }
@@ -52,7 +46,7 @@ class UsersRepositoryImpl @Inject constructor(
         Result.Error(DataError.Network.UNKNOWN)
     }
 
-    override suspend fun getUserCategories(userId: String): Result<List<CategoryInfo>, DataError> = try {
+    override suspend fun getUserCategories(userId: String): Result<List<Category>, DataError> = try {
         dataSource.getUserCategories(userId = userId).handle{ response ->
             response.map { it.toCategoryInfo() }
         }
@@ -68,7 +62,7 @@ class UsersRepositoryImpl @Inject constructor(
         Result.Error(DataError.Network.UNKNOWN)
     }
 
-    override suspend fun getUserSubscribedEvents(userId: String): Result<List<EventInfo>, DataError> = try {
+    override suspend fun getUserSubscribedEvents(userId: String): Result<List<Event>, DataError> = try {
         dataSource.getUserSubscribedEvents(userId = userId).handle{ response ->
             response.map { it.toEventInfo() }
         }

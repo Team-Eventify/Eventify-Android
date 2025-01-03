@@ -1,13 +1,10 @@
 package com.example.eventify.presentation.ui.auth.login
 
 import android.content.Context
-import android.provider.ContactsContract.Data
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.navOptions
 import com.example.eventify.R
-import com.example.eventify.data.exceptions.UserNotFoundException
-import com.example.eventify.data.models.UserCredentials
+import com.example.eventify.domain.models.UserCredentials
 import com.example.eventify.domain.DataError
 import com.example.eventify.domain.Result
 import com.example.eventify.domain.usecases.account.LoginUseCase

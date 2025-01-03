@@ -1,6 +1,6 @@
-package com.example.eventify.data.models
+package com.example.eventify.domain.models
 
-data class UserInfo(
+data class User(
     val email: String,
     val firstName: String,
     val id: String,

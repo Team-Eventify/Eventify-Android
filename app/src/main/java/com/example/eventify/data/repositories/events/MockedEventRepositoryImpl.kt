@@ -1,6 +1,6 @@
 package com.example.eventify.data.repositories.events
 
-import com.example.eventify.data.models.EventInfo
+import com.example.eventify.domain.models.Event
 import com.example.eventify.data.remote.models.events.EventsFilterData
 import com.example.eventify.domain.DataError
 import com.example.eventify.domain.Result
@@ -13,8 +13,8 @@ class MockedEventRepositoryImpl : EventsRepository {
     private val faker = Faker()
     private var events = List(10) { getRandomEventInfo(faker) }
 
-    override suspend fun getEventsList(filter: EventsFilterData?): Result<List<EventInfo>, DataError> = Result.Success(events)
-    override suspend fun getEventDetail(eventId: String): Result<EventInfo, DataError> = events.find { it.id == eventId }?.let {
+    override suspend fun getEventsList(filter: EventsFilterData?): Result<List<Event>, DataError> = Result.Success(events)
+    override suspend fun getEventDetail(eventId: String): Result<Event, DataError> = events.find { it.id == eventId }?.let {
         Result.Success(it)
     } ?: Result.Error(DataError.Network.NOT_FOUND)
     override suspend fun subscribeForEvent(eventId: String): Result<Unit, DataError> {
@@ -25,7 +25,7 @@ class MockedEventRepositoryImpl : EventsRepository {
         TODO("Not yet implemented")
     }
 
-    private fun getRandomEventInfo(faker: Faker): EventInfo = EventInfo(
+    private fun getRandomEventInfo(faker: Faker): Event = Event(
         id = UUID.randomUUID().toString(),
         title = faker.lorem().sentence(),
         description = faker.lorem().paragraph(),

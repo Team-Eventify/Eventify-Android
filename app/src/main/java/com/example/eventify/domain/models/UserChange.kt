@@ -1,4 +1,4 @@
-package com.example.eventify.data.models
+package com.example.eventify.domain.models
 
 data class UserChange(
     val firstName: String,

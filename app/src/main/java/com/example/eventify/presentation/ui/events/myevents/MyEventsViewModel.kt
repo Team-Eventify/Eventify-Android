@@ -3,21 +3,14 @@ package com.example.eventify.presentation.ui.events.myevents
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavController
-import com.example.eventify.data.models.EventInfo
-import com.example.eventify.data.models.UserInfo
-import com.example.eventify.data.repositories.events.EventsRepository
-import com.example.eventify.data.repositories.tokens.TokenManager
 import com.example.eventify.domain.DataError
 import com.example.eventify.domain.Result
-import com.example.eventify.domain.usecases.account.GetCurrentUserUseCase
 import com.example.eventify.domain.usecases.events.GetSubscribedEventsUseCase
 import com.example.eventify.presentation.models.ShortEventItem
 import com.example.eventify.presentation.navigation.Navigator
 import com.example.eventify.presentation.navigation.navgraphs.RootRouter
 import com.example.eventify.presentation.ui.SnackbarController
 import com.example.eventify.presentation.ui.SnackbarEvent
-import com.example.eventify.presentation.ui.account.profileedit.ProfileEditState
 import com.example.eventify.presentation.utils.asUiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -25,14 +18,10 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import timber.log.Timber
-import java.lang.Exception
-import java.time.LocalDate
 import java.util.Date
 
 @HiltViewModel

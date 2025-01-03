@@ -1,6 +1,6 @@
 package com.example.eventify.data.repositories.events
 
-import com.example.eventify.data.models.EventInfo
+import com.example.eventify.domain.models.Event
 import com.example.eventify.data.remote.api.EventsAPI
 import com.example.eventify.data.remote.models.events.EventsFilterData
 import com.example.eventify.data.remote.models.events.toEventInfo
@@ -13,7 +13,7 @@ import timber.log.Timber
 class EventRepositoryImpl @Inject constructor(
     private val dataSource: EventsAPI
 ) : EventsRepository {
-    override suspend fun getEventsList(filter: EventsFilterData?): Result<List<EventInfo>, DataError> = try {
+    override suspend fun getEventsList(filter: EventsFilterData?): Result<List<Event>, DataError> = try {
         dataSource.getEventsList(
             limit = filter?.limit,
             offset = filter?.offset,
@@ -30,7 +30,7 @@ class EventRepositoryImpl @Inject constructor(
         Result.Error(DataError.Network.UNKNOWN)
     }
 
-    override suspend fun getEventDetail(eventId: String): Result<EventInfo, DataError> = try {
+    override suspend fun getEventDetail(eventId: String): Result<Event, DataError> = try {
         dataSource.getEvent(eventId = eventId).handle { event ->
             event.toEventInfo()
         }

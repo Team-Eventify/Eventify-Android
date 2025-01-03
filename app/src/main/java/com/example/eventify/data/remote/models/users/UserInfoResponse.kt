@@ -1,6 +1,6 @@
 package com.example.eventify.data.remote.models.users
 
-import com.example.eventify.data.models.UserInfo
+import com.example.eventify.domain.models.User
 
 data class UserInfoResponse(
     val email: String,
@@ -12,7 +12,7 @@ data class UserInfoResponse(
 )
 
 
-fun UserInfoResponse.toUserInfo(): UserInfo = UserInfo(
+fun UserInfoResponse.toUserInfo(): User = User(
     email = this.email,
     firstName = this.firstName ?: "",
     id = this.id,

@@ -1,6 +1,6 @@
 package com.example.eventify.domain.usecases.account
 
-import com.example.eventify.data.models.UserCredentials
+import com.example.eventify.domain.models.UserCredentials
 import com.example.eventify.data.repositories.tokens.TokenManager
 import com.example.eventify.data.repositories.auth.AuthUserRepository
 import com.example.eventify.domain.DataError

@@ -1,6 +1,6 @@
-package com.example.eventify.data.models
+package com.example.eventify.domain.models
 
-data class EventInfo(
+data class Event(
     val id: String,
     val createdAt: Long,
     val modifiedAt: Long,
