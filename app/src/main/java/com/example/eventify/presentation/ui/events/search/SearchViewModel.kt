@@ -4,9 +4,17 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
+import coil3.ImageLoader
+import com.example.eventify.data.remote.models.events.EventsFilterData
 import com.example.eventify.domain.Result
+import com.example.eventify.domain.models.toShortEventItem
 import com.example.eventify.domain.usecases.categories.GetCategoriesUseCase
+import com.example.eventify.domain.usecases.events.GetEventsUseCase
+import com.example.eventify.presentation.models.CategorySelectItem
+import com.example.eventify.presentation.navigation.Navigator
 import com.example.eventify.presentation.navigation.navgraphs.HomeRouter
+import com.example.eventify.presentation.navigation.navgraphs.MainNavHost
+import com.example.eventify.presentation.navigation.navgraphs.RootRouter
 import com.example.eventify.presentation.ui.SnackbarController
 import com.example.eventify.presentation.ui.SnackbarEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,7 +31,10 @@ import timber.log.Timber
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val getCategoriesUseCase: GetCategoriesUseCase
+    private val getCategoriesUseCase: GetCategoriesUseCase,
+    private val getEventsUseCase: GetEventsUseCase,
+    private val navigator: Navigator,
+    val imageLoader: ImageLoader
 ) : ViewModel() {
 
     private val sharedQuery = savedStateHandle.toRoute<HomeRouter.Search>().query
@@ -48,9 +59,49 @@ class SearchViewModel @Inject constructor(
             is Result.Success -> {
                 _stateFlow.update { currentState ->
                     currentState.copy(
-                        categories = result.data
+                        categories = result.data.map {
+                            CategorySelectItem(
+                                id = it.id,
+                                title = it.title,
+                                selected = false
+                            )
+                        }
                     )
                 }
+            }
+        }
+    }
+
+    private suspend fun searchEvents(){
+        val filterData = stateFlow.value.categories.let { categories ->
+            EventsFilterData(
+                categoryIds = categories.filter { it.selected }.map { it.id }
+            )
+        }
+        when (val response = getEventsUseCase(filter = filterData)){
+            is Result.Error -> TODO()
+            is Result.Success -> {
+                _stateFlow.update { currentState ->
+                    currentState.copy(
+                        searchedEvents = response.data.map { it.toShortEventItem() }
+                    )
+                }
+            }
+        }
+    }
+
+    fun changeCategoryFilterActive(categoryId: String, value: Boolean){
+        viewModelScope.launch {
+            _stateFlow.update { currentState ->
+                currentState.copy(
+                    categories = currentState.categories.map { category ->
+                        if (category.id == categoryId) {
+                            category.copy(selected = value)
+                        } else {
+                            category
+                        }
+                    }
+                )
             }
         }
     }
@@ -71,6 +122,7 @@ class SearchViewModel @Inject constructor(
                     isActiveSearchBar = false
                 )
             }
+            searchEvents()
         }
     }
 
@@ -81,7 +133,7 @@ class SearchViewModel @Inject constructor(
             _stateFlow.update { currentState ->
                 currentState.copy(
                     searchText = value,
-                    isActiveSearchBar = true
+                    categories = currentState.categories.map { category -> category.copy(isShow = category.title.contains(value))}
                 )
             }
         }
@@ -94,16 +146,6 @@ class SearchViewModel @Inject constructor(
             _stateFlow.update { currentState ->
                 currentState.copy(
                     isActiveSearchBar = value
-                )
-            }
-        }
-    }
-
-    fun toggleSearchBar(){
-        viewModelScope.launch {
-            _stateFlow.update { currentState ->
-                currentState.copy(
-                    isActiveSearchBar = !currentState.isActiveSearchBar
                 )
             }
         }
@@ -123,8 +165,14 @@ class SearchViewModel @Inject constructor(
     fun refresh() {
         viewModelScope.launch {
             _stateFlow.update { it.copy(isRefreshing = true) }
-            loadSearchData()
+            searchEvents()
             _stateFlow.update { it.copy(isRefreshing = false) }
+        }
+    }
+
+    fun goToEventDetail(eventId: String){
+        viewModelScope.launch {
+            navigator.navigate(RootRouter.EventDetailRoute(eventId))
         }
     }
 }

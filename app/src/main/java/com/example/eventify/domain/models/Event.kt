@@ -1,5 +1,7 @@
 package com.example.eventify.domain.models
 
+import com.example.eventify.presentation.models.ShortEventItem
+
 data class Event(
     val id: String,
     val createdAt: Long,
@@ -16,4 +18,14 @@ data class Event(
     val location: String,
     val subscribed: Boolean,
     val categories: List<String>? = null
+)
+
+
+fun Event.toShortEventItem() = ShortEventItem(
+    id = id,
+    title = title,
+    description = description,
+    start = start,
+    end = end,
+    cover = cover
 )

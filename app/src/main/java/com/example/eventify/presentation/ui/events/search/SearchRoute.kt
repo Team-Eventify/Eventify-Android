@@ -28,9 +28,11 @@ fun SearchRoute(
                     query = uiState.searchText,
                     onSearch = { actions.onSearch() },
                     onQueryChange = actions.onSearchTextChanged,
-                    onActiveChange = {},
+                    onActiveChange = actions.onChangeActiveSearchBar,
                     active = uiState.isActiveSearchBar,
-                    onClearQuery = actions.onClearSearchText
+                    onClearQuery = actions.onClearSearchText,
+                    searchItems = uiState.categories,
+                    onChangeCategoryFilterActive = actions.onChangeCategoryFilterActive
                 )
             }
         )
@@ -38,7 +40,7 @@ fun SearchRoute(
     }
 
     // UI Rendering
-    SearchScreen(uiState, actions)
+    SearchScreen(uiState, actions, coordinator.viewModel.imageLoader)
 
 }
 
@@ -50,9 +52,10 @@ fun rememberSearchActions(coordinator: SearchCoordinator): SearchActions {
             onSearch = coordinator.viewModel::search,
             onSearchTextChanged = coordinator.viewModel::changeSearchText,
             onChangeActiveSearchBar = coordinator.viewModel::changeSearchBarActive,
-            onToggleSearch = coordinator.viewModel::toggleSearchBar,
             onClearSearchText = coordinator.viewModel::clearSearchText,
-            onRefreshData = coordinator.viewModel::refresh
+            onRefreshData = coordinator.viewModel::refresh,
+            onChangeCategoryFilterActive = coordinator.viewModel::changeCategoryFilterActive,
+            onClickEventItem = coordinator.viewModel::goToEventDetail
         )
     }
 }

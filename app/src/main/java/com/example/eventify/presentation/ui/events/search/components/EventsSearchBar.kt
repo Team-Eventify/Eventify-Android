@@ -12,13 +12,29 @@ import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onKeyEvent
+import androidx.compose.ui.input.key.type
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import com.example.eventify.R
+import com.example.eventify.presentation.models.CategorySelectItem
+import com.example.eventify.presentation.ui.shared.CategorySelector
 import com.example.eventify.presentation.ui.theme.EventifyTheme
+import java.util.UUID
+import kotlin.random.Random
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -30,12 +46,14 @@ fun EventsSearchBar(
     onSearch: (String) -> Unit,
     active: Boolean,
     onActiveChange: (Boolean) -> Unit,
+    searchItems: List<CategorySelectItem>,
+    onChangeCategoryFilterActive: (String, Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     SearchBar(
         query = query,
         onQueryChange = onQueryChange,
-        onSearch = onSearch,
+        onSearch = { onSearch(it) },
         active = active,
         onActiveChange = onActiveChange,
         modifier = Modifier
@@ -61,7 +79,14 @@ fun EventsSearchBar(
             Text(text = stringResource(R.string.search))
         },
     ) {
+        val items = remember(searchItems) {
+            searchItems.filter { it.isShow }.sortedBy { it.selected }.reversed()
+        }
 
+        CategorySelector(
+            categories = items,
+            onClickCategory = onChangeCategoryFilterActive,
+        )
     }
 }
 
@@ -77,7 +102,14 @@ private fun PreviewEventsSearchBarDark() {
                     onQueryChange = {},
                     onActiveChange = {},
                     active = false,
-                    onClearQuery = {}
+                    onClearQuery = {},
+                    searchItems = List(6){
+                        CategorySelectItem(
+                            id = UUID.randomUUID().toString(),
+                            title = LoremIpsum(2).values.toList().joinToString(),
+                        )
+                    },
+                    onChangeCategoryFilterActive = {_, _ ->}
                 )
             }
         ) { _ ->
@@ -98,7 +130,15 @@ private fun PreviewEventsSearchBarExpandedDark() {
                     onQueryChange = {},
                     onActiveChange = {},
                     active = true,
-                    onClearQuery = {}
+                    onClearQuery = {},
+                    searchItems = List(6){
+                        CategorySelectItem(
+                            id = UUID.randomUUID().toString(),
+                            title = LoremIpsum(2).values.toList().joinToString(),
+                            selected = Random.nextBoolean()
+                        )
+                    },
+                    onChangeCategoryFilterActive = {_, _ ->}
                 )
             }
         ) { _ ->

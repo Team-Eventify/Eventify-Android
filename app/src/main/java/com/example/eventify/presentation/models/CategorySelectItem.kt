@@ -6,5 +6,6 @@ import androidx.compose.runtime.Stable
 data class CategorySelectItem(
     val id: String,
     val title: String,
-    val selected: Boolean = false
+    val selected: Boolean = false,
+    val isShow: Boolean = true
 )

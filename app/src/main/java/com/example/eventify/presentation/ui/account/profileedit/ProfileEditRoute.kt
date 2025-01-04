@@ -51,7 +51,7 @@ fun rememberProfileEditActions(coordinator: ProfileEditCoordinator): ProfileEdit
             onChangeLastName = coordinator.viewModel::changeUserLastName,
             onChangeMiddleName = coordinator.viewModel::changeUserMiddleName,
             onChangeTelegram = coordinator.viewModel::changeUserTelegram,
-            onToggleCategoryItem = coordinator.viewModel::toggleCategorySelection
+            onChangeCategoryFilterActive = coordinator.viewModel::changeCategoryFilterActive
         )
     }
 }

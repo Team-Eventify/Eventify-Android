@@ -41,7 +41,7 @@ fun ChooseCategoriesScreen(
 
             CategorySelector(
                 categories = state.categoryItems,
-                onClickCategory = actions.onToggleCategorySelection
+                onClickCategory = actions.onChangeCategoryFilterActive
             )
         }
 

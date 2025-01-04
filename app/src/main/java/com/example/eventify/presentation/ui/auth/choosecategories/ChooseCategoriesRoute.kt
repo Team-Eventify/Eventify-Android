@@ -31,7 +31,7 @@ fun rememberChooseCategoriesActions(coordinator: ChooseCategoriesCoordinator): C
         ChooseCategoriesActions(
             onSkip = coordinator.viewModel::skipStep,
             onSubmit = coordinator.viewModel::setCategories,
-            onToggleCategorySelection = coordinator.viewModel::toggleCategorySelection
+            onChangeCategoryFilterActive = coordinator.viewModel::changeCategoryFilterActive
         )
     }
 }

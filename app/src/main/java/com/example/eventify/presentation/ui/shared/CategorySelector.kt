@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
@@ -17,8 +18,8 @@ import com.example.eventify.presentation.models.CategorySelectItem
 @Composable
 fun CategorySelector(
     categories: List<CategorySelectItem>,
-    onClickCategory: (String) -> Unit,
-    modifier: Modifier = Modifier
+    onClickCategory: (String, Boolean) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     FlowRow(
         modifier = Modifier
@@ -67,6 +68,6 @@ private fun PreviewCategorySelector() {
             ),
 
         ),
-        onClickCategory = {_->}
+        onClickCategory = {_, _->}
     )
 }

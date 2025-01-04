@@ -85,12 +85,12 @@ class ChooseCategoriesViewModel @Inject constructor(
         }
     }
 
-    fun toggleCategorySelection(categoryId: String) {
+    fun changeCategoryFilterActive(categoryId: String, value: Boolean) {
         _stateFlow.update { currentState ->
             currentState.copy(
                 categoryItems = currentState.categoryItems.map { category ->
                     if (category.id == categoryId) {
-                        category.copy(selected = !category.selected)
+                        category.copy(selected = value)
                     } else {
                         category
                     }

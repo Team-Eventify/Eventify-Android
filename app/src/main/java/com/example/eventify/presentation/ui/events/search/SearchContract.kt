@@ -1,6 +1,7 @@
 package com.example.eventify.presentation.ui.events.search
 
-import com.example.eventify.domain.models.Category
+import com.example.eventify.presentation.models.CategorySelectItem
+import com.example.eventify.presentation.models.ShortEventItem
 
 
 /**
@@ -11,7 +12,8 @@ data class SearchState(
     val isRefreshing: Boolean = false,
     val searchText: String = "",
     val isActiveSearchBar: Boolean = false,
-    val categories: List<Category> = emptyList()
+    val categories: List<CategorySelectItem> = emptyList(),
+    val searchedEvents: List<ShortEventItem> = emptyList()
 )
 
 /**
@@ -22,8 +24,8 @@ data class SearchActions(
     val onSearchTextChanged: (String) -> Unit = {},
     val onChangeActiveSearchBar: (Boolean) -> Unit = {},
     val onSearch: () -> Unit = {},
-    val onToggleSearch: () -> Unit = {},
     val onClearSearchText: () -> Unit = {},
-    val onRefreshData: () -> Unit = {}
-
+    val onRefreshData: () -> Unit = {},
+    val onChangeCategoryFilterActive: (String, Boolean) -> Unit = {_, _ ->},
+    val onClickEventItem: (String) -> Unit = {}
 )

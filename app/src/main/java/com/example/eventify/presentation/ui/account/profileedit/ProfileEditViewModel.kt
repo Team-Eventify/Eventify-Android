@@ -39,13 +39,13 @@ class ProfileEditViewModel @Inject constructor(
     private val validateTelegramNameUseCase = ValidateTelegramName()
     private val validateEmailUseCase = ValidateEmail()
 
-    private val _stateFlow: MutableStateFlow<ProfileEditState> = MutableStateFlow(ProfileEditState.default())
+    private val _stateFlow: MutableStateFlow<ProfileEditState> = MutableStateFlow(ProfileEditState())
     val stateFlow: StateFlow<ProfileEditState> = _stateFlow
         .onStart { loadData() }
         .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000L),
-            ProfileEditState.default()
+            ProfileEditState()
         )
 
 
@@ -140,12 +140,12 @@ class ProfileEditViewModel @Inject constructor(
 
 
 
-    fun toggleCategorySelection(categoryId: String) {
+    fun changeCategoryFilterActive(categoryId: String, value: Boolean) {
         _stateFlow.update { currentState ->
             currentState.copy(
                 categoryItems = currentState.categoryItems.map { category ->
                     if (category.id == categoryId) {
-                        category.copy(selected = !category.selected)
+                        category.copy(selected = value)
                     } else {
                         category
                     }

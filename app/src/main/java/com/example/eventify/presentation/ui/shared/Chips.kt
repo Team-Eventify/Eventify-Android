@@ -53,14 +53,12 @@ val CATEGORY_SELECT_COLORS = listOf(
 @Composable
 fun CategorySelectChip(
     category: CategorySelectItem,
-    onSelect: (String) -> Unit,
+    onSelect: (String, Boolean) -> Unit,
     selectedColor: Color? = null
 ) {
     FilterChip(
         onClick = {
-            onSelect(
-                category.id
-            )
+            onSelect(category.id, !category.selected)
         },
         label = {
             Text(
@@ -186,7 +184,7 @@ private fun PreviewCategorySelectChip() {
             title = "Backend",
             selected = false
         ),
-        {_->}
+        {_, _->}
     )
 }
 

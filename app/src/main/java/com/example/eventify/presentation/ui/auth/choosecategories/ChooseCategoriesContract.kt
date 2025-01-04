@@ -23,5 +23,5 @@ data class ChooseCategoriesState(
 data class ChooseCategoriesActions(
     val onSkip: () -> Unit = {},
     val onSubmit: () -> Unit = {},
-    val onToggleCategorySelection: (String) -> Unit = {}
+    val onChangeCategoryFilterActive: (String, Boolean) -> Unit = {_, _ ->}
 )

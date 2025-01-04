@@ -84,7 +84,7 @@ fun ProfileEditScreen(
         AnnotationText(text = "Выбирай категории ивентов под свои интересы!")
         CategorySelector(
             categories = state.categoryItems,
-            onClickCategory = actions.onToggleCategoryItem,
+            onClickCategory = actions.onChangeCategoryFilterActive,
             modifier = Modifier
                 .shimmer(showShimmer = state.isLoading)
         )
@@ -142,7 +142,7 @@ private fun ProfileEditScreenDarkPreview() {
 
                         )
                 ),
-                actions = ProfileEditActions.default()
+                actions = ProfileEditActions()
             )
         }
     }
@@ -194,7 +194,7 @@ private fun ProfileEditScreenLightPreview() {
 
                         )
                 ),
-                actions = ProfileEditActions.default()
+                actions = ProfileEditActions()
             )
         }
     }
