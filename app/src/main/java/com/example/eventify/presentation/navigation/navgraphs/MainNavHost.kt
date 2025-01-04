@@ -8,6 +8,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.eventify.presentation.models.ScaffoldViewState
 import com.example.eventify.presentation.ui.events.eventdetail.EventDetailRoute
+import com.example.eventify.presentation.ui.events.feedback.FeedbackRoute
+import com.example.eventify.presentation.ui.events.feedback.FeedbackScreen
 import kotlinx.serialization.Serializable
 
 
@@ -33,6 +35,12 @@ fun MainNavHost(
                 scaffoldViewState = scaffoldViewState
             )
         }
+
+        composable<RootRouter.EventFeedbackRoute> {
+            FeedbackRoute(
+                scaffoldViewState = scaffoldViewState
+            )
+        }
     }
 }
 
@@ -45,6 +53,9 @@ sealed class RootRouter: Destination {
     
     @Serializable
     data class EventDetailRoute(val eventId: String) : RootRouter()
+
+    @Serializable
+    data object EventFeedbackRoute : RootRouter()
 
     @Serializable
     data object SettingsRoute : RootRouter()

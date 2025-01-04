@@ -34,7 +34,7 @@ class ProfileViewModel @Inject constructor(
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
     private val logOutUseCase: LogOutUseCase,
     private val deleteAccountUseCase: DeleteAccountUseCase,
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
 ) : ViewModel() {
 
     private val _stateFlow: MutableStateFlow<ProfileState> = MutableStateFlow(ProfileState.default())
@@ -73,6 +73,12 @@ class ProfileViewModel @Inject constructor(
 
     fun navigateToEditProfile() = viewModelScope.launch {
         navigator.navigate(SettingsRouter.ProfileEditRoute)
+    }
+
+    fun navigateToRate(){
+        viewModelScope.launch {
+            navigator.navigate(RootRouter.EventFeedbackRoute)
+        }
     }
 
     fun logOut(){

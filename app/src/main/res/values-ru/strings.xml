@@ -64,4 +64,5 @@
     <string name="user_updated">Пользователь обновлен</string>
     <string name="not_found">Не найдено</string>
     <string name="unauthorized_error">Пользователь не авторизован</string>
+    <string name="send">Отправить</string>
 </resources>

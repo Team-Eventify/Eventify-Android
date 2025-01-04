@@ -38,6 +38,7 @@ fun TextInput(
     onValueChange: (String) -> Unit,
     isError: Boolean = false,
     supportingText: @Composable (() -> Unit)? = null,
+    singleLine: Boolean = true
 ) {
 
     OutlinedTextField(
@@ -50,7 +51,7 @@ fun TextInput(
         shape = RoundedCornerShape(10.dp),
         keyboardOptions = keyboardOptions,
         keyboardActions = keyboardActions,
-        singleLine = true,
+        singleLine = singleLine,
         modifier = Modifier
             .fillMaxWidth()
             .then(modifier)

@@ -87,7 +87,10 @@ fun ProfileScreen(
         SettingsBlock {
             NavigationSettingsItem(stringResource(R.string.about_app), onClick = {})
             HorizontalDivider()
-            NavigationSettingsItem(stringResource(R.string.to_rate))
+            NavigationSettingsItem(
+                text = stringResource(R.string.to_rate),
+                onClick = actions.goToRatePage
+            )
         }
 
         SettingsBlock {
