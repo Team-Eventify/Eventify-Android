@@ -55,7 +55,7 @@ sealed class RootRouter: Destination {
     data class EventDetailRoute(val eventId: String) : RootRouter()
 
     @Serializable
-    data object EventFeedbackRoute : RootRouter()
+    data class EventFeedbackRoute(val eventId: String) : RootRouter()
 
     @Serializable
     data object SettingsRoute : RootRouter()

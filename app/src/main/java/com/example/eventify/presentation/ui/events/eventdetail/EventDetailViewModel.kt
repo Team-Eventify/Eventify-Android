@@ -1,5 +1,6 @@
 package com.example.eventify.presentation.ui.events.eventdetail
 
+import android.content.Context
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,10 +11,13 @@ import com.example.eventify.domain.usecases.events.GetEventDetailUseCase
 import com.example.eventify.domain.usecases.events.GetSubscribedEventsUseCase
 import com.example.eventify.domain.usecases.events.SubscribeForEventUseCase
 import com.example.eventify.domain.usecases.events.UnsubscribeForEventUseCase
+import com.example.eventify.presentation.navigation.Navigator
 import com.example.eventify.presentation.navigation.navgraphs.RootRouter
 import com.example.eventify.presentation.ui.SnackbarController
 import com.example.eventify.presentation.ui.SnackbarEvent
+import com.example.eventify.presentation.utils.asUiText
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,7 +34,9 @@ class EventDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getEventDetailUseCase: GetEventDetailUseCase,
     private val subscribedEventsUseCase: SubscribeForEventUseCase,
-    private val unsubscribeForEventUseCase: UnsubscribeForEventUseCase
+    private val unsubscribeForEventUseCase: UnsubscribeForEventUseCase,
+    private val navigator: Navigator,
+    @ApplicationContext private val context: Context
 ) : ViewModel() {
     private val eventId = savedStateHandle.toRoute<RootRouter.EventDetailRoute>().eventId
     private val _stateFlow: MutableStateFlow<EventDetailState> =
@@ -47,7 +53,9 @@ class EventDetailViewModel @Inject constructor(
     private fun loadEvent(){
         viewModelScope.launch {
             when (val currentEvent = getEventDetailUseCase(eventId)){
-                is Result.Error -> TODO()
+                is Result.Error -> SnackbarController.sendEvent(
+                    SnackbarEvent(message = currentEvent.error.asUiText().asString(context))
+                )
                 is Result.Success -> {
                     _stateFlow.update { currentState ->
                         currentState.copy(
@@ -95,6 +103,12 @@ class EventDetailViewModel @Inject constructor(
                     )
                 }
             }
+        }
+    }
+
+    fun navigateToRate() {
+        viewModelScope.launch {
+            navigator.navigate(RootRouter.EventFeedbackRoute(eventId = eventId))
         }
     }
 

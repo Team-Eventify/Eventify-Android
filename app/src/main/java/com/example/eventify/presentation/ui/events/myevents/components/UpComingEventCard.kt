@@ -29,11 +29,11 @@ import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import com.example.eventify.R
 import com.example.eventify.presentation.models.ShortEventItem
-import com.example.eventify.presentation.models.date
-import com.example.eventify.presentation.models.time
 import com.example.eventify.presentation.ui.shared.EventCardTitle
 import com.example.eventify.presentation.ui.shared.UpComingEventInfoChip
 import com.example.eventify.presentation.ui.theme.EventifyTheme
+import com.example.eventify.presentation.utils.asDate
+import com.example.eventify.presentation.utils.asTime
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -73,8 +73,8 @@ fun UpComingEventCard(
                     verticalArrangement = Arrangement.spacedBy(5.dp, Alignment.CenterVertically),
                     horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.Start)
                 ) {
-                    UpComingEventInfoChip(text = event.localDateTimeStart.date())
-                    UpComingEventInfoChip(text = event.localDateTimeStart.time())
+                    UpComingEventInfoChip(text = event.start.asDate())
+                    UpComingEventInfoChip(text = event.start.asTime())
                     UpComingEventInfoChip(text = "онлайн")
                 }
 

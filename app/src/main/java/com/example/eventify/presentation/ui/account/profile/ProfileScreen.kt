@@ -89,7 +89,6 @@ fun ProfileScreen(
             HorizontalDivider()
             NavigationSettingsItem(
                 text = stringResource(R.string.to_rate),
-                onClick = actions.goToRatePage
             )
         }
 

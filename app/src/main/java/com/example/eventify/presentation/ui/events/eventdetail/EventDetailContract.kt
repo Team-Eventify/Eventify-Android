@@ -15,7 +15,8 @@ data class EventDetailState(
  * passed to the coordinator to handle
  **/
 data class EventDetailActions(
-    val navigateUp: () -> Unit,
-    val onSubscribe: () -> Unit,
-    val onUnsubscribe: () -> Unit
+    val navigateUp: () -> Unit = {},
+    val onSubscribe: () -> Unit = {},
+    val onUnsubscribe: () -> Unit = {},
+    val goToRatePage: () -> Unit = {},
 )

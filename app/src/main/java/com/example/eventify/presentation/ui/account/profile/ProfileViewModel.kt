@@ -75,12 +75,6 @@ class ProfileViewModel @Inject constructor(
         navigator.navigate(SettingsRouter.ProfileEditRoute)
     }
 
-    fun navigateToRate(){
-        viewModelScope.launch {
-            navigator.navigate(RootRouter.EventFeedbackRoute)
-        }
-    }
-
     fun logOut(){
         viewModelScope.launch {
             logOutUseCase()

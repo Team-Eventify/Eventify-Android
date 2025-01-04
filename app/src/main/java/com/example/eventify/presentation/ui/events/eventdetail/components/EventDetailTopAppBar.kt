@@ -31,8 +31,8 @@ fun EventDetailTopAppBar(
         title = {
             Text(
                 text = title,
-                fontSize = 28.sp,
-                fontWeight = FontWeight.Bold
+                fontSize = 25.sp,
+                fontWeight = FontWeight.SemiBold
             )
         },
         navigationIcon = {

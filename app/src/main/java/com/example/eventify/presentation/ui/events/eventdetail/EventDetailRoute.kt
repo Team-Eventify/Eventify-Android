@@ -50,7 +50,8 @@ fun rememberEventDetailActions(coordinator: EventDetailCoordinator): EventDetail
         EventDetailActions(
             navigateUp = coordinator::navigateUp,
             onSubscribe = coordinator.viewModel::subscribeForEvent,
-            onUnsubscribe = coordinator.viewModel::unsubscribeForEvent
+            onUnsubscribe = coordinator.viewModel::unsubscribeForEvent,
+            goToRatePage = coordinator.viewModel::navigateToRate
         )
     }
 }

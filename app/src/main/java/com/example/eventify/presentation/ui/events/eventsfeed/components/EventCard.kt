@@ -37,13 +37,13 @@ import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.example.eventify.R
 import com.example.eventify.presentation.models.ShortEventItem
-import com.example.eventify.presentation.models.date
-import com.example.eventify.presentation.models.time
 import com.example.eventify.presentation.ui.shared.BodyText
 import com.example.eventify.presentation.ui.shared.EventCardTitle
 import com.example.eventify.presentation.ui.shared.EventInfoChip
 import com.example.eventify.presentation.ui.shared.shimmer
 import com.example.eventify.presentation.ui.theme.EventifyTheme
+import com.example.eventify.presentation.utils.asDate
+import com.example.eventify.presentation.utils.asTime
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -107,8 +107,8 @@ fun EventCard(
                     modifier = Modifier
                         .padding(top = 10.dp)
                 ) {
-                    EventInfoChip(event.localDateTimeStart.date(short = true))
-                    EventInfoChip(event.localDateTimeStart.time(short = true))
+                    EventInfoChip(event.start.asDate())
+                    EventInfoChip(event.start.asTime())
                     EventInfoChip("онлайн")
                 }
                 EventCardTitle(

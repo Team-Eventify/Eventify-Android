@@ -34,6 +34,8 @@ import com.example.eventify.presentation.ui.shared.PrimaryButtonText
 import com.example.eventify.presentation.ui.shared.buttons.PrimaryDeclineButton
 import com.example.eventify.presentation.ui.shared.TagChip
 import com.example.eventify.presentation.ui.theme.EventifyTheme
+import com.example.eventify.presentation.utils.asDate
+import com.example.eventify.presentation.utils.asTime
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -61,8 +63,8 @@ fun EventDetailScreen(
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(10.dp, alignment = Alignment.Start)
             ) {
-                ChipInfo(text = "2 марта")
-                ChipInfo(text = "17:30")
+                ChipInfo(text = state.event?.start?.asDate() ?: "")
+                ChipInfo(text = state.event?.start?.asTime() ?: "")
 
                 state.event!!.categories.forEach{ tag ->
                     TagChip(text = tag.title)
@@ -105,6 +107,12 @@ fun EventDetailScreen(
                     PrimaryButtonText(text = "Я пойду!")
                 }
             }
+
+            PrimaryButton(
+                onClick = actions.goToRatePage
+            ) {
+                PrimaryButtonText(stringResource(R.string.to_rate))
+            }
         }
     }
 }
@@ -136,8 +144,8 @@ private fun EventDetailScreenDarkPreview() {
                 ),
                 actions = EventDetailActions(
                     navigateUp = {},
+                    onSubscribe = {},
                     onUnsubscribe = {},
-                    onSubscribe = {}
                 )
             )
         }
@@ -172,8 +180,8 @@ private fun EventDetailScreenLightPreview() {
                 ),
                 actions = EventDetailActions(
                     navigateUp = {},
+                    onSubscribe = {},
                     onUnsubscribe = {},
-                    onSubscribe = {}
                 )
             )
         }

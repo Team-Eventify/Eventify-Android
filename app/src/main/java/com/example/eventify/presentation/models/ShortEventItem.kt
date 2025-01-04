@@ -20,23 +20,4 @@ data class ShortEventItem(
     val cover: String = "",
     val start: Int,
     val end: Int
-){
-    val localDateTimeStart: LocalDateTime
-        get() = LocalDateTime.ofEpochSecond(start.toLong(), 0, ZoneOffset.UTC)
-
-    val localDateTimeEnd: LocalDateTime
-        get() = LocalDateTime.ofEpochSecond(end.toLong(), 0, ZoneOffset.UTC)
-
-}
-
-fun LocalDateTime.time(short: Boolean = true): String {
-    val pattern = if (short) SHORT_TIME_FORMAT else LONG_TIME_FORMAT
-    val formater = DateTimeFormatter.ofPattern(pattern)
-    return this.format(formater)
-}
-
-fun LocalDateTime.date(short: Boolean = true): String {
-    val pattern = if (short) SHORT_DATE_FORMAT else LONG_DATE_FORMAT
-    val formater = DateTimeFormatter.ofPattern(pattern)
-    return this.format(formater)
-}
+)

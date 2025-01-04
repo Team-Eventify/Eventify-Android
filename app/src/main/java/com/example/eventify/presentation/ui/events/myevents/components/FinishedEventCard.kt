@@ -25,11 +25,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.eventify.R
 import com.example.eventify.presentation.models.ShortEventItem
-import com.example.eventify.presentation.models.date
-import com.example.eventify.presentation.models.time
 import com.example.eventify.presentation.ui.shared.EventCardTitle
 import com.example.eventify.presentation.ui.shared.FinishedEventInfoChip
 import com.example.eventify.presentation.ui.theme.EventifyTheme
+import com.example.eventify.presentation.utils.asDate
+import com.example.eventify.presentation.utils.asTime
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -69,8 +69,8 @@ fun FinishedEventCard(
                     verticalArrangement = Arrangement.spacedBy(5.dp, Alignment.CenterVertically),
                     horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.Start)
                 ) {
-                    FinishedEventInfoChip(text = event.localDateTimeStart.date())
-                    FinishedEventInfoChip(text = event.localDateTimeStart.time())
+                    FinishedEventInfoChip(text = event.start.asDate())
+                    FinishedEventInfoChip(text = event.start.asTime())
                     FinishedEventInfoChip(text = "онлайн")
                 }
 

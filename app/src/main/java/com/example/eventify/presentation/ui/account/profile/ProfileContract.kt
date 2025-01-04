@@ -25,7 +25,6 @@ data class ProfileActions(
     val onLogOut: () -> Unit = {},
     val navigateToProfileEdit: () -> Unit = {},
     val onDeleteAccount: () -> Unit = {},
-    val goToRatePage: () -> Unit = {},
 ){
     companion object{
         fun default() = ProfileActions(
