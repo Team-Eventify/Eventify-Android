@@ -2,6 +2,7 @@ package com.example.eventify.presentation.ui.events.eventsfeed.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -10,6 +11,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CardElevation
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -49,60 +53,71 @@ fun EventCard(
     imageLoader: ImageLoader,
     modifier: Modifier = Modifier
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .clickable {
-                onClick(event.id)
-            }
+    Card(
+        shape = RoundedCornerShape(10.dp),
+        elevation = CardDefaults.cardElevation(0.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainer
+        )
     ) {
-        var showShimmer by remember { mutableStateOf(false) }
-
-        AsyncImage(
-            model = ImageRequest.Builder(context = LocalContext.current)
-                .data("https://eventify.website/api/v1/files/${event.cover}")
-                .crossfade(true)
-                .build(),
-            error = painterResource(R.drawable.underfind_event_image),
-            placeholder = painterResource(R.drawable.underfind_event_image),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            alignment = Alignment.Center,
-            imageLoader = imageLoader,
-            onLoading = {
-                showShimmer = true
-            },
-            onError = {
-                showShimmer = false
-            },
-            onSuccess = {
-                showShimmer = false
-            },
-            modifier = Modifier
+        Column(
+            modifier = modifier
                 .fillMaxWidth()
-                .height(200.dp)
-                .clip(RoundedCornerShape(10.dp))
-                .shimmer(
-                    showShimmer = showShimmer,
-                    blendMode = BlendMode.SrcAtop
-                )
-        )
-        FlowRow(
-            horizontalArrangement = Arrangement.spacedBy(10.dp),
-            modifier = Modifier
-                .padding(top = 10.dp)
+                .clickable {
+                    onClick(event.id)
+                }
         ) {
-            EventInfoChip(event.localDateTimeStart.date(short = true))
-            EventInfoChip(event.localDateTimeStart.time(short = true))
-            EventInfoChip("онлайн")
-        }
-        EventCardTitle(
-            text = event.title,
-            textColor = MaterialTheme.colorScheme.onSurface
-        )
-        BodyText(event.description, maxlines = 7)
-        Spacer(modifier = Modifier.height(10.dp))
+            var showShimmer by remember { mutableStateOf(false) }
 
+            AsyncImage(
+                model = ImageRequest.Builder(context = LocalContext.current)
+                    .data("https://eventify.website/api/v1/files/${event.cover}")
+                    .crossfade(true)
+                    .build(),
+                error = painterResource(R.drawable.underfind_event_image),
+                placeholder = painterResource(R.drawable.underfind_event_image),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                alignment = Alignment.Center,
+                imageLoader = imageLoader,
+                onLoading = {
+                    showShimmer = true
+                },
+                onError = {
+                    showShimmer = false
+                },
+                onSuccess = {
+                    showShimmer = false
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(200.dp)
+                    .clip(RoundedCornerShape(10.dp))
+                    .shimmer(
+                        showShimmer = showShimmer,
+                        blendMode = BlendMode.SrcAtop
+                    )
+            )
+            Column(
+                modifier = Modifier
+                    .padding(10.dp)
+            ) {
+                FlowRow(
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    modifier = Modifier
+                        .padding(top = 10.dp)
+                ) {
+                    EventInfoChip(event.localDateTimeStart.date(short = true))
+                    EventInfoChip(event.localDateTimeStart.time(short = true))
+                    EventInfoChip("онлайн")
+                }
+                EventCardTitle(
+                    text = event.title,
+                    textColor = MaterialTheme.colorScheme.onSurface
+                )
+                BodyText(event.description, maxlines = 7)
+            }
+        }
     }
 }
 

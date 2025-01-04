@@ -51,7 +51,6 @@ fun EventsFeedLazyColumn(
                 key = { it.id }
             ){ event ->
                 eventItem(event)
-                HorizontalDivider()
             }
         }
     }
