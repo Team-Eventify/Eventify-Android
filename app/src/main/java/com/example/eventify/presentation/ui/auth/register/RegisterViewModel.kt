@@ -116,7 +116,11 @@ class RegisterViewModel @Inject constructor(
 
     private suspend fun handleErrors(error: DataError){
         when (error){
-            is DataError.Network -> { TODO("write logic") }
+            is DataError.Network -> {
+                SnackbarController.sendEvent(
+                    SnackbarEvent(message = error.asUiText().asString(context))
+                )
+            }
             else -> {
                 SnackbarController.sendEvent(
                     SnackbarEvent(message = error.asUiText().asString(context))
