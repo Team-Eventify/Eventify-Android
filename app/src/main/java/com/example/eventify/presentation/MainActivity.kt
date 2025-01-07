@@ -35,6 +35,7 @@ import com.example.eventify.domain.di.RequestsSessionManager
 import com.example.eventify.presentation.models.ScaffoldViewState
 import com.example.eventify.presentation.navigation.NavigationAction
 import com.example.eventify.presentation.navigation.Navigator
+import com.example.eventify.presentation.navigation.navgraphs.AuthRouter
 import com.example.eventify.presentation.navigation.navgraphs.MainNavHost
 import com.example.eventify.presentation.navigation.navgraphs.RootRouter
 import com.example.eventify.presentation.ui.SnackbarController
@@ -91,7 +92,7 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
 
                 val currentDist =
-                    runBlocking { if (sessionManager.isLoggedIn()) RootRouter.HomeRoute else RootRouter.AuthRoute }
+                    runBlocking { if (sessionManager.isLoggedIn()) RootRouter.HomeRoute else RootRouter.OnboardingRoute }
 
                 ObserveAsState(flow = navigator.navigationActions) { action ->
                     when (action) {

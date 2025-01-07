@@ -7,6 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.eventify.presentation.models.ScaffoldViewState
+import com.example.eventify.presentation.ui.auth.onboarding.OnBoardingRoute
 import com.example.eventify.presentation.ui.events.eventdetail.EventDetailRoute
 import com.example.eventify.presentation.ui.events.feedback.FeedbackRoute
 import com.example.eventify.presentation.ui.events.feedback.FeedbackScreen
@@ -16,7 +17,7 @@ import kotlinx.serialization.Serializable
 @Composable
 fun MainNavHost(
     navController: NavHostController,
-    startDestination: RootRouter = RootRouter.AuthRoute,
+    startDestination: Any = RootRouter.AuthRoute,
     scaffoldViewState: MutableState<ScaffoldViewState>,
     modifier: Modifier = Modifier
 ) {
@@ -41,6 +42,11 @@ fun MainNavHost(
                 scaffoldViewState = scaffoldViewState
             )
         }
+        composable<RootRouter.OnboardingRoute> {
+            OnBoardingRoute(
+                scaffoldViewState = scaffoldViewState
+            )
+        }
     }
 }
 
@@ -59,4 +65,8 @@ sealed class RootRouter: Destination {
 
     @Serializable
     data object SettingsRoute : RootRouter()
+
+    @Serializable
+    data object OnboardingRoute : AuthRouter()
+
 }

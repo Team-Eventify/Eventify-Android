@@ -7,6 +7,7 @@ import androidx.navigation.navigation
 import com.example.eventify.presentation.models.ScaffoldViewState
 import com.example.eventify.presentation.ui.auth.choosecategories.ChooseCategoriesRoute
 import com.example.eventify.presentation.ui.auth.login.LogInRoute
+import com.example.eventify.presentation.ui.auth.onboarding.OnBoardingRoute
 import com.example.eventify.presentation.ui.auth.register.RegisterRoute
 import com.example.eventify.presentation.ui.auth.resetpassword.ResetPasswordRoute
 import kotlinx.serialization.Serializable
