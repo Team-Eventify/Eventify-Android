@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -17,7 +16,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -44,7 +42,7 @@ import com.example.eventify.presentation.utils.asTime
 fun FinishedEventCard(
     event: ShortEventItem,
     onClick: ((String) -> Unit)? = null,
-    onFeedbackAction: (() -> Unit)? = null,
+    onFeedbackAction: ((String) -> Unit)? = null,
     showFeedbackButton: Boolean = false
 ) {
     Card(
@@ -99,7 +97,7 @@ fun FinishedEventCard(
             }
             if (showFeedbackButton){
                 Button(
-                    onClick = { onFeedbackAction?.invoke() },
+                    onClick = { onFeedbackAction?.invoke(event.id) },
                     shape = RoundedCornerShape(0.dp, 0.dp, 10.dp, 10.dp),
                     modifier = Modifier
                         .height(IntrinsicSize.Min)

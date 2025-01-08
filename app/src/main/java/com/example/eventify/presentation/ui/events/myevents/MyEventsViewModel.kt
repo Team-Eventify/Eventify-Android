@@ -104,4 +104,10 @@ class MyEventsViewModel @Inject constructor(
         }
     }
 
+    fun navigateToFeedback(eventId: String){
+        viewModelScope.launch {
+            navigator.navigate(RootRouter.EventFeedbackRoute(eventId = eventId))
+        }
+    }
+
 }
