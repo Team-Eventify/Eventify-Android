@@ -17,6 +17,7 @@ import com.example.eventify.presentation.navigation.navgraphs.MainNavHost
 import com.example.eventify.presentation.navigation.navgraphs.RootRouter
 import com.example.eventify.presentation.ui.SnackbarController
 import com.example.eventify.presentation.ui.SnackbarEvent
+import com.example.eventify.presentation.utils.toColorOrNull
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow
@@ -63,7 +64,8 @@ class SearchViewModel @Inject constructor(
                             CategorySelectItem(
                                 id = it.id,
                                 title = it.title,
-                                selected = false
+                                selected = false,
+                                color = it.color.toColorOrNull()!!
                             )
                         }
                     )

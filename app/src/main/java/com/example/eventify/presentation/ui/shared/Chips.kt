@@ -1,33 +1,20 @@
 package com.example.eventify.presentation.ui.shared
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeContentPadding
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -35,26 +22,10 @@ import com.example.eventify.presentation.models.CategorySelectItem
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 
 
-val CATEGORY_SELECT_COLORS = listOf(
-    Color(0xFFFFB3A7),
-    Color(0xFFA3C7FF),
-    Color(0xFFA3D5FF),
-    Color(0xFFFFCCE7),
-    Color(0xFFFFF4A3),
-    Color(0xFFC6A4E7),
-    Color(0xFFFFD8B1),
-    Color(0xFFD3E4C4),
-    Color(0xFFFFCEF3),
-    Color(0xFFC6A4E7),
-    Color(0xFFFFE4B3),
-    Color(0xFFFFF7E1)
-)
-
 @Composable
 fun CategorySelectChip(
     category: CategorySelectItem,
     onSelect: (String, Boolean) -> Unit,
-    selectedColor: Color? = null
 ) {
     FilterChip(
         onClick = {
@@ -69,7 +40,7 @@ fun CategorySelectChip(
         selected = category.selected,
         leadingIcon = null,
         colors = FilterChipDefaults.filterChipColors(
-            selectedContainerColor = selectedColor ?: CATEGORY_SELECT_COLORS.random()
+            selectedContainerColor = category.color
         )
     )
 }
@@ -184,7 +155,8 @@ private fun PreviewCategorySelectChip() {
         CategorySelectItem(
             id = "",
             title = "Backend",
-            selected = false
+            selected = true,
+            color = Color.Cyan
         ),
         {_, _->}
     )

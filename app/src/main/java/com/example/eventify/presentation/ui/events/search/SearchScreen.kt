@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
@@ -68,7 +69,8 @@ private fun SearchScreenPreview() {
                     categories = List(8){
                         CategorySelectItem(
                             id = UUID.randomUUID().toString(),
-                            title = LoremIpsum(2).values.toList().joinToString()
+                            title = LoremIpsum(2).values.toList().joinToString(),
+                            color = Color.Cyan
                         )
                     }
                 ),

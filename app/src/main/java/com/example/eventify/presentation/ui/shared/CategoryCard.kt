@@ -67,7 +67,9 @@ private fun PreviewCategoryCard() {
     CategoryCard(
         category = Category(
             id = "",
-            title = "Backend"
+            title = "Backend",
+            color = "FF93B3E6",
+            cover = ""
         ),
         onClick = {}
     )

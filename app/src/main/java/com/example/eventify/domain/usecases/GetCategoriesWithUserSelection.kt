@@ -1,11 +1,14 @@
 package com.example.eventify.domain.usecases
 
+import android.graphics.Color
 import com.example.eventify.data.repositories.category.CategoryRepository
 import com.example.eventify.data.repositories.tokens.TokenManager
 import com.example.eventify.data.repositories.users.UsersRepository
 import com.example.eventify.domain.DataError
 import com.example.eventify.domain.Result
 import com.example.eventify.presentation.models.CategorySelectItem
+import com.example.eventify.presentation.utils.toColor
+import com.example.eventify.presentation.utils.toColorOrNull
 import javax.inject.Inject
 
 class GetCategoriesWithUserSelection @Inject constructor(
@@ -43,7 +46,8 @@ class GetCategoriesWithUserSelection @Inject constructor(
                 CategorySelectItem(
                     id = category.id,
                     title = category.title,
-                    selected = userCategoriesId.contains(category.id)
+                    selected = userCategoriesId.contains(category.id),
+                    color = category.color.toColorOrNull()!!
                 )
             }
         )

@@ -5,6 +5,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import com.example.eventify.presentation.models.CategorySelectItem
@@ -38,7 +39,8 @@ private fun PreviewCategorySearchTagUnselectedDark() {
             categoryItem = CategorySelectItem(
                 id = UUID.randomUUID().toString(),
                 title = LoremIpsum(2).values.toList().joinToString(),
-                selected = false
+                selected = false,
+                color = Color.Cyan
             ),
             onClick = {}
         )
@@ -53,7 +55,8 @@ private fun PreviewCategorySearchTagSelectedDark() {
             categoryItem = CategorySelectItem(
                 id = UUID.randomUUID().toString(),
                 title = LoremIpsum(2).values.toList().joinToString(),
-                selected = true
+                selected = true,
+                color = Color.Cyan
             ),
             onClick = {}
         )

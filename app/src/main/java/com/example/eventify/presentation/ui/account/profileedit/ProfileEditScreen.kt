@@ -9,6 +9,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.eventify.presentation.models.CategorySelectItem
@@ -112,32 +113,38 @@ private fun ProfileEditScreenDarkPreview() {
                         CategorySelectItem(
                             id = "",
                             title = "Sport",
-                            selected = false
+                            selected = false,
+                            color = Color.Cyan
                         ),
                         CategorySelectItem(
                             id = "",
                             title = "Game Dev",
-                            selected = true
+                            selected = true,
+                            color = Color.Red
                         ),
                         CategorySelectItem(
                             id = "",
                             title = "Communication",
-                            selected = false
+                            selected = false,
+                            color = Color.Cyan
                         ),
                         CategorySelectItem(
                             id = "",
                             title = "Backend",
-                            selected = true
+                            selected = true,
+                            color = Color.Green
                         ),
                         CategorySelectItem(
                             id = "",
                             title = "Mobile",
-                            selected = true
+                            selected = true,
+                            color = Color.Blue
                         ),
                         CategorySelectItem(
                             id = "",
                             title = "Frontend",
-                            selected = false
+                            selected = false,
+                            color = Color.Magenta
                         ),
 
                         )
@@ -164,32 +171,38 @@ private fun ProfileEditScreenLightPreview() {
                         CategorySelectItem(
                             id = "",
                             title = "Sport",
-                            selected = false
+                            selected = false,
+                            color = Color.Cyan
                         ),
                         CategorySelectItem(
                             id = "",
                             title = "Game Dev",
-                            selected = true
+                            selected = true,
+                            color = Color.Red
                         ),
                         CategorySelectItem(
                             id = "",
                             title = "Communication",
-                            selected = false
+                            selected = false,
+                            color = Color.Cyan
                         ),
                         CategorySelectItem(
                             id = "",
                             title = "Backend",
-                            selected = true
+                            selected = true,
+                            color = Color.Green
                         ),
                         CategorySelectItem(
                             id = "",
                             title = "Mobile",
-                            selected = true
+                            selected = true,
+                            color = Color.Blue
                         ),
                         CategorySelectItem(
                             id = "",
                             title = "Frontend",
-                            selected = false
+                            selected = false,
+                            color = Color.Magenta
                         ),
 
                         )

@@ -10,6 +10,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.eventify.presentation.models.CategorySelectItem
@@ -44,27 +45,33 @@ private fun PreviewCategorySelector() {
             CategorySelectItem(
                 id = "",
                 title = "Backend",
-                selected = true
+                selected = true,
+                color = Color.Red,
             ),
             CategorySelectItem(
                 id = "",
                 title = "Frontend",
-                selected = false
+                selected = false,
+                color = Color.Magenta,
+
             ),
             CategorySelectItem(
                 id = "",
                 title = "Сопрт",
-                selected = false
+                selected = false,
+                color = Color.Cyan,
             ),
             CategorySelectItem(
                 id = "",
                 title = "Наука",
-                selected = false
+                selected = false,
+                color = Color.Green,
             ),
             CategorySelectItem(
                 id = "",
                 title = "Game Dev",
-                selected = true
+                selected = true,
+                color = Color.Blue,
             ),
 
         ),

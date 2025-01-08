@@ -7,6 +7,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -71,14 +72,14 @@ private fun ChooseCategoriesScreenPreview() {
             ChooseCategoriesScreen(
                 state = ChooseCategoriesState(
                     categoryItems = listOf(
-                        CategorySelectItem("", "Наука", false),
-                        CategorySelectItem("", "Спорт", false),
-                        CategorySelectItem("", "Frontend", false),
-                        CategorySelectItem("", "Backend", true),
-                        CategorySelectItem("", "Media", true),
-                        CategorySelectItem("", "Студенеская жизнь", false),
-                        CategorySelectItem("", "Mobile", true),
-                    )
+                        CategorySelectItem(id = "", title = "Наука", selected = false, color = Color.Cyan),
+                        CategorySelectItem(id = "", title = "Наука", selected = false, color = Color.Cyan),
+                        CategorySelectItem(id = "", title = "Наука", selected = false, color = Color.Cyan),
+                        CategorySelectItem(id = "", title = "Наука", selected = false, color = Color.Cyan),
+                        CategorySelectItem(id = "", title = "Наука", selected = false, color = Color.Cyan),
+                        CategorySelectItem(id = "", title = "Наука", selected = false, color = Color.Cyan),
+                        CategorySelectItem(id = "", title = "Наука", selected = false, color = Color.Cyan),
+                        )
                 ),
                 actions = ChooseCategoriesActions()
             )
