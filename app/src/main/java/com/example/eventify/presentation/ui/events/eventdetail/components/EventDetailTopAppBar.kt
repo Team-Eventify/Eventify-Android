@@ -13,6 +13,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.sp
 import com.example.eventify.R
 import com.example.eventify.presentation.ui.theme.EventifyTheme
@@ -67,7 +68,7 @@ fun EventDetailTopAppBar(
 private fun PreviewEventDetailTopAppBarDark() {
     EventifyTheme(darkTheme = true) {
         EventDetailTopAppBar(
-            title = "",
+            title = LoremIpsum(3).values.joinToString(),
             onNavigateUp = {}
         )
     }
