@@ -1,5 +1,6 @@
 package com.example.eventify.presentation.models
 
+import com.example.eventify.presentation.utils.asDate
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
@@ -19,5 +20,13 @@ data class ShortEventItem(
     val description: String,
     val cover: String = "",
     val start: Int,
-    val end: Int
-)
+    val end: Int,
+    val location: String
+){
+    val duration: String
+        get() {
+            val st = start.asDate(short = true)
+            val ed = end.asDate(short = true)
+            return listOf(st, ed).joinToString(" - ")
+        }
+}

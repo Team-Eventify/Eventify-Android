@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.eventify.domain.DataError
 import com.example.eventify.domain.Result
+import com.example.eventify.domain.models.toShortEventItem
 import com.example.eventify.domain.usecases.events.GetSubscribedEventsUseCase
 import com.example.eventify.presentation.models.ShortEventItem
 import com.example.eventify.presentation.navigation.Navigator
@@ -76,15 +77,7 @@ class MyEventsViewModel @Inject constructor(
         }
 
         _stateFlow.update { currentState ->
-            val events = eventsInfo.map {
-                ShortEventItem(
-                    id = it.id,
-                    title = it.title,
-                    description = it.description,
-                    start = it.start,
-                    end = it.end
-                )
-            }
+            val events = eventsInfo.map { it.toShortEventItem() }
             currentState.copy(
                 upComingEvents = events.filter { it.start >= currentDateTime },
                 finishedEvents = events.filter { it.end < currentDateTime }

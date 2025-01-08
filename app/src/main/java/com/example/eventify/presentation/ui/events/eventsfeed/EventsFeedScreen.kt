@@ -69,7 +69,10 @@ private fun EventsFeedScreenDefaultDarkPreview() {
                                 .joinToString { it },
                             cover = "",
                             start = Random.nextInt(),
-                            end = Random.nextInt()
+                            end = Random.nextInt(),
+                            location = LoremIpsum(15)
+                                .values
+                                .joinToString(),
                         )
                     },
                     isLoading = false
@@ -120,7 +123,10 @@ private fun EventsFeedScreenDefaultLightPreview() {
                                 .joinToString { it },
                             cover = "",
                             start = Random.nextInt(),
-                            end = Random.nextInt()
+                            end = Random.nextInt(),
+                            location = LoremIpsum(2)
+                                .values
+                                .joinToString(),
                         )
                     },
                     isLoading = false

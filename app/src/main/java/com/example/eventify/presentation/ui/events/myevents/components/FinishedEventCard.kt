@@ -36,6 +36,7 @@ import com.example.eventify.presentation.ui.shared.FinishedEventInfoChip
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 import com.example.eventify.presentation.utils.asDate
 import com.example.eventify.presentation.utils.asTime
+import kotlin.random.Random
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -125,8 +126,9 @@ private fun PreviewMyPastEventCardDark() {
                     .values
                     .joinToString(),
                 description = "",
-                start = 1231313,
-                end = 231231312
+                start = Random.nextInt(),
+                end = Random.nextInt(),
+                location = LoremIpsum(2).values.joinToString()
             )
         )
     }
@@ -145,7 +147,8 @@ private fun PreviewMyPastEventCardDarkWithButton() {
                     .joinToString(),
                 description = "",
                 start = 1231313,
-                end = 231231312
+                end = 231231312,
+                location = LoremIpsum(2).values.joinToString()
             )
         )
     }

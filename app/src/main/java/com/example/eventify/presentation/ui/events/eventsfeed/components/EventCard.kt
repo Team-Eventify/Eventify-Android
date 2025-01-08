@@ -2,18 +2,15 @@ package com.example.eventify.presentation.ui.events.eventsfeed.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CardElevation
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -29,8 +26,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
-
 import coil3.ImageLoader
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
@@ -39,7 +36,7 @@ import com.example.eventify.R
 import com.example.eventify.presentation.models.ShortEventItem
 import com.example.eventify.presentation.ui.shared.BodyText
 import com.example.eventify.presentation.ui.shared.EventCardTitle
-import com.example.eventify.presentation.ui.shared.EventInfoChip
+import com.example.eventify.presentation.ui.shared.EventInfoTag
 import com.example.eventify.presentation.ui.shared.shimmer
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 import com.example.eventify.presentation.utils.asDate
@@ -104,12 +101,13 @@ fun EventCard(
             ) {
                 FlowRow(
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    verticalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterVertically),
                     modifier = Modifier
                         .padding(top = 10.dp)
                 ) {
-                    EventInfoChip(event.start.asDate())
-                    EventInfoChip(event.start.asTime())
-                    EventInfoChip("онлайн")
+                    EventInfoTag(event.start.asDate())
+                    EventInfoTag(event.start.asTime())
+                    EventInfoTag(event.location)
                 }
                 EventCardTitle(
                     text = event.title,
@@ -129,10 +127,17 @@ private fun PreviewEventCardDark() {
             EventCard(
                 event = ShortEventItem(
                     id = "",
-                    title = "День открытых дверей",
-                    description = "Дни открытых дверей — это уникальная возможность для старшеклассников больше узнать о специальностях, которым обучают в Унивеситете МИСИС.",
+                    title = LoremIpsum(3)
+                        .values
+                        .joinToString(),
+                    description = LoremIpsum(50)
+                        .values
+                        .joinToString(),
                     start = 1324412412,
-                    end = 1324419999
+                    end = 1324419999,
+                    location = LoremIpsum(15)
+                        .values
+                        .joinToString(),
                 ),
                 onClick = {},
                 imageLoader = ImageLoader(LocalContext.current)
@@ -149,10 +154,17 @@ private fun PreviewEventCardLight() {
             EventCard(
                 event = ShortEventItem(
                     id = "",
-                    title = "День открытых дверей",
-                    description = "Дни открытых дверей — это уникальная возможность для старшеклассников больше узнать о специальностях, которым обучают в Унивеситете МИСИС.",
+                    title = LoremIpsum(3)
+                        .values
+                        .joinToString(),
+                    description = LoremIpsum(50)
+                        .values
+                        .joinToString(),
                     start = 1324412412,
-                    end = 1324419999
+                    end = 1324419999,
+                    location = LoremIpsum(2)
+                        .values
+                        .joinToString(),
                 ),
                 onClick = {},
                 imageLoader = ImageLoader(LocalContext.current)

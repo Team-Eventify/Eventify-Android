@@ -10,6 +10,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import com.example.eventify.presentation.models.ShortEventItem
 import com.example.eventify.presentation.ui.events.myevents.components.FinishedEventCard
@@ -78,52 +79,26 @@ private fun MyEventsScreenDefaultDarkPreview() {
         Surface {
             MyEventsScreen(
                 state = MyEventsState(
-                    upComingEvents = listOf(
+                    upComingEvents = List(3) {
                         ShortEventItem(
                             id = "",
-                            title = "День первокурсника",
-                            description = "",
+                            title = LoremIpsum(3).values.joinToString(),
+                            description = LoremIpsum(3).values.joinToString(),
                             start = 1231313,
-                            end = 231231312
-                        ),
-                        ShortEventItem(
-                            id = "",
-                            title = "День первокурсника",
-                            description = "",
-                            start = 1231313,
-                            end = 231231312
-                        ),
-                        ShortEventItem(
-                            id = "",
-                            title = "День первокурсника",
-                            description = "",
-                            start = 1231313,
-                            end = 231231312
+                            end = 231231312,
+                            location = LoremIpsum(2).values.joinToString()
                         )
-                    ),
-                    finishedEvents = listOf(
+                    },
+                    finishedEvents = List(3) {
                         ShortEventItem(
                             id = "",
-                            title = "День первокурсника",
-                            description = "",
+                            title = LoremIpsum(3).values.joinToString(),
+                            description = LoremIpsum(3).values.joinToString(),
                             start = 1231313,
-                            end = 231231312
-                        ),
-                        ShortEventItem(
-                            id = "",
-                            title = "День первокурсника",
-                            description = "",
-                            start = 1231313,
-                            end = 231231312
-                        ),
-                        ShortEventItem(
-                            id = "",
-                            title = "День первокурсника",
-                            description = "",
-                            start = 1231313,
-                            end = 231231312
+                            end = 231231312,
+                            location = LoremIpsum(2).values.joinToString()
                         )
-                    )
+                    }
                 ),
                 actions = MyEventsActions(
                     onRefresh = {},
@@ -141,52 +116,26 @@ private fun MyEventsScreenDefaultLightPreview() {
         Surface {
             MyEventsScreen(
                 state = MyEventsState(
-                    upComingEvents = listOf(
+                    upComingEvents = List(3) {
                         ShortEventItem(
                             id = "",
-                            title = "День первокурсника",
-                            description = "",
+                            title = LoremIpsum(3).values.joinToString(),
+                            description = LoremIpsum(3).values.joinToString(),
                             start = 1231313,
-                            end = 231231312
-                        ),
-                        ShortEventItem(
-                            id = "",
-                            title = "День первокурсника",
-                            description = "",
-                            start = 1231313,
-                            end = 231231312
-                        ),
-                        ShortEventItem(
-                            id = "",
-                            title = "День первокурсника",
-                            description = "",
-                            start = 1231313,
-                            end = 231231312
+                            end = 231231312,
+                            location = LoremIpsum(2).values.joinToString()
                         )
-                    ),
-                    finishedEvents = listOf(
+                    },
+                    finishedEvents = List(3) {
                         ShortEventItem(
                             id = "",
-                            title = "День первокурсника",
-                            description = "",
+                            title = LoremIpsum(3).values.joinToString(),
+                            description = LoremIpsum(3).values.joinToString(),
                             start = 1231313,
-                            end = 231231312
-                        ),
-                        ShortEventItem(
-                            id = "",
-                            title = "День первокурсника",
-                            description = "",
-                            start = 1231313,
-                            end = 231231312
-                        ),
-                        ShortEventItem(
-                            id = "",
-                            title = "День первокурсника",
-                            description = "",
-                            start = 1231313,
-                            end = 231231312
+                            end = 231231312,
+                            location = LoremIpsum(2).values.joinToString()
                         )
-                    )
+                    }
                 ),
                 actions = MyEventsActions(
                     onRefresh = {},

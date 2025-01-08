@@ -75,7 +75,11 @@ private fun PreviewEventsFeedLazyColumnDark() {
                             .joinToString { it },
                         cover = "",
                         start = Random.nextInt(),
-                        end = Random.nextInt()
+                        end = Random.nextInt(),
+                        location = LoremIpsum(2)
+                            .values
+                            .toList()
+                            .joinToString { it },
                     )
                 },
                 loadingEventItem = {

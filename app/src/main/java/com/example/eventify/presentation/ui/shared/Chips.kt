@@ -15,11 +15,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.eventify.presentation.models.CategorySelectItem
 import com.example.eventify.presentation.ui.theme.EventifyTheme
+import kotlin.math.max
 
 
 @Composable
@@ -90,7 +92,7 @@ fun TagChip(
 }
 
 @Composable
-fun EventInfoChip(
+fun EventInfoTag(
     text: String,
 ) {
     Box(
@@ -99,15 +101,19 @@ fun EventInfoChip(
             .padding(horizontal = 10.dp, vertical = 2.dp)
 
     ) {
-        Text(text = text, color = MaterialTheme.colorScheme.onSurface)
+        Text(
+            text = text,
+            color = MaterialTheme.colorScheme.onSurface,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
+        )
     }
 
 }
 
 @Composable
-fun UpComingEventInfoChip(
-    text: String,
-    onClick: (() -> Unit)? = null
+fun UpComingEventInfoTag(
+    text: String
 ) {
     Box(
         modifier = Modifier
@@ -118,6 +124,8 @@ fun UpComingEventInfoChip(
             text = text,
             fontSize = 12.sp,
             lineHeight = 12.sp,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
             color = MaterialTheme.colorScheme.onPrimary,
             modifier = Modifier
         )
@@ -184,7 +192,7 @@ private fun PreviewTagChip() {
 private fun PreviewEventInfoChip() {
     EventifyTheme(darkTheme = true) {
         Surface {
-            EventInfoChip(
+            EventInfoTag(
                 text = "Category"
             )
         }
@@ -194,7 +202,7 @@ private fun PreviewEventInfoChip() {
 @Preview(name = "UpComingEventInfoChip")
 @Composable
 private fun PreviewUpComingEventInfoChip() {
-    UpComingEventInfoChip(
+    UpComingEventInfoTag(
         text = "Category"
     )
 }

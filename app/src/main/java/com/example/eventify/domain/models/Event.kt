@@ -27,5 +27,6 @@ fun Event.toShortEventItem() = ShortEventItem(
     description = description,
     start = start,
     end = end,
-    cover = cover
+    cover = cover,
+    location = location
 )

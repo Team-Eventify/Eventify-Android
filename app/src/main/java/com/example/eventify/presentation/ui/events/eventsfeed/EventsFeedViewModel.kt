@@ -4,18 +4,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import coil3.ImageLoader
 import com.example.eventify.domain.Result
-import com.example.eventify.domain.usecases.categories.GetCategoriesUseCase
+import com.example.eventify.domain.models.toShortEventItem
 import com.example.eventify.domain.usecases.events.GetEventsUseCase
-import com.example.eventify.presentation.models.ShortEventItem
 import com.example.eventify.presentation.ui.SnackbarController
 import com.example.eventify.presentation.ui.SnackbarEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -65,16 +62,7 @@ class EventsFeedViewModel @Inject constructor(
             is Result.Success -> {
                 _stateFlow.update { currentState ->
                     currentState.copy(
-                        events = events.data.map {
-                            ShortEventItem(
-                                id = it.id,
-                                title = it.title,
-                                description = it.description,
-                                cover = it.cover,
-                                start = it.start,
-                                end = it.end
-                            )
-                        }
+                        events = events.data.map { it.toShortEventItem() }
                     )
                 }
             }
