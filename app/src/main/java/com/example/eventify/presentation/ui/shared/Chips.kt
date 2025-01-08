@@ -157,18 +157,20 @@ fun UpComingEventInfoChip(
 @Composable
 fun FinishedEventInfoChip(
     text: String,
-    onClick: (() -> Unit)? = null
 ) {
     Box(
         modifier = Modifier
-            .background(Color(0xFF858591), shape = RoundedCornerShape(16.dp))
+            .background(
+                color = MaterialTheme.colorScheme.surfaceContainer,
+                shape = RoundedCornerShape(16.dp)
+            )
             .padding(horizontal = 10.dp, vertical = 5.dp)
     ) {
         Text(
             text = text,
             fontSize = 12.sp,
             lineHeight = 12.sp,
-            color = MaterialTheme.colorScheme.onPrimary,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier
         )
     }
@@ -229,7 +231,9 @@ private fun PreviewUpComingEventInfoChip() {
 @Preview(name = "FinishedEventInfoChip")
 @Composable
 private fun PreviewFinishedEventInfoChip() {
-    FinishedEventInfoChip(
-        text = "Category"
-    )
+    EventifyTheme(darkTheme = true) {
+        FinishedEventInfoChip(
+            text = "Category"
+        )
+    }
 }

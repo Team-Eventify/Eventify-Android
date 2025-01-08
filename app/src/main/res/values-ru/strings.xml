@@ -65,4 +65,5 @@
     <string name="not_found">Не найдено</string>
     <string name="unauthorized_error">Пользователь не авторизован</string>
     <string name="send">Отправить</string>
+    <string name="feedback_action">Оценить</string>
 </resources>

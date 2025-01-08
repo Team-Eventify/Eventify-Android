@@ -65,4 +65,5 @@
     <string name="not_found">Not found</string>
     <string name="unauthorized_error">Unauthorized</string>
     <string name="send">Send</string>
+    <string name="feedback_action">Feedback</string>
 </resources>

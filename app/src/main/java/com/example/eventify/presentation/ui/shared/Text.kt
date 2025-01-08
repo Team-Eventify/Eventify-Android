@@ -127,6 +127,8 @@ fun EventCardTitle(
         color = textColor,
         fontWeight = FontWeight.Medium,
         fontSize = 20.sp,
+        maxLines = 2,
+        overflow = TextOverflow.Ellipsis,
         modifier = modifier
             .padding(0.dp, 5.dp)
     )
