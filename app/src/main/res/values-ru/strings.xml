@@ -69,4 +69,5 @@
     <string name="resource_conflict">Конфликт ресурса</string>
     <string name="message_after_subscribe">Вы подписались на мероприятие</string>
     <string name="message_after_unsubscribe">Вы отписались от мероприятия</string>
+    <string name="retry">Повторить</string>
 </resources>

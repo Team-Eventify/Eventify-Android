@@ -69,4 +69,5 @@
     <string name="resource_conflict">Resource conflict</string>
     <string name="message_after_subscribe">You have subscribed to the event</string>
     <string name="message_after_unsubscribe">You have unsubscribed from the event</string>
+    <string name="retry">Retry</string>
 </resources>

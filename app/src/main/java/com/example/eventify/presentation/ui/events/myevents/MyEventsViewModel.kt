@@ -1,8 +1,10 @@
 package com.example.eventify.presentation.ui.events.myevents
 
 import android.content.Context
+import androidx.compose.material3.SnackbarDuration
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.eventify.R
 import com.example.eventify.domain.DataError
 import com.example.eventify.domain.Result
 import com.example.eventify.domain.models.toShortEventItem
@@ -10,6 +12,7 @@ import com.example.eventify.domain.usecases.events.GetSubscribedEventsUseCase
 import com.example.eventify.presentation.models.ShortEventItem
 import com.example.eventify.presentation.navigation.Navigator
 import com.example.eventify.presentation.navigation.navgraphs.RootRouter
+import com.example.eventify.presentation.ui.SnackbarAction
 import com.example.eventify.presentation.ui.SnackbarController
 import com.example.eventify.presentation.ui.SnackbarEvent
 import com.example.eventify.presentation.utils.asUiText
@@ -61,23 +64,26 @@ class MyEventsViewModel @Inject constructor(
     private suspend fun loadEvents(){
         val currentDateTime = Date().time
 
-        val eventsInfo = when (val result = getSubscribedEventsUseCase()){
+        val events = when (val result = getSubscribedEventsUseCase()){
             is Result.Error -> {
-                when (result.error){
-                    is DataError.Network -> {
-                        when (result.error){
-                            DataError.Network.NOT_FOUND -> emptyList()
-                            else -> return handleError(result.error)
-                        }
-                    }
-                    else -> return handleError(result.error)
-                }
+                SnackbarController.sendEvent(
+                    SnackbarEvent(
+                        message = result.error.asUiText().asString(context),
+                        duration = SnackbarDuration.Indefinite,
+                        action = SnackbarAction(
+                            name = context.getString(R.string.retry),
+                            action = {
+                                refresh()
+                            }
+                        )
+                    )
+                )
+                return
             }
-            is Result.Success -> result.data
+            is Result.Success -> result.data.map { it.toShortEventItem() }
         }
 
         _stateFlow.update { currentState ->
-            val events = eventsInfo.map { it.toShortEventItem() }
             currentState.copy(
                 upComingEvents = events.filter { it.start >= currentDateTime },
                 finishedEvents = events.filter { it.end < currentDateTime }
@@ -85,11 +91,6 @@ class MyEventsViewModel @Inject constructor(
         }
     }
 
-    private suspend fun handleError(error: DataError){
-        SnackbarController.sendEvent(
-            SnackbarEvent(message = error.asUiText().asString(context))
-        )
-    }
 
     fun navigateToEvent(eventId: String) {
         viewModelScope.launch {
