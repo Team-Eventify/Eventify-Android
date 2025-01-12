@@ -1,5 +1,6 @@
 package com.example.eventify.presentation.ui.shared
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -21,7 +22,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.eventify.presentation.models.CategorySelectItem
 import com.example.eventify.presentation.ui.theme.EventifyTheme
-import kotlin.math.max
 
 
 @Composable
@@ -77,16 +77,23 @@ fun ChipInfo(
 
 
 @Composable
-fun TagChip(
+fun CategoryTagChip(
     text: String,
+    color: Color,
     onClick: (() -> Unit)? = null
 ) {
     AssistChip(
         onClick = onClick ?: {},
         shape = RoundedCornerShape(16.dp),
-        border = AssistChipDefaults.assistChipBorder(enabled = true, borderColor = MaterialTheme.colorScheme.primary),
+        border = null,
+        colors = AssistChipDefaults.assistChipColors(
+            containerColor = color
+        ),
         label = {
-            Text(text = text, color = MaterialTheme.colorScheme.primary)
+            Text(
+                text = text,
+                color = MaterialTheme.colorScheme.onPrimary
+            )
         }
     )
 }
@@ -182,8 +189,9 @@ private fun PreviewChipInfo() {
 @Preview(name = "TagChip")
 @Composable
 private fun PreviewTagChip() {
-    TagChip(
-        text = "Category"
+    CategoryTagChip(
+        text = "Category",
+        color = Color.Cyan
     )
 }
 

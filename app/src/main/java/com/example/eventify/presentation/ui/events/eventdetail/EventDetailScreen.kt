@@ -1,5 +1,6 @@
 package com.example.eventify.presentation.ui.events.eventdetail
 
+import android.graphics.Color
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -22,9 +23,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.eventify.R
+import com.example.eventify.domain.models.Category
 import com.example.eventify.domain.models.EventWithCategories
 import com.example.eventify.presentation.ui.events.eventdetail.components.ImagePager
 import com.example.eventify.presentation.ui.shared.BodyText
@@ -32,10 +35,12 @@ import com.example.eventify.presentation.ui.shared.ChipInfo
 import com.example.eventify.presentation.ui.shared.buttons.PrimaryButton
 import com.example.eventify.presentation.ui.shared.PrimaryButtonText
 import com.example.eventify.presentation.ui.shared.buttons.PrimaryDeclineButton
-import com.example.eventify.presentation.ui.shared.TagChip
+import com.example.eventify.presentation.ui.shared.CategoryTagChip
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 import com.example.eventify.presentation.utils.asDate
 import com.example.eventify.presentation.utils.asTime
+import com.example.eventify.presentation.utils.toColorOrNull
+import java.util.UUID
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -67,7 +72,10 @@ fun EventDetailScreen(
                 ChipInfo(text = state.event?.start?.asTime() ?: "")
 
                 state.event!!.categories.forEach{ tag ->
-                    TagChip(text = tag.title)
+                    CategoryTagChip(
+                        text = tag.title,
+                        color = tag.color.toColorOrNull()!!
+                    )
                 }
             }
 
@@ -98,19 +106,13 @@ fun EventDetailScreen(
             }
             Spacer(modifier = Modifier.height(20.dp))
 
-            if (state.event.subscribed){
-                PrimaryDeclineButton(onClick = actions.onUnsubscribe) {
-                    PrimaryButtonText(text = "Отменить запись на мероприятие")
-                }
-            } else {
-                PrimaryButton(onClick = actions.onSubscribe) {
-                    PrimaryButtonText(text = "Я пойду!")
-                }
+            PrimaryDeclineButton(onClick = actions.onUnsubscribe) {
+                PrimaryButtonText(text = "Отменить запись на мероприятие")
             }
-
-            PrimaryButton(
-                onClick = actions.goToRatePage
-            ) {
+            PrimaryButton(onClick = actions.onSubscribe) {
+                PrimaryButtonText(text = "Я пойду!")
+            }
+            PrimaryButton(onClick = actions.goToRatePage) {
                 PrimaryButtonText(stringResource(R.string.to_rate))
             }
         }
@@ -125,9 +127,9 @@ private fun EventDetailScreenDarkPreview() {
             EventDetailScreen(
                 state = EventDetailState(
                     event = EventWithCategories(
-                        id = "",
-                        title = "День открытых дверей",
-                        description = "Дни открытых дверей — это уникальная возможность для старшеклассников больше узнать о специальностях, которым обучают в одном из лучших технических университетов России, научной деятельности под руководством учёных с мировым именем, образовательных проектах и карьерных возможностях, которые предлагает вуз, яркой студенческой жизни в Москве. В Университете МИСИС каждый студент сможет получить профессию будущего и быть востребованным лучшими российскими и зарубежными работодателями, раскрыть свой потенциал, благодаря формируемой в вузе экосреде креативности и творчества!",
+                        id = UUID.randomUUID().toString(),
+                        title = LoremIpsum(5).values.joinToString(),
+                        description = LoremIpsum(50).values.joinToString(),
                         createdAt = 0,
                         modifiedAt = 0,
                         start = 0,
@@ -139,7 +141,14 @@ private fun EventDetailScreenDarkPreview() {
                         location = "",
                         cover = "",
                         subscribed = false,
-                        categories = emptyList()
+                        categories = List(5){
+                            Category(
+                                id = UUID.randomUUID().toString(),
+                                color = "#A3C7FF",
+                                cover = "",
+                                title = LoremIpsum(1).values.joinToString()
+                            )
+                        }
                     )
                 ),
                 actions = EventDetailActions(
@@ -160,9 +169,9 @@ private fun EventDetailScreenLightPreview() {
             EventDetailScreen(
                 state = EventDetailState(
                     event = EventWithCategories(
-                        id = "",
-                        title = "День открытых дверей",
-                        description = "Дни открытых дверей — это уникальная возможность для старшеклассников больше узнать о специальностях, которым обучают в одном из лучших технических университетов России, научной деятельности под руководством учёных с мировым именем, образовательных проектах и карьерных возможностях, которые предлагает вуз, яркой студенческой жизни в Москве. В Университете МИСИС каждый студент сможет получить профессию будущего и быть востребованным лучшими российскими и зарубежными работодателями, раскрыть свой потенциал, благодаря формируемой в вузе экосреде креативности и творчества!",
+                        id = UUID.randomUUID().toString(),
+                        title = LoremIpsum(5).values.joinToString(),
+                        description = LoremIpsum(50).values.joinToString(),
                         createdAt = 0,
                         modifiedAt = 0,
                         start = 0,
@@ -174,7 +183,14 @@ private fun EventDetailScreenLightPreview() {
                         location = "",
                         cover = "",
                         subscribed = false,
-                        categories = emptyList()
+                        categories = List(5){
+                            Category(
+                                id = UUID.randomUUID().toString(),
+                                color = "#A3C7FF",
+                                cover = "",
+                                title = LoremIpsum(1).values.joinToString()
+                            )
+                        }
 
                     )
                 ),
