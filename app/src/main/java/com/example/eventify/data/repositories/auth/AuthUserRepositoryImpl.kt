@@ -17,16 +17,29 @@ class AuthUserRepositoryImpl @Inject constructor (
     private val dataSource: AuthAPI
 ): AuthUserRepository {
     override suspend fun refreshAccessToken(refreshToken: String): Result<TokenData, DataError> = try {
+//        dataSource.refreshAccessToken(
+//            data =  RefreshTokenRequestData(
+//                refresh = refreshToken
+//            )
+//        ).handle{
+//            TokenData(
+//                refreshToken = it.refreshToken,
+//                accessToken = it.accessToken,
+//                userID = it.userID
+//            )
+//        }
         dataSource.refreshAccessToken(
-            data =  RefreshTokenRequestData(
+            data = RefreshTokenRequestData(
                 refresh = refreshToken
             )
         ).handle{
-            TokenData(
-                refreshToken = it.refreshToken,
-                accessToken = it.accessToken,
-                userID = it.userID
-            )
+            transformSuccess {
+                TokenData(
+                    refreshToken = it.refreshToken,
+                    accessToken = it.accessToken,
+                    userID = it.userID
+                )
+            }
         }
 
     } catch (e: Exception){
@@ -41,11 +54,13 @@ class AuthUserRepositoryImpl @Inject constructor (
                 password = user.password
             )
         ).handle{
-            TokenData(
-                refreshToken = it.refreshToken,
-                accessToken = it.accessToken,
-                userID = it.userID
-            )
+            transformSuccess {
+                TokenData(
+                    refreshToken = it.refreshToken,
+                    accessToken = it.accessToken,
+                    userID = it.userID
+                )
+            }
         }
 
     } catch (e: Exception){
@@ -61,11 +76,13 @@ class AuthUserRepositoryImpl @Inject constructor (
                 password = credentials.password
             )
         ).handle{
-            TokenData(
-                refreshToken = it.refreshToken,
-                accessToken = it.accessToken,
-                userID = it.userID
-            )
+            transformSuccess {
+                TokenData(
+                    refreshToken = it.refreshToken,
+                    accessToken = it.accessToken,
+                    userID = it.userID
+                )
+            }
         }
 
     } catch (e: Exception){

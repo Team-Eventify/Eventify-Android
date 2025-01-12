@@ -29,7 +29,7 @@ class UsersRepositoryImpl @Inject constructor(
                 email = user.email
             )
         ).handle{
-            it.toUserInfo()
+            transformSuccess { it.toUserInfo() }
         }
 
     } catch (e: Exception){
@@ -39,7 +39,7 @@ class UsersRepositoryImpl @Inject constructor(
 
     override suspend fun getUserInfo(userId: String): Result<User, DataError> = try {
         dataSource.getUserInfo(userId = userId).handle{
-            it.toUserInfo()
+            transformSuccess { it.toUserInfo() }
         }
     } catch (e: Exception){
         Timber.e(e)
@@ -47,8 +47,10 @@ class UsersRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getUserCategories(userId: String): Result<List<Category>, DataError> = try {
-        dataSource.getUserCategories(userId = userId).handle{ response ->
-            response.map { it.toCategoryInfo() }
+        dataSource.getUserCategories(userId = userId).handle{
+            transformSuccess { body ->
+                body.map { it.toCategoryInfo() }
+            }
         }
     } catch (e: Exception){
         Timber.d(e)
@@ -63,8 +65,10 @@ class UsersRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getUserSubscribedEvents(userId: String): Result<List<Event>, DataError> = try {
-        dataSource.getUserSubscribedEvents(userId = userId).handle{ response ->
-            response.map { it.toEventInfo() }
+        dataSource.getUserSubscribedEvents(userId = userId).handle{
+            transformSuccess { body ->
+                body.map { it.toEventInfo() }
+            }
         }
     } catch (e: Exception){
         Timber.e(e)

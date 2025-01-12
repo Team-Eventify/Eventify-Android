@@ -21,8 +21,10 @@ class EventRepositoryImpl @Inject constructor(
             start = filter?.start,
             end = filter?.end,
             categoryIds = filter?.validCategoryIds
-        ).handle { events ->
-            events.map { it.toEventInfo() }
+        ).handle {
+            transformSuccess { body ->
+                body.map { it.toEventInfo() }
+            }
         }
 
     } catch (e:Exception){
@@ -31,8 +33,8 @@ class EventRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getEventDetail(eventId: String): Result<Event, DataError> = try {
-        dataSource.getEvent(eventId = eventId).handle { event ->
-            event.toEventInfo()
+        dataSource.getEvent(eventId = eventId).handle {
+            transformSuccess { it.toEventInfo() }
         }
     } catch (e: Exception){
         Timber.e(e)

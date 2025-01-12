@@ -12,9 +12,19 @@ class CategoryRepositoryImpl @Inject constructor(
     private val dataSource: CategoryAPI
 ) : CategoryRepository {
     override suspend fun getCategoriesList(): Result<List<Category>, DataError> = try {
-        dataSource.getCategoriesList().handle { response ->
-            response.map { it.toCategoryInfo() }
+//        dataSource.getCategoriesList().handle { response ->
+//            response.map { it.toCategoryInfo() }
+//        }
+        dataSource.getCategoriesList().handle{
+            process(404){
+                Result.Success(emptyList())
+            }
+
+            transformSuccess { body ->
+                body.map { it.toCategoryInfo() }
+            }
         }
+
 
     } catch (e: Exception){
         Timber.e(e)
@@ -22,8 +32,11 @@ class CategoryRepositoryImpl @Inject constructor(
     }
 
     override suspend fun readCategory(categoryId: String): Result<Category, DataError> = try {
-        dataSource.readCategory(categoryId = categoryId).handle { response ->
-            response.toCategoryInfo()
+//        dataSource.readCategory(categoryId = categoryId).handle { response ->
+//            response.toCategoryInfo()
+//        }
+        dataSource.readCategory(categoryId = categoryId).handle {
+            transformSuccess { it.toCategoryInfo() }
         }
     } catch (e: Exception){
         Timber.e(e)

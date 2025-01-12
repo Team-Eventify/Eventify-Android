@@ -3,6 +3,7 @@ package com.example.eventify.data.repositories.category
 import com.example.eventify.data.remote.api.CategoryAPI
 import com.example.eventify.data.remote.models.category.CategoryInfoResponse
 import com.example.eventify.domain.Result
+import com.example.eventify.domain.models.Category
 import com.example.eventify.emptyResponseError
 import com.example.eventify.nextHex
 import com.example.eventify.responseSuccess
@@ -63,7 +64,15 @@ class CategoryRepositoryImplTest {
     fun `Empty events list with 404 API status code`() = runTest {
         coEvery { api.getCategoriesList() } returns emptyResponseError(404)
 
-        TODO("Change implementation that will be returns empty list with 404 API code")
+        val result = sut.getCategoriesList()
+
+        assertThat(result).apply {
+            isInstanceOf(Result.Success::class.java)
+        }
+        val successResult = result as Result.Success
+        assertThat(successResult.data).apply {
+            isEqualTo(emptyList<Category>())
+        }
     }
 
     @Test
