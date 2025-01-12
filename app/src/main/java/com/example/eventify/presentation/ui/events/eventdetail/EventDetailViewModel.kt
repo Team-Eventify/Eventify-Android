@@ -1,10 +1,12 @@
 package com.example.eventify.presentation.ui.events.eventdetail
 
 import android.content.Context
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
+import com.example.eventify.R
 import com.example.eventify.domain.DataError
 import com.example.eventify.domain.Result
 import com.example.eventify.domain.usecases.events.GetEventDetailUseCase
@@ -72,13 +74,13 @@ class EventDetailViewModel @Inject constructor(
             when (val result = subscribedEventsUseCase(eventId)) {
                 is Result.Error -> {
                     SnackbarController.sendEvent(
-                        SnackbarEvent(message = result.error.toString())
+                        SnackbarEvent(message = result.error.asUiText().asString(context))
                     )
                 }
                 is Result.Success -> {
                     loadEvent()
                     SnackbarController.sendEvent(
-                        SnackbarEvent(message = "Вы подписались на событие")
+                        SnackbarEvent(message = context.getString(R.string.message_after_subscribe))
                     )
                 }
             }
@@ -91,14 +93,14 @@ class EventDetailViewModel @Inject constructor(
                 is Result.Error -> {
                     SnackbarController.sendEvent(
                         SnackbarEvent(
-                            message = result.error.toString()
+                            message = result.error.asUiText().asString(context)
                         )
                     )
                 }
                 is Result.Success -> {
                     SnackbarController.sendEvent(
                         SnackbarEvent(
-                            message = "Вы отписались от события"
+                            message = context.getString(R.string.message_after_unsubscribe)
                         )
                     )
                 }

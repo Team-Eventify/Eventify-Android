@@ -69,6 +69,10 @@ fun DataError.asUiText(): UiText = when (this){
             DataError.Network.UNAUTHORIZED -> UiText.StringResource(
                 R.string.unauthorized_error
             )
+            DataError.Network.RESOURCE_CONFLICT -> UiText.StringResource(
+                R.string.resource_conflict
+            )
+
             else -> UiText.DynamicString(this.toString())
         }
     }

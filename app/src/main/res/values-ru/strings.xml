@@ -66,4 +66,7 @@
     <string name="unauthorized_error">Пользователь не авторизован</string>
     <string name="send">Отправить</string>
     <string name="feedback_action">Оценить</string>
+    <string name="resource_conflict">Конфликт ресурса</string>
+    <string name="message_after_subscribe">Вы подписались на мероприятие</string>
+    <string name="message_after_unsubscribe">Вы отписались от мероприятия</string>
 </resources>

@@ -12,7 +12,8 @@ interface DataError: Error {
         NOT_FOUND,
         BAD_REQUEST,
         FORBIDDEN,
-        UNAUTHORIZED
+        UNAUTHORIZED,
+        RESOURCE_CONFLICT
     }
     enum class Local: DataError {
         DISK_FULL
