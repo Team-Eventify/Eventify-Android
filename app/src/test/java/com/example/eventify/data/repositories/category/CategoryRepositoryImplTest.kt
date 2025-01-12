@@ -61,7 +61,7 @@ class CategoryRepositoryImplTest {
     }
 
     @Test
-    fun `Empty events list with 404 API status code`() = runTest {
+    fun `Empty categories list with 404 API status code`() = runTest {
         coEvery { api.getCategoriesList() } returns emptyResponseError(404)
 
         val result = sut.getCategoriesList()

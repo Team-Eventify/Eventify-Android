@@ -20,23 +20,11 @@ class GetCategoriesWithUserSelection @Inject constructor(
         val userId = tokenManager.getUserId() ?: throw Exception()
 
         val allCategories = when (val result = categoriesRepository.getCategoriesList()){
-            is Result.Error -> when (val error = result.error){
-                is DataError.Network -> when (error){
-                    DataError.Network.NOT_FOUND -> emptyList()
-                    else -> return Result.Error(error)
-                }
-                else -> return Result.Error(error)
-            }
+            is Result.Error -> return Result.Error(result.error)
             is Result.Success -> result.data
         }
         val userCategoriesId = when (val result = usersRepository.getUserCategories(userId = userId)){
-            is Result.Error -> when (val error = result.error){
-                is DataError.Network -> when (error){
-                    DataError.Network.NOT_FOUND -> emptyList()
-                    else -> return Result.Error(error)
-                }
-                else -> return Result.Error(error)
-            }
+            is Result.Error -> return Result.Error(result.error)
             is Result.Success -> result.data
         }.map { it.id }.toSet()
 

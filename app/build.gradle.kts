@@ -72,6 +72,8 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.firebase.messaging)
+    testImplementation(libs.junit.jupiter)
+    testRuntimeOnly(libs.junit.jupiter.engine)
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -99,8 +101,7 @@ dependencies {
 
     // Tests
     testImplementation(libs.junit)
-    testImplementation(libs.junit.jupiter)
-    testRuntimeOnly(libs.junit.jupiter.engine)
+
     testImplementation(libs.mockk)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.truth)

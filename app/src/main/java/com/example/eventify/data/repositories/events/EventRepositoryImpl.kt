@@ -25,6 +25,9 @@ class EventRepositoryImpl @Inject constructor(
             transformSuccess { body ->
                 body.map { it.toEventInfo() }
             }
+            process(404){
+                Result.Success(emptyList())
+            }
         }
 
     } catch (e:Exception){

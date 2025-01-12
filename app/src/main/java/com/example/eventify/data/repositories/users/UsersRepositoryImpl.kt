@@ -51,6 +51,9 @@ class UsersRepositoryImpl @Inject constructor(
             transformSuccess { body ->
                 body.map { it.toCategoryInfo() }
             }
+            process(404){
+                Result.Success(emptyList())
+            }
         }
     } catch (e: Exception){
         Timber.d(e)

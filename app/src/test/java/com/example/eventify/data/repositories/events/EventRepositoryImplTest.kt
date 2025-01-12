@@ -59,19 +59,19 @@ class EventRepositoryImplTest {
     }
 
     @Test
-    fun `getEventsList should return not found result error if API return 404 response code`() = runTest {
+    fun `Empty events list with 404 API status code`() = runTest {
         coEvery { api.getEventsList() } returns emptyResponseError(404)
 
         val result = repository.getEventsList()
 
         assertThat(result).apply {
-            isInstanceOf(Result.Error::class.java)
+            isInstanceOf(Result.Success::class.java)
         }
 
-        val errorResult = result as Result.Error
+        val successResult = result as Result.Success
 
-        assertThat(errorResult.error).apply {
-            isEqualTo(DataError.Network.NOT_FOUND)
+        assertThat(successResult.data).apply {
+            isEqualTo(emptyList<Event>())
         }
     }
 
