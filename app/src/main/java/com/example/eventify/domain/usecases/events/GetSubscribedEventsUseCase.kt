@@ -12,8 +12,8 @@ class GetSubscribedEventsUseCase @Inject constructor(
     private val tokenManager: TokenManager
 ) {
     suspend operator fun invoke(): Result<List<Event>, DataError> {
-        // TODO provide nullable user id result
-        val userId = tokenManager.getUserId() ?: throw Exception()
-        return usersRepository.getUserSubscribedEvents(userId = userId)
+        return tokenManager.getUserId()?.let { userId ->
+            usersRepository.getUserSubscribedEvents(userId = userId)
+        } ?: Result.Error(DataError.Network.UNAUTHORIZED)
     }
 }
