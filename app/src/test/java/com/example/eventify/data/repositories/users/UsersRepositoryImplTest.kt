@@ -105,6 +105,22 @@ class UsersRepositoryImplTest {
 
     }
 
+    @Test
+    fun `Getting empty subscribed events when 404 API status code`() = runTest {
+        coEvery { api.getUserSubscribedEvents(any()) } returns emptyResponseError(404)
+
+        val result = sut.getUserSubscribedEvents(userId = UUID.randomUUID().toString())
+
+        assertThat(result).apply {
+            isInstanceOf(Result.Success::class.java)
+        }
+        val successResult = result as Result.Success
+        assertThat(successResult.data).apply {
+            isInstanceOf(List::class.java)
+            isEmpty()
+        }
+    }
+
 
 
 //    @Test
