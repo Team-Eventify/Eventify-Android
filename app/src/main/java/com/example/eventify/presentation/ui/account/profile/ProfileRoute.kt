@@ -48,7 +48,7 @@ fun rememberProfileActions(coordinator: ProfileCoordinator): ProfileActions {
             onLogOut = coordinator.viewModel::logOut,
             onDeleteAccount = coordinator.viewModel::deleteAccount,
             navigateToProfileEdit = coordinator.viewModel::navigateToEditProfile,
-
+            navigateToAppInfo = coordinator.viewModel::navigateToAppInfo
         )
     }
 }

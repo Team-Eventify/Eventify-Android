@@ -85,7 +85,7 @@ fun ProfileScreen(
         }
 
         SettingsBlock {
-            NavigationSettingsItem(stringResource(R.string.about_app), onClick = {})
+            NavigationSettingsItem(stringResource(R.string.about_app), onClick = actions.navigateToAppInfo)
             HorizontalDivider()
             NavigationSettingsItem(
                 text = stringResource(R.string.to_rate),
@@ -127,7 +127,7 @@ private fun ProfileScreenPreview() {
                         email = "ivanov@mail.ru"
                     )
                 ),
-                actions = ProfileActions.default()
+                actions = ProfileActions()
             )
         }
     }

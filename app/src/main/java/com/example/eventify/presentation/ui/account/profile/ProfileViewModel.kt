@@ -97,4 +97,10 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
+    fun navigateToAppInfo(){
+        viewModelScope.launch {
+            navigator.navigate(SettingsRouter.AboutAppRoute)
+        }
+    }
+
 }

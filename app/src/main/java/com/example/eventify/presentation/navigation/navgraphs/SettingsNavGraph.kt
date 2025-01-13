@@ -5,6 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.eventify.presentation.models.ScaffoldViewState
+import com.example.eventify.presentation.ui.account.aboutapp.AboutAppRoute
 import com.example.eventify.presentation.ui.account.profileedit.ProfileEditRoute
 import kotlinx.serialization.Serializable
 
@@ -18,6 +19,9 @@ fun NavGraphBuilder.SettingsNavGraph(
         composable<SettingsRouter.ProfileEditRoute>{
             ProfileEditRoute(scaffoldViewState = scaffoldViewState)
         }
+        composable<SettingsRouter.AboutAppRoute>{
+            AboutAppRoute(scaffoldViewState = scaffoldViewState)
+        }
     }
 }
 
@@ -25,4 +29,7 @@ fun NavGraphBuilder.SettingsNavGraph(
 sealed class SettingsRouter: Destination {
     @Serializable
     data object ProfileEditRoute : SettingsRouter()
+
+    @Serializable
+    data object AboutAppRoute : SettingsRouter()
 }
