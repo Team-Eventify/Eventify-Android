@@ -35,11 +35,11 @@ import com.example.eventify.domain.di.RequestsSessionManager
 import com.example.eventify.presentation.models.ScaffoldViewState
 import com.example.eventify.presentation.navigation.NavigationAction
 import com.example.eventify.presentation.navigation.Navigator
-import com.example.eventify.presentation.navigation.navgraphs.AuthRouter
 import com.example.eventify.presentation.navigation.navgraphs.MainNavHost
 import com.example.eventify.presentation.navigation.navgraphs.RootRouter
 import com.example.eventify.presentation.ui.SnackbarController
 import com.example.eventify.presentation.ui.shared.BottomNavigationBar
+import com.example.eventify.presentation.ui.shared.EventifySnackbar
 import com.example.eventify.presentation.ui.shared.OfflineScreen
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 import com.example.eventify.presentation.utils.ObserveAsState
@@ -144,7 +144,9 @@ class MainActivity : ComponentActivity() {
                                 BottomNavigationBar(navController)
                         },
                         snackbarHost = {
-                           SnackbarHost(hostState = snackbarHostState)
+                            SnackbarHost(snackbarHostState){
+                                EventifySnackbar(it)
+                            }
                         },
                         floatingActionButton = scaffoldState.value.floatingActionButton,
                         floatingActionButtonPosition = scaffoldState.value.floatingActionButtonPosition
