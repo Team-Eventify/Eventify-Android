@@ -23,6 +23,7 @@ fun SearchRoute(
 
     LaunchedEffect(Unit) {
         scaffoldViewState.value = scaffoldViewState.value.copy(
+            showBottomBar = true,
             topBar = {
                 EventsSearchBar(
                     query = uiState.searchText,
