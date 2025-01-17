@@ -2,6 +2,7 @@ package com.example.eventify.domain.di
 
 import android.app.Activity
 import android.content.Context
+import com.example.eventify.BuildConfig
 import com.example.eventify.data.repositories.tokens.PreferencesTokenManagerImpl
 import com.example.eventify.data.repositories.tokens.TokenManager
 import com.example.eventify.data.remote.utils.AccessTokenInterceptor
@@ -31,7 +32,7 @@ import javax.inject.Singleton
 object AuthModule {
     @Provides
     @Singleton
-    fun provideAuthAPI(): AuthAPI = NetworkServiceFactory.getApi("https://eventify.website/api/v1/auth/", AuthAPI::class.java)
+    fun provideAuthAPI(): AuthAPI = NetworkServiceFactory.getApi("${BuildConfig.API_BASE_URL}/api/v1/auth/", AuthAPI::class.java)
 
     @Provides
     @Singleton

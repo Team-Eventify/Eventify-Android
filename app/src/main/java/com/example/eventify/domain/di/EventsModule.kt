@@ -1,5 +1,6 @@
 package com.example.eventify.domain.di
 
+import com.example.eventify.BuildConfig
 import com.example.eventify.data.remote.utils.AccessTokenInterceptor
 import com.example.eventify.data.remote.utils.TokenAuthenticator
 import com.example.eventify.data.remote.api.EventsAPI
@@ -31,7 +32,7 @@ object EventsModule {
             .build()
 
         return Retrofit.Builder()
-            .baseUrl("https://eventify.website/api/v1/events/")
+            .baseUrl("${BuildConfig.API_BASE_URL}/api/v1/events/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()

@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
@@ -6,6 +8,12 @@ plugins {
     id("com.google.dagger.hilt.android")
     id("kotlinx-serialization")
     id("com.google.gms.google-services")
+}
+
+fun loadProperties(filename: String): Properties {
+    val properties = Properties()
+    file(filename).inputStream().use { properties.load(it) }
+    return properties
 }
 
 android {
@@ -25,6 +33,9 @@ android {
         }
     }
 
+    val releaseProperties = loadProperties("../release.properties")
+    val debugProperties = loadProperties("../debug.properties")
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -33,9 +44,13 @@ android {
                 "proguard-rules.pro"
             )
             signingConfig = signingConfigs.getByName("debug")
+
+            buildConfigField("String", "APPMETRICA_API_KEY", "\"${releaseProperties["appmetrica.api.key"]}\"")
+            buildConfigField("String", "API_BASE_URL", "\"${releaseProperties["api.base.url"]}\"")
         }
         debug {
-
+            buildConfigField("String", "APPMETRICA_API_KEY", "\"${debugProperties["appmetrica.api.key"]}\"")
+            buildConfigField("String", "API_BASE_URL", "\"${debugProperties["api.base.url"]}\"")
         }
     }
 
@@ -49,6 +64,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.7"
@@ -71,7 +87,6 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation(libs.firebase.messaging)
     testImplementation(libs.junit.jupiter)
     testRuntimeOnly(libs.junit.jupiter.engine)
 
@@ -140,6 +155,14 @@ dependencies {
     implementation(libs.androidx.credentials.play.services.auth)
 
     implementation(libs.androidx.foundation)
+
+    // Yandex Appmetrica
+    implementation(libs.analytics)
+    implementation(libs.firebase.messaging)
+    implementation(libs.push)
+    implementation(libs.androidx.legacy.support.v4)
+
+    implementation(libs.play.services.base)
 
 }
 
