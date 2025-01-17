@@ -161,6 +161,7 @@ dependencies {
     implementation(libs.firebase.messaging)
     implementation(libs.push)
     implementation(libs.androidx.legacy.support.v4)
+    implementation(libs.push.provider.firebase)
 
     implementation(libs.play.services.base)
 

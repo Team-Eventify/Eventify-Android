@@ -15,16 +15,21 @@ import com.example.eventify.presentation.MainActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import dagger.hilt.android.AndroidEntryPoint
+import io.appmetrica.analytics.push.provider.firebase.AppMetricaMessagingService
 import timber.log.Timber
 import javax.inject.Inject
 import kotlin.random.Random
 
 
-// TODO rewrite to work with appmetrica notifications
 class FirebaseNotificationService: FirebaseMessagingService() {
     override fun onMessageReceived(message: RemoteMessage) {
         // Respond to received message
         Timber.d("<onMessageReceived ${message.notification?.title}>")
+
+        if (AppMetricaMessagingService.isNotificationRelatedToSDK(message)) {
+            AppMetricaMessagingService().processPush(this, message)
+            return
+        }
 
         message.notification?.let { notification ->
             sendNotification(notification)
@@ -33,7 +38,8 @@ class FirebaseNotificationService: FirebaseMessagingService() {
 
     override fun onNewToken(token: String) {
         // Update token on server
-        Timber.d("onNewToken: $token")
+        super.onNewToken(token)
+        AppMetricaMessagingService().processToken(this, token)
     }
 
     private fun sendNotification(message: RemoteMessage.Notification) {
