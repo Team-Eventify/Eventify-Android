@@ -107,9 +107,9 @@ fun <T: HomeRouter> RowScope.AddItem(
             disabledTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
             unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant
         ),
-
+        // TODO: придумать нормальную реализацию проверки
         selected = currentDestination?.hierarchy?.any {
-            it.route == item.route::class.qualifiedName
+            it.route?.contains(item.route::class.qualifiedName ?: "") ?: false
         } == true,
         onClick = {
             navController.navigate(item.route)
