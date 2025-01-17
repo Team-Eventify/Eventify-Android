@@ -20,6 +20,7 @@ import javax.inject.Inject
 import kotlin.random.Random
 
 
+// TODO rewrite to work with appmetrica notifications
 class FirebaseNotificationService: FirebaseMessagingService() {
     override fun onMessageReceived(message: RemoteMessage) {
         // Respond to received message
