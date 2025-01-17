@@ -43,14 +43,10 @@ import com.example.eventify.presentation.ui.shared.EventifySnackbar
 import com.example.eventify.presentation.ui.shared.OfflineScreen
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 import com.example.eventify.presentation.utils.ObserveAsState
-import com.google.firebase.Firebase
-import com.google.firebase.messaging.messaging
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.tasks.await
 import rememberConnectivityState
-import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -70,13 +66,6 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             EventifyTheme {
-                LaunchedEffect(true) {
-                    lifecycleScope.launch {
-                        val token = Firebase.messaging.token.await()
-                        Timber.d(token)
-                    }
-                }
-
                 LaunchedEffect(Unit) {
                     enableEdgeToEdge(
                         statusBarStyle = SystemBarStyle.light(
