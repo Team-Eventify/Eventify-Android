@@ -6,6 +6,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
+import coil3.ImageLoader
 import com.example.eventify.R
 import com.example.eventify.domain.DataError
 import com.example.eventify.domain.Result

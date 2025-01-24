@@ -1,12 +1,15 @@
 package com.example.eventify.data.repositories.events
 
 import com.example.eventify.data.remote.api.EventsAPI
+import com.example.eventify.data.remote.models.events.EventDetailResponse
 import com.example.eventify.data.remote.models.events.EventInfoResponse
 import com.example.eventify.data.remote.models.events.EventsFilterData
+import com.example.eventify.data.remote.models.events.toEventDetail
 import com.example.eventify.data.remote.models.events.toEventInfo
 import com.example.eventify.domain.DataError
 import com.example.eventify.domain.Result
 import com.example.eventify.domain.models.Event
+import com.example.eventify.domain.models.EventDetail
 import com.example.eventify.emptyResponseError
 import com.example.eventify.responseSuccess
 import com.github.javafaker.Faker
@@ -34,24 +37,44 @@ class EventRepositoryImplTest {
     private val lorem = faker.lorem()
 
     private fun getFakeEventInfoResponse() = EventInfoResponse(
+            id = UUID.randomUUID().toString(),
+            title = lorem.words(3).joinToString(" "),
+            description = lorem.paragraph(),
+            start = Random.nextInt(),
+            end = Random.nextInt(),
+            cover = UUID.randomUUID().toString(),
+            state = lorem.word(),
+            capacity = Random.nextInt(0, 100),
+            organizationID = UUID.randomUUID().toString(),
+            location = lorem.words(4).joinToString(" "),
+            subscribed = Random.nextBoolean(),
+            categories = List(Random.nextInt(1, 4)){
+                    UUID.randomUUID().toString()
+                },
+            pictures = List(Random.nextInt(1, 4)){
+                UUID.randomUUID().toString()
+            },
+        )
+
+    private fun getFakeEventDetailResponse() = EventDetailResponse(
         id = UUID.randomUUID().toString(),
         title = lorem.words(3).joinToString(" "),
         description = lorem.paragraph(),
         start = Random.nextInt(),
         end = Random.nextInt(),
-        cover = "",
+        cover = UUID.randomUUID().toString(),
         state = lorem.word(),
-        CreatedAt = Random.nextLong(),
-        ModifiedAt = Random.nextLong(),
         capacity = Random.nextInt(0, 100),
-        moderated = Random.nextBoolean(),
-        ownerID = UUID.randomUUID().toString(),
+        organizationID = UUID.randomUUID().toString(),
         location = lorem.words(4).joinToString(" "),
         subscribed = Random.nextBoolean(),
         categories = List(Random.nextInt(1, 4)){
-                UUID.randomUUID().toString()
-            },
-        )
+            UUID.randomUUID().toString()
+        },
+        pictures = List(Random.nextInt(1, 4)){
+            UUID.randomUUID().toString()
+        },
+    )
 
     @BeforeEach
     fun setUp() {
@@ -77,7 +100,7 @@ class EventRepositoryImplTest {
 
     @Test
     fun `getEventDetail should return result success data when found Event and transform it to EventInfo`() = runTest {
-        val eventResponse = getFakeEventInfoResponse()
+        val eventResponse = getFakeEventDetailResponse()
 
         coEvery { api.getEvent(eventId = eventResponse.id) } returns responseSuccess(eventResponse)
 
@@ -90,7 +113,7 @@ class EventRepositoryImplTest {
         val successResult = result as Result.Success
 
         assertThat(successResult.data).apply {
-            isEqualTo(eventResponse.toEventInfo())
+            isEqualTo(eventResponse.toEventDetail())
         }
     }
 

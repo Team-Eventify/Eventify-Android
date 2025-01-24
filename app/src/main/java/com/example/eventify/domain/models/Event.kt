@@ -4,14 +4,11 @@ import com.example.eventify.presentation.models.ShortEventItem
 
 data class Event(
     val id: String,
-    val createdAt: Long,
-    val modifiedAt: Long,
     val capacity: Int,
     val cover: String,
     val description: String,
     val end: Int,
-    val moderated: Boolean,
-    val ownerID: String,
+    val organizationID: String,
     val start: Int,
     val state: String,
     val title: String,

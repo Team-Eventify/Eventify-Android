@@ -3,11 +3,13 @@ package com.example.eventify.data.repositories.events
 import com.example.eventify.domain.models.Event
 import com.example.eventify.data.remote.api.EventsAPI
 import com.example.eventify.data.remote.models.events.EventsFilterData
+import com.example.eventify.data.remote.models.events.toEventDetail
 import com.example.eventify.data.remote.models.events.toEventInfo
 import com.example.eventify.data.remote.utils.handle
 import com.example.eventify.domain.DataError
 import javax.inject.Inject
 import com.example.eventify.domain.Result
+import com.example.eventify.domain.models.EventDetail
 import timber.log.Timber
 
 class EventRepositoryImpl @Inject constructor(
@@ -35,9 +37,9 @@ class EventRepositoryImpl @Inject constructor(
         Result.Error(DataError.Network.UNKNOWN)
     }
 
-    override suspend fun getEventDetail(eventId: String): Result<Event, DataError> = try {
+    override suspend fun getEventDetail(eventId: String): Result<EventDetail, DataError> = try {
         dataSource.getEvent(eventId = eventId).handle {
-            transformSuccess { it.toEventInfo() }
+            transformSuccess { it.toEventDetail() }
         }
     } catch (e: Exception){
         Timber.e(e)

@@ -1,5 +1,6 @@
 package com.example.eventify.presentation.ui.events.eventdetail
 
+import android.content.res.Configuration
 import android.graphics.Color
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -20,12 +21,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.UiMode
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil3.ImageLoader
 import com.example.eventify.R
 import com.example.eventify.domain.models.Category
 import com.example.eventify.domain.models.EventWithCategories
@@ -106,63 +110,27 @@ fun EventDetailScreen(
             }
             Spacer(modifier = Modifier.height(20.dp))
 
-            PrimaryDeclineButton(onClick = actions.onUnsubscribe) {
-                PrimaryButtonText(text = "Отменить запись на мероприятие")
+            if (state.event.subscribed) {
+                PrimaryDeclineButton(onClick = actions.onUnsubscribe) {
+                    PrimaryButtonText(text = "Отменить запись на мероприятие")
+                }
+            } else {
+                PrimaryButton(onClick = actions.onSubscribe) {
+                    PrimaryButtonText(text = "Я пойду!")
+                }
             }
-            PrimaryButton(onClick = actions.onSubscribe) {
-                PrimaryButtonText(text = "Я пойду!")
-            }
-            PrimaryButton(onClick = actions.goToRatePage) {
-                PrimaryButtonText(stringResource(R.string.to_rate))
-            }
+
+//            PrimaryButton(onClick = actions.goToRatePage) {
+//                PrimaryButtonText(stringResource(R.string.to_rate))
+//            }
         }
     }
 }
 
-@Composable
-@Preview(name = "EventDetailDark")
-private fun EventDetailScreenDarkPreview() {
-    EventifyTheme(darkTheme = true) {
-        Scaffold { _ ->
-            EventDetailScreen(
-                state = EventDetailState(
-                    event = EventWithCategories(
-                        id = UUID.randomUUID().toString(),
-                        title = LoremIpsum(5).values.joinToString(),
-                        description = LoremIpsum(50).values.joinToString(),
-                        createdAt = 0,
-                        modifiedAt = 0,
-                        start = 0,
-                        end = 0,
-                        moderated = false,
-                        state = "",
-                        capacity = 0,
-                        ownerID = "",
-                        location = "",
-                        cover = "",
-                        subscribed = false,
-                        categories = List(5){
-                            Category(
-                                id = UUID.randomUUID().toString(),
-                                color = "#A3C7FF",
-                                cover = "",
-                                title = LoremIpsum(1).values.joinToString()
-                            )
-                        }
-                    )
-                ),
-                actions = EventDetailActions(
-                    navigateUp = {},
-                    onSubscribe = {},
-                    onUnsubscribe = {},
-                )
-            )
-        }
-    }
-}
 
 @Composable
-@Preview(name = "EventDetailLight")
+@Preview(name = "EventDetailDark", uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(name = "EventDetailLight", uiMode = Configuration.UI_MODE_NIGHT_NO)
 private fun EventDetailScreenLightPreview() {
     EventifyTheme() {
         Scaffold { _ ->
@@ -172,14 +140,10 @@ private fun EventDetailScreenLightPreview() {
                         id = UUID.randomUUID().toString(),
                         title = LoremIpsum(5).values.joinToString(),
                         description = LoremIpsum(50).values.joinToString(),
-                        createdAt = 0,
-                        modifiedAt = 0,
                         start = 0,
                         end = 0,
-                        moderated = false,
                         state = "",
                         capacity = 0,
-                        ownerID = "",
                         location = "",
                         cover = "",
                         subscribed = false,
@@ -190,8 +154,8 @@ private fun EventDetailScreenLightPreview() {
                                 cover = "",
                                 title = LoremIpsum(1).values.joinToString()
                             )
-                        }
-
+                        },
+                        organizationID = UUID.randomUUID().toString(),
                     )
                 ),
                 actions = EventDetailActions(

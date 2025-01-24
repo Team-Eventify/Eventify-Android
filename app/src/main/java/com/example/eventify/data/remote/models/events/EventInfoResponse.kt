@@ -4,36 +4,31 @@ import com.example.eventify.domain.models.Event
 
 data class EventInfoResponse(
     val id: String,
-    val CreatedAt: Long,
-    val ModifiedAt: Long,
     val capacity: Int,
     val description: String,
     val end: Int,
-    val moderated: Boolean,
-    val ownerID: String,
     val start: Int,
     val state: String,
     val title: String,
     val cover: String,
     val location: String,
     val subscribed: Boolean,
-    val categories: List<String>? = null
+    val categories: List<String>? = null,
+    val organizationID: String,
+    val pictures: List<String>,
 )
 
 fun EventInfoResponse.toEventInfo(): Event = Event(
     id = id,
-    createdAt = CreatedAt,
-    modifiedAt = ModifiedAt,
     capacity = capacity,
     description = description,
     end = end,
-    moderated = moderated,
-    ownerID = ownerID,
+    organizationID = organizationID,
     start = start,
     state = state,
     title = title,
     location = location,
     cover = cover,
     subscribed = subscribed,
-    categories = categories
+    categories = categories,
 )
