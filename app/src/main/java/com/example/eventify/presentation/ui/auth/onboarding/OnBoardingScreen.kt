@@ -35,31 +35,32 @@ fun OnBoardingScreen(
 
     val items = listOf(
         OnBoardingItem(
-            primaryImage = painterResource(R.drawable.ic_launcher_foreground),
+            primaryImage = painterResource(R.drawable.planet),
             title = "Актуальные мероприятия",
             body = "Все события вашего университета теперь собраны в одном удобном приложении.",
             primaryButtonText = stringResource(R.string.next)
         ),
         OnBoardingItem(
-            primaryImage = painterResource(R.drawable.ic_launcher_foreground),
+            primaryImage = painterResource(R.drawable.touch_action),
             title = "Легкая регистрация",
             body = "Узнавайте подробности о мероприятиях \n" +
                     "и записывайтесь на них всего в пару кликов.",
             primaryButtonText = stringResource(R.string.next)
         ),
         OnBoardingItem(
-            primaryImage = painterResource(R.drawable.ic_launcher_foreground),
+            primaryImage = painterResource(R.drawable.checklist),
             title = "Интересные категории",
             body = "Выберите интересы, и приложение предложит ивенты, которые соответствуют вашим вкусам.",
             primaryButtonText = stringResource(R.string.next)
         ),
         OnBoardingItem(
-            primaryImage = painterResource(R.drawable.ic_launcher_foreground),
+            primaryImage = painterResource(R.drawable.utils),
             title = "Организуйте мероприятие",
             body = "Напишите нам и мы вместе сделаем \n" +
                     "ваше мероприятие ярким и незабываемым!",
             primaryButtonText = stringResource(R.string.next)
         ),
+        // TODO нужно импортнуть картинку из фигмы
         OnBoardingItem(
             primaryImage = painterResource(R.drawable.ic_launcher_foreground),
             title = "Живи. Учись. Совершенствуй.",
