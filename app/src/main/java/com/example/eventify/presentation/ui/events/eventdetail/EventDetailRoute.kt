@@ -22,11 +22,8 @@ fun EventDetailRoute(
     // UI Actions
     val actions = rememberEventDetailActions(coordinator)
 
-
-
     // UI Rendering
     if (uiState.event == null) return
-
 
     LaunchedEffect(Unit) {
         scaffoldViewState.value = scaffoldViewState.value.copy(
@@ -39,7 +36,7 @@ fun EventDetailRoute(
             }
         )
     }
-    EventDetailScreen(uiState, actions)
+    EventDetailScreen(uiState, actions, coordinator.viewModel.imageLoader)
 
 }
 

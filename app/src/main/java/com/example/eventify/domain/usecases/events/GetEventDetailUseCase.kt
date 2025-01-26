@@ -46,6 +46,7 @@ class GetEventDetailUseCase @Inject constructor(
                     location = it.location,
                     subscribed = it.subscribed,
                     categories = categories,
+                    pictures = it.pictures
                 )
             }
         )

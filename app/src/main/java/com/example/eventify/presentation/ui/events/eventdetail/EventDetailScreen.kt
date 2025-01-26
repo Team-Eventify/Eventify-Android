@@ -1,7 +1,6 @@
 package com.example.eventify.presentation.ui.events.eventdetail
 
 import android.content.res.Configuration
-import android.graphics.Color
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,7 +11,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -20,12 +21,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.UiMode
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -40,6 +41,7 @@ import com.example.eventify.presentation.ui.shared.buttons.PrimaryButton
 import com.example.eventify.presentation.ui.shared.PrimaryButtonText
 import com.example.eventify.presentation.ui.shared.buttons.PrimaryDeclineButton
 import com.example.eventify.presentation.ui.shared.CategoryTagChip
+import com.example.eventify.presentation.ui.shared.EventImage
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 import com.example.eventify.presentation.utils.asDate
 import com.example.eventify.presentation.utils.asTime
@@ -51,19 +53,28 @@ import java.util.UUID
 fun EventDetailScreen(
     state: EventDetailState,
     actions: EventDetailActions,
+    imageLoader: ImageLoader,
 ) {
+    val pagerState = rememberPagerState(pageCount = { state.event?.pictures?.size ?: 0})
 
     Column(
         modifier = Modifier
             .verticalScroll(rememberScrollState())
     ) {
+
         ImagePager(
-            listOf(
-                painterResource(R.drawable.default_event_image),
-                painterResource(R.drawable.misis_cj_image),
-                painterResource(R.drawable.default_event_image),
+            pagerState = pagerState
+        ){ page ->
+            val uri = state.event?.pictures?.get(page)
+            EventImage(
+                uri = "https://eventify.website/api/v1/files/$uri",
+                imageLoader = imageLoader,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(200.dp)
+                    .clip(RoundedCornerShape(10.dp))
             )
-        )
+        }
         Column(
             modifier = Modifier
                 .padding(10.dp)
@@ -156,13 +167,15 @@ private fun EventDetailScreenLightPreview() {
                             )
                         },
                         organizationID = UUID.randomUUID().toString(),
+                        pictures = emptyList()
                     )
                 ),
                 actions = EventDetailActions(
                     navigateUp = {},
                     onSubscribe = {},
                     onUnsubscribe = {},
-                )
+                ),
+                imageLoader = ImageLoader(LocalContext.current)
             )
         }
     }

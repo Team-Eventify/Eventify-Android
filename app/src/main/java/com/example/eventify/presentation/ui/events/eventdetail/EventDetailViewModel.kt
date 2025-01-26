@@ -1,17 +1,14 @@
 package com.example.eventify.presentation.ui.events.eventdetail
 
 import android.content.Context
-import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import coil3.ImageLoader
 import com.example.eventify.R
-import com.example.eventify.domain.DataError
 import com.example.eventify.domain.Result
 import com.example.eventify.domain.usecases.events.GetEventDetailUseCase
-import com.example.eventify.domain.usecases.events.GetSubscribedEventsUseCase
 import com.example.eventify.domain.usecases.events.SubscribeForEventUseCase
 import com.example.eventify.domain.usecases.events.UnsubscribeForEventUseCase
 import com.example.eventify.presentation.navigation.Navigator
@@ -25,12 +22,10 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.security.PrivateKey
 
 @HiltViewModel
 class EventDetailViewModel @Inject constructor(
@@ -39,6 +34,7 @@ class EventDetailViewModel @Inject constructor(
     private val subscribedEventsUseCase: SubscribeForEventUseCase,
     private val unsubscribeForEventUseCase: UnsubscribeForEventUseCase,
     private val navigator: Navigator,
+    val imageLoader: ImageLoader,
     @ApplicationContext private val context: Context
 ) : ViewModel() {
     private val eventId = savedStateHandle.toRoute<RootRouter.EventDetailRoute>().eventId

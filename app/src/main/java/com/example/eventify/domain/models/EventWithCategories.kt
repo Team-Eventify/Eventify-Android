@@ -15,5 +15,6 @@ data class EventWithCategories(
     val title: String,
     val location: String,
     val subscribed: Boolean,
-    val categories: List<Category>
+    val categories: List<Category>,
+    val pictures: List<String>,
 )
