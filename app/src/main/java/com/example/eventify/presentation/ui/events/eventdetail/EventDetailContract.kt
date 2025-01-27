@@ -1,14 +1,20 @@
 package com.example.eventify.presentation.ui.events.eventdetail
 
-import com.example.eventify.domain.models.EventWithCategories
+import com.example.eventify.domain.models.FullEventDetail
 
 
 /**
  * UI State that represents EventDetailScreen
  **/
-data class EventDetailState(
-    val event: EventWithCategories? = null
-)
+sealed class UiState {
+    data object Loading : UiState()
+    data class Error(
+        val message: String,
+    ) : UiState()
+    data class ShowEvent(
+        val event: FullEventDetail,
+    ) : UiState()
+}
 
 /**
  * EventDetail Actions emitted from the UI Layer

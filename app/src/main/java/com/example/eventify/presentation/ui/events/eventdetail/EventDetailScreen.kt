@@ -33,8 +33,12 @@ import androidx.compose.ui.unit.sp
 import coil3.ImageLoader
 import com.example.eventify.R
 import com.example.eventify.domain.models.Category
+import com.example.eventify.domain.models.EventDetail
 import com.example.eventify.domain.models.EventWithCategories
+import com.example.eventify.domain.models.FullEventDetail
+import com.example.eventify.domain.models.Organization
 import com.example.eventify.presentation.ui.events.eventdetail.components.ImagePager
+import com.example.eventify.presentation.ui.events.eventdetail.components.OrganizationInfoPanel
 import com.example.eventify.presentation.ui.shared.BodyText
 import com.example.eventify.presentation.ui.shared.ChipInfo
 import com.example.eventify.presentation.ui.shared.buttons.PrimaryButton
@@ -51,11 +55,11 @@ import java.util.UUID
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun EventDetailScreen(
-    state: EventDetailState,
+    state: UiState.ShowEvent,
     actions: EventDetailActions,
     imageLoader: ImageLoader,
 ) {
-    val pagerState = rememberPagerState(pageCount = { state.event?.pictures?.size ?: 0})
+    val pagerState = rememberPagerState(pageCount = { state.event.eventInfo.pictures.size})
 
     Column(
         modifier = Modifier
@@ -65,7 +69,7 @@ fun EventDetailScreen(
         ImagePager(
             pagerState = pagerState
         ){ page ->
-            val uri = state.event?.pictures?.get(page)
+            val uri = state.event.eventInfo.pictures[page]
             EventImage(
                 uri = "https://eventify.website/api/v1/files/$uri",
                 imageLoader = imageLoader,
@@ -83,10 +87,10 @@ fun EventDetailScreen(
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(10.dp, alignment = Alignment.Start)
             ) {
-                ChipInfo(text = state.event?.start?.asDate() ?: "")
-                ChipInfo(text = state.event?.start?.asTime() ?: "")
+                ChipInfo(text = state.event.eventInfo.start.asDate())
+                ChipInfo(text = state.event.eventInfo.start.asTime())
 
-                state.event!!.categories.forEach{ tag ->
+                state.event.categories.forEach{ tag ->
                     CategoryTagChip(
                         text = tag.title,
                         color = tag.color.toColorOrNull()!!
@@ -94,7 +98,7 @@ fun EventDetailScreen(
                 }
             }
 
-            BodyText(text = state.event!!.description)
+            BodyText(text = state.event.eventInfo.description)
             Spacer(modifier = Modifier.height(10.dp))
 
 
@@ -104,24 +108,14 @@ fun EventDetailScreen(
                 fontSize = 12.sp
             )
             Spacer(modifier = Modifier.height(10.dp))
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.Start),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.misis_logo),
-                    contentDescription = "organizer logo",
-                    contentScale = ContentScale.FillHeight,
-                    modifier = Modifier
-                        .height(40.dp)
-                )
-                Text(text = "MISIS", color = MaterialTheme.colorScheme.onSecondary, fontSize = 20.sp)
-            }
+            OrganizationInfoPanel(
+                organization = state.event.organization,
+                onClick = {},
+                imageLoader = imageLoader,
+            )
             Spacer(modifier = Modifier.height(20.dp))
 
-            if (state.event.subscribed) {
+            if (state.event.eventInfo.subscribed) {
                 PrimaryDeclineButton(onClick = actions.onUnsubscribe) {
                     PrimaryButtonText(text = "Отменить запись на мероприятие")
                 }
@@ -146,18 +140,23 @@ private fun EventDetailScreenLightPreview() {
     EventifyTheme() {
         Scaffold { _ ->
             EventDetailScreen(
-                state = EventDetailState(
-                    event = EventWithCategories(
-                        id = UUID.randomUUID().toString(),
-                        title = LoremIpsum(5).values.joinToString(),
-                        description = LoremIpsum(50).values.joinToString(),
-                        start = 0,
-                        end = 0,
-                        state = "",
-                        capacity = 0,
-                        location = "",
-                        cover = "",
-                        subscribed = false,
+                state = UiState.ShowEvent(
+                    event = FullEventDetail(
+                        eventInfo = EventDetail(
+                            id = UUID.randomUUID().toString(),
+                            title = LoremIpsum(5).values.joinToString(),
+                            description = LoremIpsum(50).values.joinToString(),
+                            start = 0,
+                            end = 0,
+                            state = "",
+                            capacity = 0,
+                            location = "",
+                            cover = "",
+                            subscribed = false,
+
+                            organizationID = UUID.randomUUID().toString(),
+                            pictures = emptyList(),
+                        ),
                         categories = List(5){
                             Category(
                                 id = UUID.randomUUID().toString(),
@@ -166,8 +165,12 @@ private fun EventDetailScreenLightPreview() {
                                 title = LoremIpsum(1).values.joinToString()
                             )
                         },
-                        organizationID = UUID.randomUUID().toString(),
-                        pictures = emptyList()
+                        organization = Organization(
+                            id = UUID.randomUUID().toString(),
+                            title = LoremIpsum(2).values.joinToString(),
+                            description = LoremIpsum(4).values.joinToString(),
+                            photoId = UUID.randomUUID().toString()
+                        )
                     )
                 ),
                 actions = EventDetailActions(

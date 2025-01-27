@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import coil3.ImageLoader
 import com.example.eventify.R
+import com.example.eventify.data.repositories.organizations.OrganizationsRepository
 import com.example.eventify.domain.Result
 import com.example.eventify.domain.usecases.events.GetEventDetailUseCase
 import com.example.eventify.domain.usecases.events.SubscribeForEventUseCase
@@ -27,6 +28,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+
 @HiltViewModel
 class EventDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
@@ -38,15 +40,15 @@ class EventDetailViewModel @Inject constructor(
     @ApplicationContext private val context: Context
 ) : ViewModel() {
     private val eventId = savedStateHandle.toRoute<RootRouter.EventDetailRoute>().eventId
-    private val _stateFlow: MutableStateFlow<EventDetailState> =
-        MutableStateFlow(EventDetailState())
+    private val _stateFlow: MutableStateFlow<UiState> =
+        MutableStateFlow(UiState.Loading)
 
-    val stateFlow: StateFlow<EventDetailState> = _stateFlow
+    val stateFlow: StateFlow<UiState> = _stateFlow
         .onStart { loadEvent() }
         .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000L),
-            EventDetailState()
+            UiState.Loading
         )
 
     private fun loadEvent(){
@@ -56,8 +58,8 @@ class EventDetailViewModel @Inject constructor(
                     SnackbarEvent(message = currentEvent.error.asUiText().asString(context))
                 )
                 is Result.Success -> {
-                    _stateFlow.update { currentState ->
-                        currentState.copy(
+                    _stateFlow.update { _ ->
+                        UiState.ShowEvent(
                             event = currentEvent.data
                         )
                     }
@@ -79,6 +81,7 @@ class EventDetailViewModel @Inject constructor(
                     SnackbarController.sendEvent(
                         SnackbarEvent(message = context.getString(R.string.message_after_subscribe))
                     )
+                    navigator.navigateUp()
                 }
             }
         }
@@ -100,6 +103,7 @@ class EventDetailViewModel @Inject constructor(
                             message = context.getString(R.string.message_after_unsubscribe)
                         )
                     )
+                    navigator.navigateUp()
                 }
             }
         }

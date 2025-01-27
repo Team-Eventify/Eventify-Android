@@ -22,22 +22,25 @@ fun EventDetailRoute(
     // UI Actions
     val actions = rememberEventDetailActions(coordinator)
 
-    // UI Rendering
-    if (uiState.event == null) return
-
-    LaunchedEffect(Unit) {
-        scaffoldViewState.value = scaffoldViewState.value.copy(
-            showBottomBar = false,
-            topBar = {
-                EventDetailTopAppBar(
-                    title = uiState.event!!.title,
-                    onNavigateUp = actions.navigateUp
+    when (uiState) {
+        is UiState.Error -> {}
+        is UiState.ShowEvent -> {
+            LaunchedEffect(Unit) {
+                scaffoldViewState.value = scaffoldViewState.value.copy(
+                    showBottomBar = false,
+                    topBar = {
+                        EventDetailTopAppBar(
+                            title = (uiState as UiState.ShowEvent).event.eventInfo.title,
+                            onNavigateUp = actions.navigateUp
+                        )
+                    }
                 )
             }
-        )
-    }
-    EventDetailScreen(uiState, actions, coordinator.viewModel.imageLoader)
+            EventDetailScreen(uiState as UiState.ShowEvent, actions, coordinator.viewModel.imageLoader)
+        }
 
+        UiState.Loading -> {}
+    }
 }
 
 
