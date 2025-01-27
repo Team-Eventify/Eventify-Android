@@ -10,12 +10,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
 import coil3.ImageLoader
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
@@ -40,8 +38,8 @@ fun EventImage(
         error = painterResource(R.drawable.underfind_event_image),
         placeholder = painterResource(R.drawable.underfind_event_image),
         contentDescription = null,
-        contentScale = ContentScale.Crop,
-        alignment = Alignment.Center,
+        contentScale = contentScale,
+        alignment = alignment,
         imageLoader = imageLoader,
         onLoading = {
             showShimmer = true

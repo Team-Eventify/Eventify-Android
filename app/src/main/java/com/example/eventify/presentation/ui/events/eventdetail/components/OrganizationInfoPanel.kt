@@ -1,6 +1,5 @@
 package com.example.eventify.presentation.ui.events.eventdetail.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -17,7 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
@@ -26,7 +24,6 @@ import coil3.ImageLoader
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
-import com.example.eventify.R
 import com.example.eventify.domain.models.Organization
 import java.util.UUID
 
@@ -47,7 +44,7 @@ fun OrganizationInfoPanel(
     ) {
         AsyncImage(
             model  = ImageRequest.Builder(context = LocalContext.current)
-                .data("https://eventify.website/api/v1/files/${organization.photoId}")
+                .data(organization.photoUrl)
                 .crossfade(true)
                 .build(),
             imageLoader = imageLoader,
@@ -78,7 +75,7 @@ private fun PreviewOrganizationInfoPanel() {
             id = UUID.randomUUID().toString(),
             title = LoremIpsum(2).values.joinToString(),
             description = LoremIpsum(5).values.joinToString(),
-            photoId = UUID.randomUUID().toString(),
+            photoUrl = UUID.randomUUID().toString(),
         ),
         onClick = {},
         imageLoader = ImageLoader(LocalContext.current)

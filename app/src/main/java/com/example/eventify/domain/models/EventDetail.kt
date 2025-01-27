@@ -1,5 +1,8 @@
 package com.example.eventify.domain.models
 
+typealias PictureUUID = String
+typealias CategoryUUID = String
+
 data class EventDetail(
     val capacity: Int,
     val cover: String,
@@ -8,8 +11,8 @@ data class EventDetail(
     val id: String,
     val location: String,
     val organizationID: String,
-    val pictures: List<String>,
-    val categories: List<String>? = null,
+    val pictures: List<PictureUUID>,
+    val categories: List<CategoryUUID>? = null,
     val start: Int,
     val state: String,
     val subscribed: Boolean,

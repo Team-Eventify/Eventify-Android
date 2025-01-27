@@ -13,6 +13,6 @@ data class OrganizationDetailResponse(
 fun OrganizationDetailResponse.toBusiness() = Organization(
     id = id,
     description = description,
-    photoId = photoID,
+    photoUrl = "https://eventify.website/api/v1/files/$photoID",
     title = title
 )

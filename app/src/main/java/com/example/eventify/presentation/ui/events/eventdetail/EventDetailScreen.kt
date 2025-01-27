@@ -1,12 +1,10 @@
 package com.example.eventify.presentation.ui.events.eventdetail
 
 import android.content.res.Configuration
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -22,9 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
@@ -34,7 +30,6 @@ import coil3.ImageLoader
 import com.example.eventify.R
 import com.example.eventify.domain.models.Category
 import com.example.eventify.domain.models.EventDetail
-import com.example.eventify.domain.models.EventWithCategories
 import com.example.eventify.domain.models.FullEventDetail
 import com.example.eventify.domain.models.Organization
 import com.example.eventify.presentation.ui.events.eventdetail.components.ImagePager
@@ -69,9 +64,9 @@ fun EventDetailScreen(
         ImagePager(
             pagerState = pagerState
         ){ page ->
-            val uri = state.event.eventInfo.pictures[page]
+            val url = state.event.eventInfo.pictures[page]
             EventImage(
-                uri = "https://eventify.website/api/v1/files/$uri",
+                uri = url,
                 imageLoader = imageLoader,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -169,7 +164,7 @@ private fun EventDetailScreenLightPreview() {
                             id = UUID.randomUUID().toString(),
                             title = LoremIpsum(2).values.joinToString(),
                             description = LoremIpsum(4).values.joinToString(),
-                            photoId = UUID.randomUUID().toString()
+                            photoUrl = UUID.randomUUID().toString()
                         )
                     )
                 ),
