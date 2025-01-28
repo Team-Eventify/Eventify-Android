@@ -40,6 +40,7 @@ import com.example.eventify.presentation.ui.SnackbarController
 import com.example.eventify.presentation.ui.common.BottomNavigationBar
 import com.example.eventify.presentation.ui.common.EventifySnackbar
 import com.example.eventify.presentation.ui.common.OfflineScreen
+import com.example.eventify.presentation.ui.common.screens.NoInternetConnectionScreen
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 import com.example.eventify.presentation.utils.ObserveAsState
 import dagger.hilt.android.AndroidEntryPoint
@@ -156,9 +157,7 @@ class MainActivity : ComponentActivity() {
                     }
 
                     if (!isConnected) {
-                        OfflineScreen(
-                            onRefreshState = {}
-                        )
+                        NoInternetConnectionScreen()
                     }
 
                 }
