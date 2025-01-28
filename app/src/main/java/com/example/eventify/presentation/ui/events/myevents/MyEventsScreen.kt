@@ -1,5 +1,6 @@
 package com.example.eventify.presentation.ui.events.myevents
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -23,11 +24,11 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 @Composable
 fun MyEventsScreen(
-    state: MyEventsState,
+    state: UiState.ShowMyEvents,
     actions: MyEventsActions,
 ) {
-
-    val swipeRefreshState = rememberSwipeRefreshState(state.isRefreshing)
+    // TODO implement refreshing
+    val swipeRefreshState = rememberSwipeRefreshState(false)
 
     SwipeRefresh(
         state = swipeRefreshState,
@@ -73,12 +74,13 @@ fun MyEventsScreen(
 
 
 @Composable
-@Preview(name = "MyEvents Default Dark", showBackground = true)
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
 private fun MyEventsScreenDefaultDarkPreview() {
-    EventifyTheme(darkTheme = true) {
+    EventifyTheme {
         Surface {
             MyEventsScreen(
-                state = MyEventsState(
+                state = UiState.ShowMyEvents(
                     upComingEvents = List(3) {
                         ShortEventItem(
                             id = "",
@@ -108,41 +110,3 @@ private fun MyEventsScreenDefaultDarkPreview() {
         }
     }
 }
-
-@Composable
-@Preview(name = "MyEvents Default Light", showBackground = true)
-private fun MyEventsScreenDefaultLightPreview() {
-    EventifyTheme(darkTheme = false) {
-        Surface {
-            MyEventsScreen(
-                state = MyEventsState(
-                    upComingEvents = List(3) {
-                        ShortEventItem(
-                            id = "",
-                            title = LoremIpsum(3).values.joinToString(),
-                            description = LoremIpsum(3).values.joinToString(),
-                            start = 1231313,
-                            end = 231231312,
-                            location = LoremIpsum(2).values.joinToString()
-                        )
-                    },
-                    finishedEvents = List(3) {
-                        ShortEventItem(
-                            id = "",
-                            title = LoremIpsum(3).values.joinToString(),
-                            description = LoremIpsum(3).values.joinToString(),
-                            start = 1231313,
-                            end = 231231312,
-                            location = LoremIpsum(2).values.joinToString()
-                        )
-                    }
-                ),
-                actions = MyEventsActions(
-                    onRefresh = {},
-                    navigateToEvent = {}
-                )
-            )
-        }
-    }
-}
-

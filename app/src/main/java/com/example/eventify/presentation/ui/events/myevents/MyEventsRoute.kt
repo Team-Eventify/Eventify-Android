@@ -35,10 +35,23 @@ fun MyEventsRoute(
     }
 
     // UI Rendering
-    if (uiState.finishedEvents.isEmpty() && uiState.upComingEvents.isEmpty()){
-        EmptyMyEventsScreen()
-    } else {
-        MyEventsScreen(uiState, actions)
+    when (uiState) {
+        UiState.Empty -> EmptyMyEventsScreen()
+        UiState.Error -> TODO("Add error screen")
+        UiState.Initial -> {}
+        is UiState.ShowMyEvents -> {
+            LaunchedEffect(Unit) {
+                scaffoldViewState.value = scaffoldViewState.value.copy(
+                    showBottomBar = true,
+                    topBar = {
+                        DefaultTopAppBar(
+                            title = stringResource(R.string.my_events_title)
+                        )
+                    }
+                )
+            }
+            MyEventsScreen(uiState as UiState.ShowMyEvents, actions)
+        }
     }
 }
 

@@ -35,29 +35,25 @@ class MyEventsViewModel @Inject constructor(
     @ApplicationContext private val context: Context
 ) : ViewModel() {
 
-    private val _stateFlow: MutableStateFlow<MyEventsState> = MutableStateFlow(MyEventsState(isLoading = true))
-    val stateFlow: StateFlow<MyEventsState> = _stateFlow
+    private val _stateFlow: MutableStateFlow<UiState> = MutableStateFlow(UiState.Initial)
+    val stateFlow: StateFlow<UiState> = _stateFlow
         .onStart { loadData() }
         .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000L),
-            MyEventsState(isLoading = true)
+            UiState.Initial
         )
 
 
     fun loadData(){
         viewModelScope.launch {
-            _stateFlow.update { it.copy(isLoading = true) }
             loadEvents()
-            _stateFlow.update { it.copy(isLoading = false) }
         }
     }
 
     fun refresh(){
         viewModelScope.launch {
-            _stateFlow.update { it.copy(isRefreshing = true) }
             loadEvents()
-            _stateFlow.update { it.copy(isRefreshing = false) }
         }
     }
 
@@ -83,11 +79,15 @@ class MyEventsViewModel @Inject constructor(
             is Result.Success -> result.data.map { it.toShortEventItem() }
         }
 
-        _stateFlow.update { currentState ->
-            currentState.copy(
-                upComingEvents = events.filter { it.start >= currentDateTime },
-                finishedEvents = events.filter { it.end < currentDateTime }
-            )
+        _stateFlow.update { _ ->
+            if (events.isEmpty()) {
+                UiState.Empty
+            } else {
+                UiState.ShowMyEvents(
+                    upComingEvents = events.filter { it.start >= currentDateTime },
+                    finishedEvents = events.filter { it.end < currentDateTime }
+                )
+            }
         }
     }
 
