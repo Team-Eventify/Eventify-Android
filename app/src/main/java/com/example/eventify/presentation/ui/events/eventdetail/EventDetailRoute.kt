@@ -9,6 +9,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.example.eventify.presentation.models.ScaffoldViewState
 import com.example.eventify.presentation.ui.events.eventdetail.components.EventDetailTopAppBar
+import com.example.eventify.presentation.ui.events.eventdetail.components.LoadingEvent
 
 @Composable
 fun EventDetailRoute(
@@ -39,7 +40,7 @@ fun EventDetailRoute(
             EventDetailScreen(uiState as UiState.ShowEvent, actions, coordinator.viewModel.imageLoader)
         }
 
-        UiState.Loading -> {}
+        UiState.Loading -> LoadingEvent()
     }
 }
 
