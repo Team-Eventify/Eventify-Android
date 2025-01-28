@@ -1,4 +1,4 @@
-package com.example.eventify.presentation.ui.shared.buttons
+package com.example.eventify.presentation.ui.common.buttons
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.defaultMinSize

@@ -34,10 +34,10 @@ import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.example.eventify.R
 import com.example.eventify.presentation.models.ShortEventItem
-import com.example.eventify.presentation.ui.shared.BodyText
-import com.example.eventify.presentation.ui.shared.EventCardTitle
-import com.example.eventify.presentation.ui.shared.EventInfoTag
-import com.example.eventify.presentation.ui.shared.shimmer
+import com.example.eventify.presentation.ui.common.BodyText
+import com.example.eventify.presentation.ui.common.EventCardTitle
+import com.example.eventify.presentation.ui.common.EventInfoTag
+import com.example.eventify.presentation.ui.common.shimmer
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 import com.example.eventify.presentation.utils.asDate
 import com.example.eventify.presentation.utils.asTime

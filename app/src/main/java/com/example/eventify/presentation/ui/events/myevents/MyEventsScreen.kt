@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.example.eventify.presentation.models.ShortEventItem
 import com.example.eventify.presentation.ui.events.myevents.components.FinishedEventCard
 import com.example.eventify.presentation.ui.events.myevents.components.UpComingEventCard
-import com.example.eventify.presentation.ui.shared.HeadingText
+import com.example.eventify.presentation.ui.common.HeadingText
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState

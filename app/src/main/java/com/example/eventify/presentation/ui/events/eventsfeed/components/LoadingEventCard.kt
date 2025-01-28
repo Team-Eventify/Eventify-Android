@@ -20,7 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.eventify.R
-import com.example.eventify.presentation.ui.shared.shimmer
+import com.example.eventify.presentation.ui.common.shimmer
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 
 @Composable

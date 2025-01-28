@@ -1,7 +1,6 @@
 package com.example.eventify.presentation.ui.account.profileedit.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
@@ -13,7 +12,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.eventify.presentation.ui.shared.ErrorInputText
+import com.example.eventify.presentation.ui.common.ErrorInputText
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 
 @Composable

@@ -10,11 +10,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.eventify.presentation.ui.shared.BodyText
-import com.example.eventify.presentation.ui.shared.buttons.PrimaryButton
-import com.example.eventify.presentation.ui.shared.PrimaryButtonText
-import com.example.eventify.presentation.ui.shared.TextInput
-import com.example.eventify.presentation.ui.shared.TitleText
+import com.example.eventify.presentation.ui.common.BodyText
+import com.example.eventify.presentation.ui.common.buttons.PrimaryButton
+import com.example.eventify.presentation.ui.common.PrimaryButtonText
+import com.example.eventify.presentation.ui.common.TextInput
+import com.example.eventify.presentation.ui.common.TitleText
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 
 @Composable

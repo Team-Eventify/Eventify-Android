@@ -10,18 +10,16 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import com.example.eventify.R
 import com.example.eventify.presentation.ui.auth.onboarding.OnBoardingItem
-import com.example.eventify.presentation.ui.shared.BodyText
-import com.example.eventify.presentation.ui.shared.PrimaryButtonText
-import com.example.eventify.presentation.ui.shared.TitleText
-import com.example.eventify.presentation.ui.shared.buttons.PrimaryButton
+import com.example.eventify.presentation.ui.common.BodyText
+import com.example.eventify.presentation.ui.common.PrimaryButtonText
+import com.example.eventify.presentation.ui.common.TitleText
+import com.example.eventify.presentation.ui.common.buttons.PrimaryButton
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 
 @Composable

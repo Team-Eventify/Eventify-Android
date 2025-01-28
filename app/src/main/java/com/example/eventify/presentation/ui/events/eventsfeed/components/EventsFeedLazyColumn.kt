@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -18,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import coil3.ImageLoader
 import com.example.eventify.R
 import com.example.eventify.presentation.models.ShortEventItem
-import com.example.eventify.presentation.ui.shared.HeadingText
+import com.example.eventify.presentation.ui.common.HeadingText
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 import kotlin.random.Random
 

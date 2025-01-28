@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import coil3.ImageLoader
 import com.example.eventify.presentation.models.CategorySelectItem
 import com.example.eventify.presentation.ui.events.eventsfeed.components.EventCard
-import com.example.eventify.presentation.ui.shared.CategorySelector
+import com.example.eventify.presentation.ui.common.CategorySelector
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState

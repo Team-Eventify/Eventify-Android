@@ -1,6 +1,5 @@
-package com.example.eventify.presentation.ui.shared
+package com.example.eventify.presentation.ui.common
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text

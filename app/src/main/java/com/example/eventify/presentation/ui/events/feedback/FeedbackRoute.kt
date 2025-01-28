@@ -7,7 +7,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import com.example.eventify.presentation.models.ScaffoldViewState
-import com.example.eventify.presentation.ui.shared.DefaultTopAppBar
+import com.example.eventify.presentation.ui.common.DefaultTopAppBar
 
 
 @Composable

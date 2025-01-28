@@ -16,7 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.eventify.R
-import com.example.eventify.presentation.ui.shared.AnnotationText
+import com.example.eventify.presentation.ui.common.AnnotationText
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 
 @Composable

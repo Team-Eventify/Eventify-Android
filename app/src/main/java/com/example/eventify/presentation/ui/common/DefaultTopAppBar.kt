@@ -1,4 +1,4 @@
-package com.example.eventify.presentation.ui.shared
+package com.example.eventify.presentation.ui.common
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon

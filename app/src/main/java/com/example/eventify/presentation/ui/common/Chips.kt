@@ -1,6 +1,5 @@
-package com.example.eventify.presentation.ui.shared
+package com.example.eventify.presentation.ui.common
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box

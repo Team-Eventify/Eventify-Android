@@ -1,4 +1,4 @@
-package com.example.eventify.presentation.ui.shared
+package com.example.eventify.presentation.ui.common
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border

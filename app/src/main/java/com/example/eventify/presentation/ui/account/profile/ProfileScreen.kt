@@ -4,12 +4,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -20,13 +17,12 @@ import com.example.eventify.R
 import com.example.eventify.presentation.models.UserShortInfo
 import com.example.eventify.presentation.ui.account.profile.components.ActionSettingsItem
 import com.example.eventify.presentation.ui.account.profile.components.SettingsBlock
-import com.example.eventify.presentation.ui.account.profile.components.BaseSettingsItem
 import com.example.eventify.presentation.ui.account.profile.components.DeleteAccountDialog
 import com.example.eventify.presentation.ui.account.profile.components.ImportantActionSettingsItem
 import com.example.eventify.presentation.ui.account.profile.components.LogOutDialog
 import com.example.eventify.presentation.ui.account.profile.components.NavigationSettingsItem
 import com.example.eventify.presentation.ui.account.profile.components.UserProfilePanel
-import com.example.eventify.presentation.ui.shared.shimmer
+import com.example.eventify.presentation.ui.common.shimmer
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 
 @Composable

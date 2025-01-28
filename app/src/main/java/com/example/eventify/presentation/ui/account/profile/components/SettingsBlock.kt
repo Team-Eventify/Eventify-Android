@@ -1,6 +1,5 @@
 package com.example.eventify.presentation.ui.account.profile.components
 
-import android.graphics.drawable.Icon
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,7 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.eventify.R
-import com.example.eventify.presentation.ui.shared.AnnotationText
+import com.example.eventify.presentation.ui.common.AnnotationText
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 
 @Composable

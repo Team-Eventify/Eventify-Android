@@ -17,10 +17,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.eventify.R
 import com.example.eventify.presentation.ui.events.feedback.components.MarkHorizontalGroup
-import com.example.eventify.presentation.ui.shared.PrimaryButtonText
-import com.example.eventify.presentation.ui.shared.SubHeadingText
-import com.example.eventify.presentation.ui.shared.TextInput
-import com.example.eventify.presentation.ui.shared.buttons.PrimaryButton
+import com.example.eventify.presentation.ui.common.PrimaryButtonText
+import com.example.eventify.presentation.ui.common.SubHeadingText
+import com.example.eventify.presentation.ui.common.TextInput
+import com.example.eventify.presentation.ui.common.buttons.PrimaryButton
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 
 

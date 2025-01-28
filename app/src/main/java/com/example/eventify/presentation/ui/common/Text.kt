@@ -1,6 +1,5 @@
-package com.example.eventify.presentation.ui.shared
+package com.example.eventify.presentation.ui.common
 
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme

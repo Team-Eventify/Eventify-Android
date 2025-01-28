@@ -1,6 +1,5 @@
-package com.example.eventify.presentation.ui.shared.settings
+package com.example.eventify.presentation.ui.common.settings
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth

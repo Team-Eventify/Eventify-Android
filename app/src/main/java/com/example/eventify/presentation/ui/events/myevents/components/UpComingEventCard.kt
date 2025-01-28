@@ -27,8 +27,8 @@ import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import com.example.eventify.R
 import com.example.eventify.presentation.models.ShortEventItem
-import com.example.eventify.presentation.ui.shared.EventCardTitle
-import com.example.eventify.presentation.ui.shared.UpComingEventInfoTag
+import com.example.eventify.presentation.ui.common.EventCardTitle
+import com.example.eventify.presentation.ui.common.UpComingEventInfoTag
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 import com.example.eventify.presentation.utils.asDate
 import com.example.eventify.presentation.utils.asTime

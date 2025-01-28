@@ -28,7 +28,6 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.rememberNavController
 import com.example.eventify.domain.SessionManager
 import com.example.eventify.domain.di.RequestsSessionManager
@@ -38,9 +37,9 @@ import com.example.eventify.presentation.navigation.Navigator
 import com.example.eventify.presentation.navigation.navgraphs.MainNavHost
 import com.example.eventify.presentation.navigation.navgraphs.RootRouter
 import com.example.eventify.presentation.ui.SnackbarController
-import com.example.eventify.presentation.ui.shared.BottomNavigationBar
-import com.example.eventify.presentation.ui.shared.EventifySnackbar
-import com.example.eventify.presentation.ui.shared.OfflineScreen
+import com.example.eventify.presentation.ui.common.BottomNavigationBar
+import com.example.eventify.presentation.ui.common.EventifySnackbar
+import com.example.eventify.presentation.ui.common.OfflineScreen
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 import com.example.eventify.presentation.utils.ObserveAsState
 import dagger.hilt.android.AndroidEntryPoint

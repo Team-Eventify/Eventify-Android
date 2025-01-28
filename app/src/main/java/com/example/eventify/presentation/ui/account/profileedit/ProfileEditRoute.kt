@@ -3,14 +3,13 @@ package com.example.eventify.presentation.ui.account.profileedit
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.eventify.R
 import com.example.eventify.presentation.models.ScaffoldViewState
-import com.example.eventify.presentation.ui.shared.DefaultTopAppBar
+import com.example.eventify.presentation.ui.common.DefaultTopAppBar
 
 @Composable
 fun ProfileEditRoute(

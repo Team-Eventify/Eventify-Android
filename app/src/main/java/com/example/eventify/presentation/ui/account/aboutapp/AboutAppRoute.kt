@@ -9,7 +9,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
 import com.example.eventify.R
 import com.example.eventify.presentation.models.ScaffoldViewState
-import com.example.eventify.presentation.ui.shared.DefaultTopAppBar
+import com.example.eventify.presentation.ui.common.DefaultTopAppBar
 
 
 @Composable
