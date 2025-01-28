@@ -10,6 +10,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.eventify.R
 import com.example.eventify.presentation.models.ScaffoldViewState
 import com.example.eventify.presentation.ui.common.DefaultTopAppBar
+import com.example.eventify.presentation.ui.events.myevents.components.EmptyMyEventsScreen
 
 @Composable
 fun MyEventsRoute(
