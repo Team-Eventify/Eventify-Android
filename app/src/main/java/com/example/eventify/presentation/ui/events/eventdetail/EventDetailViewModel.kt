@@ -53,16 +53,14 @@ class EventDetailViewModel @Inject constructor(
 
     private fun loadEvent(){
         viewModelScope.launch {
-            when (val currentEvent = getEventDetailUseCase(eventId)){
-                is Result.Error -> SnackbarController.sendEvent(
-                    SnackbarEvent(message = currentEvent.error.asUiText().asString(context))
-                )
-                is Result.Success -> {
-                    _stateFlow.update { _ ->
-                        UiState.ShowEvent(
-                            event = currentEvent.data
-                        )
-                    }
+            _stateFlow.update { _ ->
+                when (val result = getEventDetailUseCase(eventId)){
+                    is Result.Error -> UiState.Error(
+                        message = result.error.asUiText().asString(context)
+                    )
+                    is Result.Success -> UiState.ShowEvent(
+                        event = result.data
+                    )
                 }
             }
         }

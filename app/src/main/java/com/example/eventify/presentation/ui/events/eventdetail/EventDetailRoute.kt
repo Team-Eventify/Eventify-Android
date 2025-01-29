@@ -5,9 +5,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import com.example.eventify.R
 import com.example.eventify.presentation.models.ScaffoldViewState
+import com.example.eventify.presentation.ui.common.screens.ErrorScreen
 import com.example.eventify.presentation.ui.events.eventdetail.components.EventDetailTopAppBar
 import com.example.eventify.presentation.ui.events.eventdetail.components.LoadingEvent
 
@@ -24,7 +27,10 @@ fun EventDetailRoute(
     val actions = rememberEventDetailActions(coordinator)
 
     when (uiState) {
-        is UiState.Error -> {}
+        is UiState.Error -> ErrorScreen(
+            title = stringResource(R.string.error_load_event),
+            description = (uiState as UiState.Error).message
+        )
         is UiState.ShowEvent -> {
             LaunchedEffect(Unit) {
                 scaffoldViewState.value = scaffoldViewState.value.copy(
