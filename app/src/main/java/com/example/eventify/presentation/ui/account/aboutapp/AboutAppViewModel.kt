@@ -51,4 +51,34 @@ class AboutAppViewModel @Inject constructor(
             navigator.navigateUp()
         }
     }
+
+    fun navigateToPrivacyPolicy() {
+        viewModelScope.launch {
+
+        }
+    }
+
+    fun navigateToAboutUs() {
+        viewModelScope.launch {
+
+        }
+    }
+
+    fun navigateToDonate() {
+        viewModelScope.launch {
+
+        }
+    }
+
+    fun navigateTermsOfUse() {
+        viewModelScope.launch {
+
+        }
+    }
+
+    fun navigateToInformationSecurity() {
+        viewModelScope.launch {
+
+        }
+    }
 }

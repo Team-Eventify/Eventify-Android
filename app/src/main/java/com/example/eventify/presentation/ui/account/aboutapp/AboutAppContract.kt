@@ -15,7 +15,12 @@ data class AboutAppState(
  * passed to the coordinator to handle
  **/
 data class AboutAppActions(
-    val navigateUp: () -> Unit = {}
+    val navigateUp: () -> Unit = {},
+    val goToAboutUs: () -> Unit = {},
+    val goPrivacyPolicy: () -> Unit = {},
+    val goTermsOfUse: () -> Unit = {},
+    val goToInformationSecurity: () -> Unit = {},
+    val goToDonate: () -> Unit = {},
 )
 
 

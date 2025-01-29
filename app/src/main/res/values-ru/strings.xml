@@ -75,4 +75,9 @@
     <string name="error_load_feed">Не удалось загрузить ленту</string>
     <string name="error_loading_my_events">Не удалось загрузить мои события</string>
     <string name="go_to_events">К событиям</string>
+    <string name="privacy_policy">Политика конфиденциальности</string>
+    <string name="terms_of_use">Правила использования</string>
+    <string name="information_security">Защита информации</string>
+    <string name="donate">Админам на покушать</string>
+    <string name="about_us">О нас</string>
 </resources>

@@ -43,7 +43,12 @@ fun AboutAppRoute(
 fun rememberAboutAppActions(coordinator: AboutAppCoordinator): AboutAppActions {
     return remember(coordinator) {
         AboutAppActions(
-            navigateUp = coordinator.viewModel::navigateUp
+            navigateUp = coordinator.viewModel::navigateUp,
+            goPrivacyPolicy = coordinator.viewModel::navigateToPrivacyPolicy,
+            goToAboutUs = coordinator.viewModel::navigateToAboutUs,
+            goToDonate = coordinator.viewModel::navigateToDonate,
+            goTermsOfUse = coordinator.viewModel::navigateTermsOfUse,
+            goToInformationSecurity = coordinator.viewModel::navigateToInformationSecurity
         )
     }
 }

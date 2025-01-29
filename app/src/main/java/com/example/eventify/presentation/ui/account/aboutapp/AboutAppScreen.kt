@@ -1,22 +1,20 @@
 package com.example.eventify.presentation.ui.account.aboutapp
 
-import android.graphics.BitmapFactory
-import android.graphics.drawable.Icon
+import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Icon
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.eventify.R
@@ -48,16 +46,41 @@ fun AboutAppScreen(
         )
 
         SettingsBlock{
-            NavigationSettingsItem(text = "Обратная связь")
+            NavigationSettingsItem(text = stringResource(R.string.about_us))
+        }
+
+        SettingsBlock{
+            NavigationSettingsItem(
+                text = stringResource(R.string.privacy_policy),
+                onClick = actions.goPrivacyPolicy,
+            )
+            HorizontalDivider()
+            NavigationSettingsItem(
+                text = stringResource(R.string.terms_of_use),
+                onClick = actions.goTermsOfUse,
+            )
+            HorizontalDivider()
+            NavigationSettingsItem(
+                text = stringResource(R.string.information_security),
+                onClick = actions.goToInformationSecurity,
+            )
+        }
+
+        SettingsBlock{
+            NavigationSettingsItem(
+                text = stringResource(R.string.donate),
+                onClick = actions.goToDonate,
+            )
         }
     }
 
 }
 
 @Composable
-@Preview(name = "AboutApp")
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 private fun AboutAppScreenPreview() {
-    EventifyTheme(darkTheme = true) {
+    EventifyTheme(dynamicColor = true) {
         AboutAppScreen(
             state = AboutAppState(),
             actions = AboutAppActions()
