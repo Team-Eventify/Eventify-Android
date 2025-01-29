@@ -32,52 +32,39 @@ class EventsFeedViewModel @Inject constructor(
     val imageLoader: ImageLoader,
 ) : ViewModel() {
 
-    private val _stateFlow: MutableStateFlow<EventsFeedState> = MutableStateFlow(EventsFeedState.default())
-    val stateFlow: StateFlow<EventsFeedState> = _stateFlow
+    private val _stateFlow: MutableStateFlow<UiState> = MutableStateFlow(UiState.Loading)
+    val stateFlow: StateFlow<UiState> = _stateFlow
         .onStart { loadData() }
         .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000L),
-            EventsFeedState.default()
+            UiState.Loading
         )
 
     fun loadData() {
         viewModelScope.launch {
-            _stateFlow.update { it.copy(isLoading = true) }
             loadEvents()
-            _stateFlow.update { it.copy(isLoading = false) }
 
         }
     }
 
     fun refreshData() {
         viewModelScope.launch {
-            _stateFlow.update { it.copy(isRefreshing = true) }
             loadEvents()
-            _stateFlow.update { it.copy(isRefreshing = false) }
         }
     }
 
     private suspend fun loadEvents(){
-        when (val events = getEventsUseCase()){
-            is Result.Error -> {
-                SnackbarController.sendEvent(
-                    SnackbarEvent(
-                        message = events.error.asUiText().asString(context),
-                        duration = SnackbarDuration.Indefinite,
-                        action = SnackbarAction(
-                            name = context.getString(R.string.retry),
-                            action = {
-                                refreshData()
-                            }
-                        )
+        _stateFlow.update { _ ->
+            when (val result = getEventsUseCase()){
+                is Result.Error -> {
+                    UiState.Error(
+                        message = result.error.asUiText().asString(context)
                     )
-                )
-            }
-            is Result.Success -> {
-                _stateFlow.update { currentState ->
-                    currentState.copy(
-                        events = events.data.map { it.toShortEventItem() }
+                }
+                is Result.Success -> {
+                    UiState.ShowFeed(
+                        events = result.data.map { it.toShortEventItem() }
                     )
                 }
             }

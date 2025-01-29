@@ -71,4 +71,6 @@
     <string name="message_after_unsubscribe">Вы отписались от мероприятия</string>
     <string name="retry">Повторить</string>
     <string name="version">Версия: %1$s</string>
+    <string name="error_load_event">Не удалось загрузить событие</string>
+    <string name="error_load_feed">Не удалось загрузить ленту</string>
 </resources>

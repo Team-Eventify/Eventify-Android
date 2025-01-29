@@ -71,4 +71,6 @@
     <string name="message_after_unsubscribe">You have unsubscribed from the event</string>
     <string name="retry">Retry</string>
     <string name="version">Version: %1$s</string>
+    <string name="error_load_event">Failed to load event</string>
+    <string name="error_load_feed">"Failed to load feed "</string>
 </resources>

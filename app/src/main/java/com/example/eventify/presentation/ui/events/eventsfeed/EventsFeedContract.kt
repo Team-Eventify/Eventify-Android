@@ -6,16 +6,15 @@ import com.example.eventify.presentation.models.ShortEventItem
 /**
  * UI State that represents EventsFeedScreen
  **/
-data class EventsFeedState(
-    val isLoading: Boolean = true,
-    val isRefreshing: Boolean = false,
-    val events: List<ShortEventItem>,
-){
-    companion object {
-        fun default() = EventsFeedState(
-            events = emptyList(),
-        )
-    }
+
+sealed class UiState {
+    data class Error(
+        val message: String? = null,
+    ) : UiState()
+    data object Loading : UiState()
+    data class ShowFeed(
+        val events: List<ShortEventItem>,
+    ) : UiState()
 }
 
 /**

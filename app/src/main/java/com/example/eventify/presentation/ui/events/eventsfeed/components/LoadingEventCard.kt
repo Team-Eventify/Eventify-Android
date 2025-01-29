@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -27,53 +28,47 @@ import com.example.eventify.presentation.ui.theme.EventifyTheme
 fun LoadingEventCard(
     blendMode: BlendMode = BlendMode.SrcAtop
 ) {
-    Card(
-        shape = RoundedCornerShape(10.dp),
-        elevation = CardDefaults.cardElevation(0.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainer
-        )
+    Column(
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        modifier = Modifier
+            .padding(horizontal = 10.dp)
+            .shimmer(
+                showShimmer = true,
+                blendMode = blendMode
+            )
     ) {
-        Column(
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+        Image(
+            painter = painterResource(R.drawable.underfind_event_image),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
             modifier = Modifier
-                .shimmer(
-                    showShimmer = true,
-                    blendMode = blendMode
-                )
-        ) {
-            Image(
-                painter = painterResource(R.drawable.underfind_event_image),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp)
-                    .clip(RoundedCornerShape(10.dp))
+                .fillMaxWidth()
+                .height(200.dp)
+                .clip(RoundedCornerShape(10.dp))
 
-            )
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth(.5f)
-                    .height(30.dp)
-                    .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(60.dp))
-            )
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(30.dp)
-                    .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(60.dp))
-            )
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(30.dp)
-                    .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(60.dp))
-            )
-        }
+        )
+        Box(
+            modifier = Modifier
+                .fillMaxWidth(.5f)
+                .height(30.dp)
+                .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(60.dp))
+        )
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(30.dp)
+                .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(60.dp))
+        )
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(30.dp)
+                .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(60.dp))
+        )
     }
-
 }
+
+
 
 @Preview(name = "LoadingEventCard")
 @Composable

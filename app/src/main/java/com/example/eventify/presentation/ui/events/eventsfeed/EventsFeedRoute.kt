@@ -11,10 +11,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import com.example.eventify.R
 import com.example.eventify.presentation.models.ScaffoldViewState
+import com.example.eventify.presentation.ui.common.screens.ErrorScreen
 import com.example.eventify.presentation.ui.events.eventsfeed.components.EventsFeedTopAppBar
+import com.example.eventify.presentation.ui.events.eventsfeed.components.LoadingEventFeed
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -32,20 +36,27 @@ fun EventsFeedRoute(
 
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
 
-    LaunchedEffect(Unit) {
-        scaffoldViewState.value = scaffoldViewState.value.copy(
-            showBottomBar = true,
-            topBar = {
-                EventsFeedTopAppBar(
-                    scrollBehavior = scrollBehavior
-                )
-            },
-            modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
+    when (uiState){
+        is UiState.Error -> ErrorScreen(
+            title = stringResource(R.string.error_load_feed),
+            description = (uiState as UiState.Error).message
         )
+        UiState.Loading -> LoadingEventFeed()
+        is UiState.ShowFeed -> {
+            LaunchedEffect(Unit) {
+                scaffoldViewState.value = scaffoldViewState.value.copy(
+                    showBottomBar = true,
+                    topBar = {
+                        EventsFeedTopAppBar(
+                            scrollBehavior = scrollBehavior
+                        )
+                    },
+                    modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
+                )
+            }
+            EventsFeedScreen(uiState as UiState.ShowFeed, actions, coordinator.imageLoader)
+        }
     }
-
-    // UI Rendering
-    EventsFeedScreen(uiState, actions, coordinator.imageLoader)
 }
 
 
