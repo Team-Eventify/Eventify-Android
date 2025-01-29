@@ -20,6 +20,7 @@ import com.example.eventify.presentation.ui.common.HeadingText
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import java.util.UUID
 
 
 @Composable
@@ -27,8 +28,7 @@ fun MyEventsScreen(
     state: UiState.ShowMyEvents,
     actions: MyEventsActions,
 ) {
-    // TODO implement refreshing
-    val swipeRefreshState = rememberSwipeRefreshState(false)
+    val swipeRefreshState = rememberSwipeRefreshState(state.isRefreshing)
 
     SwipeRefresh(
         state = swipeRefreshState,
@@ -83,7 +83,7 @@ private fun MyEventsScreenDefaultDarkPreview() {
                 state = UiState.ShowMyEvents(
                     upComingEvents = List(3) {
                         ShortEventItem(
-                            id = "",
+                            id = UUID.randomUUID().toString(),
                             title = LoremIpsum(3).values.joinToString(),
                             description = LoremIpsum(3).values.joinToString(),
                             start = 1231313,
@@ -93,7 +93,7 @@ private fun MyEventsScreenDefaultDarkPreview() {
                     },
                     finishedEvents = List(3) {
                         ShortEventItem(
-                            id = "",
+                            id = UUID.randomUUID().toString(),
                             title = LoremIpsum(3).values.joinToString(),
                             description = LoremIpsum(3).values.joinToString(),
                             start = 1231313,

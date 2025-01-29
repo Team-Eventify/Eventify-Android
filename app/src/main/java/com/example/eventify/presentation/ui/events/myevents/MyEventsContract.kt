@@ -6,15 +6,19 @@ import com.example.eventify.presentation.models.ShortEventItem
 /**
  * UI State that represents MyEventsScreen
  **/
-sealed class UiState(
-//    open val isRefreshing: Boolean = false,
-) {
+sealed class UiState {
     data object Initial : UiState()
-    data object Empty : UiState()
-    data object Error : UiState()
+    data class Empty(
+        val isRefreshing: Boolean = false,
+    ) : UiState()
+    data class Error(
+        val isRefreshing: Boolean = false,
+        val message: String? = null,
+    ) : UiState()
     data class ShowMyEvents(
         val upComingEvents: List<ShortEventItem> = emptyList(),
         val finishedEvents: List<ShortEventItem> = emptyList(),
+        val isRefreshing: Boolean = false,
     ) : UiState()
 }
 

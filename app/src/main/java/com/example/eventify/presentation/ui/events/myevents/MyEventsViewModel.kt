@@ -53,6 +53,14 @@ class MyEventsViewModel @Inject constructor(
 
     fun refresh(){
         viewModelScope.launch {
+            _stateFlow.update { currentState ->
+                when (currentState) {
+                    is UiState.Empty -> currentState.copy(isRefreshing = true)
+                    is UiState.Error -> currentState.copy(isRefreshing = true)
+                    is UiState.ShowMyEvents -> currentState.copy(isRefreshing = true)
+                    UiState.Initial -> return@launch
+                }
+            }
             loadEvents()
         }
     }
@@ -81,7 +89,7 @@ class MyEventsViewModel @Inject constructor(
 
         _stateFlow.update { _ ->
             if (events.isEmpty()) {
-                UiState.Empty
+                UiState.Empty()
             } else {
                 UiState.ShowMyEvents(
                     upComingEvents = events.filter { it.start >= currentDateTime },

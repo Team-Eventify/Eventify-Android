@@ -10,7 +10,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.eventify.R
 import com.example.eventify.presentation.models.ScaffoldViewState
 import com.example.eventify.presentation.ui.common.DefaultTopAppBar
+import com.example.eventify.presentation.ui.common.screens.ErrorScreen
 import com.example.eventify.presentation.ui.events.myevents.components.EmptyMyEventsScreen
+import com.example.eventify.presentation.ui.events.myevents.components.LoadingMyEvents
 
 @Composable
 fun MyEventsRoute(
@@ -36,9 +38,12 @@ fun MyEventsRoute(
 
     // UI Rendering
     when (uiState) {
-        UiState.Empty -> EmptyMyEventsScreen()
-        UiState.Error -> TODO("Add error screen")
-        UiState.Initial -> {}
+        UiState.Initial -> LoadingMyEvents()
+        is UiState.Empty -> EmptyMyEventsScreen()
+        is UiState.Error -> ErrorScreen(
+            title = stringResource(R.string.error_loading_my_events),
+            description = (uiState as UiState.Error).message
+        )
         is UiState.ShowMyEvents -> {
             LaunchedEffect(Unit) {
                 scaffoldViewState.value = scaffoldViewState.value.copy(
