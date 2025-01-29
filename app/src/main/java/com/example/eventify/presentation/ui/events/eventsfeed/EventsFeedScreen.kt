@@ -31,7 +31,7 @@ fun EventsFeedScreen(
     actions: EventsFeedActions,
     imageLoader: ImageLoader
 ) {
-    val swipeRefreshState = rememberSwipeRefreshState(false)
+    val swipeRefreshState = rememberSwipeRefreshState(state.isRefreshing)
 
     SwipeRefresh(
         state = swipeRefreshState,

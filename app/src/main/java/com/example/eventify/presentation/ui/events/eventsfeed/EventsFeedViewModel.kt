@@ -44,12 +44,18 @@ class EventsFeedViewModel @Inject constructor(
     fun loadData() {
         viewModelScope.launch {
             loadEvents()
-
         }
     }
 
     fun refreshData() {
         viewModelScope.launch {
+            _stateFlow.update { currentState ->
+                when (currentState) {
+                    is UiState.Error -> currentState.copy(isRefreshing = true)
+                    is UiState.ShowFeed -> currentState.copy(isRefreshing = true)
+                    UiState.Loading -> return@launch
+                }
+            }
             loadEvents()
         }
     }
