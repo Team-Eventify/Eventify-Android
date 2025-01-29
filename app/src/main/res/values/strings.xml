@@ -74,4 +74,5 @@
     <string name="error_load_event">Failed to load event</string>
     <string name="error_load_feed">"Failed to load feed "</string>
     <string name="error_loading_my_events">Failed to load my event</string>
+    <string name="go_to_events">Go to events</string>
 </resources>

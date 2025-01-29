@@ -39,7 +39,9 @@ fun MyEventsRoute(
     // UI Rendering
     when (uiState) {
         UiState.Initial -> LoadingMyEvents()
-        is UiState.Empty -> EmptyMyEventsScreen()
+        is UiState.Empty -> EmptyMyEventsScreen(
+            onActionClick = actions.navigateToFeed,
+        )
         is UiState.Error -> ErrorScreen(
             title = stringResource(R.string.error_loading_my_events),
             description = (uiState as UiState.Error).message
@@ -67,7 +69,8 @@ fun rememberMyEventsActions(coordinator: MyEventsCoordinator): MyEventsActions {
         MyEventsActions(
             onRefresh = coordinator.viewModel::refresh,
             navigateToEvent = coordinator.viewModel::navigateToEvent,
-            navigateToFeedback = coordinator.viewModel::navigateToFeedback
+            navigateToFeedback = coordinator.viewModel::navigateToFeedback,
+            navigateToFeed = coordinator.viewModel::navigateToFeed
         )
     }
 }

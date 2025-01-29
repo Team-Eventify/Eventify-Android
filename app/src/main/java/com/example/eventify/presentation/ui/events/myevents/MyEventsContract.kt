@@ -29,5 +29,6 @@ sealed class UiState {
 data class MyEventsActions(
     val onRefresh: () -> Unit = {},
     val navigateToEvent: (String) -> Unit = {},
-    val navigateToFeedback: (String) -> Unit = {}
+    val navigateToFeedback: (String) -> Unit = {},
+    val navigateToFeed: () -> Unit = {},
 )

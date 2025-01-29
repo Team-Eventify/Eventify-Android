@@ -35,7 +35,7 @@ fun BorderedImage(
         Image(
             modifier = Modifier
                 .fillMaxWidth(.17f)
-                .padding(10.dp)
+                .padding(15.dp)
                 .then(modifier)
             ,
             painter = painter,

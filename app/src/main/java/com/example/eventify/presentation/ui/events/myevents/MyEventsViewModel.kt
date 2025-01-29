@@ -11,6 +11,7 @@ import com.example.eventify.domain.models.toShortEventItem
 import com.example.eventify.domain.usecases.events.GetSubscribedEventsUseCase
 import com.example.eventify.presentation.models.ShortEventItem
 import com.example.eventify.presentation.navigation.Navigator
+import com.example.eventify.presentation.navigation.navgraphs.HomeRouter
 import com.example.eventify.presentation.navigation.navgraphs.RootRouter
 import com.example.eventify.presentation.ui.SnackbarAction
 import com.example.eventify.presentation.ui.SnackbarController
@@ -109,6 +110,12 @@ class MyEventsViewModel @Inject constructor(
     fun navigateToFeedback(eventId: String){
         viewModelScope.launch {
             navigator.navigate(RootRouter.EventFeedbackRoute(eventId = eventId))
+        }
+    }
+
+    fun navigateToFeed() {
+        viewModelScope.launch {
+            navigator.navigate(HomeRouter.EventFeed)
         }
     }
 
