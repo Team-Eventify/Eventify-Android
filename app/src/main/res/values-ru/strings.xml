@@ -80,4 +80,6 @@
     <string name="information_security">Защита информации</string>
     <string name="donate">Админам на покушать</string>
     <string name="about_us">О нас</string>
+    <string name="upcoming_events">Предстоящие мероприятия</string>
+    <string name="finished_events">Прошедшие мероприятия</string>
 </resources>

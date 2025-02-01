@@ -1,10 +1,13 @@
 package com.example.eventify.presentation.models
 
 import com.example.eventify.presentation.utils.asDate
+import com.example.eventify.presentation.utils.toLocalDateTime
+import java.time.Duration
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import javax.annotation.concurrent.Immutable
+import kotlin.time.toKotlinDuration
 
 
 const val SHORT_DATE_FORMAT = "dd MMM"
@@ -25,8 +28,14 @@ data class ShortEventItem(
 ){
     val duration: String
         get() {
-            val st = start.asDate(short = true)
-            val ed = end.asDate(short = true)
-            return listOf(st, ed).joinToString(" - ")
+            val startTime = start.toLocalDateTime()
+            val endTime = end.toLocalDateTime()
+
+            val duration = Duration.between(startTime, endTime)
+
+            if (duration.toDays() <= 1)
+                return startTime.asDate()
+
+            return listOf(startTime.asDate(), endTime.asDate()).joinToString(" - ")
         }
 }

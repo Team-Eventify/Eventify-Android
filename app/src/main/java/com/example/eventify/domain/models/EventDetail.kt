@@ -1,5 +1,8 @@
 package com.example.eventify.domain.models
 
+import java.time.LocalDateTime
+import java.time.ZoneOffset
+
 typealias PictureUUID = String
 typealias CategoryUUID = String
 
@@ -17,4 +20,7 @@ data class EventDetail(
     val state: String,
     val subscribed: Boolean,
     val title: String
-)
+) {
+    val isFinished: Boolean
+        get() = LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli() > end
+}

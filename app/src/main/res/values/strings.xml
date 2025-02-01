@@ -80,4 +80,6 @@
     <string name="information_security">Information security</string>
     <string name="donate">Donate</string>
     <string name="about_us">About us</string>
+    <string name="upcoming_events">Upcoming events</string>
+    <string name="finished_events">Finished events</string>
 </resources>

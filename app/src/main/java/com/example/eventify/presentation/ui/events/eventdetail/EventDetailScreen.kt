@@ -111,11 +111,17 @@ fun EventDetailScreen(
             Spacer(modifier = Modifier.height(20.dp))
 
             if (state.event.eventInfo.subscribed) {
-                PrimaryDeclineButton(onClick = actions.onUnsubscribe) {
+                PrimaryDeclineButton(
+                    onClick = actions.onUnsubscribe,
+                    enabled = !state.event.eventInfo.isFinished,
+                ) {
                     PrimaryButtonText(text = "Отменить запись на мероприятие")
                 }
             } else {
-                PrimaryButton(onClick = actions.onSubscribe) {
+                PrimaryButton(
+                    onClick = actions.onSubscribe,
+                    enabled = !state.event.eventInfo.isFinished,
+                ) {
                     PrimaryButtonText(text = "Я пойду!")
                 }
             }
