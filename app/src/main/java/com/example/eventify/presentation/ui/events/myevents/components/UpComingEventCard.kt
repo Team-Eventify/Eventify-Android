@@ -111,8 +111,8 @@ private fun PreviewMyEventCardDark() {
                     .values
                     .toList()
                     .joinToString { it },
-                start = Random.nextInt(),
-                end = Random.nextInt(),
+                start = Random.nextLong(),
+                end = Random.nextLong(),
                 location = LoremIpsum(2).values.joinToString()
             )
         )

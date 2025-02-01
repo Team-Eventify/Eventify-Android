@@ -126,8 +126,8 @@ private fun PreviewMyPastEventCardDark() {
                     .values
                     .joinToString(),
                 description = "",
-                start = Random.nextInt(),
-                end = Random.nextInt(),
+                start = Random.nextLong(),
+                end = Random.nextLong(),
                 location = LoremIpsum(2).values.joinToString()
             )
         )

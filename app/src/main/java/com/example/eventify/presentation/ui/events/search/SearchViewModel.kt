@@ -1,5 +1,6 @@
 package com.example.eventify.presentation.ui.events.search
 
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,6 +18,7 @@ import com.example.eventify.presentation.navigation.navgraphs.MainNavHost
 import com.example.eventify.presentation.navigation.navgraphs.RootRouter
 import com.example.eventify.presentation.ui.SnackbarController
 import com.example.eventify.presentation.ui.SnackbarEvent
+import com.example.eventify.presentation.utils.toColor
 import com.example.eventify.presentation.utils.toColorOrNull
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -65,7 +67,7 @@ class SearchViewModel @Inject constructor(
                                 id = it.id,
                                 title = it.title,
                                 selected = false,
-                                color = it.color.toColorOrNull()!!
+                                color = it.color.toColor(Color.Blue)
                             )
                         }
                     )

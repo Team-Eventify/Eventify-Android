@@ -4,12 +4,13 @@ import com.example.eventify.presentation.models.LONG_DATE_FORMAT
 import com.example.eventify.presentation.models.LONG_TIME_FORMAT
 import com.example.eventify.presentation.models.SHORT_DATE_FORMAT
 import com.example.eventify.presentation.models.SHORT_TIME_FORMAT
+import kotlinx.serialization.json.internal.decodeStringToJsonTree
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
 
-fun Int.toLocalDateTime(): LocalDateTime = LocalDateTime.ofEpochSecond(this.toLong(), 0, ZoneOffset.UTC)
+fun Long.toLocalDateTime(): LocalDateTime = LocalDateTime.ofEpochSecond(this, 0, ZoneOffset.UTC)
 
 
 fun LocalDateTime.asDate(short: Boolean = true): String {
@@ -25,6 +26,6 @@ fun LocalDateTime.asTime(short: Boolean = true): String {
     return this.format(formater)
 }
 
-fun Int.asDate(short: Boolean = true) = this.toLocalDateTime().asDate()
+fun Long.asDate(short: Boolean = true) = this.toLocalDateTime().asDate(short)
 
-fun Int.asTime(short: Boolean = true) = this.toLocalDateTime().asTime()
+fun Long.asTime(short: Boolean = true) = this.toLocalDateTime().asTime(short)

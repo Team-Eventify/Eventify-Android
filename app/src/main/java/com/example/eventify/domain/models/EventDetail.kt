@@ -10,17 +10,20 @@ data class EventDetail(
     val capacity: Int,
     val cover: String,
     val description: String,
-    val end: Int,
+    val end: Long,
     val id: String,
     val location: String,
     val organizationID: String,
     val pictures: List<PictureUUID>,
     val categories: List<CategoryUUID>? = null,
-    val start: Int,
+    val start: Long,
     val state: String,
     val subscribed: Boolean,
     val title: String
 ) {
     val isFinished: Boolean
-        get() = LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli() > end
+        get() {
+            return LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli() > end
+        }
 }
+

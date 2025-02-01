@@ -22,8 +22,8 @@ data class ShortEventItem(
     val title: String,
     val description: String,
     val cover: String = "",
-    val start: Int,
-    val end: Int,
+    val start: Long,
+    val end: Long,
     val location: String
 ){
     val duration: String

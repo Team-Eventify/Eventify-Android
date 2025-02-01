@@ -80,8 +80,8 @@ private fun EventsFeedScreenDefaultDarkPreview() {
                                 .toList()
                                 .joinToString { it },
                             cover = "",
-                            start = Random.nextInt(),
-                            end = Random.nextInt(),
+                            start = Random.nextLong(),
+                            end = Random.nextLong(),
                             location = LoremIpsum(15)
                                 .values
                                 .joinToString(),
