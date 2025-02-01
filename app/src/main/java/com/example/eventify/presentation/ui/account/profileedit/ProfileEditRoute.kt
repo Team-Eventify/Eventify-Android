@@ -50,7 +50,8 @@ fun rememberProfileEditActions(coordinator: ProfileEditCoordinator): ProfileEdit
             onChangeLastName = coordinator.viewModel::changeUserLastName,
             onChangeMiddleName = coordinator.viewModel::changeUserMiddleName,
             onChangeTelegram = coordinator.viewModel::changeUserTelegram,
-            onChangeCategoryFilterActive = coordinator.viewModel::changeCategoryFilterActive
+            onChangeCategoryFilterActive = coordinator.viewModel::changeCategoryFilterActive,
+            onDeleteAccount = coordinator.viewModel::deleteAccount,
         )
     }
 }

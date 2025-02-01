@@ -24,6 +24,5 @@ data class ProfileState(
 data class ProfileActions(
     val onLogOut: () -> Unit = {},
     val navigateToProfileEdit: () -> Unit = {},
-    val onDeleteAccount: () -> Unit = {},
     val navigateToAppInfo: () -> Unit = {}
 )

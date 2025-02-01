@@ -31,32 +31,17 @@ fun ProfileScreen(
     actions: ProfileActions,
 ) {
     val openLogOutDialog = remember { mutableStateOf(false) }
-    val openDeleteAccountDialog = remember { mutableStateOf(false) }
 
-
-    when {
-        openLogOutDialog.value -> {
-            LogOutDialog(
-                onDismissRequest = {
-                    openLogOutDialog.value = false
-                },
-                onConfirmation = {
-                    openLogOutDialog.value = false
-                    actions.onLogOut()
-                }
-            )
-        }
-        openDeleteAccountDialog.value -> {
-            DeleteAccountDialog(
-                onDismissRequest = {
-                    openDeleteAccountDialog.value = false
-                },
-                onConfirmation = {
-                    openLogOutDialog.value = false
-                    actions.onDeleteAccount()
-                }
-            )
-        }
+    if (openLogOutDialog.value) {
+        LogOutDialog(
+            onDismissRequest = {
+                openLogOutDialog.value = false
+            },
+            onConfirmation = {
+                openLogOutDialog.value = false
+                actions.onLogOut()
+            }
+        )
     }
 
     Column(
@@ -93,15 +78,6 @@ fun ProfileScreen(
                 text = stringResource(R.string.log_out),
                 onClick = {
                     openLogOutDialog.value = true
-                }
-            )
-        }
-
-        SettingsBlock {
-            ImportantActionSettingsItem(
-                text = stringResource(R.string.delete_account),
-                onClick = {
-                    openDeleteAccountDialog.value = true
                 }
             )
         }

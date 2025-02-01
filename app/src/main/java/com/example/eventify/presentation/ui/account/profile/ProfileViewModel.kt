@@ -86,17 +86,6 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    fun deleteAccount(){
-        viewModelScope.launch {
-            deleteAccountUseCase()
-            navigator.navigate(RootRouter.AuthRoute){
-                popUpTo(0) {
-                    inclusive = true
-                }
-            }
-        }
-    }
-
     fun navigateToAppInfo(){
         viewModelScope.launch {
             navigator.navigate(SettingsRouter.AboutAppRoute)

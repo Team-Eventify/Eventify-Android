@@ -8,11 +8,13 @@ import com.example.eventify.domain.models.UserChange
 import com.example.eventify.domain.Result
 import com.example.eventify.domain.usecases.GetCategoriesWithUserSelection
 import com.example.eventify.domain.usecases.account.ChangeUserUseCase
+import com.example.eventify.domain.usecases.account.DeleteAccountUseCase
 import com.example.eventify.domain.usecases.account.GetCurrentUserUseCase
 import com.example.eventify.domain.usecases.account.SetUserCategoriesUseCase
 import com.example.eventify.domain.validation.ValidateEmail
 import com.example.eventify.domain.validation.ValidateTelegramName
 import com.example.eventify.presentation.navigation.Navigator
+import com.example.eventify.presentation.navigation.navgraphs.RootRouter
 import com.example.eventify.presentation.ui.SnackbarController
 import com.example.eventify.presentation.ui.SnackbarEvent
 import com.example.eventify.presentation.utils.asUiText
@@ -34,6 +36,7 @@ class ProfileEditViewModel @Inject constructor(
     private val changeUserUseCase: ChangeUserUseCase,
     private val setUserCategoriesUseCase: SetUserCategoriesUseCase,
     private val navigator: Navigator,
+    private val deleteAccountUseCase: DeleteAccountUseCase,
     @ApplicationContext private val context: Context
 ) : ViewModel() {
     private val validateTelegramNameUseCase = ValidateTelegramName()
@@ -228,6 +231,17 @@ class ProfileEditViewModel @Inject constructor(
         }
 
         return validationResult is Result.Success
+    }
+
+    fun deleteAccount() {
+        viewModelScope.launch {
+            deleteAccountUseCase()
+            navigator.navigate(RootRouter.AuthRoute){
+                popUpTo(0) {
+                    inclusive = true
+                }
+            }
+        }
     }
 
 

@@ -49,4 +49,5 @@ data class ProfileEditActions(
     val onChangeLastName: (String) -> Unit = {},
     val onChangeMiddleName: (String) -> Unit = {},
     val onChangeTelegram: (String) -> Unit = {},
+    val onDeleteAccount: () -> Unit = {},
 )
