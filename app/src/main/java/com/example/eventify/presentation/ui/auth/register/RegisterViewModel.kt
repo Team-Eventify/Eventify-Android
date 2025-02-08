@@ -3,9 +3,13 @@ package com.example.eventify.presentation.ui.auth.register
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.eventify.data.repositories.auth.AuthUserRepository
 import com.example.eventify.domain.models.UserCreate
 import com.example.eventify.domain.DataError
 import com.example.eventify.domain.Result
+import com.example.eventify.domain.models.OtpUserCreate
+import com.example.eventify.domain.models.RegisterValidationData
+import com.example.eventify.domain.usecases.auth.OtpRegisterUseCase
 import com.example.eventify.domain.usecases.auth.RegisterUseCase
 import com.example.eventify.domain.validation.ValidateEmail
 import com.example.eventify.domain.validation.ValidatePassword
@@ -25,12 +29,15 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
-    private val registerUseCase: RegisterUseCase,
+    private val otpRegisterUseCase: OtpRegisterUseCase,
+    private val authRepository: AuthUserRepository,
     private val navigator: Navigator,
     @ApplicationContext private val context: Context
 ) : ViewModel() {
     private val validateEmailUseCase: ValidateEmail = ValidateEmail()
     private val validatePasswordUseCase: ValidatePassword = ValidatePassword()
+
+    private var validationResultId: String? = null
 
     private val _stateFlow: MutableStateFlow<RegisterState> = MutableStateFlow(RegisterState())
     val stateFlow: StateFlow<RegisterState> = _stateFlow.asStateFlow()
@@ -98,7 +105,26 @@ class RegisterViewModel @Inject constructor(
 
         if (!isValidData) return
 
-        triggerOtpBottomSheet(true)
+        val validationData = _stateFlow.value.run {
+            RegisterValidationData(
+                email = login,
+                password = password,
+            )
+        }
+
+        viewModelScope.launch {
+            when (val result = authRepository.validateRegisterData(data = validationData)) {
+                is Result.Error -> {
+                    SnackbarController.sendEvent(
+                        SnackbarEvent(message = result.error.asUiText().asString(context))
+                    )
+                }
+                is Result.Success -> {
+                    validationResultId = result.data
+                    triggerOtpBottomSheet(true)
+                }
+            }
+        }
     }
 
     fun triggerOtpBottomSheet(value: Boolean){
@@ -107,15 +133,21 @@ class RegisterViewModel @Inject constructor(
 
 
     fun register(){
+        if (validationResultId == null || _stateFlow.value.otp == null) {
+            return
+        }
+
         val userPayload = stateFlow.value.run {
-            UserCreate(
+            OtpUserCreate(
                 email = login,
-                password = password
+                password = password,
+                code = otp!!,
+                validationResultId = validationResultId!!
             )
         }
 
         viewModelScope.launch {
-            when (val result = registerUseCase(user = userPayload)){
+            when (val result = otpRegisterUseCase(userData = userPayload)){
                 is Result.Error -> handleErrors(result.error)
                 is Result.Success -> {
                     triggerOtpBottomSheet(false)
