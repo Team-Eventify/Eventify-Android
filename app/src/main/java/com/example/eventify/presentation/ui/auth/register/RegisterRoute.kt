@@ -37,7 +37,10 @@ fun rememberRegisterActions(coordinator: RegisterCoordinator): RegisterActions {
             navigateToLogIn = coordinator.viewModel::navigateToLogin,
             onChangeLogin = coordinator.viewModel::changeLogin,
             onChangePassword = coordinator.viewModel::changePassword,
-            onSubmit = coordinator.viewModel::register
+            onRegister = coordinator.viewModel::register,
+            onChangeOtp = coordinator.viewModel::changeOtp,
+            onRequestOtp = coordinator.viewModel::requestOtp,
+            onTriggerOtpBottomSheet = coordinator.viewModel::triggerOtpBottomSheet
         )
     }
 }

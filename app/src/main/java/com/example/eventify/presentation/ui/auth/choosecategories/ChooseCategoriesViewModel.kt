@@ -39,12 +39,16 @@ class ChooseCategoriesViewModel @Inject constructor(
 
     fun loadData(){
         viewModelScope.launch {
-            when (val categories = getCategoriesUseCase()){
-                is Result.Error -> TODO()
+            when (val result = getCategoriesUseCase()){
+                is Result.Error -> {
+                    SnackbarController.sendEvent(
+                        SnackbarEvent(message = result.error.asUiText().asString(context))
+                    )
+                }
                 is Result.Success -> {
                     _stateFlow.update { currentState ->
                         currentState.copy(
-                            categoryItems = categories.data.map {
+                            categoryItems = result.data.map {
                                 CategorySelectItem(
                                     id = it.id,
                                     title = it.title,

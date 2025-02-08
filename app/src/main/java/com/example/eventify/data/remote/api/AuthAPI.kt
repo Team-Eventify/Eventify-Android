@@ -26,6 +26,4 @@ interface AuthAPI {
 
     @GET("public")
     suspend fun getPublicKey(): Response<PublicKeyInfoResponse>
-
-
 }

@@ -36,6 +36,27 @@ class FirebaseNotificationService: FirebaseMessagingService() {
         }
     }
 
+    override fun onCreate() {
+        super.onCreate()
+        createNotificationChannel()
+    }
+
+    private fun createNotificationChannel() {
+        val channelId = getString(R.string.firebase_notification_channel_id)
+        val channel = NotificationChannel(
+            channelId,
+            "App Notifications",
+            NotificationManager.IMPORTANCE_HIGH // ВАЖНО: High для всплывающих уведомлений
+        ).apply {
+            enableVibration(true)
+            enableLights(true)
+            setShowBadge(true)
+        }
+
+        val manager = getSystemService(NotificationManager::class.java)
+        manager.createNotificationChannel(channel)
+    }
+
     override fun onNewToken(token: String) {
         // Update token on server
         super.onNewToken(token)

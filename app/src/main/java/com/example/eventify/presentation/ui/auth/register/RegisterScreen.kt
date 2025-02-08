@@ -1,5 +1,6 @@
 package com.example.eventify.presentation.ui.auth.register
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,8 +11,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -27,6 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.eventify.R
+import com.example.eventify.presentation.ui.auth.register.components.RegistrationOtpBottomSheet
 import com.example.eventify.presentation.ui.common.ActionPrimaryText
 import com.example.eventify.presentation.ui.common.BodyText
 import com.example.eventify.presentation.ui.common.ErrorInputText
@@ -38,6 +42,7 @@ import com.example.eventify.presentation.ui.theme.EventifyTheme
 import com.example.eventify.presentation.utils.UiText
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegisterScreen(
     state: RegisterState,
@@ -47,6 +52,20 @@ fun RegisterScreen(
         FocusRequester()
     }
     val focusManager = LocalFocusManager.current
+
+    val sheetState = rememberModalBottomSheetState()
+
+    if (state.showOtpBottomSheet){
+        RegistrationOtpBottomSheet(
+            onDismissRequest = {
+                actions.onTriggerOtpBottomSheet(false)
+            },
+            sheetState = sheetState,
+            onChangeOtpValue = actions.onChangeOtp,
+            otpValue = state.otp,
+            onSubmit = actions.onRegister
+        )
+    }
 
     Column(
         modifier = Modifier
@@ -106,7 +125,7 @@ fun RegisterScreen(
 
         Spacer(modifier = Modifier.height(30.dp))
         PrimaryButton(
-            onClick = actions.onSubmit,
+            onClick = actions.onRequestOtp,
             enabled = state.isValidFormData,
             modifier = Modifier
                 .fillMaxWidth()
@@ -130,19 +149,21 @@ fun RegisterScreen(
 }
 
 @Composable
-@Preview(name = "Register Default Dark", showBackground = true)
+@Preview(name = "Register Default Dark", showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(name = "Register Default Light", showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
 private fun RegisterScreenDefaultDarkPreview() {
-    EventifyTheme(
-        darkTheme = true
-    ) {
+    EventifyTheme {
         Surface {
             RegisterScreen(
-                state = RegisterState.default(),
+                state = RegisterState(),
                 actions = RegisterActions(
                     onChangeLogin = {},
                     onChangePassword = {},
-                    onSubmit = {},
-                    navigateToLogIn = {}
+                    navigateToLogIn = {},
+                    onRegister = {},
+                    onRequestOtp = {},
+                    onChangeOtp = {},
+                    onTriggerOtpBottomSheet = {},
                 )
             )
         }
@@ -150,56 +171,10 @@ private fun RegisterScreenDefaultDarkPreview() {
 }
 
 @Composable
-@Preview(name = "Register Error Dark", showBackground = true)
-private fun RegisterScreenErrorDarkPreview() {
-    EventifyTheme(
-        darkTheme = true
-    ) {
-        Surface {
-            RegisterScreen(
-                state = RegisterState(
-                    login = "",
-                    hasLoginError = true,
-                    password = "",
-                    passwordError = UiText.DynamicString("Ошибка")
-                ),
-                actions = RegisterActions(
-                    onChangeLogin = {},
-                    onChangePassword = {},
-                    onSubmit = {},
-                    navigateToLogIn = {}
-                )
-            )
-        }
-    }
-}
-
-@Composable
-@Preview(name = "Register Default Light", showBackground = true)
-private fun RegisterScreenDefaultLightPreview() {
-    EventifyTheme(
-        darkTheme = false
-    ) {
-        Surface {
-            RegisterScreen(
-                state = RegisterState.default(),
-                actions = RegisterActions(
-                    onChangeLogin = {},
-                    onChangePassword = {},
-                    onSubmit = {},
-                    navigateToLogIn = {}
-                )
-            )
-        }
-    }
-}
-
-@Composable
-@Preview(name = "Register Error Light", showBackground = true)
+@Preview(name = "Register Error Dark", showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(name = "Register Error Light", showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
 private fun RegisterScreenErrorLightPreview() {
-    EventifyTheme(
-        darkTheme = false
-    ) {
+    EventifyTheme {
         Surface {
             RegisterScreen(
                 state = RegisterState(
@@ -211,8 +186,11 @@ private fun RegisterScreenErrorLightPreview() {
                 actions = RegisterActions(
                     onChangeLogin = {},
                     onChangePassword = {},
-                    onSubmit = {},
-                    navigateToLogIn = {}
+                    navigateToLogIn = {},
+                    onRegister = {},
+                    onRequestOtp = {},
+                    onChangeOtp = {},
+                    onTriggerOtpBottomSheet = {},
                 )
             )
         }

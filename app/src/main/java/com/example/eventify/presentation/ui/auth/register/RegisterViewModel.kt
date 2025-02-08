@@ -14,6 +14,7 @@ import com.example.eventify.presentation.navigation.navgraphs.AuthRouter
 import com.example.eventify.presentation.ui.SnackbarController
 import com.example.eventify.presentation.ui.SnackbarEvent
 import com.example.eventify.presentation.utils.asUiText
+import dagger.Binds
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
@@ -32,7 +33,7 @@ class RegisterViewModel @Inject constructor(
     private val validateEmailUseCase: ValidateEmail = ValidateEmail()
     private val validatePasswordUseCase: ValidatePassword = ValidatePassword()
 
-    private val _stateFlow: MutableStateFlow<RegisterState> = MutableStateFlow(RegisterState.default())
+    private val _stateFlow: MutableStateFlow<RegisterState> = MutableStateFlow(RegisterState())
     val stateFlow: StateFlow<RegisterState> = _stateFlow.asStateFlow()
 
 
@@ -82,8 +83,15 @@ class RegisterViewModel @Inject constructor(
         return validationResult is Result.Success
     }
 
+    fun changeOtp(value: String){
+        _stateFlow.update { currentState ->
+            currentState.copy(
+                otp = value
+            )
+        }
+    }
 
-    fun register(){
+    fun requestOtp() {
         val isValidData = listOf(
             validateLogin(),
             validatePassword()
@@ -91,7 +99,15 @@ class RegisterViewModel @Inject constructor(
 
         if (!isValidData) return
 
+        triggerOtpBottomSheet(true)
+    }
 
+    fun triggerOtpBottomSheet(value: Boolean){
+        _stateFlow.update { currentState -> currentState.copy(showOtpBottomSheet = value) }
+    }
+
+
+    fun register(){
         val userPayload = stateFlow.value.run {
             UserCreate(
                 email = login,
@@ -103,6 +119,7 @@ class RegisterViewModel @Inject constructor(
             when (val result = registerUseCase(user = userPayload)){
                 is Result.Error -> handleErrors(result.error)
                 is Result.Success -> {
+                    triggerOtpBottomSheet(false)
                     navigator.navigate(AuthRouter.ChooseCategoriesRoute){
                         popUpTo(0) {
                             inclusive = true

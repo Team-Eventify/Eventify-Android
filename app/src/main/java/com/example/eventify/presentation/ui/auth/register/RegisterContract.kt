@@ -1,10 +1,9 @@
 package com.example.eventify.presentation.ui.auth.register
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Stable
-import androidx.compose.runtime.staticCompositionLocalOf
 import com.example.eventify.presentation.utils.UiText
+
+const val OTP_LENGTH = 6
 
 
 /**
@@ -12,13 +11,17 @@ import com.example.eventify.presentation.utils.UiText
  **/
 @Stable
 data class RegisterState(
-    val login: String,
+    val login: String = "",
     val hasLoginError: Boolean = false,
     val loginError: UiText? = null,
 
-    val password: String,
+    val password: String = "",
     val hasPasswordError: Boolean = false,
-    val passwordError: UiText? = null
+    val passwordError: UiText? = null,
+
+    val otp: String? = null,
+    val otpError: Boolean = false,
+    val showOtpBottomSheet: Boolean = false,
 ){
     val isValidLogin: Boolean
         get() = login.isNotEmpty()
@@ -29,12 +32,8 @@ data class RegisterState(
     val isValidFormData: Boolean
         get() = isValidLogin && isValidPassword
 
-    companion object {
-        fun default() = RegisterState(
-            login = "",
-            password = ""
-        )
-    }
+    val isValidOtp: Boolean
+        get() = otp?.let { it.length == OTP_LENGTH } ?: false
 }
 
 /**
@@ -45,5 +44,8 @@ data class RegisterActions(
     val navigateToLogIn: () -> Unit,
     val onChangeLogin: (String) -> Unit,
     val onChangePassword: (String) -> Unit,
-    val onSubmit: () -> Unit,
+    val onRequestOtp: () -> Unit,
+    val onRegister: () -> Unit,
+    val onChangeOtp: (String) -> Unit,
+    val onTriggerOtpBottomSheet: (Boolean) -> Unit,
 )
