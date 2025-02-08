@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.eventify.domain.models.UserCreate
 import com.example.eventify.domain.DataError
 import com.example.eventify.domain.Result
-import com.example.eventify.domain.usecases.account.RegisterUseCase
+import com.example.eventify.domain.usecases.auth.RegisterUseCase
 import com.example.eventify.domain.validation.ValidateEmail
 import com.example.eventify.domain.validation.ValidatePassword
 import com.example.eventify.presentation.navigation.Navigator
@@ -14,7 +14,6 @@ import com.example.eventify.presentation.navigation.navgraphs.AuthRouter
 import com.example.eventify.presentation.ui.SnackbarController
 import com.example.eventify.presentation.ui.SnackbarEvent
 import com.example.eventify.presentation.utils.asUiText
-import dagger.Binds
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject

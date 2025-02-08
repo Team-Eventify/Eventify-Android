@@ -1,4 +1,4 @@
-package com.example.eventify.domain.usecases.account
+package com.example.eventify.domain.usecases.auth
 
 import com.example.eventify.data.repositories.tokens.TokenManager
 import javax.inject.Inject

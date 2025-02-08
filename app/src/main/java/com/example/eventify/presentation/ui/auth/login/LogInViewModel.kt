@@ -7,7 +7,7 @@ import com.example.eventify.R
 import com.example.eventify.domain.models.UserCredentials
 import com.example.eventify.domain.DataError
 import com.example.eventify.domain.Result
-import com.example.eventify.domain.usecases.account.LoginUseCase
+import com.example.eventify.domain.usecases.auth.LoginUseCase
 import com.example.eventify.presentation.navigation.Navigator
 import com.example.eventify.presentation.navigation.navgraphs.AuthRouter
 import com.example.eventify.presentation.navigation.navgraphs.RootRouter
