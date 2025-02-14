@@ -117,7 +117,7 @@ fun PrimaryButtonText(
 @Composable
 fun EventCardTitle(
     text: String,
-    textColor: Color = MaterialTheme.colorScheme.onPrimary,
+    textColor: Color = MaterialTheme.colorScheme.onSecondary,
     modifier: Modifier = Modifier
 ) {
     Text(

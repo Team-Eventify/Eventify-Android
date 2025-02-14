@@ -35,17 +35,19 @@ private val DarkColorScheme = darkColorScheme(
 private val LightColorScheme = lightColorScheme(
     primary = BrandYellow,
     primaryContainer = BrandYellow,
+    onPrimary = Color.Black,
+    onSurface = Color.Black,
     secondary = PurpleGrey40,
+    onSecondary = Color.Black,
     tertiary = Pink40,
-
-//    /* Other default colors to override
-//    background = Color(0xFFFFFBFE),
-//    surface = Color(0xFFFFFBFE),
-//    onPrimary = Color.White,
-//    onSecondary = Color.White,
-//    onTertiary = Color.White,
-//    onBackground = Color(0xFF1C1B1F),
-//    onSurface = Color(0xFF1C1B1F),
+    background = Color(0xFFececec),
+    error = Color(0xFFFF8F88),
+    errorContainer = Color(0xFFFF8F88),
+    onError = Color.Black,
+    surfaceContainer = Color(0xFFeeeeee),
+    surface = Color.White,
+    onSurfaceVariant = Color(0xFF858591),
+    surfaceVariant = Color.White,
 
 )
 

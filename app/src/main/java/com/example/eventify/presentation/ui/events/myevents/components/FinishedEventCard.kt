@@ -1,5 +1,6 @@
 package com.example.eventify.presentation.ui.events.myevents.components
 
+import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -115,10 +116,11 @@ fun FinishedEventCard(
 }
 
 
-@Preview(name = "MyPastEventCard")
+@Preview(name = "MyPastEventCard", uiMode = Configuration.UI_MODE_NIGHT_NO)
+@Preview(name = "MyPastEventCard", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun PreviewMyPastEventCardDark() {
-    EventifyTheme(darkTheme = true) {
+    EventifyTheme {
         FinishedEventCard(
             event = ShortEventItem(
                 id = "",
@@ -134,10 +136,11 @@ private fun PreviewMyPastEventCardDark() {
     }
 }
 
-@Preview(name = "MyPastEventCard")
+@Preview(name = "MyPastEventCard", uiMode = Configuration.UI_MODE_NIGHT_NO)
+@Preview(name = "MyPastEventCard", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun PreviewMyPastEventCardDarkWithButton() {
-    EventifyTheme(darkTheme = true) {
+    EventifyTheme {
         FinishedEventCard(
             showFeedbackButton = true,
             event = ShortEventItem(

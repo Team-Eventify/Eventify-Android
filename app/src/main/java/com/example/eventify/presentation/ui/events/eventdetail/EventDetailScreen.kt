@@ -84,6 +84,7 @@ fun EventDetailScreen(
             ) {
                 ChipInfo(text = state.event.eventInfo.start.asDate())
                 ChipInfo(text = state.event.eventInfo.start.asTime())
+                ChipInfo(text = state.event.eventInfo.location)
 
                 state.event.categories.forEach{ tag ->
                     CategoryTagChip(
@@ -138,7 +139,7 @@ fun EventDetailScreen(
 @Preview(name = "EventDetailDark", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Preview(name = "EventDetailLight", uiMode = Configuration.UI_MODE_NIGHT_NO)
 private fun EventDetailScreenLightPreview() {
-    EventifyTheme() {
+    EventifyTheme {
         Scaffold { _ ->
             EventDetailScreen(
                 state = UiState.ShowEvent(

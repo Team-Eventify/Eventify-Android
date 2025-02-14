@@ -1,5 +1,6 @@
 package com.example.eventify.presentation.ui.common
 
+import android.annotation.SuppressLint
 import androidx.annotation.IntRange
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
@@ -7,6 +8,8 @@ import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -23,6 +26,23 @@ import androidx.compose.ui.graphics.withSaveLayer
 import kotlin.math.cos
 import kotlin.math.sin
 
+private val gradientColorsWhite = listOf(
+    Color(0xFFFAFAFA),
+    Color(0xFFF2F2F2),
+    Color(0xFFE3E3E3),
+    Color(0xFFF2F2F2),
+    Color(0xFFFAFAFA),
+)
+
+private val gradientColorsDark = listOf(
+    Color(0xFF202020),
+    Color(0xFF2B2B2B),
+    Color(0xFF8F8B8B),
+    Color(0xFF2B2B2B),
+    Color(0xFF202020),
+)
+
+@SuppressLint("SuspiciousModifierThen")
 @Composable
 fun Modifier.shimmer(
     showShimmer: Boolean = true,
@@ -32,13 +52,11 @@ fun Modifier.shimmer(
 ): Modifier {
     if (!showShimmer) return this
 
-    val gradient = remember { mutableStateOf(listOf(
-        Color(0xFF202020),
-        Color(0xFF2B2B2B),
-        Color(0xFF8F8B8B),
-        Color(0xFF2B2B2B),
-        Color(0xFF202020),
-    )) }
+    val isDarkTheme = isSystemInDarkTheme()
+
+    val gradient = remember(isDarkTheme) { mutableStateOf(
+        gradientColorsDark.takeIf { isDarkTheme } ?: gradientColorsWhite
+    ) }
 
     val transition = rememberInfiniteTransition(label = "shimmer animation transition")
     val translateAnimation by transition.animateFloat(

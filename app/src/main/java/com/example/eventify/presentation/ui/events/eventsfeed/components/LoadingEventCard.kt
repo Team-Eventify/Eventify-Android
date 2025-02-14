@@ -1,5 +1,6 @@
 package com.example.eventify.presentation.ui.events.eventsfeed.components
 
+import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -70,10 +71,11 @@ fun LoadingEventCard(
 
 
 
-@Preview(name = "LoadingEventCard")
+@Preview(name = "LoadingEventCard Dark", uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(name = "LoadingEventCard Light", uiMode = Configuration.UI_MODE_NIGHT_NO)
 @Composable
 private fun PreviewLoadingEventCard() {
-    EventifyTheme(darkTheme = true) {
+    EventifyTheme {
         LoadingEventCard()
     }
 }

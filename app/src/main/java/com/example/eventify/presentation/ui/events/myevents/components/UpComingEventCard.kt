@@ -1,5 +1,7 @@
 package com.example.eventify.presentation.ui.events.myevents.components
 
+import android.content.res.Configuration
+import android.graphics.Bitmap.Config
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -15,6 +17,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -44,7 +47,7 @@ fun UpComingEventCard(
 ) {
     Card(
         colors = CardDefaults.cardColors(
-            containerColor = Color(0xFF242427)
+            containerColor = MaterialTheme.colorScheme.surfaceContainer,
         ),
         onClick = { onClick?.invoke(event.id) },
         modifier = Modifier
@@ -67,7 +70,6 @@ fun UpComingEventCard(
             ) {
                 EventCardTitle(
                     text = event.title,
-                    textColor = Color.White
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 FlowRow(
@@ -96,30 +98,9 @@ fun UpComingEventCard(
     }
 }
 
-@Preview(name = "UpComingEventCard")
-@Composable
-private fun PreviewMyEventCardDark() {
-    EventifyTheme(darkTheme = true) {
-        UpComingEventCard(
-            event = ShortEventItem(
-                id = UUID.randomUUID().toString(),
-                title = LoremIpsum(3)
-                    .values
-                    .toList()
-                    .joinToString { it },
-                description = LoremIpsum(9)
-                    .values
-                    .toList()
-                    .joinToString { it },
-                start = Random.nextLong(),
-                end = Random.nextLong(),
-                location = LoremIpsum(2).values.joinToString()
-            )
-        )
-    }
-}
 
-@Preview(name = "UpComingEventCard")
+@Preview(name = "UpComingEventCard", uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(name = "UpComingEventCard", uiMode = Configuration.UI_MODE_NIGHT_NO)
 @Composable
 private fun PreviewMyEventCardLight() {
     EventifyTheme {
