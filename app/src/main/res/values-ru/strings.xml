@@ -82,4 +82,6 @@
     <string name="about_us">О нас</string>
     <string name="upcoming_events">Предстоящие мероприятия</string>
     <string name="finished_events">Прошедшие мероприятия</string>
+    <string name="email_confirmation">Подтверждение почты</string>
+    <string name="otp_description">Мы отправили код подтверждения на вашу почту. Пожалуйста, введите его ниже, чтобы завершить процесс.</string>
 </resources>
