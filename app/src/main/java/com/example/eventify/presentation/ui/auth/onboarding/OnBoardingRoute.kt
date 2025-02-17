@@ -36,7 +36,7 @@ fun OnBoardingRoute(
 fun rememberOnBoardingActions(coordinator: OnBoardingCoordinator): OnBoardingActions {
     return remember(coordinator) {
         OnBoardingActions(
-            onLeaveFromOnboarding = coordinator.viewModel::leaveFromOnboarding
+            onFinishOnboarding = coordinator.viewModel::finishOnboarding
         )
     }
 }

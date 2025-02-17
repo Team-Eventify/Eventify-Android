@@ -29,20 +29,23 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
+import com.example.eventify.data.storages.LocaleStorage
+import com.example.eventify.data.storages.SharedStorage
 import com.example.eventify.domain.SessionManager
 import com.example.eventify.domain.di.RequestsSessionManager
 import com.example.eventify.presentation.models.ScaffoldViewState
 import com.example.eventify.presentation.navigation.NavigationAction
 import com.example.eventify.presentation.navigation.Navigator
+import com.example.eventify.presentation.navigation.navgraphs.Destination
 import com.example.eventify.presentation.navigation.navgraphs.MainNavHost
 import com.example.eventify.presentation.navigation.navgraphs.RootRouter
 import com.example.eventify.presentation.ui.SnackbarController
 import com.example.eventify.presentation.ui.common.BottomNavigationBar
 import com.example.eventify.presentation.ui.common.EventifySnackbar
-import com.example.eventify.presentation.ui.common.OfflineScreen
 import com.example.eventify.presentation.ui.common.screens.NoInternetConnectionScreen
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 import com.example.eventify.presentation.utils.ObserveAsState
+import com.example.eventify.presentation.utils.isShowOnboarding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -58,6 +61,10 @@ class MainActivity : ComponentActivity() {
     @RequestsSessionManager
     @Inject
     lateinit var sessionManager: SessionManager
+
+    @SharedStorage
+    @Inject
+    lateinit var localeStorage: LocaleStorage
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
@@ -79,9 +86,6 @@ class MainActivity : ComponentActivity() {
 
 
                 val navController = rememberNavController()
-
-                val currentDist =
-                    runBlocking { if (sessionManager.isLoggedIn()) RootRouter.HomeRoute else RootRouter.OnboardingRoute }
 
                 ObserveAsState(flow = navigator.navigationActions) { action ->
                     when (action) {
@@ -142,14 +146,14 @@ class MainActivity : ComponentActivity() {
                     ) { innerPadding ->
                         MainNavHost(
                             navController = navController,
-                            startDestination = currentDist,
+                            startDestination = getDefaultDestination(),
                             scaffoldViewState = scaffoldState,
                             modifier = Modifier.padding(innerPadding)
                         )
                     }
 
+                    // Connectivity
                     val connectionState by rememberConnectivityState()
-
                     val isConnected by remember(connectionState) {
                         derivedStateOf {
                             connectionState === NetworkConnectionState.Available
@@ -161,6 +165,15 @@ class MainActivity : ComponentActivity() {
                     }
 
                 }
+            }
+        }
+    }
+    private fun getDefaultDestination(): Destination {
+        return runBlocking {
+            when {
+                localeStorage.isShowOnboarding() -> RootRouter.OnboardingRoute
+                sessionManager.isLoggedIn() -> RootRouter.HomeRoute
+                else -> RootRouter.AuthRoute
             }
         }
     }

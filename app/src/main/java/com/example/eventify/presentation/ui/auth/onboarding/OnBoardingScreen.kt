@@ -31,7 +31,7 @@ fun OnBoardingScreen(
     state: OnBoardingState,
     actions: OnBoardingActions
 ) {
-    var state by remember { mutableStateOf(0) }
+    var currentPageState by remember { mutableStateOf(0) }
 
     val items = listOf(
         OnBoardingItem(
@@ -74,8 +74,8 @@ fun OnBoardingScreen(
         items.size
     }
 
-    LaunchedEffect(state) {
-        pagerState.animateScrollToPage(state)
+    LaunchedEffect(currentPageState) {
+        pagerState.animateScrollToPage(currentPageState)
     }
 
     Column(
@@ -83,13 +83,13 @@ fun OnBoardingScreen(
             .fillMaxSize()
     ) {
         TabRow(
-            selectedTabIndex = state,
+            selectedTabIndex = currentPageState,
             containerColor = Color.Transparent
         ) {
             items.forEachIndexed { index, _ ->
                 Tab(
-                    selected = state == index,
-                    onClick = { state = index },
+                    selected = currentPageState == index,
+                    onClick = { currentPageState = index },
                     text = null
                 )
             }
@@ -106,11 +106,11 @@ fun OnBoardingScreen(
                 itemState = items[index],
                 onNext = {
                     if (index == items.size -1)
-                        actions.onLeaveFromOnboarding()
+                        actions.onFinishOnboarding()
                     else
-                        state = (index + 1) % items.size
+                        currentPageState = (index + 1) % items.size
                 },
-                onSkip = actions.onLeaveFromOnboarding
+                onSkip = actions.onFinishOnboarding
             )
         }
     }

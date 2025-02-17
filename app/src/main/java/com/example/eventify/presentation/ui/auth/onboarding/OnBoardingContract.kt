@@ -11,7 +11,7 @@ class OnBoardingState
  * passed to the coordinator to handle
  **/
 data class OnBoardingActions(
-    val onLeaveFromOnboarding: () -> Unit = {}
+    val onFinishOnboarding: () -> Unit = {}
 )
 
 
