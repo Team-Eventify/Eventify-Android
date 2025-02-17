@@ -44,6 +44,7 @@ pushProviderFirebase = "4.0.0"
 pushVersion = "4.0.0"
 retrofit = "2.11.0"
 navigationCompose = "2.8.3"
+securityCrypto = "1.0.0-alpha02"
 timber = "5.0.1"
 googleServices = "4.4.2"
 firebaseMessaging = "22.0.0"
@@ -62,6 +63,7 @@ androidx-credentials-play-services-auth = { module = "androidx.credentials:crede
 androidx-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "foundation" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 androidx-legacy-support-v4 = { module = "androidx.legacy:legacy-support-v4", version.ref = "legacySupportV4" }
+androidx-security-crypto = { module = "androidx.security:security-crypto", version.ref = "securityCrypto" }
 byte-buddy = { module = "net.bytebuddy:byte-buddy", version.ref = "byteBuddy" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coilComposeVersion" }

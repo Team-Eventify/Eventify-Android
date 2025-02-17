@@ -165,6 +165,8 @@ dependencies {
 
     implementation(libs.play.services.base)
 
+    implementation(libs.androidx.security.crypto)
+
 }
 
 tasks.withType<Test>().configureEach {
