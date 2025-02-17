@@ -14,7 +14,7 @@ import kotlinx.serialization.Serializable
 
 fun NavGraphBuilder.AuthNavGraph(
     scaffoldViewState: MutableState<ScaffoldViewState>,
-    startDestination: AuthRouter = AuthRouter.LogInRoute
+    startDestination: AuthRouter = AuthRouter.RegisterRoute
 ) {
     navigation<RootRouter.AuthRoute>(
         startDestination = startDestination

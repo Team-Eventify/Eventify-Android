@@ -1,7 +1,7 @@
 package com.example.eventify.data.remote.utils
 
 import com.example.eventify.data.repositories.auth.AuthUserRepository
-import com.example.eventify.data.repositories.tokens.TokenManager
+import com.example.eventify.data.repositories.tokens.TokenProvider
 import com.example.eventify.domain.Result
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
@@ -14,7 +14,7 @@ val Response.responseCount: Int
     get() = generateSequence(this) { it.priorResponse }.count()
 
 class TokenAuthenticator @Inject constructor(
-    private val tokenManager: TokenManager,
+    private val tokenProvider: TokenProvider,
     private val authRepository: AuthUserRepository
 ) : Authenticator {
 
@@ -24,7 +24,7 @@ class TokenAuthenticator @Inject constructor(
         if (!response.request.isAuthRequired()) return null
 
 
-        val refreshToken = tokenManager.getRefreshToken() ?: return null
+        val refreshToken = tokenProvider.getRefreshToken() ?: return null
 
         val newTokensData = runBlocking {
             when (val tokenResult = authRepository.refreshAccessToken(refreshToken = refreshToken)){
@@ -33,7 +33,7 @@ class TokenAuthenticator @Inject constructor(
             }
         } ?: return null
 
-        tokenManager.apply {
+        tokenProvider.apply {
             setAccessToken(newTokensData.accessToken)
             setRefreshToken(newTokensData.refreshToken)
             setUserId(newTokensData.userID)

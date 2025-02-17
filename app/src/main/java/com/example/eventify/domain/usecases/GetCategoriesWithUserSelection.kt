@@ -1,23 +1,21 @@
 package com.example.eventify.domain.usecases
 
-import android.graphics.Color
 import com.example.eventify.data.repositories.category.CategoryRepository
-import com.example.eventify.data.repositories.tokens.TokenManager
+import com.example.eventify.data.repositories.tokens.TokenProvider
 import com.example.eventify.data.repositories.users.UsersRepository
 import com.example.eventify.domain.DataError
 import com.example.eventify.domain.Result
 import com.example.eventify.presentation.models.CategorySelectItem
-import com.example.eventify.presentation.utils.toColor
 import com.example.eventify.presentation.utils.toColorOrNull
 import javax.inject.Inject
 
 class GetCategoriesWithUserSelection @Inject constructor(
     private val usersRepository: UsersRepository,
     private val categoriesRepository: CategoryRepository,
-    private val tokenManager: TokenManager
+    private val tokenProvider: TokenProvider
 ){
     suspend operator fun invoke(): Result<List<CategorySelectItem>, DataError>{
-        val userId = tokenManager.getUserId() ?: throw Exception()
+        val userId = tokenProvider.getUserId() ?: throw Exception()
 
         val allCategories = when (val result = categoriesRepository.getCategoriesList()){
             is Result.Error -> return Result.Error(result.error)

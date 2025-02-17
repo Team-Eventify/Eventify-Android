@@ -1,10 +1,8 @@
 package com.example.eventify.presentation.ui.auth.choosecategories
 
 import android.content.Context
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.eventify.data.repositories.tokens.TokenManager
 import com.example.eventify.domain.Result
 import com.example.eventify.domain.usecases.account.SetUserCategoriesUseCase
 import com.example.eventify.domain.usecases.categories.GetCategoriesUseCase

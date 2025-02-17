@@ -1,12 +1,12 @@
 package com.example.eventify.domain.usecases.auth
 
-import com.example.eventify.data.repositories.tokens.TokenManager
+import com.example.eventify.data.repositories.tokens.TokenProvider
 import javax.inject.Inject
 
 class LogOutUseCase @Inject constructor(
-    private val tokenManager: TokenManager
+    private val tokenProvider: TokenProvider
 )  {
     operator fun invoke(){
-        tokenManager.clear()
+        tokenProvider.clear()
     }
 }

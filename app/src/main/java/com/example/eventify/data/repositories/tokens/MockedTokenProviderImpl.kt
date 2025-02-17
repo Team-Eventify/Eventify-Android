@@ -3,7 +3,7 @@ package com.example.eventify.data.repositories.tokens
 import com.auth0.jwt.JWT
 import com.auth0.jwt.interfaces.DecodedJWT
 
-class MockedTokenManagerImpl: TokenManager {
+class MockedTokenProviderImpl: TokenProvider {
     private var accessToken: String? = null
     private var refreshToken: String? = null
     private var userId: String? = null

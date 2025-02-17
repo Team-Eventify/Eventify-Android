@@ -43,7 +43,7 @@ class SharedPreferencesStorageImpl @Inject constructor(
         sharedPreferences.edit(commit = true) { removeAll() }
     }
 
-    override fun getString(key: String, defaultValue: String): String {
+    override fun getString(key: String, defaultValue: String?): String? {
         return sharedPreferences.getString(key, defaultValue) ?: defaultValue
     }
 
