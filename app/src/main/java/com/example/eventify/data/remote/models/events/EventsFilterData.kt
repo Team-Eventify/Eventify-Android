@@ -7,7 +7,8 @@ data class EventsFilterData(
     val ownerId: String? = null,
     val start: Int? = null,
     val end: Int? = null,
-    val categoryIds: List<String>? = null
+    val categoryIds: List<String>? = null,
+    val title: String? = null,
 ){
     /**
      * Returns raw value that can be passed to api query call

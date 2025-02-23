@@ -22,7 +22,8 @@ class EventRepositoryImpl @Inject constructor(
             ownerID = filter?.ownerId,
             start = filter?.start,
             end = filter?.end,
-            categoryIds = filter?.validCategoryIds
+            categoryIds = filter?.validCategoryIds,
+            title = filter?.title,
         ).handle {
             transformSuccess { body ->
                 body.map { it.toEventInfo() }

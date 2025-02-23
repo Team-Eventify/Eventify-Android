@@ -20,7 +20,8 @@ interface EventsAPI {
         @Query("ownerID") ownerID: String? = null,
         @Query("start") start: Int? = null,
         @Query("end") end: Int? = null,
-        @Query("categoryIDs") categoryIds: String? = null
+        @Query("categoryIDs") categoryIds: String? = null,
+        @Query("searchByTitle") title: String? = null,
     ): Response<List<EventInfoResponse>>
 
     @GET("{id}")
