@@ -8,6 +8,7 @@ import com.example.eventify.domain.models.EventWithCategories
 import javax.inject.Inject
 import com.example.eventify.domain.Result
 import com.example.eventify.domain.models.FullEventDetail
+import timber.log.Timber
 
 /**
  * Use case to get event with attached categories data.
@@ -27,9 +28,12 @@ class GetEventDetailUseCase @Inject constructor(
             is Result.Error -> return Result.Error(result.error)
             is Result.Success -> result.data
         }
-        val categories = event.categories?.map {
+        val categories = event.categories?.mapNotNull {
             when (val result = categoryRepository.readCategory(it)){
-                is Result.Error -> return Result.Error(result.error)
+                is Result.Error -> {
+                    Timber.w("Category with UUID($it) not found")
+                    null
+                }
                 is Result.Success -> result.data
             }
         } ?: emptyList()
