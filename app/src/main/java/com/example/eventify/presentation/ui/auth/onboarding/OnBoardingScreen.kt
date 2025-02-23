@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.example.eventify.R
 import com.example.eventify.presentation.ui.auth.onboarding.components.OnboardingView
 import com.example.eventify.presentation.ui.theme.EventifyTheme
+import com.example.eventify.presentation.ui.theme.LocalDimentions
 
 
 @Composable
@@ -32,6 +33,7 @@ fun OnBoardingScreen(
     actions: OnBoardingActions
 ) {
     var currentPageState by remember { mutableStateOf(0) }
+    val dimentions = LocalDimentions.current
 
     val items = listOf(
         OnBoardingItem(
@@ -97,7 +99,7 @@ fun OnBoardingScreen(
         HorizontalPager(
             state = pagerState,
             userScrollEnabled = false,
-            contentPadding = PaddingValues(horizontal = 10.dp),
+            contentPadding = dimentions.windowPaddings,
             pageSpacing = 20.dp,
             modifier = Modifier
                 .fillMaxSize()

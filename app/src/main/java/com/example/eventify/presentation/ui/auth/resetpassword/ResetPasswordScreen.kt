@@ -16,17 +16,20 @@ import com.example.eventify.presentation.ui.common.PrimaryButtonText
 import com.example.eventify.presentation.ui.common.TextInput
 import com.example.eventify.presentation.ui.common.TitleText
 import com.example.eventify.presentation.ui.theme.EventifyTheme
+import com.example.eventify.presentation.ui.theme.LocalDimentions
 
 @Composable
 fun ResetPasswordScreen(
     state: ResetPasswordState,
     actions: ResetPasswordActions,
 ) {
+    val dimmentions = LocalDimentions.current
+
     Column(
         verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterVertically),
         modifier = Modifier
             .fillMaxSize()
-            .padding(15.dp)
+            .padding(dimmentions.windowPaddings)
     ) {
         TitleText(text = "Сброс пароля")
         BodyText(

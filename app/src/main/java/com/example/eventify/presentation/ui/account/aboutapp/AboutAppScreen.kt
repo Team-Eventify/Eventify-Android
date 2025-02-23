@@ -21,18 +21,21 @@ import com.example.eventify.R
 import com.example.eventify.presentation.ui.account.profile.components.NavigationSettingsItem
 import com.example.eventify.presentation.ui.account.profile.components.SettingsBlock
 import com.example.eventify.presentation.ui.theme.EventifyTheme
+import com.example.eventify.presentation.ui.theme.LocalDimentions
 
 @Composable
 fun AboutAppScreen(
     state: AboutAppState,
     actions: AboutAppActions
 ) {
+    val dimmentions = LocalDimentions.current
+
     Column(
         verticalArrangement = Arrangement.spacedBy(10.dp, Alignment.Top),
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxSize()
-            .padding(10.dp)
+            .padding(dimmentions.windowPaddings)
     ) {
         Image(
             painter = painterResource(R.drawable.ic_launcher_foreground),

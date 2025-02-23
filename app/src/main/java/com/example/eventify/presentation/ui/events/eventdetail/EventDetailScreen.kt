@@ -42,6 +42,7 @@ import com.example.eventify.presentation.ui.common.buttons.PrimaryDeclineButton
 import com.example.eventify.presentation.ui.common.CategoryTagChip
 import com.example.eventify.presentation.ui.common.EventImage
 import com.example.eventify.presentation.ui.theme.EventifyTheme
+import com.example.eventify.presentation.ui.theme.LocalDimentions
 import com.example.eventify.presentation.utils.asDate
 import com.example.eventify.presentation.utils.asTime
 import com.example.eventify.presentation.utils.toColorOrNull
@@ -55,6 +56,7 @@ fun EventDetailScreen(
     imageLoader: ImageLoader,
 ) {
     val pagerState = rememberPagerState(pageCount = { state.event.eventInfo.pictures.size})
+    val dimmentions = LocalDimentions.current
 
     Column(
         modifier = Modifier
@@ -76,7 +78,7 @@ fun EventDetailScreen(
         }
         Column(
             modifier = Modifier
-                .padding(10.dp)
+                .padding(dimmentions.windowPaddings)
         ) {
 
             FlowRow(

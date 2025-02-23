@@ -24,6 +24,7 @@ import com.example.eventify.presentation.ui.account.profile.components.Navigatio
 import com.example.eventify.presentation.ui.account.profile.components.UserProfilePanel
 import com.example.eventify.presentation.ui.common.shimmer
 import com.example.eventify.presentation.ui.theme.EventifyTheme
+import com.example.eventify.presentation.ui.theme.LocalDimentions
 
 @Composable
 fun ProfileScreen(
@@ -31,6 +32,7 @@ fun ProfileScreen(
     actions: ProfileActions,
 ) {
     val openLogOutDialog = remember { mutableStateOf(false) }
+    val dimmentions = LocalDimentions.current
 
     if (openLogOutDialog.value) {
         LogOutDialog(
@@ -48,7 +50,7 @@ fun ProfileScreen(
         verticalArrangement = Arrangement.spacedBy(20.dp),
         modifier = Modifier
             .fillMaxSize()
-            .padding(10.dp)
+            .padding(dimmentions.windowPaddings)
     ) {
         UserProfilePanel(
             firstName = state.userInfo?.firstName,

@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import com.example.eventify.R
 import com.example.eventify.presentation.models.CategorySelectItem
@@ -29,6 +30,8 @@ import com.example.eventify.presentation.ui.common.PrimaryButtonText
 import com.example.eventify.presentation.ui.common.SubHeadingText
 import com.example.eventify.presentation.ui.common.shimmer
 import com.example.eventify.presentation.ui.theme.EventifyTheme
+import com.example.eventify.presentation.ui.theme.LocalDimentions
+import kotlin.random.Random
 
 @Composable
 fun ProfileEditScreen(
@@ -37,6 +40,7 @@ fun ProfileEditScreen(
 ) {
     val scrollState = rememberScrollState()
     val openDeleteAccountDialog = remember { mutableStateOf(false) }
+    val dimmentions = LocalDimentions.current
 
     if (openDeleteAccountDialog.value) {
         DeleteAccountDialog(
@@ -54,7 +58,7 @@ fun ProfileEditScreen(
         verticalArrangement = Arrangement.spacedBy(10.dp, Alignment.Top),
         horizontalAlignment = Alignment.Start,
         modifier = Modifier
-            .padding(horizontal = 10.dp)
+            .padding(dimmentions.windowPaddings)
             .verticalScroll(scrollState)
     ) {
         SubHeadingText(text = "Имя")
@@ -140,45 +144,14 @@ private fun ProfileEditScreenDarkPreview() {
                     middleName = "Ivanovich",
                     email = "ivan@mail.ru",
                     telegramName = "ivan",
-                    categoryItems = listOf(
+                    categoryItems = List(7) {
                         CategorySelectItem(
-                            id = "",
-                            title = "Sport",
-                            selected = false,
+                            id = it.toString(),
+                            title = LoremIpsum(Random.nextInt(1, 3)).values.joinToString(),
+                            selected = Random.nextBoolean(),
                             color = Color.Cyan
-                        ),
-                        CategorySelectItem(
-                            id = "",
-                            title = "Game Dev",
-                            selected = true,
-                            color = Color.Red
-                        ),
-                        CategorySelectItem(
-                            id = "",
-                            title = "Communication",
-                            selected = false,
-                            color = Color.Cyan
-                        ),
-                        CategorySelectItem(
-                            id = "",
-                            title = "Backend",
-                            selected = true,
-                            color = Color.Green
-                        ),
-                        CategorySelectItem(
-                            id = "",
-                            title = "Mobile",
-                            selected = true,
-                            color = Color.Blue
-                        ),
-                        CategorySelectItem(
-                            id = "",
-                            title = "Frontend",
-                            selected = false,
-                            color = Color.Magenta
-                        ),
-
                         )
+                    }
                 ),
                 actions = ProfileEditActions()
             )

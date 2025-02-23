@@ -20,6 +20,7 @@ import com.example.eventify.presentation.ui.events.myevents.components.FinishedE
 import com.example.eventify.presentation.ui.events.myevents.components.UpComingEventCard
 import com.example.eventify.presentation.ui.common.HeadingText
 import com.example.eventify.presentation.ui.theme.EventifyTheme
+import com.example.eventify.presentation.ui.theme.LocalDimentions
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import java.util.UUID
@@ -31,12 +32,12 @@ fun MyEventsScreen(
     actions: MyEventsActions,
 ) {
     val swipeRefreshState = rememberSwipeRefreshState(state.isRefreshing)
+    val dimmentions = LocalDimentions.current
 
     SwipeRefresh(
         state = swipeRefreshState,
         onRefresh = actions.onRefresh
-    ){
-
+    ) {
         LazyColumn(
             contentPadding = PaddingValues(horizontal = 10.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp)

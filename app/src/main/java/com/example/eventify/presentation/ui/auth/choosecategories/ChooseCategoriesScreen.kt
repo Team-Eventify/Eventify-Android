@@ -3,6 +3,7 @@ package com.example.eventify.presentation.ui.auth.choosecategories
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,17 +22,21 @@ import com.example.eventify.presentation.ui.common.PrimaryButtonText
 import com.example.eventify.presentation.ui.common.SkipTextButton
 import com.example.eventify.presentation.ui.common.TitleText
 import com.example.eventify.presentation.ui.theme.EventifyTheme
+import com.example.eventify.presentation.ui.theme.LocalDimentions
+import com.example.eventify.presentation.ui.theme.space20
 
 @Composable
 fun ChooseCategoriesScreen(
     state: ChooseCategoriesState,
     actions: ChooseCategoriesActions,
 ) {
+    val dimmentions = LocalDimentions.current
 
     Column(
         verticalArrangement = Arrangement.SpaceAround,
         modifier = Modifier
             .fillMaxSize()
+            .padding(dimmentions.windowPaddings)
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top)
@@ -49,7 +54,7 @@ fun ChooseCategoriesScreen(
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Bottom)
+            verticalArrangement = Arrangement.spacedBy(space20, Alignment.Bottom)
         ) {
             AnnotationText(text = stringResource(R.string.you_can_always_change_your_choice))
             PrimaryButton(

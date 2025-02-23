@@ -37,6 +37,7 @@ import com.example.eventify.presentation.ui.common.PrimaryButtonText
 import com.example.eventify.presentation.ui.common.TextInput
 import com.example.eventify.presentation.ui.common.TitleText
 import com.example.eventify.presentation.ui.theme.EventifyTheme
+import com.example.eventify.presentation.ui.theme.LocalDimentions
 
 @Composable
 fun LogInScreen(
@@ -47,11 +48,13 @@ fun LogInScreen(
         FocusRequester()
     }
     val focusManager = LocalFocusManager.current
+    val dimmentions = LocalDimentions.current
+
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(15.dp),
+            .padding(dimmentions.windowPaddings),
         verticalArrangement = Arrangement.Center
     ) {
         TitleText(text = stringResource(R.string.log_in))

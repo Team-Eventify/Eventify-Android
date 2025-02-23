@@ -39,6 +39,7 @@ import com.example.eventify.presentation.ui.common.buttons.PrimaryButton
 import com.example.eventify.presentation.ui.common.TextInput
 import com.example.eventify.presentation.ui.common.TitleText
 import com.example.eventify.presentation.ui.theme.EventifyTheme
+import com.example.eventify.presentation.ui.theme.LocalDimentions
 import com.example.eventify.presentation.utils.UiText
 
 
@@ -52,7 +53,7 @@ fun RegisterScreen(
         FocusRequester()
     }
     val focusManager = LocalFocusManager.current
-
+    val dimmentions = LocalDimentions.current
     val sheetState = rememberModalBottomSheetState()
 
     if (state.showOtpBottomSheet){
@@ -70,7 +71,7 @@ fun RegisterScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(15.dp)
+            .padding(dimmentions.windowPaddings)
         ,
         verticalArrangement = Arrangement.Center
     ) {
