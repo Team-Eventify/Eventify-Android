@@ -57,7 +57,6 @@ class ProfileViewModel @Inject constructor(
                                 id = currentUser.data.id,
                                 firstName = currentUser.data.firstName,
                                 lastName = currentUser.data.lastName,
-                                middleName = currentUser.data.middleName,
                                 email = currentUser.data.email
                             )
                         )

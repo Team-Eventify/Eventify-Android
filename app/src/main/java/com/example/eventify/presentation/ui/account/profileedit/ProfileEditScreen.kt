@@ -77,14 +77,6 @@ fun ProfileEditScreen(
                 .shimmer(showShimmer = state.isLoading)
         )
 
-        SubHeadingText(text = "Отчество")
-        ProfileEditInput(
-            text = state.middleName,
-            onChange = actions.onChangeMiddleName,
-            modifier = Modifier
-                .shimmer(showShimmer = state.isLoading)
-        )
-
         SubHeadingText(text = "Электронная поста")
         ProfileEditInput(
             text = state.email,
@@ -141,7 +133,6 @@ private fun ProfileEditScreenDarkPreview() {
                 state = ProfileEditState(
                     firstName = "Ivan",
                     lastName = "Ivanov",
-                    middleName = "Ivanovich",
                     email = "ivan@mail.ru",
                     telegramName = "ivan",
                     categoryItems = List(7) {

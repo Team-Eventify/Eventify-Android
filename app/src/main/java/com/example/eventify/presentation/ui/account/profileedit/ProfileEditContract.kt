@@ -27,9 +27,6 @@ data class ProfileEditState(
     val lastName: String = "",
     val lastNameError: String? = null,
 
-    val middleName: String = "",
-    val middleNameError: String? = null,
-
     val telegramName: String = "",
     val hasTelegramNameError: Boolean = false,
     val telegramNameError: UiText? = null,
@@ -47,7 +44,6 @@ data class ProfileEditActions(
     val onChangeEmail: (String) -> Unit = {},
     val onChangeFirstName: (String) -> Unit = {},
     val onChangeLastName: (String) -> Unit = {},
-    val onChangeMiddleName: (String) -> Unit = {},
     val onChangeTelegram: (String) -> Unit = {},
     val onDeleteAccount: () -> Unit = {},
 )

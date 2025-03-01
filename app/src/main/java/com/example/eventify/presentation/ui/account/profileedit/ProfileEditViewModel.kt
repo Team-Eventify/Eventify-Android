@@ -66,7 +66,6 @@ class ProfileEditViewModel @Inject constructor(
                     _stateFlow.update { currentState ->
                         currentState.copy(
                             firstName = user.firstName,
-                            middleName = user.middleName,
                             lastName = user.lastName,
                             email = user.email,
                             telegramName = user.telegramName
@@ -105,7 +104,6 @@ class ProfileEditViewModel @Inject constructor(
             UserChange(
                 firstName = firstName,
                 lastName = lastName,
-                middleName = middleName,
                 email = email,
                 telegramName = telegramName
             )
@@ -199,13 +197,6 @@ class ProfileEditViewModel @Inject constructor(
         _stateFlow.update { currentState ->
             currentState.copy(
                 lastName = value
-            )
-        }
-    }
-    fun changeUserMiddleName(value: String){
-        _stateFlow.update { currentState ->
-            currentState.copy(
-                middleName = value
             )
         }
     }

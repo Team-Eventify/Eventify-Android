@@ -7,7 +7,6 @@ data class UserInfoResponse(
     val firstName: String?,
     val id: String,
     val lastName: String?,
-    val middleName: String?,
     val telegramName: String?
 )
 
@@ -17,6 +16,5 @@ fun UserInfoResponse.toUserInfo(): User = User(
     firstName = this.firstName ?: "",
     id = this.id,
     lastName = this.lastName ?: "",
-    middleName = this.middleName ?: "",
     telegramName = this.telegramName ?: "",
 )

@@ -48,7 +48,6 @@ fun rememberProfileEditActions(coordinator: ProfileEditCoordinator): ProfileEdit
             onChangeEmail = coordinator.viewModel::changeUserEmail,
             onChangeFirstName = coordinator.viewModel::changeUserFirstName,
             onChangeLastName = coordinator.viewModel::changeUserLastName,
-            onChangeMiddleName = coordinator.viewModel::changeUserMiddleName,
             onChangeTelegram = coordinator.viewModel::changeUserTelegram,
             onChangeCategoryFilterActive = coordinator.viewModel::changeCategoryFilterActive,
             onDeleteAccount = coordinator.viewModel::deleteAccount,
