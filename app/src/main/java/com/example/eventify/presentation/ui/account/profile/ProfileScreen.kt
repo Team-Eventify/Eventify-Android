@@ -97,7 +97,6 @@ private fun ProfileScreenPreview() {
                         id = "",
                         firstName = "Иван",
                         lastName = "Иванов",
-                        middleName = "Иванович",
                         email = "ivanov@mail.ru"
                     )
                 ),
