@@ -6,41 +6,36 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.eventify.presentation.models.ScaffoldViewState
 import com.example.eventify.presentation.ui.events.search.components.EventsSearchBar
 
 @Composable
 fun SearchRoute(
-    scaffoldViewState: MutableState<ScaffoldViewState>,
     coordinator: SearchCoordinator = rememberSearchCoordinator()
 ) {
-    // State observing and declarations
     val uiState by coordinator.screenStateFlow.collectAsStateWithLifecycle()
-
-    // UI Actions
     val actions = rememberSearchActions(coordinator)
 
-    LaunchedEffect(Unit) {
-        scaffoldViewState.value = scaffoldViewState.value.copy(
-            showBottomBar = true,
-            topBar = {
-                EventsSearchBar(
-                    query = uiState.searchText,
-                    onSearch = { actions.onSearch() },
-                    onQueryChange = actions.onSearchTextChanged,
-                    onActiveChange = actions.onChangeActiveSearchBar,
-                    active = uiState.isActiveSearchBar,
-                    onClearQuery = actions.onClearSearchText,
-                    searchItems = uiState.categories,
-                    onChangeCategoryFilterActive = actions.onChangeCategoryFilterActive
-                )
-            }
-        )
-
-    }
-
-    // UI Rendering
-    SearchScreen(uiState, actions)
+//    LaunchedEffect(Unit) {
+//        scaffoldViewState.value = scaffoldViewState.value.copy(
+//            showBottomBar = true,
+//            topBar = {
+//                EventsSearchBar(
+//                    query = uiState.searchText,
+//                    onSearch = { actions.onSearch() },
+//                    onQueryChange = actions.onSearchTextChanged,
+//                    onActiveChange = actions.onChangeActiveSearchBar,
+//                    active = uiState.isActiveSearchBar,
+//                    onClearQuery = actions.onClearSearchText,
+//                    searchItems = uiState.categories,
+//                    onChangeCategoryFilterActive = actions.onChangeCategoryFilterActive
+//                )
+//            }
+//        )
+//
+//    }
+//
+//    // UI Rendering
+//    SearchScreen(uiState, actions)
 
 }
 

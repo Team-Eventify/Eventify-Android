@@ -5,7 +5,6 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.example.eventify.presentation.models.ScaffoldViewState
 import com.example.eventify.presentation.ui.account.profile.ProfileRoute
 import com.example.eventify.presentation.ui.events.eventsfeed.EventsFeedRoute
 import com.example.eventify.presentation.ui.events.myevents.MyEventsRoute
@@ -14,25 +13,22 @@ import kotlinx.serialization.Serializable
 
 fun NavGraphBuilder.HomeNavGraph(
     navController: NavHostController,
-    scaffoldViewState: MutableState<ScaffoldViewState>,
     startDestination: HomeRouter = HomeRouter.EventFeed
 ) {
     navigation<RootRouter.HomeRoute>(
         startDestination = startDestination
     ){
         composable<HomeRouter.EventFeed> {
-            EventsFeedRoute(navController = navController, scaffoldViewState = scaffoldViewState)
+            EventsFeedRoute(navController = navController)
         }
         composable<HomeRouter.Profile> {
-            ProfileRoute(scaffoldViewState = scaffoldViewState)
+            ProfileRoute()
         }
         composable<HomeRouter.Search> {
-            SearchRoute(scaffoldViewState = scaffoldViewState)
+            SearchRoute()
         }
         composable<HomeRouter.SelfEvents> {
-            MyEventsRoute(
-                scaffoldViewState = scaffoldViewState
-            )
+            MyEventsRoute()
         }
     }
 }

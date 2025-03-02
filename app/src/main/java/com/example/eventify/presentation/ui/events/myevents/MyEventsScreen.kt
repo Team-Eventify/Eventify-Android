@@ -2,7 +2,6 @@ package com.example.eventify.presentation.ui.events.myevents
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
@@ -39,7 +38,7 @@ fun MyEventsScreen(
         onRefresh = actions.onRefresh
     ) {
         LazyColumn(
-            contentPadding = PaddingValues(horizontal = 10.dp),
+            contentPadding = dimmentions.windowPaddings,
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             item {

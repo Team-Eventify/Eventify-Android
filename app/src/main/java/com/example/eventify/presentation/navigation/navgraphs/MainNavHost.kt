@@ -6,7 +6,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.eventify.presentation.models.ScaffoldViewState
 import com.example.eventify.presentation.ui.auth.onboarding.OnBoardingRoute
 import com.example.eventify.presentation.ui.events.eventdetail.EventDetailRoute
 import com.example.eventify.presentation.ui.events.feedback.FeedbackRoute
@@ -18,7 +17,6 @@ import kotlinx.serialization.Serializable
 fun MainNavHost(
     navController: NavHostController,
     startDestination: Any = RootRouter.AuthRoute,
-    scaffoldViewState: MutableState<ScaffoldViewState>,
     modifier: Modifier = Modifier
 ) {
     NavHost(
@@ -26,26 +24,21 @@ fun MainNavHost(
         startDestination = startDestination,
         modifier = Modifier.then(modifier)
     ){
-        HomeNavGraph(navController = navController, scaffoldViewState = scaffoldViewState)
-        AuthNavGraph(scaffoldViewState = scaffoldViewState)
-        SettingsNavGraph(scaffoldViewState = scaffoldViewState)
+        HomeNavGraph(navController = navController)
+        AuthNavGraph()
+        SettingsNavGraph()
         
         composable<RootRouter.EventDetailRoute>{
             EventDetailRoute(
                 navController = navController,
-                scaffoldViewState = scaffoldViewState
             )
         }
 
         composable<RootRouter.EventFeedbackRoute> {
-            FeedbackRoute(
-                scaffoldViewState = scaffoldViewState
-            )
+            FeedbackRoute()
         }
         composable<RootRouter.OnboardingRoute> {
-            OnBoardingRoute(
-                scaffoldViewState = scaffoldViewState
-            )
+            OnBoardingRoute()
         }
     }
 }

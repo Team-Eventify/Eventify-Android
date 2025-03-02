@@ -7,12 +7,17 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import com.example.eventify.R
+import com.example.eventify.presentation.LocalTopBarState
+import com.example.eventify.presentation.TopBarSize
+import com.example.eventify.presentation.TopBarState
 import com.example.eventify.presentation.models.ShortEventItem
 import com.example.eventify.presentation.ui.common.HeadingText
 import com.example.eventify.presentation.ui.events.eventsfeed.components.EventCard

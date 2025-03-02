@@ -4,7 +4,6 @@ import androidx.compose.runtime.MutableState
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.example.eventify.presentation.models.ScaffoldViewState
 import com.example.eventify.presentation.ui.auth.choosecategories.ChooseCategoriesRoute
 import com.example.eventify.presentation.ui.auth.login.LogInRoute
 import com.example.eventify.presentation.ui.auth.onboarding.OnBoardingRoute
@@ -13,17 +12,16 @@ import com.example.eventify.presentation.ui.auth.resetpassword.ResetPasswordRout
 import kotlinx.serialization.Serializable
 
 fun NavGraphBuilder.AuthNavGraph(
-    scaffoldViewState: MutableState<ScaffoldViewState>,
     startDestination: AuthRouter = AuthRouter.RegisterRoute
 ) {
     navigation<RootRouter.AuthRoute>(
         startDestination = startDestination
     ){
         composable<AuthRouter.LogInRoute> {
-            LogInRoute(scaffoldViewState = scaffoldViewState)
+            LogInRoute()
         }
         composable<AuthRouter.RegisterRoute> {
-            RegisterRoute(scaffoldViewState = scaffoldViewState)
+            RegisterRoute()
         }
         composable<AuthRouter.ChooseCategoriesRoute> {
             ChooseCategoriesRoute()

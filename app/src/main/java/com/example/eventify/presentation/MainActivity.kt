@@ -8,6 +8,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -35,7 +36,6 @@ import com.example.eventify.data.storages.LocaleStorage
 import com.example.eventify.data.storages.SharedStorage
 import com.example.eventify.domain.SessionManager
 import com.example.eventify.domain.di.RequestsSessionManager
-import com.example.eventify.presentation.models.ScaffoldViewState
 import com.example.eventify.presentation.navigation.NavigationAction
 import com.example.eventify.presentation.navigation.Navigator
 import com.example.eventify.presentation.navigation.navgraphs.Destination
@@ -45,6 +45,7 @@ import com.example.eventify.presentation.ui.SnackbarController
 import com.example.eventify.presentation.ui.common.BottomNavigationBar
 import com.example.eventify.presentation.ui.common.EventifySnackbar
 import com.example.eventify.presentation.ui.common.screens.NoInternetConnectionScreen
+import com.example.eventify.presentation.ui.common.topBar.EventifyTopAppBar
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 import com.example.eventify.presentation.utils.ObserveAsState
 import com.example.eventify.presentation.utils.isShowOnboarding
@@ -77,11 +78,23 @@ class MainActivity : ComponentActivity() {
         RequestNotificationPermission()
 
         setContent {
+            val topBarState = rememberTopBarState()
+            val snackbarHostState = remember { SnackbarHostState() }
+            val navController = rememberNavController()
+            val scope = rememberCoroutineScope()
+            val connectionState by rememberConnectivityState()
+            val isConnected by remember(connectionState) {
+                derivedStateOf {
+                    connectionState === NetworkConnectionState.Available
+                }
+            }
+
             EventifyTheme(
                 darkTheme = isSystemInDarkTheme(),
                 dynamicColor = false,
                 LocaleImageLoader provides imageLoader,
-            ) {
+                    LocalTopBarState provides topBarState,
+                ) {
                 LaunchedEffect(Unit) {
                     enableEdgeToEdge(
                         statusBarStyle = SystemBarStyle.light(
@@ -92,9 +105,6 @@ class MainActivity : ComponentActivity() {
                         )
                     )
                 }
-
-
-                val navController = rememberNavController()
 
                 ObserveAsState(flow = navigator.navigationActions) { action ->
                     when (action) {
@@ -112,10 +122,6 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-
-                    val snackbarHostState = remember { SnackbarHostState() }
-                    val scope = rememberCoroutineScope()
-
 
                     ObserveAsState(
                         flow = SnackbarController.events,
@@ -135,40 +141,29 @@ class MainActivity : ComponentActivity() {
                         }
                     }
 
-                    val scaffoldState = remember { mutableStateOf(ScaffoldViewState()) }
-
-
                     Scaffold(
-                        modifier = scaffoldState.value.modifier,
-                        topBar = scaffoldState.value.topBar,
+                        topBar = {
+                            AnimatedVisibility(topBarState.isVisible) {
+                                EventifyTopAppBar(state = topBarState.topBarState)
+                            }
+                        },
                         bottomBar = {
-                            if (scaffoldState.value.showBottomBar)
-                                BottomNavigationBar(navController)
+                            BottomNavigationBar(navController)
                         },
                         snackbarHost = {
                             SnackbarHost(snackbarHostState){
                                 EventifySnackbar(it)
                             }
                         },
-                        floatingActionButton = scaffoldState.value.floatingActionButton,
-                        floatingActionButtonPosition = scaffoldState.value.floatingActionButtonPosition
                     ) { innerPadding ->
                         MainNavHost(
                             navController = navController,
                             startDestination = getDefaultDestination(),
-                            scaffoldViewState = scaffoldState,
                             modifier = Modifier.padding(innerPadding)
                         )
                     }
 
                     // Connectivity
-                    val connectionState by rememberConnectivityState()
-                    val isConnected by remember(connectionState) {
-                        derivedStateOf {
-                            connectionState === NetworkConnectionState.Available
-                        }
-                    }
-
                     if (!isConnected) {
                         NoInternetConnectionScreen()
                     }

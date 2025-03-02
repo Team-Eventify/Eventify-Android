@@ -11,6 +11,7 @@ import com.example.eventify.presentation.navigation.Navigator
 import com.example.eventify.presentation.navigation.navgraphs.RootRouter
 import com.example.eventify.presentation.ui.SnackbarController
 import com.example.eventify.presentation.ui.SnackbarEvent
+import com.example.eventify.presentation.ui.events.eventdetail.UiState
 import com.example.eventify.presentation.utils.asUiText
 import com.example.eventify.presentation.utils.toColorOrNull
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +19,10 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -30,10 +34,14 @@ class ChooseCategoriesViewModel @Inject constructor(
     @ApplicationContext private val context: Context
 ) : ViewModel() {
 
-    private val _stateFlow: MutableStateFlow<ChooseCategoriesState> =
-        MutableStateFlow(ChooseCategoriesState())
-
-    val stateFlow: StateFlow<ChooseCategoriesState> = _stateFlow.asStateFlow()
+    private val _stateFlow: MutableStateFlow<ChooseCategoriesState> = MutableStateFlow(ChooseCategoriesState())
+    val stateFlow: StateFlow<ChooseCategoriesState> = _stateFlow
+        .onStart { loadData() }
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000L),
+            ChooseCategoriesState()
+        )
 
     fun loadData(){
         viewModelScope.launch {
