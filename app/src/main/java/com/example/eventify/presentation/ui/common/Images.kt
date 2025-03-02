@@ -11,20 +11,21 @@ import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import coil3.ImageLoader
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.example.eventify.R
+import com.example.eventify.presentation.LocaleImageLoader
 
 @Composable
 fun EventImage(
     uri: String?,
-    imageLoader: ImageLoader,
     modifier: Modifier = Modifier,
     contentScale: ContentScale = ContentScale.Crop,
     alignment: Alignment = Alignment.Center
 ) {
+    val localeImageLoader = LocaleImageLoader.current
+
     var showShimmer by remember { mutableStateOf(false) }
 
     AsyncImage(
@@ -37,7 +38,7 @@ fun EventImage(
         contentDescription = null,
         contentScale = contentScale,
         alignment = alignment,
-        imageLoader = imageLoader,
+        imageLoader = localeImageLoader,
         onLoading = {
             showShimmer = true
         },

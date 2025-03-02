@@ -2,26 +2,22 @@ package com.example.eventify.presentation.ui.events.eventsfeed
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
-import coil3.ImageLoader
 import com.example.eventify.R
 import com.example.eventify.presentation.models.ShortEventItem
 import com.example.eventify.presentation.ui.common.HeadingText
 import com.example.eventify.presentation.ui.events.eventsfeed.components.EventCard
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 import com.example.eventify.presentation.ui.theme.LocalDimentions
-import com.example.eventify.presentation.ui.theme.space16
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import java.util.UUID
@@ -31,7 +27,6 @@ import kotlin.random.Random
 fun EventsFeedScreen(
     state: UiState.ShowFeed,
     actions: EventsFeedActions,
-    imageLoader: ImageLoader
 ) {
     val swipeRefreshState = rememberSwipeRefreshState(state.isRefreshing)
     val dimmentions = LocalDimentions.current
@@ -56,7 +51,6 @@ fun EventsFeedScreen(
                 EventCard(
                     event = event,
                     onClick = actions.onEventClick,
-                    imageLoader = imageLoader,
                 )
             }
         }
@@ -92,7 +86,6 @@ private fun EventsFeedScreenDefaultDarkPreview() {
                     },
                 ),
                 actions = EventsFeedActions.default(),
-                imageLoader = ImageLoader(LocalContext.current)
             )
         }
     }

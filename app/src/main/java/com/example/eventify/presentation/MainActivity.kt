@@ -8,6 +8,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -29,6 +30,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
+import coil3.ImageLoader
 import com.example.eventify.data.storages.LocaleStorage
 import com.example.eventify.data.storages.SharedStorage
 import com.example.eventify.domain.SessionManager
@@ -66,13 +68,20 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var localeStorage: LocaleStorage
 
+    @Inject
+    lateinit var imageLoader: ImageLoader
+
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
         RequestNotificationPermission()
 
         setContent {
-            EventifyTheme {
+            EventifyTheme(
+                darkTheme = isSystemInDarkTheme(),
+                dynamicColor = false,
+                LocaleImageLoader provides imageLoader,
+            ) {
                 LaunchedEffect(Unit) {
                     enableEdgeToEdge(
                         statusBarStyle = SystemBarStyle.light(

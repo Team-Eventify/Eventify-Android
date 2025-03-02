@@ -20,19 +20,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil3.ImageLoader
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.example.eventify.domain.models.Organization
+import com.example.eventify.presentation.LocaleImageLoader
 import java.util.UUID
 
 @Composable
 fun OrganizationInfoPanel(
     organization: Organization,
     onClick: () -> Unit,
-    imageLoader: ImageLoader,
 ) {
+    val localeImageLoader = LocaleImageLoader.current
     val isLoading = remember { mutableStateOf(true) }
 
     Row(
@@ -47,7 +47,7 @@ fun OrganizationInfoPanel(
                 .data(organization.photoUrl)
                 .crossfade(true)
                 .build(),
-            imageLoader = imageLoader,
+            imageLoader = localeImageLoader,
             contentDescription = null,
             contentScale = ContentScale.FillHeight,
             modifier = Modifier
@@ -78,6 +78,5 @@ private fun PreviewOrganizationInfoPanel() {
             photoUrl = UUID.randomUUID().toString(),
         ),
         onClick = {},
-        imageLoader = ImageLoader(LocalContext.current)
     )
 }

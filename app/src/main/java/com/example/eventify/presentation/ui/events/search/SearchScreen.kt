@@ -8,11 +8,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
-import coil3.ImageLoader
 import com.example.eventify.presentation.models.CategorySelectItem
 import com.example.eventify.presentation.ui.events.eventsfeed.components.EventCard
 import com.example.eventify.presentation.ui.common.CategorySelector
@@ -25,7 +23,6 @@ import java.util.UUID
 fun SearchScreen(
     state: SearchState,
     actions: SearchActions,
-    imageLoader: ImageLoader
 ) {
     val swipeRefreshState = rememberSwipeRefreshState(state.isRefreshing)
     val selectedCategories = remember(state.categories) { state.categories.filter { it.selected } }
@@ -51,7 +48,6 @@ fun SearchScreen(
                     EventCard(
                         event = event,
                         onClick = actions.onClickEventItem,
-                        imageLoader = imageLoader
                     )
                 }
             }
@@ -75,7 +71,6 @@ private fun SearchScreenPreview() {
                     }
                 ),
                 actions = SearchActions(),
-                imageLoader = ImageLoader(LocalContext.current)
             )
         }
     }

@@ -37,7 +37,6 @@ class SearchViewModel @Inject constructor(
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getEventsUseCase: GetEventsUseCase,
     private val navigator: Navigator,
-    val imageLoader: ImageLoader
 ) : ViewModel() {
 
     private val sharedQuery = savedStateHandle.toRoute<HomeRouter.Search>().query

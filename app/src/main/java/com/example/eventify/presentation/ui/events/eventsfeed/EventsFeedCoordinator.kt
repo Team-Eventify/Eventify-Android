@@ -15,7 +15,6 @@ class EventsFeedCoordinator(
     val navController: NavHostController
 ) {
     val screenStateFlow = viewModel.stateFlow
-    val imageLoader = viewModel.imageLoader
 
     fun navigateToEventDetail(eventId: String) = navController.navigate(RootRouter.EventDetailRoute(eventId))
 
