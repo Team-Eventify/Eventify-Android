@@ -43,7 +43,7 @@ fun EventDetailRoute(
                     }
                 )
             }
-            EventDetailScreen(uiState as UiState.ShowEvent, actions, coordinator.viewModel.imageLoader)
+            EventDetailScreen(uiState as UiState.ShowEvent, actions)
         }
 
         UiState.Loading -> LoadingEvent()

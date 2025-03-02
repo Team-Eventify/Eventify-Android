@@ -53,7 +53,6 @@ import java.util.UUID
 fun EventDetailScreen(
     state: UiState.ShowEvent,
     actions: EventDetailActions,
-    imageLoader: ImageLoader,
 ) {
     val pagerState = rememberPagerState(pageCount = { state.event.eventInfo.pictures.size})
     val dimmentions = LocalDimentions.current
@@ -69,7 +68,6 @@ fun EventDetailScreen(
             val url = state.event.eventInfo.pictures[page]
             EventImage(
                 uri = url,
-                imageLoader = imageLoader,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(200.dp)
@@ -109,7 +107,6 @@ fun EventDetailScreen(
             OrganizationInfoPanel(
                 organization = state.event.organization,
                 onClick = {},
-                imageLoader = imageLoader,
             )
             Spacer(modifier = Modifier.height(20.dp))
 
@@ -182,7 +179,6 @@ private fun EventDetailScreenLightPreview() {
                     onSubscribe = {},
                     onUnsubscribe = {},
                 ),
-                imageLoader = ImageLoader(LocalContext.current)
             )
         }
     }

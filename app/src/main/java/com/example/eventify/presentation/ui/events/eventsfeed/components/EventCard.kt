@@ -28,18 +28,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
-import coil3.ImageLoader
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.example.eventify.R
+import com.example.eventify.presentation.LocaleImageLoader
 import com.example.eventify.presentation.models.ShortEventItem
 import com.example.eventify.presentation.ui.common.BodyText
 import com.example.eventify.presentation.ui.common.EventCardTitle
 import com.example.eventify.presentation.ui.common.EventInfoTag
 import com.example.eventify.presentation.ui.common.shimmer
 import com.example.eventify.presentation.ui.theme.EventifyTheme
-import com.example.eventify.presentation.utils.asDate
 import com.example.eventify.presentation.utils.asTime
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -47,9 +46,10 @@ import com.example.eventify.presentation.utils.asTime
 fun EventCard(
     event: ShortEventItem,
     onClick: (String) -> Unit,
-    imageLoader: ImageLoader,
     modifier: Modifier = Modifier
 ) {
+    val localeImageLoader = LocaleImageLoader.current
+
     Card(
         shape = RoundedCornerShape(10.dp),
         elevation = CardDefaults.cardElevation(0.dp),
@@ -76,7 +76,7 @@ fun EventCard(
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 alignment = Alignment.Center,
-                imageLoader = imageLoader,
+                imageLoader = localeImageLoader,
                 onLoading = {
                     showShimmer = true
                 },
@@ -140,7 +140,6 @@ private fun PreviewEventCardDark() {
                         .joinToString(),
                 ),
                 onClick = {},
-                imageLoader = ImageLoader(LocalContext.current)
             )
         }
     }
@@ -167,7 +166,6 @@ private fun PreviewEventCardLight() {
                         .joinToString(),
                 ),
                 onClick = {},
-                imageLoader = ImageLoader(LocalContext.current)
             )
         }
     }

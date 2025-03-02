@@ -54,7 +54,7 @@ fun EventsFeedRoute(
                     modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
                 )
             }
-            EventsFeedScreen(uiState as UiState.ShowFeed, actions, coordinator.imageLoader)
+            EventsFeedScreen(uiState as UiState.ShowFeed, actions)
         }
     }
 }

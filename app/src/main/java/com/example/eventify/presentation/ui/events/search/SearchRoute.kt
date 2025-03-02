@@ -3,7 +3,6 @@ package com.example.eventify.presentation.ui.events.search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -41,7 +40,7 @@ fun SearchRoute(
     }
 
     // UI Rendering
-    SearchScreen(uiState, actions, coordinator.viewModel.imageLoader)
+    SearchScreen(uiState, actions)
 
 }
 

@@ -36,7 +36,6 @@ class EventDetailViewModel @Inject constructor(
     private val subscribedEventsUseCase: SubscribeForEventUseCase,
     private val unsubscribeForEventUseCase: UnsubscribeForEventUseCase,
     private val navigator: Navigator,
-    val imageLoader: ImageLoader,
     @ApplicationContext private val context: Context
 ) : ViewModel() {
     private val eventId = savedStateHandle.toRoute<RootRouter.EventDetailRoute>().eventId
