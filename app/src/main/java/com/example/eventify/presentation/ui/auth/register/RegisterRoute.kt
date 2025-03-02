@@ -6,26 +6,20 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import com.example.eventify.presentation.models.ScaffoldViewState
+import com.example.eventify.presentation.LocalTopBarState
 
 @Composable
 fun RegisterRoute(
-    scaffoldViewState: MutableState<ScaffoldViewState>,
     coordinator: RegisterCoordinator = rememberRegisterCoordinator()
 ) {
-    // State observing and declarations
     val uiState by coordinator.screenStateFlow.collectAsState()
-
-    // UI Actions
     val actions = rememberRegisterActions(coordinator)
+    val topBarState = LocalTopBarState.current
 
     LaunchedEffect(Unit) {
-        scaffoldViewState.value = ScaffoldViewState(
-            showBottomBar = false
-        )
+        topBarState.hide()
     }
 
-    // UI Rendering
     RegisterScreen(uiState, actions)
 }
 

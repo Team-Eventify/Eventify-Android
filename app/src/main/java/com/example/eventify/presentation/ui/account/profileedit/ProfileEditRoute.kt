@@ -5,36 +5,33 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.eventify.R
-import com.example.eventify.presentation.models.ScaffoldViewState
+import com.example.eventify.presentation.LocalTopBarState
+import com.example.eventify.presentation.TopBarSize
+import com.example.eventify.presentation.TopBarState
 import com.example.eventify.presentation.ui.common.DefaultTopAppBar
 
 @Composable
 fun ProfileEditRoute(
-    scaffoldViewState: MutableState<ScaffoldViewState>,
     coordinator: ProfileEditCoordinator = rememberProfileEditCoordinator()
 ) {
-    // State observing and declarations
     val uiState by coordinator.screenStateFlow.collectAsStateWithLifecycle()
-
-    // UI Actions
     val actions = rememberProfileEditActions(coordinator)
+    val topBarState = LocalTopBarState.current
+    val context = LocalContext.current
 
     LaunchedEffect(Unit) {
-        scaffoldViewState.value = scaffoldViewState.value.copy(
-            showBottomBar = false,
-            topBar = {
-                DefaultTopAppBar(
-                    title = stringResource(R.string.profile_edit_title),
-                    onNavigateUp = coordinator::navigateBack
-                )
-            }
+        topBarState.setUp(
+            TopBarState.Base(
+                title = context.getString(R.string.profile_edit_title),
+                size = TopBarSize.SMALL,
+            )
         )
     }
 
-    // UI Rendering
     ProfileEditScreen(uiState, actions)
 
 }

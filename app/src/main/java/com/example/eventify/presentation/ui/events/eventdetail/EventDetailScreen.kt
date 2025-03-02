@@ -17,21 +17,24 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil3.ImageLoader
 import com.example.eventify.R
 import com.example.eventify.domain.models.Category
 import com.example.eventify.domain.models.EventDetail
 import com.example.eventify.domain.models.FullEventDetail
 import com.example.eventify.domain.models.Organization
+import com.example.eventify.presentation.LocalTopBarState
+import com.example.eventify.presentation.TopBarAction
+import com.example.eventify.presentation.TopBarSize
+import com.example.eventify.presentation.TopBarState
 import com.example.eventify.presentation.ui.events.eventdetail.components.ImagePager
 import com.example.eventify.presentation.ui.events.eventdetail.components.OrganizationInfoPanel
 import com.example.eventify.presentation.ui.common.BodyText
@@ -56,6 +59,20 @@ fun EventDetailScreen(
 ) {
     val pagerState = rememberPagerState(pageCount = { state.event.eventInfo.pictures.size})
     val dimmentions = LocalDimentions.current
+    val topBarState = LocalTopBarState.current
+
+    LaunchedEffect(Unit) {
+        topBarState.setUp(
+            TopBarState.Base(
+                title = state.event.eventInfo.title,
+                size = TopBarSize.MEDIUM,
+                leftAction = TopBarAction(
+                    iconRes = R.drawable.ic_chevron_right,
+                    onClick = actions.navigateUp
+                )
+            )
+        )
+    }
 
     Column(
         modifier = Modifier

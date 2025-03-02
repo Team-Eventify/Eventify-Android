@@ -1,21 +1,24 @@
 package com.example.eventify.presentation.ui.auth.resetpassword
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import com.example.eventify.presentation.LocalTopBarState
 
 @Composable
 fun ResetPasswordRoute(
     coordinator: ResetPasswordCoordinator = rememberResetPasswordCoordinator()
 ) {
-    // State observing and declarations
     val uiState by coordinator.screenStateFlow.collectAsState(ResetPasswordState())
-
-    // UI Actions
     val actions = rememberResetPasswordActions(coordinator)
+    val topBarState = LocalTopBarState.current
 
-    // UI Rendering
+    LaunchedEffect(Unit) {
+        topBarState.hide()
+    }
+
     ResetPasswordScreen(uiState, actions)
 }
 

@@ -2,32 +2,24 @@ package com.example.eventify.presentation.ui.auth.onboarding
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import com.example.eventify.presentation.models.ScaffoldViewState
+import com.example.eventify.presentation.LocalTopBarState
 
 
 @Composable
 fun OnBoardingRoute(
-    scaffoldViewState: MutableState<ScaffoldViewState>,
     coordinator: OnBoardingCoordinator = rememberOnBoardingCoordinator()
 ) {
-    // State observing and declarations
     val uiState by coordinator.screenStateFlow.collectAsState(OnBoardingState())
-
-    // UI Actions
     val actions = rememberOnBoardingActions(coordinator)
+    val topBarState = LocalTopBarState.current
 
     LaunchedEffect(Unit) {
-        scaffoldViewState.value = scaffoldViewState.value.copy(
-            topBar = {},
-            showBottomBar = false
-        )
+        topBarState.hide()
     }
 
-    // UI Rendering
     OnBoardingScreen(uiState, actions)
 }
 

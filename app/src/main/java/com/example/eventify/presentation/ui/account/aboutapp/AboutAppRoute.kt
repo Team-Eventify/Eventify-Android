@@ -6,35 +6,33 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.example.eventify.R
-import com.example.eventify.presentation.models.ScaffoldViewState
+import com.example.eventify.presentation.LocalTopBarState
+import com.example.eventify.presentation.TopBarSize
+import com.example.eventify.presentation.TopBarState
 import com.example.eventify.presentation.ui.common.DefaultTopAppBar
 
 
 @Composable
 fun AboutAppRoute(
-    scaffoldViewState: MutableState<ScaffoldViewState>,
     coordinator: AboutAppCoordinator = rememberAboutAppCoordinator()
 ) {
-    // State observing and declarations
     val uiState by coordinator.screenStateFlow.collectAsState(AboutAppState())
-
-    // UI Actions
     val actions = rememberAboutAppActions(coordinator)
+    val topBarState = LocalTopBarState.current
+    val context = LocalContext.current
 
     LaunchedEffect(Unit) {
-        scaffoldViewState.value = scaffoldViewState.value.copy(
-            topBar = {
-                DefaultTopAppBar(
-                    title = stringResource(R.string.about_app),
-                    onNavigateUp = actions.navigateUp
-                )
-            }, showBottomBar = false
+        topBarState.setUp(
+            TopBarState.Base(
+                title = context.getString(R.string.about_app),
+                size = TopBarSize.SMALL,
+            )
         )
     }
 
-    // UI Rendering
     AboutAppScreen(uiState, actions)
 }
 
