@@ -18,6 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.eventify.R
+import com.example.eventify.presentation.ui.account.aboutapp.state.AboutAppListener
 import com.example.eventify.presentation.ui.account.profile.components.NavigationSettingsItem
 import com.example.eventify.presentation.ui.account.profile.components.SettingsBlock
 import com.example.eventify.presentation.ui.theme.EventifyTheme
@@ -26,7 +27,7 @@ import com.example.eventify.presentation.ui.theme.LocalDimentions
 @Composable
 fun AboutAppScreen(
     state: AboutAppState,
-    actions: AboutAppActions
+    actions: AboutAppListener
 ) {
     val dimmentions = LocalDimentions.current
 
@@ -55,24 +56,24 @@ fun AboutAppScreen(
         SettingsBlock{
             NavigationSettingsItem(
                 text = stringResource(R.string.privacy_policy),
-                onClick = actions.goPrivacyPolicy,
+                onClick = actions::goPrivacyPolicy,
             )
             HorizontalDivider()
             NavigationSettingsItem(
                 text = stringResource(R.string.terms_of_use),
-                onClick = actions.goTermsOfUse,
+                onClick = actions::goTermsOfUse,
             )
             HorizontalDivider()
             NavigationSettingsItem(
                 text = stringResource(R.string.information_security),
-                onClick = actions.goToInformationSecurity,
+                onClick = actions::goToInformationSecurity,
             )
         }
 
         SettingsBlock{
             NavigationSettingsItem(
                 text = stringResource(R.string.donate),
-                onClick = actions.goToDonate,
+                onClick = actions::goToDonate,
             )
         }
     }
@@ -86,7 +87,14 @@ private fun AboutAppScreenPreview() {
     EventifyTheme(dynamicColor = true) {
         AboutAppScreen(
             state = AboutAppState(),
-            actions = AboutAppActions()
+            actions = object : AboutAppListener {
+                override fun navigateUp() = Unit
+                override fun goToAboutUs() = Unit
+                override fun goPrivacyPolicy() = Unit
+                override fun goTermsOfUse() = Unit
+                override fun goToInformationSecurity() = Unit
+                override fun goToDonate() = Unit
+            }
         )
     }
 }

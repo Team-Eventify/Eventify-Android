@@ -11,28 +11,6 @@ import com.example.eventify.presentation.ui.events.myevents.MyEventsRoute
 import com.example.eventify.presentation.ui.events.search.SearchRoute
 import kotlinx.serialization.Serializable
 
-fun NavGraphBuilder.HomeNavGraph(
-    navController: NavHostController,
-    startDestination: HomeRouter = HomeRouter.EventFeed
-) {
-    navigation<RootRouter.HomeRoute>(
-        startDestination = startDestination
-    ){
-        composable<HomeRouter.EventFeed> {
-            EventsFeedRoute(navController = navController)
-        }
-        composable<HomeRouter.Profile> {
-            ProfileRoute()
-        }
-        composable<HomeRouter.Search> {
-            SearchRoute()
-        }
-        composable<HomeRouter.SelfEvents> {
-            MyEventsRoute()
-        }
-    }
-}
-
 
 sealed class HomeRouter: Destination {
     @Serializable

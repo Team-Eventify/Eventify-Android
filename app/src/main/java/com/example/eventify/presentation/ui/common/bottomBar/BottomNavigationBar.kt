@@ -1,4 +1,4 @@
-package com.example.eventify.presentation.ui.common
+package com.example.eventify.presentation.ui.common.bottomBar
 
 
 

@@ -6,35 +6,59 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavHostController
 import com.example.eventify.presentation.LocalTopBarState
+import com.example.eventify.presentation.navigation.LocalFeaturesProvider
+import com.example.eventify.presentation.navigation.entries.auth.LoginEntry
+import com.example.eventify.presentation.navigation.navigateNewTaskFeature
+import com.example.eventify.presentation.navigation.navigateToFeature
+import com.example.eventify.presentation.ui.auth.register.state.RegisterListener
 
 @Composable
 fun RegisterRoute(
-    coordinator: RegisterCoordinator = rememberRegisterCoordinator()
+    navController: NavHostController
 ) {
-    val uiState by coordinator.screenStateFlow.collectAsState()
-    val actions = rememberRegisterActions(coordinator)
+    val viewModel = hiltViewModel<RegisterViewModel>()
+    val uiState by viewModel.stateFlow.collectAsStateWithLifecycle()
     val topBarState = LocalTopBarState.current
+    val features = LocalFeaturesProvider.current.features
+
+    val listener = object : RegisterListener {
+        override fun navigateToLogIn() {
+            features.navigateToFeature<LoginEntry>(navController)
+        }
+
+        override fun onChangeLogin(login: String) {
+            viewModel.changeLogin(login)
+        }
+
+        override fun onChangePassword(password: String) {
+            viewModel.changePassword(password)
+        }
+
+        override fun onRequestOtp() {
+            viewModel.requestOtp()
+        }
+
+        override fun onRegister() {
+            viewModel.register()
+        }
+
+        override fun onChangeOtp(otpValue: String) {
+            viewModel.changeOtp(otpValue)
+        }
+
+        override fun onTriggerOtpBottomSheet(value: Boolean) {
+            viewModel.triggerOtpBottomSheet(value)
+        }
+
+    }
 
     LaunchedEffect(Unit) {
         topBarState.hide()
     }
 
-    RegisterScreen(uiState, actions)
-}
-
-
-@Composable
-fun rememberRegisterActions(coordinator: RegisterCoordinator): RegisterActions {
-    return remember(coordinator) {
-        RegisterActions(
-            navigateToLogIn = coordinator.viewModel::navigateToLogin,
-            onChangeLogin = coordinator.viewModel::changeLogin,
-            onChangePassword = coordinator.viewModel::changePassword,
-            onRegister = coordinator.viewModel::register,
-            onChangeOtp = coordinator.viewModel::changeOtp,
-            onRequestOtp = coordinator.viewModel::requestOtp,
-            onTriggerOtpBottomSheet = coordinator.viewModel::triggerOtpBottomSheet
-        )
-    }
+    RegisterScreen(uiState, listener)
 }

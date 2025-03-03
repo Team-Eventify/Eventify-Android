@@ -23,6 +23,8 @@ import com.example.eventify.presentation.ui.account.profile.components.DeleteAcc
 import com.example.eventify.presentation.ui.account.profile.components.ImportantActionSettingsItem
 import com.example.eventify.presentation.ui.account.profile.components.SettingsBlock
 import com.example.eventify.presentation.ui.account.profileedit.components.ProfileEditInput
+import com.example.eventify.presentation.ui.account.profileedit.state.ProfileEditListener
+import com.example.eventify.presentation.ui.account.profileedit.state.UiState
 import com.example.eventify.presentation.ui.common.AnnotationText
 import com.example.eventify.presentation.ui.common.CategorySelector
 import com.example.eventify.presentation.ui.common.buttons.PrimaryButton
@@ -35,8 +37,8 @@ import kotlin.random.Random
 
 @Composable
 fun ProfileEditScreen(
-    state: ProfileEditState,
-    actions: ProfileEditActions,
+    state: UiState.ShowProfileEdit,
+    actions: ProfileEditListener,
 ) {
     val scrollState = rememberScrollState()
     val openDeleteAccountDialog = remember { mutableStateOf(false) }
@@ -61,50 +63,50 @@ fun ProfileEditScreen(
             .padding(dimmentions.windowPaddings)
             .verticalScroll(scrollState)
     ) {
-        SubHeadingText(text = "Имя")
+        SubHeadingText(stringResource(R.string.first_name))
         ProfileEditInput(
             text = state.firstName,
-            onChange = actions.onChangeFirstName,
+            onChange = actions::onChangeFirstName,
             modifier = Modifier
-                .shimmer(showShimmer = state.isLoading)
+//                .shimmer(showShimmer = state.isLoading)
         )
 
-        SubHeadingText(text = "Фамилия")
+        SubHeadingText(stringResource(R.string.last_name))
         ProfileEditInput(
             text = state.lastName,
-            onChange = actions.onChangeLastName,
+            onChange = actions::onChangeLastName,
             modifier = Modifier
-                .shimmer(showShimmer = state.isLoading)
+//                .shimmer(showShimmer = state.isLoading)
         )
 
-        SubHeadingText(text = "Электронная поста")
+        SubHeadingText(stringResource(R.string.email))
         ProfileEditInput(
             text = state.email,
-            onChange = actions.onChangeEmail,
+            onChange = actions::onChangeEmail,
             isError = state.emailError != null || state.hasEmailError,
             supportingText = state.emailError?.asString(),
             modifier = Modifier
-                .shimmer(showShimmer = state.isLoading)
+//                .shimmer(showShimmer = state.isLoading)
         )
 
-        SubHeadingText(text = "Telegram")
+        SubHeadingText(stringResource(R.string.telegram))
         ProfileEditInput(
             text = state.telegramName,
-            onChange = actions.onChangeTelegram,
+            onChange = actions::onChangeTelegram,
             prefix = "@",
             isError = state.telegramNameError != null || state.hasTelegramNameError,
             supportingText = state.telegramNameError?.asString(),
             modifier = Modifier
-                .shimmer(showShimmer = state.isLoading)
+//                .shimmer(showShimmer = state.isLoading)
         )
 
-        SubHeadingText(text = "Мои категории")
+        SubHeadingText(stringResource(R.string.my_categories))
         AnnotationText(text = "Выбирай категории ивентов под свои интересы!")
         CategorySelector(
             categories = state.categoryItems,
-            onClickCategory = actions.onChangeCategoryFilterActive,
+            onClickCategory = actions::onChangeCategoryFilterActive,
             modifier = Modifier
-                .shimmer(showShimmer = state.isLoading)
+//                .shimmer(showShimmer = state.isLoading)
         )
 
         SettingsBlock {
@@ -116,8 +118,8 @@ fun ProfileEditScreen(
             )
         }
 
-        PrimaryButton(onClick = actions.onSubmit) {
-            PrimaryButtonText(text = "Сохранить")
+        PrimaryButton(onClick = actions::onSubmit) {
+            PrimaryButtonText(text = stringResource(R.string.save))
         }
 
     }
@@ -130,7 +132,7 @@ private fun ProfileEditScreenDarkPreview() {
     EventifyTheme {
         Surface {
             ProfileEditScreen(
-                state = ProfileEditState(
+                state = UiState.ShowProfileEdit(
                     firstName = "Ivan",
                     lastName = "Ivanov",
                     email = "ivan@mail.ru",
@@ -144,7 +146,15 @@ private fun ProfileEditScreenDarkPreview() {
                         )
                     }
                 ),
-                actions = ProfileEditActions()
+                actions = object : ProfileEditListener {
+                    override fun onSubmit() = Unit
+                    override fun onChangeCategoryFilterActive(categoryId: String, value: Boolean) = Unit
+                    override fun onChangeEmail(email: String) = Unit
+                    override fun onChangeFirstName(firstName: String) = Unit
+                    override fun onChangeLastName(lastName: String) = Unit
+                    override fun onChangeTelegram(telegram: String) = Unit
+                    override fun onDeleteAccount() = Unit
+                }
             )
         }
     }

@@ -18,7 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.eventify.R
-import com.example.eventify.presentation.ui.auth.register.OTP_LENGTH
+import com.example.eventify.presentation.ui.auth.register.state.OTP_LENGTH
 import com.example.eventify.presentation.ui.common.AnnotationText
 import com.example.eventify.presentation.ui.common.PrimaryButtonText
 import com.example.eventify.presentation.ui.common.TitleText

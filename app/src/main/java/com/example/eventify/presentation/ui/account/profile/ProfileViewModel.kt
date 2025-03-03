@@ -13,6 +13,7 @@ import com.example.eventify.presentation.navigation.navgraphs.AuthRouter
 import com.example.eventify.presentation.navigation.navgraphs.SettingsRouter
 import com.example.eventify.presentation.ui.SnackbarController
 import com.example.eventify.presentation.ui.SnackbarEvent
+import com.example.eventify.presentation.ui.account.profile.state.UiState
 import com.example.eventify.presentation.utils.asUiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -30,46 +31,43 @@ class ProfileViewModel @Inject constructor(
     private val navigator: Navigator,
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
     private val logOutUseCase: LogOutUseCase,
-    private val deleteAccountUseCase: DeleteAccountUseCase,
     @ApplicationContext private val context: Context,
 ) : ViewModel() {
 
-    private val _stateFlow: MutableStateFlow<ProfileState> = MutableStateFlow(ProfileState.default())
-    val stateFlow: StateFlow<ProfileState> = _stateFlow
+    private val _stateFlow: MutableStateFlow<UiState> = MutableStateFlow(UiState.Loading)
+    val stateFlow: StateFlow<UiState> = _stateFlow
         .onStart { loadData() }
         .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000L),
-            ProfileState.default()
+            UiState.Loading
         )
 
     fun loadData(){
-        _stateFlow.update { it.copy(isLoading = true) }
         viewModelScope.launch {
-            when (val currentUser = getCurrentUserUseCase()){
-                is Result.Error -> SnackbarController.sendEvent(
-                    SnackbarEvent(message = currentUser.error.asUiText().asString(context))
-                )
-                is Result.Success -> {
-                    _stateFlow.update { currentState ->
-                        currentState.copy(
+            _stateFlow.update {
+                when (val result = getCurrentUserUseCase()){
+                    is Result.Error -> {
+                        SnackbarController.sendEvent(
+                            SnackbarEvent(message = result.error.asUiText().asString(context))
+                        )
+                        UiState.Error
+                    }
+                    is Result.Success -> {
+                        UiState.ShowProfile(
                             userInfo = UserShortInfo(
-                                id = currentUser.data.id,
-                                firstName = currentUser.data.firstName,
-                                lastName = currentUser.data.lastName,
-                                email = currentUser.data.email
+                                id = result.data.id,
+                                firstName = result.data.firstName,
+                                lastName = result.data.lastName,
+                                email = result.data.email
                             )
                         )
                     }
                 }
             }
         }
-        _stateFlow.update { it.copy(isLoading = false) }
     }
 
-    fun navigateToEditProfile() = viewModelScope.launch {
-        navigator.navigate(SettingsRouter.ProfileEditRoute)
-    }
 
     fun logOut(){
         viewModelScope.launch {
@@ -81,11 +79,4 @@ class ProfileViewModel @Inject constructor(
             }
         }
     }
-
-    fun navigateToAppInfo(){
-        viewModelScope.launch {
-            navigator.navigate(SettingsRouter.AboutAppRoute)
-        }
-    }
-
 }

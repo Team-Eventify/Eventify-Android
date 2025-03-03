@@ -1,36 +1,32 @@
 package com.example.eventify.presentation.navigation.navgraphs
 
-import androidx.compose.runtime.MutableState
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
+import androidx.navigation.NavHostController
 import androidx.navigation.navigation
-import com.example.eventify.presentation.ui.auth.choosecategories.ChooseCategoriesRoute
-import com.example.eventify.presentation.ui.auth.login.LogInRoute
-import com.example.eventify.presentation.ui.auth.onboarding.OnBoardingRoute
-import com.example.eventify.presentation.ui.auth.register.RegisterRoute
-import com.example.eventify.presentation.ui.auth.resetpassword.ResetPasswordRoute
+import com.example.eventify.presentation.navigation.entries.ComposableFeatureEntry
+import com.example.eventify.presentation.navigation.entries.auth.AuthRootPath
+import com.example.eventify.presentation.navigation.entries.auth.LoginPath
+
+
 import kotlinx.serialization.Serializable
 
-fun NavGraphBuilder.AuthNavGraph(
-    startDestination: AuthRouter = AuthRouter.RegisterRoute
-) {
-    navigation<RootRouter.AuthRoute>(
-        startDestination = startDestination
-    ){
-        composable<AuthRouter.LogInRoute> {
-            LogInRoute()
-        }
-        composable<AuthRouter.RegisterRoute> {
-            RegisterRoute()
-        }
-        composable<AuthRouter.ChooseCategoriesRoute> {
-            ChooseCategoriesRoute()
-        }
-        composable<AuthRouter.ResetPasswordRoute> {
-            ResetPasswordRoute()
+fun NavGraphBuilder.addAuthNavGraph(
+    navController: NavHostController,
+    features: List<ComposableFeatureEntry>,
+    ) {
+    navigation(
+        route = AuthRootPath.baseRoute,
+        startDestination = LoginPath
+    ) {
+        features.forEach { feature ->
+            with(feature) {
+                featureComposable(navController)
+            }
         }
     }
 }
+
+
 
 
 sealed class AuthRouter: Destination {

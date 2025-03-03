@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.eventify.domain.Result
 import com.example.eventify.domain.models.toShortEventItem
 import com.example.eventify.domain.usecases.events.GetEventsUseCase
+import com.example.eventify.presentation.ui.events.eventsfeed.state.UiState
 import com.example.eventify.presentation.utils.asUiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext

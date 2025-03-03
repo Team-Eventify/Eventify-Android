@@ -31,6 +31,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.eventify.R
 import com.example.eventify.presentation.ui.auth.register.components.RegistrationOtpBottomSheet
+import com.example.eventify.presentation.ui.auth.register.state.RegisterListener
+import com.example.eventify.presentation.ui.auth.register.state.RegisterState
 import com.example.eventify.presentation.ui.common.ActionPrimaryText
 import com.example.eventify.presentation.ui.common.BodyText
 import com.example.eventify.presentation.ui.common.ErrorInputText
@@ -47,7 +49,7 @@ import com.example.eventify.presentation.utils.UiText
 @Composable
 fun RegisterScreen(
     state: RegisterState,
-    actions: RegisterActions,
+    actions: RegisterListener,
 ) {
     val focusRequest = remember {
         FocusRequester()
@@ -62,9 +64,9 @@ fun RegisterScreen(
                 actions.onTriggerOtpBottomSheet(false)
             },
             sheetState = sheetState,
-            onChangeOtpValue = actions.onChangeOtp,
+            onChangeOtpValue = actions::onChangeOtp,
             otpValue = state.otp,
-            onSubmit = actions.onRegister
+            onSubmit = actions::onRegister
         )
     }
 
@@ -84,7 +86,7 @@ fun RegisterScreen(
             text = state.login,
             label = "Email",
             placeholder = "ivanov@gmail.com",
-            onValueChange = actions.onChangeLogin,
+            onValueChange = actions::onChangeLogin,
             isError = state.loginError != null || state.hasLoginError,
             supportingText = {
                 state.loginError?.let { 
@@ -107,7 +109,7 @@ fun RegisterScreen(
             text = state.password,
             label = "Password",
             placeholder = "yourpassword",
-            onValueChange = actions.onChangePassword,
+            onValueChange = actions::onChangePassword,
             isError = state.passwordError != null || state.hasPasswordError,
             supportingText = {
                 state.passwordError?.let {
@@ -126,7 +128,7 @@ fun RegisterScreen(
 
         Spacer(modifier = Modifier.height(30.dp))
         PrimaryButton(
-            onClick = actions.onRequestOtp,
+            onClick = actions::onRequestOtp,
             enabled = state.isValidFormData,
             modifier = Modifier
                 .fillMaxWidth()
@@ -143,7 +145,7 @@ fun RegisterScreen(
             Text(text = stringResource(R.string.already_have_account_question))
             ActionPrimaryText(
                 text = stringResource(R.string.login_action),
-                onClick = actions.navigateToLogIn
+                onClick = actions::navigateToLogIn
             )
         }
     }
@@ -157,15 +159,15 @@ private fun RegisterScreenDefaultDarkPreview() {
         Surface {
             RegisterScreen(
                 state = RegisterState(),
-                actions = RegisterActions(
-                    onChangeLogin = {},
-                    onChangePassword = {},
-                    navigateToLogIn = {},
-                    onRegister = {},
-                    onRequestOtp = {},
-                    onChangeOtp = {},
-                    onTriggerOtpBottomSheet = {},
-                )
+                actions = object : RegisterListener {
+                    override fun navigateToLogIn() = Unit
+                    override fun onChangeLogin(login: String) = Unit
+                    override fun onChangePassword(password: String) = Unit
+                    override fun onRequestOtp() = Unit
+                    override fun onRegister() = Unit
+                    override fun onChangeOtp(otpValue: String) = Unit
+                    override fun onTriggerOtpBottomSheet(value: Boolean) = Unit
+                }
             )
         }
     }
@@ -184,15 +186,15 @@ private fun RegisterScreenErrorLightPreview() {
                     password = "",
                     passwordError = UiText.DynamicString("Ошибка")
                 ),
-                actions = RegisterActions(
-                    onChangeLogin = {},
-                    onChangePassword = {},
-                    navigateToLogIn = {},
-                    onRegister = {},
-                    onRequestOtp = {},
-                    onChangeOtp = {},
-                    onTriggerOtpBottomSheet = {},
-                )
+                actions = object : RegisterListener {
+                    override fun navigateToLogIn() = Unit
+                    override fun onChangeLogin(login: String) = Unit
+                    override fun onChangePassword(password: String) = Unit
+                    override fun onRequestOtp() = Unit
+                    override fun onRegister() = Unit
+                    override fun onChangeOtp(otpValue: String) = Unit
+                    override fun onTriggerOtpBottomSheet(value: Boolean) = Unit
+                }
             )
         }
     }

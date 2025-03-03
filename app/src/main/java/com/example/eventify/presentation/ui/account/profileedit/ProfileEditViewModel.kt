@@ -17,6 +17,7 @@ import com.example.eventify.presentation.navigation.Navigator
 import com.example.eventify.presentation.navigation.navgraphs.RootRouter
 import com.example.eventify.presentation.ui.SnackbarController
 import com.example.eventify.presentation.ui.SnackbarEvent
+import com.example.eventify.presentation.ui.account.profileedit.state.UiState
 import com.example.eventify.presentation.utils.asUiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -42,20 +43,18 @@ class ProfileEditViewModel @Inject constructor(
     private val validateTelegramNameUseCase = ValidateTelegramName()
     private val validateEmailUseCase = ValidateEmail()
 
-    private val _stateFlow: MutableStateFlow<ProfileEditState> = MutableStateFlow(ProfileEditState())
-    val stateFlow: StateFlow<ProfileEditState> = _stateFlow
+    private val _stateFlow: MutableStateFlow<UiState> = MutableStateFlow(UiState.Loading)
+    val stateFlow: StateFlow<UiState> = _stateFlow
         .onStart { loadData() }
         .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000L),
-            ProfileEditState()
+            UiState.Loading
         )
 
 
 
     private fun loadData(){
-        _stateFlow.update { it.copy(isLoading = true) }
-
         viewModelScope.launch {
             when (val userResult = getCurrentUserUseCase()){
                 is Result.Error -> SnackbarController.sendEvent(
@@ -88,7 +87,6 @@ class ProfileEditViewModel @Inject constructor(
             }
         }
 
-        _stateFlow.update { it.copy(isLoading = false) }
     }
 
 

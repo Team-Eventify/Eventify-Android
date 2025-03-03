@@ -21,6 +21,8 @@ import com.example.eventify.presentation.TopBarState
 import com.example.eventify.presentation.models.ShortEventItem
 import com.example.eventify.presentation.ui.common.HeadingText
 import com.example.eventify.presentation.ui.events.eventsfeed.components.EventCard
+import com.example.eventify.presentation.ui.events.eventsfeed.state.EventFeedListener
+import com.example.eventify.presentation.ui.events.eventsfeed.state.UiState
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 import com.example.eventify.presentation.ui.theme.LocalDimentions
 import com.google.accompanist.swiperefresh.SwipeRefresh
@@ -31,14 +33,14 @@ import kotlin.random.Random
 @Composable
 fun EventsFeedScreen(
     state: UiState.ShowFeed,
-    actions: EventsFeedActions,
+    actions: EventFeedListener,
 ) {
     val swipeRefreshState = rememberSwipeRefreshState(state.isRefreshing)
     val dimmentions = LocalDimentions.current
 
     SwipeRefresh(
         state = swipeRefreshState,
-        onRefresh = actions.onRefreshData
+        onRefresh = actions::onRefreshData
     ) {
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(20.dp),
@@ -55,7 +57,7 @@ fun EventsFeedScreen(
             ){ event ->
                 EventCard(
                     event = event,
-                    onClick = actions.onEventClick,
+                    onClick = actions::onEventClick,
                 )
             }
         }
@@ -90,7 +92,10 @@ private fun EventsFeedScreenDefaultDarkPreview() {
                         )
                     },
                 ),
-                actions = EventsFeedActions.default(),
+                actions = object : EventFeedListener {
+                    override fun onEventClick(eventId: String) = Unit
+                    override fun onRefreshData() = Unit
+                }
             )
         }
     }

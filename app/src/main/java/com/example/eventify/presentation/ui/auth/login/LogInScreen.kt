@@ -27,6 +27,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.eventify.R
+import com.example.eventify.presentation.ui.auth.login.state.LogInState
+import com.example.eventify.presentation.ui.auth.login.state.LoginListener
 import com.example.eventify.presentation.ui.common.ActionPrimaryText
 import com.example.eventify.presentation.ui.common.ActionText
 import com.example.eventify.presentation.ui.common.BodyText
@@ -42,7 +44,7 @@ import com.example.eventify.presentation.ui.theme.LocalDimentions
 @Composable
 fun LogInScreen(
     state: LogInState,
-    actions: LogInActions,
+    actions: LoginListener,
 ) {
     val focusRequester = remember {
         FocusRequester()
@@ -70,7 +72,7 @@ fun LogInScreen(
             label = "Email",
             placeholder = "ivanov@gmail.com",
             isError = state.loginError != null || state.hasLoginError,
-            onValueChange = actions.onChangeLogin,
+            onValueChange = actions::onChangeLogin,
             supportingText = {
                 state.loginError?.let { ErrorInputText(text = it) }
             },
@@ -91,7 +93,7 @@ fun LogInScreen(
             label = "Password",
             placeholder = "mypassword",
             isError = state.passwordError != null || state.hasPasswordError,
-            onValueChange = actions.onChangePassword,
+            onValueChange = actions::onChangePassword,
             supportingText = {
                 state.passwordError?.let { ErrorInputText(text = it) }
             },
@@ -106,14 +108,14 @@ fun LogInScreen(
         )
         ActionText(
             text = stringResource(R.string.forgot_password),
-            onClick = actions.navigateToResetPassword,
+            onClick = actions::navigateToResetPassword,
             textAlign = TextAlign.Right,
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(30.dp))
         PrimaryButton(
             enabled = state.isValidForm,
-            onClick = actions.onSubmit,
+            onClick = actions::onSubmit,
             modifier = Modifier
                 .fillMaxWidth()
         ) {
@@ -128,7 +130,7 @@ fun LogInScreen(
             Text(text = stringResource(R.string.no_account_question))
             ActionPrimaryText(
                 text = stringResource(R.string.register_action),
-                onClick = actions.navigateToRegister
+                onClick = actions::navigateToRegister
             )
         }
     }
@@ -146,12 +148,13 @@ private fun LogInScreenDarkPreview() {
         ){
             LogInScreen(
                 state = LogInState.default(),
-                actions = LogInActions(
-                    onSubmit = {},
-                    onChangePassword = {},
-                    onChangeLogin = {},
-                    navigateToRegister = {}
-                )
+                actions = object : LoginListener {
+                    override fun onChangeLogin(login: String) = Unit
+                    override fun onChangePassword(password: String) = Unit
+                    override fun onSubmit() = Unit
+                    override fun navigateToRegister() = Unit
+                    override fun navigateToResetPassword() = Unit
+                }
             )
         }
     }
@@ -174,12 +177,13 @@ private fun LogInScreenInvalidDarkPreview() {
                     password = "",
                     passwordError = "Глупый",
                 ),
-                actions = LogInActions(
-                    onSubmit = {},
-                    onChangePassword = {},
-                    onChangeLogin = {},
-                    navigateToRegister = {}
-                )
+                actions = object : LoginListener {
+                    override fun onChangeLogin(login: String) = Unit
+                    override fun onChangePassword(password: String) = Unit
+                    override fun onSubmit() = Unit
+                    override fun navigateToRegister() = Unit
+                    override fun navigateToResetPassword() = Unit
+                }
             )
         }
     }
@@ -197,12 +201,13 @@ private fun LogInScreenLightPreview() {
         ){
             LogInScreen(
                 state = LogInState.default(),
-                actions = LogInActions(
-                    onSubmit = {},
-                    onChangePassword = {},
-                    onChangeLogin = {},
-                    navigateToRegister = {}
-                )
+                actions = object : LoginListener {
+                    override fun onChangeLogin(login: String) = Unit
+                    override fun onChangePassword(password: String) = Unit
+                    override fun onSubmit() = Unit
+                    override fun navigateToRegister() = Unit
+                    override fun navigateToResetPassword() = Unit
+                }
             )
         }
     }
@@ -225,12 +230,13 @@ private fun LogInScreenInvalidLightPreview() {
                     password = "",
                     passwordError = "Глупый"
                 ),
-                actions = LogInActions(
-                    onSubmit = {},
-                    onChangePassword = {},
-                    onChangeLogin = {},
-                    navigateToRegister = {}
-                )
+                actions = object : LoginListener {
+                    override fun onChangeLogin(login: String) = Unit
+                    override fun onChangePassword(password: String) = Unit
+                    override fun onSubmit() = Unit
+                    override fun navigateToRegister() = Unit
+                    override fun navigateToResetPassword() = Unit
+                }
             )
         }
     }

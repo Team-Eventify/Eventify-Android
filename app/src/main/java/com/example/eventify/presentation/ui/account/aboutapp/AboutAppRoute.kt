@@ -8,21 +8,52 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavHostController
 import com.example.eventify.R
 import com.example.eventify.presentation.LocalTopBarState
 import com.example.eventify.presentation.TopBarSize
 import com.example.eventify.presentation.TopBarState
+import com.example.eventify.presentation.ui.account.aboutapp.state.AboutAppListener
 import com.example.eventify.presentation.ui.common.DefaultTopAppBar
 
 
 @Composable
 fun AboutAppRoute(
-    coordinator: AboutAppCoordinator = rememberAboutAppCoordinator()
+    navController: NavHostController
 ) {
-    val uiState by coordinator.screenStateFlow.collectAsState(AboutAppState())
-    val actions = rememberAboutAppActions(coordinator)
+    val viewModel = hiltViewModel<AboutAppViewModel>()
+    val uiState by viewModel.stateFlow.collectAsStateWithLifecycle()
     val topBarState = LocalTopBarState.current
     val context = LocalContext.current
+
+    val listener = object : AboutAppListener {
+        override fun navigateUp() {
+            navController.navigateUp()
+        }
+
+        override fun goToAboutUs() {
+            TODO("Not yet implemented")
+        }
+
+        override fun goPrivacyPolicy() {
+            TODO("Not yet implemented")
+        }
+
+        override fun goTermsOfUse() {
+            TODO("Not yet implemented")
+        }
+
+        override fun goToInformationSecurity() {
+            TODO("Not yet implemented")
+        }
+
+        override fun goToDonate() {
+            TODO("Not yet implemented")
+        }
+
+    }
 
     LaunchedEffect(Unit) {
         topBarState.setUp(
@@ -33,20 +64,6 @@ fun AboutAppRoute(
         )
     }
 
-    AboutAppScreen(uiState, actions)
+    AboutAppScreen(uiState, listener)
 }
 
-
-@Composable
-fun rememberAboutAppActions(coordinator: AboutAppCoordinator): AboutAppActions {
-    return remember(coordinator) {
-        AboutAppActions(
-            navigateUp = coordinator.viewModel::navigateUp,
-            goPrivacyPolicy = coordinator.viewModel::navigateToPrivacyPolicy,
-            goToAboutUs = coordinator.viewModel::navigateToAboutUs,
-            goToDonate = coordinator.viewModel::navigateToDonate,
-            goTermsOfUse = coordinator.viewModel::navigateTermsOfUse,
-            goToInformationSecurity = coordinator.viewModel::navigateToInformationSecurity
-        )
-    }
-}

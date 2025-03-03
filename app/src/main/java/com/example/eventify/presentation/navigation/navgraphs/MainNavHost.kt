@@ -1,16 +1,26 @@
 package com.example.eventify.presentation.navigation.navgraphs
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import com.example.eventify.presentation.ui.auth.onboarding.OnBoardingRoute
-import com.example.eventify.presentation.ui.events.eventdetail.EventDetailRoute
-import com.example.eventify.presentation.ui.events.feedback.FeedbackRoute
-import com.example.eventify.presentation.ui.events.feedback.FeedbackScreen
+import com.example.eventify.presentation.navigation.LocalFeaturesProvider
+import com.example.eventify.presentation.navigation.entries.BaseDestination
+import com.example.eventify.presentation.navigation.entries.ComposableFeatureEntry
+import com.example.eventify.presentation.navigation.entries.auth.AuthRootPath
+import com.example.eventify.presentation.navigation.entries.auth.LoginEntry
+import com.example.eventify.presentation.navigation.entries.auth.LoginPath
+import com.example.eventify.presentation.navigation.entries.auth.OnBoardingEntry
+import com.example.eventify.presentation.navigation.entries.auth.RegisterEntry
+import com.example.eventify.presentation.navigation.entries.auth.RegisterPath
+import com.example.eventify.presentation.navigation.entries.auth.ResetPasswordEntry
+import com.example.eventify.presentation.navigation.entries.events.EventDetailEntry
+import com.example.eventify.presentation.navigation.entries.events.EventsFeedFeatureEntry
+import com.example.eventify.presentation.navigation.entries.events.MyEventsEntry
+import com.example.eventify.presentation.navigation.entries.events.SearchEntry
+import com.example.eventify.presentation.navigation.findOrNull
 import kotlinx.serialization.Serializable
+
 
 
 @Composable
@@ -19,29 +29,35 @@ fun MainNavHost(
     startDestination: Any = RootRouter.AuthRoute,
     modifier: Modifier = Modifier
 ) {
-    NavHost(
-        navController = navController,
-        startDestination = startDestination,
-        modifier = Modifier.then(modifier)
-    ){
-        HomeNavGraph(navController = navController)
-        AuthNavGraph()
-        SettingsNavGraph()
-        
-        composable<RootRouter.EventDetailRoute>{
-            EventDetailRoute(
-                navController = navController,
-            )
-        }
+    val features = LocalFeaturesProvider.current.features
 
-        composable<RootRouter.EventFeedbackRoute> {
-            FeedbackRoute()
-        }
-        composable<RootRouter.OnboardingRoute> {
-            OnBoardingRoute()
-        }
+    val authFeatures: List<ComposableFeatureEntry> = listOfNotNull(
+        features.findOrNull<LoginEntry>(),
+        features.findOrNull<RegisterEntry>(),
+        features.findOrNull<ResetPasswordEntry>(),
+        features.findOrNull<OnBoardingEntry>(),
+    )
+
+    val eventsFeatures: List<ComposableFeatureEntry> = listOfNotNull(
+        features.findOrNull<EventsFeedFeatureEntry>(),
+        features.findOrNull<EventDetailEntry>(),
+        features.findOrNull<MyEventsEntry>(),
+        features.findOrNull<SearchEntry>(),
+    )
+
+    NavHost(
+        modifier = modifier,
+        navController = navController,
+        startDestination = AuthRootPath.baseRoute
+    ){
+
+        addAuthNavGraph(navController, authFeatures)
+        addEventsNavGraph(navController, eventsFeatures)
+
     }
 }
+
+
 
 sealed class RootRouter: Destination {
     @Serializable

@@ -44,6 +44,8 @@ import com.example.eventify.presentation.ui.common.PrimaryButtonText
 import com.example.eventify.presentation.ui.common.buttons.PrimaryDeclineButton
 import com.example.eventify.presentation.ui.common.CategoryTagChip
 import com.example.eventify.presentation.ui.common.EventImage
+import com.example.eventify.presentation.ui.events.eventdetail.state.EventDetailListener
+import com.example.eventify.presentation.ui.events.eventdetail.state.UiState
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 import com.example.eventify.presentation.ui.theme.LocalDimentions
 import com.example.eventify.presentation.utils.asDate
@@ -55,7 +57,7 @@ import java.util.UUID
 @Composable
 fun EventDetailScreen(
     state: UiState.ShowEvent,
-    actions: EventDetailActions,
+    actions: EventDetailListener,
 ) {
     val pagerState = rememberPagerState(pageCount = { state.event.eventInfo.pictures.size})
     val dimmentions = LocalDimentions.current
@@ -68,7 +70,7 @@ fun EventDetailScreen(
                 size = TopBarSize.MEDIUM,
                 leftAction = TopBarAction(
                     iconRes = R.drawable.ic_chevron_right,
-                    onClick = actions.navigateUp
+                    onClick = actions::navigateUp
                 )
             )
         )
@@ -129,14 +131,14 @@ fun EventDetailScreen(
 
             if (state.event.eventInfo.subscribed) {
                 PrimaryDeclineButton(
-                    onClick = actions.onUnsubscribe,
+                    onClick = actions::onUnsubscribe,
                     enabled = !state.event.eventInfo.isFinished,
                 ) {
                     PrimaryButtonText(text = "Отменить запись на мероприятие")
                 }
             } else {
                 PrimaryButton(
-                    onClick = actions.onSubscribe,
+                    onClick = actions::onSubscribe,
                     enabled = !state.event.eventInfo.isFinished,
                 ) {
                     PrimaryButtonText(text = "Я пойду!")
@@ -191,11 +193,12 @@ private fun EventDetailScreenLightPreview() {
                         )
                     )
                 ),
-                actions = EventDetailActions(
-                    navigateUp = {},
-                    onSubscribe = {},
-                    onUnsubscribe = {},
-                ),
+                actions = object : EventDetailListener {
+                    override fun navigateUp() = Unit
+                    override fun onSubscribe() = Unit
+                    override fun onUnsubscribe() = Unit
+                    override fun goToRatePage() = Unit
+                },
             )
         }
     }

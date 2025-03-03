@@ -16,13 +16,3 @@ data class ProfileState(
         )
     }
 }
-
-/**
- * Profile Actions emitted from the UI Layer
- * passed to the coordinator to handle
- **/
-data class ProfileActions(
-    val onLogOut: () -> Unit = {},
-    val navigateToProfileEdit: () -> Unit = {},
-    val navigateToAppInfo: () -> Unit = {}
-)

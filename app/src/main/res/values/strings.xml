@@ -77,4 +77,8 @@
     <string name="finished_events">Finished events</string>
     <string name="email_confirmation">Email confirmation</string>
     <string name="otp_description">We have sent a confirmation code to your email. Please enter it below to complete the process.</string>
+    <string name="email">Email</string>
+    <string name="telegram">Telegram</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
 </resources>

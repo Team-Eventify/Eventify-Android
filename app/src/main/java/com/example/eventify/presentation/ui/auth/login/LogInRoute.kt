@@ -2,40 +2,53 @@ package com.example.eventify.presentation.ui.auth.login
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.example.eventify.presentation.LocalTopBarState
+import com.example.eventify.presentation.navigation.LocalFeaturesProvider
+import com.example.eventify.presentation.navigation.entries.auth.RegisterEntry
+import com.example.eventify.presentation.navigation.entries.auth.ResetPasswordEntry
+import com.example.eventify.presentation.navigation.navigateToFeature
+import com.example.eventify.presentation.ui.auth.login.state.LoginListener
 
 @Composable
 fun LogInRoute(
-    coordinator: LogInCoordinator = rememberLogInCoordinator()
+    navController: NavHostController
 ) {
-    val uiState by coordinator.screenStateFlow.collectAsStateWithLifecycle()
-    val actions = rememberLogInActions(coordinator)
+    val viewModel = hiltViewModel<LogInViewModel>()
+    val uiState by viewModel.stateFlow.collectAsStateWithLifecycle()
     val topBarState = LocalTopBarState.current
+    val features = LocalFeaturesProvider.current.features
+
+    val listener = object : LoginListener {
+        override fun onChangeLogin(login: String) {
+            viewModel.changeLogin(login)
+        }
+
+        override fun onChangePassword(password: String) {
+            viewModel.changePassword(password)
+        }
+
+        override fun onSubmit() {
+            viewModel.logIn()
+        }
+
+        override fun navigateToRegister() {
+            features.navigateToFeature<RegisterEntry>(navController)
+        }
+
+        override fun navigateToResetPassword() {
+            features.navigateToFeature<ResetPasswordEntry>(navController)
+
+        }
+    }
 
     LaunchedEffect(Unit) {
         topBarState.hide()
     }
 
     // UI Rendering
-    LogInScreen(uiState, actions)
-}
-
-
-@Composable
-fun rememberLogInActions(coordinator: LogInCoordinator): LogInActions {
-    return remember(coordinator) {
-        LogInActions(
-            onChangeLogin = coordinator.viewModel::changeLogin,
-            onChangePassword = coordinator.viewModel::changePassword,
-            onSubmit = coordinator.viewModel::logIn,
-            navigateToRegister = coordinator::navigateToRegister,
-            navigateToResetPassword = coordinator.viewModel::navigateToResetPassword
-        )
-    }
+    LogInScreen(uiState, listener)
 }

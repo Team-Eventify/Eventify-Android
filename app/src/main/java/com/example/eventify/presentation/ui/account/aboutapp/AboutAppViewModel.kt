@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.eventify.R
 import com.example.eventify.presentation.navigation.Navigator
+import com.example.eventify.presentation.ui.account.aboutapp.state.AboutAppState
 import com.example.eventify.presentation.utils.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -43,42 +44,6 @@ class AboutAppViewModel @Inject constructor(
                     versionName = UiText.StringResource(R.string.version, args = arrayOf(versionName))
                 )
             }
-        }
-    }
-
-    fun navigateUp(){
-        viewModelScope.launch {
-            navigator.navigateUp()
-        }
-    }
-
-    fun navigateToPrivacyPolicy() {
-        viewModelScope.launch {
-
-        }
-    }
-
-    fun navigateToAboutUs() {
-        viewModelScope.launch {
-
-        }
-    }
-
-    fun navigateToDonate() {
-        viewModelScope.launch {
-
-        }
-    }
-
-    fun navigateTermsOfUse() {
-        viewModelScope.launch {
-
-        }
-    }
-
-    fun navigateToInformationSecurity() {
-        viewModelScope.launch {
-
         }
     }
 }

@@ -1,14 +1,12 @@
-package com.example.eventify.presentation.ui.auth.register
+package com.example.eventify.presentation.ui.auth.register.state
 
 import androidx.compose.runtime.Stable
 import com.example.eventify.presentation.utils.UiText
 
+
 const val OTP_LENGTH = 6
 
 
-/**
- * UI State that represents RegisterScreen
- **/
 @Stable
 data class RegisterState(
     val login: String = "",
@@ -35,17 +33,3 @@ data class RegisterState(
     val isValidOtp: Boolean
         get() = otp?.let { it.length == OTP_LENGTH } ?: false
 }
-
-/**
- * Register Actions emitted from the UI Layer
- * passed to the coordinator to handle
- **/
-data class RegisterActions(
-    val navigateToLogIn: () -> Unit,
-    val onChangeLogin: (String) -> Unit,
-    val onChangePassword: (String) -> Unit,
-    val onRequestOtp: () -> Unit,
-    val onRegister: () -> Unit,
-    val onChangeOtp: (String) -> Unit,
-    val onTriggerOtpBottomSheet: (Boolean) -> Unit,
-)

@@ -21,7 +21,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -36,13 +35,14 @@ import com.example.eventify.data.storages.LocaleStorage
 import com.example.eventify.data.storages.SharedStorage
 import com.example.eventify.domain.SessionManager
 import com.example.eventify.domain.di.RequestsSessionManager
+import com.example.eventify.presentation.navigation.LocalFeaturesProvider
 import com.example.eventify.presentation.navigation.NavigationAction
 import com.example.eventify.presentation.navigation.Navigator
 import com.example.eventify.presentation.navigation.navgraphs.Destination
 import com.example.eventify.presentation.navigation.navgraphs.MainNavHost
 import com.example.eventify.presentation.navigation.navgraphs.RootRouter
 import com.example.eventify.presentation.ui.SnackbarController
-import com.example.eventify.presentation.ui.common.BottomNavigationBar
+import com.example.eventify.presentation.ui.common.bottomBar.BottomNavigationBar
 import com.example.eventify.presentation.ui.common.EventifySnackbar
 import com.example.eventify.presentation.ui.common.screens.NoInternetConnectionScreen
 import com.example.eventify.presentation.ui.common.topBar.EventifyTopAppBar
@@ -94,6 +94,7 @@ class MainActivity : ComponentActivity() {
                 dynamicColor = false,
                 LocaleImageLoader provides imageLoader,
                     LocalTopBarState provides topBarState,
+                    LocalFeaturesProvider provides application.featuresProvider
                 ) {
                 LaunchedEffect(Unit) {
                     enableEdgeToEdge(

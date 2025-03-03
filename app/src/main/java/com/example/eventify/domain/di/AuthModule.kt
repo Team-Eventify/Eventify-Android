@@ -16,11 +16,20 @@ import com.example.eventify.data.storages.LocaleStorage
 import com.example.eventify.domain.SessionManager
 import com.example.eventify.domain.SessionManagerImpl
 import com.example.eventify.domain.SessionManagerRequestsImpl
+import com.example.eventify.presentation.navigation.entries.auth.LoginEntry
+import com.example.eventify.presentation.navigation.entries.auth.LoginEntryImpl
+import com.example.eventify.presentation.navigation.entries.auth.OnBoardingEntry
+import com.example.eventify.presentation.navigation.entries.auth.OnBoardingEntryImpl
+import com.example.eventify.presentation.navigation.entries.auth.RegisterEntry
+import com.example.eventify.presentation.navigation.entries.auth.RegisterEntryImpl
+import com.example.eventify.presentation.navigation.entries.auth.ResetPasswordEntry
+import com.example.eventify.presentation.navigation.entries.auth.ResetPasswordEntryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import dagger.multibindings.IntoMap
 import okhttp3.Authenticator
 import okhttp3.Interceptor
 import javax.inject.Singleton
@@ -62,5 +71,7 @@ object AuthModule {
     @Provides
     @Singleton
     fun provideRequestsSessionManager(usersRepository: UsersRepository, tokenProvider: TokenProvider): SessionManager = SessionManagerRequestsImpl(usersRepository = usersRepository, tokenProvider = tokenProvider)
+
+
 
 }
