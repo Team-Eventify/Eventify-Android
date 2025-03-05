@@ -11,6 +11,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -42,6 +43,7 @@ private val gradientColorsDark = listOf(
     Color(0xFF202020),
 )
 
+@Stable
 @SuppressLint("SuspiciousModifierThen")
 @Composable
 fun Modifier.shimmer(

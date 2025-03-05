@@ -1,4 +1,4 @@
-package com.example.eventify.presentation.ui.account.aboutapp.state
+package com.example.eventify.presentation.ui.settings.aboutapp.state
 
 import com.example.eventify.presentation.utils.UiText
 

@@ -4,17 +4,11 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.eventify.domain.Result
-import com.example.eventify.domain.usecases.account.DeleteAccountUseCase
 import com.example.eventify.domain.usecases.account.GetCurrentUserUseCase
 import com.example.eventify.domain.usecases.auth.LogOutUseCase
 import com.example.eventify.presentation.models.UserShortInfo
-import com.example.eventify.presentation.navigation.Navigator
-import com.example.eventify.presentation.navigation.navgraphs.AuthRouter
-import com.example.eventify.presentation.navigation.navgraphs.SettingsRouter
-import com.example.eventify.presentation.ui.SnackbarController
-import com.example.eventify.presentation.ui.SnackbarEvent
 import com.example.eventify.presentation.ui.account.profile.state.UiState
-import com.example.eventify.presentation.utils.asUiText
+import com.example.eventify.presentation.utils.asText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
@@ -28,7 +22,6 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val navigator: Navigator,
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
     private val logOutUseCase: LogOutUseCase,
     @ApplicationContext private val context: Context,
@@ -48,10 +41,7 @@ class ProfileViewModel @Inject constructor(
             _stateFlow.update {
                 when (val result = getCurrentUserUseCase()){
                     is Result.Error -> {
-                        SnackbarController.sendEvent(
-                            SnackbarEvent(message = result.error.asUiText().asString(context))
-                        )
-                        UiState.Error
+                        UiState.Error(result.asText(context))
                     }
                     is Result.Success -> {
                         UiState.ShowProfile(
@@ -72,11 +62,11 @@ class ProfileViewModel @Inject constructor(
     fun logOut(){
         viewModelScope.launch {
             logOutUseCase()
-            navigator.navigate(AuthRouter.LogInRoute){
-                popUpTo(0) {
-                    inclusive = true
-                }
-            }
+//            navigator.navigate(AuthRouter.LogInRoute){
+//                popUpTo(0) {
+//                    inclusive = true
+//                }
+//            }
         }
     }
 }

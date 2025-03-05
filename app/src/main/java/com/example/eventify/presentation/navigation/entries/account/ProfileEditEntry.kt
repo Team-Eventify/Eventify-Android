@@ -16,7 +16,7 @@ interface ProfileEditEntry : ComposableFeatureEntry {
         get() = emptyList()
 }
 
-class ProfileEditEntryImpl @Inject constructor() : ProfileEntry {
+class ProfileEditEntryImpl @Inject constructor() : ProfileEditEntry {
     @Composable
     override fun Composable(navController: NavHostController) {
         ProfileEditRoute(navController)

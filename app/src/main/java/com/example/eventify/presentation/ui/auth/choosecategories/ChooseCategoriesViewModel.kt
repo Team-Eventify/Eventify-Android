@@ -7,10 +7,6 @@ import com.example.eventify.domain.Result
 import com.example.eventify.domain.usecases.account.SetUserCategoriesUseCase
 import com.example.eventify.domain.usecases.categories.GetCategoriesUseCase
 import com.example.eventify.presentation.models.CategorySelectItem
-import com.example.eventify.presentation.navigation.Navigator
-import com.example.eventify.presentation.navigation.navgraphs.RootRouter
-import com.example.eventify.presentation.ui.SnackbarController
-import com.example.eventify.presentation.ui.SnackbarEvent
 import com.example.eventify.presentation.utils.asUiText
 import com.example.eventify.presentation.utils.toColorOrNull
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,7 +22,6 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class ChooseCategoriesViewModel @Inject constructor(
-    private val navigator: Navigator,
     private val setCategoriesUseCase: SetUserCategoriesUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     @ApplicationContext private val context: Context
@@ -45,9 +40,9 @@ class ChooseCategoriesViewModel @Inject constructor(
         viewModelScope.launch {
             when (val result = getCategoriesUseCase()){
                 is Result.Error -> {
-                    SnackbarController.sendEvent(
-                        SnackbarEvent(message = result.error.asUiText().asString(context))
-                    )
+//                    SnackbarController.sendEvent(
+//                        SnackbarEvent(message = result.error.asUiText().asString(context))
+//                    )
                 }
                 is Result.Success -> {
                     _stateFlow.update { currentState ->
@@ -67,13 +62,7 @@ class ChooseCategoriesViewModel @Inject constructor(
     }
 
     fun skipStep(){
-        viewModelScope.launch {
-            navigator.navigate(RootRouter.HomeRoute){
-                popUpTo(0) {
-                    inclusive = true
-                }
-            }
-        }
+
     }
 
     fun setCategories(){
@@ -82,15 +71,11 @@ class ChooseCategoriesViewModel @Inject constructor(
         viewModelScope.launch {
             when (val result = setCategoriesUseCase(selectedCategoryIds)){
                 is Result.Error -> {
-                    SnackbarController.sendEvent(
-                        SnackbarEvent(message = result.error.asUiText().asString(context))
-                    )
+//                    SnackbarController.sendEvent(
+//                        SnackbarEvent(message = result.error.asUiText().asString(context))
+//                    )
                 }
-                is Result.Success -> navigator.navigate(RootRouter.HomeRoute){
-                    popUpTo(0) {
-                        inclusive = true
-                    }
-                }
+                is Result.Success -> {}
             }
         }
     }

@@ -2,6 +2,7 @@ package com.example.eventify.presentation.navigation.entries.events
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import com.example.eventify.presentation.navigation.ARG_EVENT_ID
 import com.example.eventify.presentation.navigation.entries.ComposableFeatureEntry
 import com.example.eventify.presentation.ui.events.eventdetail.EventDetailRoute
 import javax.inject.Inject
@@ -13,7 +14,9 @@ interface EventDetailEntry : ComposableFeatureEntry {
         get() = EventDetailPath
 
     override val argumentsKeys: List<String>
-        get() = emptyList()
+        get() = listOf(
+            ARG_EVENT_ID,
+        )
 }
 
 class EventDetailEntryImpl @Inject constructor() : EventDetailEntry{

@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import com.example.eventify.presentation.navigation.entries.BaseDestination
 import com.example.eventify.presentation.navigation.entries.ComposableFeatureEntry
-import com.example.eventify.presentation.ui.account.aboutapp.AboutAppRoute
+import com.example.eventify.presentation.ui.settings.aboutapp.AboutAppRoute
 import javax.inject.Inject
 
 

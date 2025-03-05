@@ -1,38 +1,31 @@
 package com.example.eventify.presentation.ui.auth.resetpassword
 
-import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import androidx.navigation.toRoute
-import com.example.eventify.R
 import com.example.eventify.domain.validation.ValidateEmail
-import com.example.eventify.presentation.navigation.navgraphs.AuthRouter
-import com.example.eventify.presentation.navigation.navgraphs.RootRouter
-import com.example.eventify.presentation.ui.SnackbarController
-import com.example.eventify.presentation.ui.SnackbarEvent
+import com.example.eventify.presentation.navigation.ARG_SHARED_EMAIL
+import com.example.eventify.presentation.ui.auth.resetpassword.state.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
+
 
 @HiltViewModel
 class ResetPasswordViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-    private val sharedEmail = savedStateHandle.toRoute<AuthRouter.ResetPasswordRoute>().email
-
+    private val sharedEmail by lazy {
+        savedStateHandle.get<String?>(ARG_SHARED_EMAIL) ?: ""
+    }
     private val validateEmail = ValidateEmail()
-
-    private val _stateFlow: MutableStateFlow<ResetPasswordState> =
-        MutableStateFlow(ResetPasswordState(
-            email = sharedEmail ?: ""
+    private val _stateFlow: MutableStateFlow<UiState> =
+        MutableStateFlow(UiState(
+            email = sharedEmail
         ))
-
-    val stateFlow: StateFlow<ResetPasswordState> = _stateFlow.asStateFlow()
+    val stateFlow: StateFlow<UiState> = _stateFlow.asStateFlow()
 
     fun onChangeEmail(value: String){
         _stateFlow.update { currentState ->
@@ -43,12 +36,6 @@ class ResetPasswordViewModel @Inject constructor(
     }
 
     fun resetPassword(){
-        viewModelScope.launch {
-            SnackbarController.sendEvent(
-                SnackbarEvent(
-                    message = "Will be later"
-                )
-            )
-        }
+
     }
 }

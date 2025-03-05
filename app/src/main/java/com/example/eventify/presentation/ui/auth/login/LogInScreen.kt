@@ -108,7 +108,9 @@ fun LogInScreen(
         )
         ActionText(
             text = stringResource(R.string.forgot_password),
-            onClick = actions::navigateToResetPassword,
+            onClick = {
+                actions.navigateToResetPassword(sharedEmail = state.login)
+            },
             textAlign = TextAlign.Right,
             modifier = Modifier.fillMaxWidth()
         )
@@ -153,7 +155,7 @@ private fun LogInScreenDarkPreview() {
                     override fun onChangePassword(password: String) = Unit
                     override fun onSubmit() = Unit
                     override fun navigateToRegister() = Unit
-                    override fun navigateToResetPassword() = Unit
+                    override fun navigateToResetPassword(sharedEmail: String?) = Unit
                 }
             )
         }
@@ -182,7 +184,7 @@ private fun LogInScreenInvalidDarkPreview() {
                     override fun onChangePassword(password: String) = Unit
                     override fun onSubmit() = Unit
                     override fun navigateToRegister() = Unit
-                    override fun navigateToResetPassword() = Unit
+                    override fun navigateToResetPassword(sharedEmail: String?) = Unit
                 }
             )
         }
@@ -206,7 +208,7 @@ private fun LogInScreenLightPreview() {
                     override fun onChangePassword(password: String) = Unit
                     override fun onSubmit() = Unit
                     override fun navigateToRegister() = Unit
-                    override fun navigateToResetPassword() = Unit
+                    override fun navigateToResetPassword(sharedEmail: String?) = Unit
                 }
             )
         }
@@ -235,7 +237,7 @@ private fun LogInScreenInvalidLightPreview() {
                     override fun onChangePassword(password: String) = Unit
                     override fun onSubmit() = Unit
                     override fun navigateToRegister() = Unit
-                    override fun navigateToResetPassword() = Unit
+                    override fun navigateToResetPassword(sharedEmail: String?) = Unit
                 }
             )
         }

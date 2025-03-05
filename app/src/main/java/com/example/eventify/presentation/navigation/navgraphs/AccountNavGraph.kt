@@ -4,8 +4,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.navigation
 import com.example.eventify.presentation.navigation.entries.ComposableFeatureEntry
-import com.example.eventify.presentation.navigation.entries.auth.AuthRootPath
-import com.example.eventify.presentation.navigation.entries.auth.LoginPath
+import com.example.eventify.presentation.navigation.entries.account.AccountRootPath
+import com.example.eventify.presentation.navigation.entries.account.ProfilePath
 
 
 fun NavGraphBuilder.addAccountNavGraph(
@@ -13,8 +13,8 @@ fun NavGraphBuilder.addAccountNavGraph(
     features: List<ComposableFeatureEntry>,
 ) {
     navigation(
-        route = AuthRootPath.baseRoute,
-        startDestination = LoginPath
+        route = AccountRootPath.baseRoute,
+        startDestination = ProfilePath
     ) {
         features.forEach { feature ->
             with(feature) {

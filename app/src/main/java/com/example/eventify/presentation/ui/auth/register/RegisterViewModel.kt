@@ -10,21 +10,19 @@ import com.example.eventify.domain.Result
 import com.example.eventify.domain.models.OtpUserCreate
 import com.example.eventify.domain.models.RegisterValidationData
 import com.example.eventify.domain.usecases.auth.OtpRegisterUseCase
-import com.example.eventify.domain.usecases.auth.RegisterUseCase
 import com.example.eventify.domain.validation.ValidateEmail
 import com.example.eventify.domain.validation.ValidatePassword
-import com.example.eventify.presentation.navigation.Navigator
-import com.example.eventify.presentation.navigation.navgraphs.AuthRouter
-import com.example.eventify.presentation.ui.SnackbarController
-import com.example.eventify.presentation.ui.SnackbarEvent
 import com.example.eventify.presentation.ui.auth.register.state.RegisterState
+import com.example.eventify.presentation.ui.auth.register.state.SideEffect
 import com.example.eventify.presentation.utils.asUiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.channels.Channel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -32,13 +30,15 @@ import kotlinx.coroutines.launch
 class RegisterViewModel @Inject constructor(
     private val otpRegisterUseCase: OtpRegisterUseCase,
     private val authRepository: AuthUserRepository,
-    private val navigator: Navigator,
     @ApplicationContext private val context: Context
 ) : ViewModel() {
     private val validateEmailUseCase: ValidateEmail = ValidateEmail()
     private val validatePasswordUseCase: ValidatePassword = ValidatePassword()
 
     private var validationResultId: String? = null
+
+    private val mutableSideEffect = Channel<SideEffect>()
+    val sideEffect = mutableSideEffect.receiveAsFlow()
 
     private val _stateFlow: MutableStateFlow<RegisterState> = MutableStateFlow(RegisterState())
     val stateFlow: StateFlow<RegisterState> = _stateFlow.asStateFlow()
@@ -116,9 +116,9 @@ class RegisterViewModel @Inject constructor(
         viewModelScope.launch {
             when (val result = authRepository.validateRegisterData(data = validationData)) {
                 is Result.Error -> {
-                    SnackbarController.sendEvent(
-                        SnackbarEvent(message = result.error.asUiText().asString(context))
-                    )
+//                    SnackbarController.sendEvent(
+//                        SnackbarEvent(message = result.error.asUiText().asString(context))
+//                    )
                 }
                 is Result.Success -> {
                     validationResultId = result.data
@@ -152,11 +152,11 @@ class RegisterViewModel @Inject constructor(
                 is Result.Error -> handleErrors(result.error)
                 is Result.Success -> {
                     triggerOtpBottomSheet(false)
-                    navigator.navigate(AuthRouter.ChooseCategoriesRoute){
-                        popUpTo(0) {
-                            inclusive = true
-                        }
-                    }
+//                    navigator.navigate(AuthRouter.ChooseCategoriesRoute){
+//                        popUpTo(0) {
+//                            inclusive = true
+//                        }
+//                    }
                 }
             }
         }
@@ -166,22 +166,15 @@ class RegisterViewModel @Inject constructor(
     private suspend fun handleErrors(error: DataError){
         when (error){
             is DataError.Network -> {
-                SnackbarController.sendEvent(
-                    SnackbarEvent(message = error.asUiText().asString(context))
-                )
+//                SnackbarController.sendEvent(
+//                    SnackbarEvent(message = error.asUiText().asString(context))
+//                )
             }
             else -> {
-                SnackbarController.sendEvent(
-                    SnackbarEvent(message = error.asUiText().asString(context))
-                )
+//                SnackbarController.sendEvent(
+//                    SnackbarEvent(message = error.asUiText().asString(context))
+//                )
             }
         }
     }
-
-    fun navigateToLogin(){
-        viewModelScope.launch {
-            navigator.navigate(AuthRouter.LogInRoute)
-        }
-    }
-
 }

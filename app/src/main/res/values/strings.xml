@@ -78,7 +78,15 @@
     <string name="email_confirmation">Email confirmation</string>
     <string name="otp_description">We have sent a confirmation code to your email. Please enter it below to complete the process.</string>
     <string name="email">Email</string>
-    <string name="telegram">Telegram</string>
+    <string name="telegram" translatable="false">Telegram</string>
     <string name="first_name">First name</string>
     <string name="last_name">Last name</string>
+    <string name="my_categories">My categories</string>
+    <string name="logout_action">Log out</string>
+    <string name="save">Save</string>
+    <string name="save_changes">Save changes</string>
+    <string name="categories_based_on_interests">Categories based on interests</string>
+    <string name="search_title">Search</string>
+    <string name="profile_title">Profile</string>
+    <string name="failed_load_profile">Failed to load your profile</string>
 </resources>

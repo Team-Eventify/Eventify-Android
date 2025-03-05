@@ -8,4 +8,5 @@ interface ProfileEditListener {
     fun onChangeLastName(lastName: String): Unit
     fun onChangeTelegram(telegram: String): Unit
     fun onDeleteAccount(): Unit
+    fun onBackClick(): Unit
 }

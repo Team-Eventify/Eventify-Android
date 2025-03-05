@@ -5,5 +5,5 @@ interface LoginListener {
     fun onChangePassword(password: String): Unit
     fun onSubmit(): Unit
     fun navigateToRegister(): Unit
-    fun navigateToResetPassword(): Unit
+    fun navigateToResetPassword(sharedEmail: String? = null): Unit
 }

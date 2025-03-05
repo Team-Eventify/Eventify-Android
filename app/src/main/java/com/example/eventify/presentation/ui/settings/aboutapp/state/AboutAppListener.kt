@@ -1,4 +1,4 @@
-package com.example.eventify.presentation.ui.account.aboutapp.state
+package com.example.eventify.presentation.ui.settings.aboutapp.state
 
 interface AboutAppListener {
     fun navigateUp(): Unit

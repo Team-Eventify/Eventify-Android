@@ -7,6 +7,8 @@ import androidx.navigation.compose.NavHost
 import com.example.eventify.presentation.navigation.LocalFeaturesProvider
 import com.example.eventify.presentation.navigation.entries.BaseDestination
 import com.example.eventify.presentation.navigation.entries.ComposableFeatureEntry
+import com.example.eventify.presentation.navigation.entries.account.ProfileEditEntry
+import com.example.eventify.presentation.navigation.entries.account.ProfileEntry
 import com.example.eventify.presentation.navigation.entries.auth.AuthRootPath
 import com.example.eventify.presentation.navigation.entries.auth.LoginEntry
 import com.example.eventify.presentation.navigation.entries.auth.LoginPath
@@ -16,8 +18,10 @@ import com.example.eventify.presentation.navigation.entries.auth.RegisterPath
 import com.example.eventify.presentation.navigation.entries.auth.ResetPasswordEntry
 import com.example.eventify.presentation.navigation.entries.events.EventDetailEntry
 import com.example.eventify.presentation.navigation.entries.events.EventsFeedFeatureEntry
+import com.example.eventify.presentation.navigation.entries.events.EventsRootPath
 import com.example.eventify.presentation.navigation.entries.events.MyEventsEntry
 import com.example.eventify.presentation.navigation.entries.events.SearchEntry
+import com.example.eventify.presentation.navigation.entries.settings.AboutAppEntry
 import com.example.eventify.presentation.navigation.findOrNull
 import kotlinx.serialization.Serializable
 
@@ -26,7 +30,7 @@ import kotlinx.serialization.Serializable
 @Composable
 fun MainNavHost(
     navController: NavHostController,
-    startDestination: Any = RootRouter.AuthRoute,
+    startDestination: String = AuthRootPath.baseRoute,
     modifier: Modifier = Modifier
 ) {
     val features = LocalFeaturesProvider.current.features
@@ -45,37 +49,23 @@ fun MainNavHost(
         features.findOrNull<SearchEntry>(),
     )
 
+    val settingsFeatures: List<ComposableFeatureEntry> = listOfNotNull(
+        features.findOrNull<AboutAppEntry>(),
+    )
+
+    val accountFeatures: List<ComposableFeatureEntry> = listOfNotNull(
+        features.findOrNull<ProfileEntry>(),
+        features.findOrNull<ProfileEditEntry>(),
+    )
+
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = AuthRootPath.baseRoute
+        startDestination = startDestination
     ){
-
         addAuthNavGraph(navController, authFeatures)
         addEventsNavGraph(navController, eventsFeatures)
-
+        addSettingsNavGraph(navController, settingsFeatures)
+        addAccountNavGraph(navController, accountFeatures)
     }
-}
-
-
-
-sealed class RootRouter: Destination {
-    @Serializable
-    data object HomeRoute : RootRouter()
-
-    @Serializable
-    data object AuthRoute : RootRouter()
-    
-    @Serializable
-    data class EventDetailRoute(val eventId: String) : RootRouter()
-
-    @Serializable
-    data class EventFeedbackRoute(val eventId: String) : RootRouter()
-
-    @Serializable
-    data object SettingsRoute : RootRouter()
-
-    @Serializable
-    data object OnboardingRoute : AuthRouter()
-
 }

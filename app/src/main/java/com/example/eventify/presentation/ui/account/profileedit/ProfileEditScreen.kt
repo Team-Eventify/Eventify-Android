@@ -154,6 +154,7 @@ private fun ProfileEditScreenDarkPreview() {
                     override fun onChangeLastName(lastName: String) = Unit
                     override fun onChangeTelegram(telegram: String) = Unit
                     override fun onDeleteAccount() = Unit
+                    override fun onBackClick() = Unit
                 }
             )
         }

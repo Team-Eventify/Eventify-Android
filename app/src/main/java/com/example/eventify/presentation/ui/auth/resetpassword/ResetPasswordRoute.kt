@@ -4,31 +4,35 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.example.eventify.presentation.LocalTopBarState
+import com.example.eventify.presentation.LocaleSnackbarState
+import com.example.eventify.presentation.ui.auth.resetpassword.state.ResetPasswordListener
 
 @Composable
 fun ResetPasswordRoute(
-    coordinator: ResetPasswordCoordinator = rememberResetPasswordCoordinator()
+    navController: NavHostController
 ) {
-    val uiState by coordinator.screenStateFlow.collectAsState(ResetPasswordState())
-    val actions = rememberResetPasswordActions(coordinator)
+    val viewModel = hiltViewModel<ResetPasswordViewModel>()
+    val uiState by viewModel.stateFlow.collectAsState()
     val topBarState = LocalTopBarState.current
+    val snackBarState = LocaleSnackbarState.current
+
+    val listener = object : ResetPasswordListener {
+        override fun submit() {
+
+        }
+
+        override fun changeEmail(email: String) {
+            viewModel.onChangeEmail(email)
+        }
+
+    }
 
     LaunchedEffect(Unit) {
         topBarState.hide()
     }
 
-    ResetPasswordScreen(uiState, actions)
-}
-
-
-@Composable
-fun rememberResetPasswordActions(coordinator: ResetPasswordCoordinator): ResetPasswordActions {
-    return remember(coordinator) {
-        ResetPasswordActions(
-            onSubmit = coordinator.viewModel::resetPassword,
-            onChangeEmail = coordinator.viewModel::onChangeEmail
-        )
-    }
+    ResetPasswordScreen(uiState, listener)
 }

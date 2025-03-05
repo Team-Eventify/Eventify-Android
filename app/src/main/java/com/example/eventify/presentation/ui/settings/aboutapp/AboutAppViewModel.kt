@@ -1,12 +1,10 @@
-package com.example.eventify.presentation.ui.account.aboutapp
+package com.example.eventify.presentation.ui.settings.aboutapp
 
 import android.content.Context
-import androidx.core.content.pm.PackageInfoCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.eventify.R
-import com.example.eventify.presentation.navigation.Navigator
-import com.example.eventify.presentation.ui.account.aboutapp.state.AboutAppState
+import com.example.eventify.presentation.ui.settings.aboutapp.state.AboutAppState
 import com.example.eventify.presentation.utils.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -21,7 +19,6 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class AboutAppViewModel @Inject constructor(
-    private val navigator: Navigator,
     @ApplicationContext private val context: Context
 ) : ViewModel() {
 

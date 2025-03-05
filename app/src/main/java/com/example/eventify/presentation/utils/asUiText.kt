@@ -1,7 +1,11 @@
 package com.example.eventify.presentation.utils
 
+import android.content.Context
+import androidx.compose.runtime.Composable
 import com.example.eventify.R
 import com.example.eventify.domain.DataError
+import com.example.eventify.domain.Result
+import com.example.eventify.domain.RootError
 import com.example.eventify.domain.validation.EmailValidationError
 import com.example.eventify.domain.validation.PasswordValidationError
 import com.example.eventify.domain.validation.TelegramNameValidationError
@@ -85,6 +89,10 @@ fun DataError.asUiText(): UiText = when (this){
     }
 
     else -> UiText.DynamicString(this.toString())
+}
+
+fun <D, E: DataError>Result.Error<D, E>.asText(context: Context): String {
+    return this.error.asUiText().asString(context)
 }
 
 

@@ -17,6 +17,7 @@ import com.example.eventify.R
 import com.example.eventify.presentation.LocalTopBarState
 import com.example.eventify.presentation.TopBarSize
 import com.example.eventify.presentation.TopBarState
+import com.example.eventify.presentation.navigation.ARG_EVENT_ID
 import com.example.eventify.presentation.navigation.LocalFeaturesProvider
 import com.example.eventify.presentation.navigation.entries.events.EventDetailEntry
 import com.example.eventify.presentation.navigation.navigateToFeature
@@ -39,7 +40,10 @@ fun EventsFeedRoute(
 
     val listener = object : EventFeedListener {
         override fun onEventClick(eventId: String) {
-            features.navigateToFeature<EventDetailEntry>(navController)
+            features.navigateToFeature<EventDetailEntry>(
+                navController,
+                ARG_EVENT_ID to eventId
+            )
         }
 
         override fun onRefreshData() {

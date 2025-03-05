@@ -1,4 +1,4 @@
-package com.example.eventify.presentation.ui.account.aboutapp
+package com.example.eventify.presentation.ui.settings.aboutapp
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
@@ -18,7 +18,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.eventify.R
-import com.example.eventify.presentation.ui.account.aboutapp.state.AboutAppListener
+import com.example.eventify.presentation.ui.settings.aboutapp.state.AboutAppListener
+import com.example.eventify.presentation.ui.settings.aboutapp.state.AboutAppState
 import com.example.eventify.presentation.ui.account.profile.components.NavigationSettingsItem
 import com.example.eventify.presentation.ui.account.profile.components.SettingsBlock
 import com.example.eventify.presentation.ui.theme.EventifyTheme

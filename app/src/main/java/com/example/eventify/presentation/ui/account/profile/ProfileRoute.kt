@@ -16,10 +16,14 @@ import com.example.eventify.presentation.LocalTopBarState
 import com.example.eventify.presentation.TopBarSize
 import com.example.eventify.presentation.TopBarState
 import com.example.eventify.presentation.navigation.LocalFeaturesProvider
+import com.example.eventify.presentation.navigation.entries.account.ProfileEditEntry
+import com.example.eventify.presentation.navigation.entries.settings.AboutAppEntry
 import com.example.eventify.presentation.navigation.navigateToFeature
+import com.example.eventify.presentation.ui.account.profile.components.LoadingProfile
 import com.example.eventify.presentation.ui.account.profile.state.ProfileListener
 import com.example.eventify.presentation.ui.account.profile.state.UiState
 import com.example.eventify.presentation.ui.common.DefaultTopAppBar
+import com.example.eventify.presentation.ui.common.screens.ErrorScreen
 
 @Composable
 fun ProfileRoute(
@@ -35,21 +39,25 @@ fun ProfileRoute(
     val listener = object : ProfileListener {
         override fun onLogOut() {
             viewModel.logOut()
-//            features.navigateToFeature<>(navController)
         }
 
         override fun navigateToProfileEdit() {
-//            features.navigateToFeature<>(navController)
+            features.navigateToFeature<ProfileEditEntry>(navController)
         }
 
         override fun navigateToAppInfo() {
-//            features.navigateToFeature<>(navController)
+            features.navigateToFeature<AboutAppEntry>(navController)
         }
     }
 
     when (uiState) {
-        UiState.Error -> {}
-        UiState.Loading -> {}
+        is UiState.Error -> {
+            ErrorScreen(
+                title = stringResource(R.string.failed_load_profile),
+                description = (uiState as UiState.Error).message
+            )
+        }
+        UiState.Loading -> LoadingProfile()
         is UiState.ShowProfile -> {
             ProfileScreen((uiState as UiState.ShowProfile), listener)
 
