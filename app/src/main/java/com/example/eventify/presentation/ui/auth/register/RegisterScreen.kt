@@ -1,9 +1,9 @@
 package com.example.eventify.presentation.ui.auth.register
 
 import android.content.res.Configuration
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -32,13 +31,11 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.eventify.R
 import com.example.eventify.presentation.ui.auth.register.components.RegistrationOtpBottomSheet
 import com.example.eventify.presentation.ui.common.ActionPrimaryText
-import com.example.eventify.presentation.ui.common.ActionText
 import com.example.eventify.presentation.ui.common.BodyText
 import com.example.eventify.presentation.ui.common.ErrorInputText
 import com.example.eventify.presentation.ui.common.PasswordInput
