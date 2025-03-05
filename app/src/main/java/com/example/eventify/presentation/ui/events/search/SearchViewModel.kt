@@ -4,22 +4,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.toRoute
-import coil3.ImageLoader
 import com.example.eventify.data.remote.models.events.EventsFilterData
 import com.example.eventify.domain.Result
 import com.example.eventify.domain.models.toShortEventItem
 import com.example.eventify.domain.usecases.categories.GetCategoriesUseCase
 import com.example.eventify.domain.usecases.events.GetEventsUseCase
 import com.example.eventify.presentation.models.CategorySelectItem
-import com.example.eventify.presentation.navigation.Navigator
-import com.example.eventify.presentation.navigation.navgraphs.HomeRouter
-import com.example.eventify.presentation.navigation.navgraphs.MainNavHost
-import com.example.eventify.presentation.navigation.navgraphs.RootRouter
-import com.example.eventify.presentation.ui.SnackbarController
-import com.example.eventify.presentation.ui.SnackbarEvent
 import com.example.eventify.presentation.utils.toColor
-import com.example.eventify.presentation.utils.toColorOrNull
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow
@@ -36,10 +27,9 @@ class SearchViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getEventsUseCase: GetEventsUseCase,
-    private val navigator: Navigator,
 ) : ViewModel() {
 
-    private val sharedQuery = savedStateHandle.toRoute<HomeRouter.Search>().query
+    private val sharedQuery = ""
     private val _stateFlow: MutableStateFlow<SearchState> = MutableStateFlow(SearchState(
         searchText = sharedQuery ?: ""
     ))
@@ -54,9 +44,9 @@ class SearchViewModel @Inject constructor(
     private suspend fun loadSearchData(){
         when (val result = getCategoriesUseCase()){
             is Result.Error -> {
-                SnackbarController.sendEvent(
-                    SnackbarEvent(message = result.error.toString())
-                )
+//                SnackbarController.sendEvent(
+//                    SnackbarEvent(message = result.error.toString())
+//                )
             }
             is Result.Success -> {
                 _stateFlow.update { currentState ->
@@ -175,7 +165,7 @@ class SearchViewModel @Inject constructor(
 
     fun goToEventDetail(eventId: String){
         viewModelScope.launch {
-            navigator.navigate(RootRouter.EventDetailRoute(eventId))
+//            navigator.navigate(RootRouter.EventDetailRoute(eventId))
         }
     }
 }

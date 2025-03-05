@@ -84,6 +84,10 @@
     <string name="finished_events">Прошедшие мероприятия</string>
     <string name="email_confirmation">Подтверждение почты</string>
     <string name="otp_description">Мы отправили код подтверждения на вашу почту. Пожалуйста, введите его ниже, чтобы завершить процесс.</string>
+    <string name="email">Электронная функция</string>
+    <string name="first_name">Имя</string>
+    <string name="last_name">Фамилия</string>
+    <string name="failed_load_profile">Не удалось загрузить твой профиль</string>
     <string name="privacy_policy_text">Регистрируясь, Вы даете согласие на обработку</string>
     <string name="privacy_policy_link">персональных данных</string>
 </resources>

@@ -1,48 +1,25 @@
 package com.example.eventify.presentation.navigation.navgraphs
 
-import androidx.compose.runtime.MutableState
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
-import androidx.navigation.navDeepLink
+import androidx.navigation.NavHostController
 import androidx.navigation.navigation
-import com.example.eventify.presentation.ui.auth.choosecategories.ChooseCategoriesRoute
-import com.example.eventify.presentation.ui.auth.login.LogInRoute
-import com.example.eventify.presentation.ui.auth.register.RegisterRoute
-import com.example.eventify.presentation.ui.auth.resetpassword.ResetPasswordRoute
-import kotlinx.serialization.Serializable
+import com.example.eventify.presentation.navigation.ComposableFeatureEntry
+import com.example.eventify.presentation.ui.auth.login.AuthRootPath
+import com.example.eventify.presentation.ui.auth.login.LoginPath
 
-fun NavGraphBuilder.AuthNavGraph(
-    startDestination: AuthRouter = AuthRouter.RegisterRoute
-) {
-    navigation<RootRouter.AuthRoute>(
-        startDestination = startDestination
-    ){
-        composable<AuthRouter.LogInRoute> {
-            LogInRoute()
-        }
-        composable<AuthRouter.RegisterRoute> {
-            RegisterRoute()
-        }
-        composable<AuthRouter.ChooseCategoriesRoute> {
-            ChooseCategoriesRoute()
-        }
-        composable<AuthRouter.ResetPasswordRoute> {
-            ResetPasswordRoute()
+
+fun NavGraphBuilder.addAuthNavGraph(
+    navController: NavHostController,
+    features: List<ComposableFeatureEntry>,
+    ) {
+    navigation(
+        route = AuthRootPath.baseRoute,
+        startDestination = LoginPath
+    ) {
+        features.forEach { feature ->
+            with(feature) {
+                featureComposable(navController)
+            }
         }
     }
-}
-
-
-sealed class AuthRouter: Destination {
-    @Serializable
-    data object LogInRoute : AuthRouter()
-
-    @Serializable
-    data object RegisterRoute : AuthRouter()
-
-    @Serializable
-    data class ResetPasswordRoute(val email: String? = null) : AuthRouter()
-
-    @Serializable
-    data object ChooseCategoriesRoute: AuthRouter()
 }

@@ -15,7 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.eventify.R
-import com.example.eventify.presentation.ui.auth.onboarding.OnBoardingItem
+import com.example.eventify.presentation.ui.auth.onboarding.state.OnBoardingItem
 import com.example.eventify.presentation.ui.common.BodyText
 import com.example.eventify.presentation.ui.common.PrimaryButtonText
 import com.example.eventify.presentation.ui.common.TitleText

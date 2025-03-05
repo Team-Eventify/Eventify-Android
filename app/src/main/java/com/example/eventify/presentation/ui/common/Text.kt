@@ -94,15 +94,17 @@ fun ActionPrimaryText(
         textAlign = textAlign,
         color = MaterialTheme.colorScheme.primary,
         textDecoration = TextDecoration.Underline,
-        modifier = modifier
+        modifier = Modifier
             .clickable { onClick() }
+            .then(modifier)
     )
 }
 
 @Composable
 fun PrimaryButtonText(
     text: String,
-    textDecoration: TextDecoration = TextDecoration.None
+    textDecoration: TextDecoration = TextDecoration.None,
+    modifier: Modifier = Modifier,
 ) {
     Text(
         text = text,
@@ -110,6 +112,8 @@ fun PrimaryButtonText(
         fontSize = 17.sp,
         fontWeight = FontWeight.Medium,
         textDecoration = textDecoration,
+        modifier = Modifier
+            .then(modifier)
     )
 }
 
@@ -136,32 +140,59 @@ fun EventCardTitle(
 
 @Composable
 fun HeadingText(
-    text: String
+    text: String,
+    modifier: Modifier = Modifier,
 ) {
     Text(
         text = text,
         fontSize = 25.sp,
-        fontWeight = FontWeight.Medium
+        fontWeight = FontWeight.Medium,
+        modifier = Modifier
+            .then(modifier)
     )
 }
 
 @Composable
 fun SubHeadingText(
-    text: String
+    text: String,
+    modifier: Modifier = Modifier,
 ) {
     Text(
         text = text,
         fontSize = 20.sp,
-        fontWeight = FontWeight.Medium
+        fontWeight = FontWeight.Medium,
+        modifier = Modifier
+            .then(modifier)
     )
 }
 
 @Composable
 fun ErrorInputText(
-    text: String
+    text: String,
+    modifier: Modifier = Modifier,
 ) {
     Text(
         text = text,
-        color = MaterialTheme.colorScheme.error
+        color = MaterialTheme.colorScheme.error,
+        modifier = Modifier
+            .then(modifier)
+    )
+}
+
+
+@Composable
+fun DisclaimerText(
+    text: String,
+    textDecoration: TextDecoration = TextDecoration.None,
+    modifier: Modifier = Modifier
+) {
+    Text(
+        text = text,
+        textDecoration = textDecoration,
+        fontWeight = FontWeight.Light,
+        fontSize = 14.sp,
+        color = MaterialTheme.colorScheme.onSecondary.copy(alpha = .4f),
+        modifier = Modifier
+            .then(modifier)
     )
 }

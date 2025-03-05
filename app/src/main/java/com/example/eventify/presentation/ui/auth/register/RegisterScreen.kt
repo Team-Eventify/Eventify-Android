@@ -1,9 +1,8 @@
 package com.example.eventify.presentation.ui.auth.register
 
 import android.content.res.Configuration
-import android.util.Log
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -16,6 +15,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -28,15 +28,17 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.eventify.R
 import com.example.eventify.presentation.ui.auth.register.components.RegistrationOtpBottomSheet
+import com.example.eventify.presentation.ui.auth.register.state.RegisterListener
+import com.example.eventify.presentation.ui.auth.register.state.RegisterState
 import com.example.eventify.presentation.ui.common.ActionPrimaryText
 import com.example.eventify.presentation.ui.common.BodyText
+import com.example.eventify.presentation.ui.common.DisclaimerText
 import com.example.eventify.presentation.ui.common.ErrorInputText
 import com.example.eventify.presentation.ui.common.PasswordInput
 import com.example.eventify.presentation.ui.common.buttons.PrimaryButton
@@ -51,7 +53,7 @@ import com.example.eventify.presentation.utils.UiText
 @Composable
 fun RegisterScreen(
     state: RegisterState,
-    actions: RegisterActions,
+    actions: RegisterListener,
 ) {
     val focusRequest = remember {
         FocusRequester()
@@ -66,19 +68,23 @@ fun RegisterScreen(
                 actions.onTriggerOtpBottomSheet(false)
             },
             sheetState = sheetState,
-            onChangeOtpValue = actions.onChangeOtp,
+            onChangeOtpValue = actions::onChangeOtp,
             otpValue = state.otp,
-            onSubmit = actions.onRegister
+            onSubmit = actions::onRegister
         )
     }
 
-    Column(modifier = Modifier.fillMaxSize()) {
-        Spacer(modifier = Modifier.weight(1f))
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
         Column(
             modifier = Modifier
+                .fillMaxSize()
                 .padding(dimmentions.windowPaddings)
+                .align(Alignment.Center)
             ,
-            verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.Center
         ) {
             TitleText(text = stringResource(R.string.register))
             Spacer(modifier = Modifier.height(5.dp))
@@ -89,7 +95,7 @@ fun RegisterScreen(
                 text = state.login,
                 label = "Email",
                 placeholder = "ivanov@gmail.com",
-                onValueChange = actions.onChangeLogin,
+                onValueChange = actions::onChangeLogin,
                 isError = state.loginError != null || state.hasLoginError,
                 supportingText = {
                     state.loginError?.let {
@@ -112,7 +118,7 @@ fun RegisterScreen(
                 text = state.password,
                 label = "Password",
                 placeholder = "yourpassword",
-                onValueChange = actions.onChangePassword,
+                onValueChange = actions::onChangePassword,
                 isError = state.passwordError != null || state.hasPasswordError,
                 supportingText = {
                     state.passwordError?.let {
@@ -131,42 +137,50 @@ fun RegisterScreen(
 
             Spacer(modifier = Modifier.height(30.dp))
             PrimaryButton(
-                onClick = actions.onRequestOtp,
+                onClick = actions::onRequestOtp,
                 enabled = state.isValidFormData,
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
-                Text(
-                    text = stringResource(R.string.register_action),
-                    lineHeight = 22.sp,
-                    fontSize = 17.sp,
-                    fontWeight = FontWeight.Medium
-                )
+                Text(text = stringResource(R.string.register_action), lineHeight = 22.sp, fontSize = 17.sp, fontWeight = FontWeight.Medium)
             }
             Spacer(modifier = Modifier.height(20.dp))
             Row(
                 modifier = Modifier
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                ,
                 horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally)
             ) {
                 Text(text = stringResource(R.string.already_have_account_question))
                 ActionPrimaryText(
                     text = stringResource(R.string.login_action),
-                    onClick = actions.navigateToLogIn
+                    onClick = actions::navigateToLogIn
+                )
+            }
+
+        }
+
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+        ) {
+            DisclaimerText(
+                text = stringResource(R.string.privacy_policy_text)
+            )
+            TextButton(
+                onClick = actions::goToPrivacyPolicy,
+            ) {
+                DisclaimerText(
+                    text = stringResource(R.string.privacy_policy_link),
+                    textDecoration = TextDecoration.Underline
                 )
             }
         }
-        Spacer(modifier = Modifier.weight(1f))
-        Column(verticalArrangement = Arrangement.Bottom, modifier = Modifier.padding(dimmentions.windowPaddings).fillMaxWidth()) {
-            Text(text = stringResource(R.string.privacy_policy_text), textAlign = TextAlign.Center, modifier = Modifier.align(Alignment.CenterHorizontally), fontSize = 14.sp)
-            Text(text = stringResource(R.string.privacy_policy_link), fontSize = 14.sp, textDecoration = TextDecoration.Underline,
-                modifier = Modifier.align(Alignment.CenterHorizontally).clickable {
-                    actions.navigateToPrivacyPolicy()
-                }
-            )
-        }
 
     }
+
+
 }
 
 @Composable
@@ -177,16 +191,16 @@ private fun RegisterScreenDefaultDarkPreview() {
         Surface {
             RegisterScreen(
                 state = RegisterState(),
-                actions = RegisterActions(
-                    onChangeLogin = {},
-                    onChangePassword = {},
-                    navigateToLogIn = {},
-                    onRegister = {},
-                    onRequestOtp = {},
-                    onChangeOtp = {},
-                    onTriggerOtpBottomSheet = {},
-                    navigateToPrivacyPolicy = {}
-                )
+                actions = object : RegisterListener {
+                    override fun navigateToLogIn() = Unit
+                    override fun onChangeLogin(login: String) = Unit
+                    override fun onChangePassword(password: String) = Unit
+                    override fun onRequestOtp() = Unit
+                    override fun onRegister() = Unit
+                    override fun onChangeOtp(otpValue: String) = Unit
+                    override fun onTriggerOtpBottomSheet(value: Boolean) = Unit
+                    override fun goToPrivacyPolicy() = Unit
+                }
             )
         }
     }
@@ -205,16 +219,16 @@ private fun RegisterScreenErrorLightPreview() {
                     password = "",
                     passwordError = UiText.DynamicString("Ошибка")
                 ),
-                actions = RegisterActions(
-                    onChangeLogin = {},
-                    onChangePassword = {},
-                    navigateToLogIn = {},
-                    onRegister = {},
-                    onRequestOtp = {},
-                    onChangeOtp = {},
-                    onTriggerOtpBottomSheet = {},
-                    navigateToPrivacyPolicy = {}
-                )
+                actions = object : RegisterListener {
+                    override fun navigateToLogIn() = Unit
+                    override fun onChangeLogin(login: String) = Unit
+                    override fun onChangePassword(password: String) = Unit
+                    override fun onRequestOtp() = Unit
+                    override fun onRegister() = Unit
+                    override fun onChangeOtp(otpValue: String) = Unit
+                    override fun onTriggerOtpBottomSheet(value: Boolean) = Unit
+                    override fun goToPrivacyPolicy() = Unit
+                }
             )
         }
     }

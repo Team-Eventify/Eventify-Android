@@ -10,6 +10,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.eventify.presentation.ui.auth.resetpassword.state.ResetPasswordListener
+import com.example.eventify.presentation.ui.auth.resetpassword.state.UiState
 import com.example.eventify.presentation.ui.common.BodyText
 import com.example.eventify.presentation.ui.common.buttons.PrimaryButton
 import com.example.eventify.presentation.ui.common.PrimaryButtonText
@@ -20,8 +22,8 @@ import com.example.eventify.presentation.ui.theme.LocalDimentions
 
 @Composable
 fun ResetPasswordScreen(
-    state: ResetPasswordState,
-    actions: ResetPasswordActions,
+    state: UiState,
+    actions: ResetPasswordListener,
 ) {
     val dimmentions = LocalDimentions.current
 
@@ -37,11 +39,11 @@ fun ResetPasswordScreen(
         )
         TextInput(
             text = state.email,
-            onValueChange = actions.onChangeEmail,
+            onValueChange = actions::changeEmail,
             label = "Email"
         )
         PrimaryButton(
-            onClick = actions.onSubmit,
+            onClick = actions::submit,
             enabled = state.isValidEmail
         ) {
             PrimaryButtonText(text = "Отправить")
@@ -55,8 +57,11 @@ private fun ResetPasswordScreenPreview() {
     EventifyTheme(darkTheme = true) {
         Surface {
             ResetPasswordScreen(
-                state = ResetPasswordState(),
-                actions = ResetPasswordActions()
+                state = UiState(),
+                actions = object : ResetPasswordListener {
+                    override fun submit() = Unit
+                    override fun changeEmail(email: String) = Unit
+                }
             )
         }
     }

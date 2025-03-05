@@ -4,26 +4,23 @@ import android.content.Context
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.toRoute
-import coil3.ImageLoader
-import com.example.eventify.R
-import com.example.eventify.data.repositories.organizations.OrganizationsRepository
 import com.example.eventify.domain.Result
 import com.example.eventify.domain.usecases.events.GetEventDetailUseCase
 import com.example.eventify.domain.usecases.events.SubscribeForEventUseCase
 import com.example.eventify.domain.usecases.events.UnsubscribeForEventUseCase
-import com.example.eventify.presentation.navigation.Navigator
-import com.example.eventify.presentation.navigation.navgraphs.RootRouter
-import com.example.eventify.presentation.ui.SnackbarController
-import com.example.eventify.presentation.ui.SnackbarEvent
+import com.example.eventify.presentation.navigation.ARG_EVENT_ID
+import com.example.eventify.presentation.ui.events.eventdetail.state.SideEffect
+import com.example.eventify.presentation.ui.events.eventdetail.state.UiState
 import com.example.eventify.presentation.utils.asUiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.channels.Channel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -35,13 +32,17 @@ class EventDetailViewModel @Inject constructor(
     private val getEventDetailUseCase: GetEventDetailUseCase,
     private val subscribedEventsUseCase: SubscribeForEventUseCase,
     private val unsubscribeForEventUseCase: UnsubscribeForEventUseCase,
-    private val navigator: Navigator,
     @ApplicationContext private val context: Context
 ) : ViewModel() {
-    private val eventId = savedStateHandle.toRoute<RootRouter.EventDetailRoute>().eventId
+    private val eventId by lazy {
+        savedStateHandle.get<String>(ARG_EVENT_ID) ?: ""
+    }
+
+    private val mutableSideEffect = Channel<SideEffect>()
+    val sideEffect = mutableSideEffect.receiveAsFlow()
+
     private val _stateFlow: MutableStateFlow<UiState> =
         MutableStateFlow(UiState.Loading)
-
     val stateFlow: StateFlow<UiState> = _stateFlow
         .onStart { loadEvent() }
         .stateIn(
@@ -68,18 +69,10 @@ class EventDetailViewModel @Inject constructor(
     fun subscribeForEvent(){
         viewModelScope.launch {
             when (val result = subscribedEventsUseCase(eventId)) {
-                is Result.Error -> {
-                    SnackbarController.sendEvent(
-                        SnackbarEvent(message = result.error.asUiText().asString(context))
-                    )
-                }
-                is Result.Success -> {
-                    loadEvent()
-                    SnackbarController.sendEvent(
-                        SnackbarEvent(message = context.getString(R.string.message_after_subscribe))
-                    )
-                    navigator.navigateUp()
-                }
+                is Result.Error -> mutableSideEffect.send(SideEffect.FailSubscribeEvent(
+                    result.error.asUiText().asString(context)
+                ))
+                is Result.Success -> mutableSideEffect.send(SideEffect.SuccessSubscribeEvent)
             }
         }
     }
@@ -87,29 +80,13 @@ class EventDetailViewModel @Inject constructor(
     fun unsubscribeForEvent(){
         viewModelScope.launch {
             when (val result = unsubscribeForEventUseCase(eventId)){
-                is Result.Error -> {
-                    SnackbarController.sendEvent(
-                        SnackbarEvent(
-                            message = result.error.asUiText().asString(context)
-                        )
-                    )
-                }
+                is Result.Error -> mutableSideEffect.send(SideEffect.FailUnsubscribeEvent(
+                    result.error.asUiText().asString(context)
+                ))
                 is Result.Success -> {
-                    SnackbarController.sendEvent(
-                        SnackbarEvent(
-                            message = context.getString(R.string.message_after_unsubscribe)
-                        )
-                    )
-                    navigator.navigateUp()
+                    mutableSideEffect.send(SideEffect.SuccessUnsubscribeEvent)
                 }
             }
         }
     }
-
-    fun navigateToRate() {
-        viewModelScope.launch {
-            navigator.navigate(RootRouter.EventFeedbackRoute(eventId = eventId))
-        }
-    }
-
 }

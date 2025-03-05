@@ -1,52 +1,89 @@
 package com.example.eventify.presentation.ui.auth.register
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavHostController
 import com.example.eventify.presentation.LocalTopBarState
+import com.example.eventify.presentation.LocaleSnackbarState
+import com.example.eventify.presentation.navigation.LocalFeaturesProvider
+import com.example.eventify.presentation.ui.auth.login.LoginEntry
+import com.example.eventify.presentation.navigation.navigateToFeature
+import com.example.eventify.presentation.ui.auth.choosecategories.SetUpEntry
+import com.example.eventify.presentation.ui.auth.register.state.RegisterListener
+import com.example.eventify.presentation.ui.auth.register.state.SideEffect
+import com.example.eventify.presentation.utils.ObserveAsEvent
 
 @Composable
 fun RegisterRoute(
-    coordinator: RegisterCoordinator = rememberRegisterCoordinator()
+    navController: NavHostController
 ) {
-    val ctx = LocalContext.current
-    val uiState by coordinator.screenStateFlow.collectAsState()
-    val actions = rememberRegisterActions(coordinator, ctx)
+    val viewModel = hiltViewModel<RegisterViewModel>()
+    val uiState by viewModel.stateFlow.collectAsStateWithLifecycle()
     val topBarState = LocalTopBarState.current
+    val features = LocalFeaturesProvider.current.features
+    val snackBarState = LocaleSnackbarState.current
+    val context = LocalContext.current
+
+
+    val listener = object : RegisterListener {
+        override fun navigateToLogIn() {
+            features.navigateToFeature<LoginEntry>(navController)
+        }
+
+        override fun onChangeLogin(login: String) {
+            viewModel.changeLogin(login)
+        }
+
+        override fun onChangePassword(password: String) {
+            viewModel.changePassword(password)
+        }
+
+        override fun onRequestOtp() {
+            viewModel.requestOtp()
+        }
+
+        override fun onRegister() {
+            viewModel.register()
+        }
+
+        override fun onChangeOtp(otpValue: String) {
+            viewModel.changeOtp(otpValue)
+        }
+
+        override fun onTriggerOtpBottomSheet(value: Boolean) {
+            viewModel.triggerOtpBottomSheet(value)
+        }
+
+        override fun goToPrivacyPolicy() {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://nometa.xyz"))
+            context.startActivity(intent)
+        }
+
+    }
+
+    ObserveAsEvent(viewModel.sideEffect) { sideEffect ->
+        when (sideEffect) {
+            SideEffect.SuccessRegister -> {
+                viewModel.triggerOtpBottomSheet(false)
+                features.navigateToFeature<SetUpEntry>(navController)
+            }
+            is SideEffect.FailRegister -> {
+                snackBarState.showSnackbar(
+                    message = sideEffect.message ?: ""
+                )
+            }
+        }
+    }
 
     LaunchedEffect(Unit) {
         topBarState.hide()
     }
 
-
-    RegisterScreen(uiState, actions)
-}
-
-
-@Composable
-fun rememberRegisterActions(coordinator: RegisterCoordinator, ctx: Context): RegisterActions {
-    return remember(coordinator) {
-        RegisterActions(
-            navigateToLogIn = coordinator.viewModel::navigateToLogin,
-            onChangeLogin = coordinator.viewModel::changeLogin,
-            onChangePassword = coordinator.viewModel::changePassword,
-            onRegister = coordinator.viewModel::register,
-            onChangeOtp = coordinator.viewModel::changeOtp,
-            onRequestOtp = coordinator.viewModel::requestOtp,
-            onTriggerOtpBottomSheet = coordinator.viewModel::triggerOtpBottomSheet,
-            navigateToPrivacyPolicy = { openDeepLink(ctx, "https://nometa.xyz") }
-        )
-    }
-}
-
-fun openDeepLink(ctx: Context, url: String) {
-    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-    ctx.startActivity(intent)
+    RegisterScreen(uiState, listener)
 }

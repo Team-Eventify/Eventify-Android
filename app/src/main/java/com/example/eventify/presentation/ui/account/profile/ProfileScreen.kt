@@ -22,14 +22,16 @@ import com.example.eventify.presentation.ui.account.profile.components.Important
 import com.example.eventify.presentation.ui.account.profile.components.LogOutDialog
 import com.example.eventify.presentation.ui.account.profile.components.NavigationSettingsItem
 import com.example.eventify.presentation.ui.account.profile.components.UserProfilePanel
+import com.example.eventify.presentation.ui.account.profile.state.ProfileListener
+import com.example.eventify.presentation.ui.account.profile.state.UiState
 import com.example.eventify.presentation.ui.common.shimmer
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 import com.example.eventify.presentation.ui.theme.LocalDimentions
 
 @Composable
 fun ProfileScreen(
-    state: ProfileState,
-    actions: ProfileActions,
+    state: UiState.ShowProfile,
+    actions: ProfileListener,
 ) {
     val openLogOutDialog = remember { mutableStateOf(false) }
     val dimmentions = LocalDimentions.current
@@ -53,13 +55,13 @@ fun ProfileScreen(
             .padding(dimmentions.windowPaddings)
     ) {
         UserProfilePanel(
-            firstName = state.userInfo?.firstName,
-            lastName = state.userInfo?.lastName,
-            onClick = actions.navigateToProfileEdit,
+            firstName = state.userInfo.firstName,
+            lastName = state.userInfo.lastName,
+            onClick = actions::navigateToProfileEdit,
             modifier = Modifier
-                .shimmer(
-                    showShimmer = state.isLoading
-                )
+//                .shimmer(
+//                    showShimmer = state.isLoading
+//                )
         )
         SettingsBlock {
             NavigationSettingsItem(stringResource(R.string.notifications), onClick = {})
@@ -68,7 +70,7 @@ fun ProfileScreen(
         }
 
         SettingsBlock {
-            NavigationSettingsItem(stringResource(R.string.about_app), onClick = actions.navigateToAppInfo)
+            NavigationSettingsItem(stringResource(R.string.about_app), onClick = actions::navigateToAppInfo)
             HorizontalDivider()
             NavigationSettingsItem(
                 text = stringResource(R.string.to_rate),
@@ -92,7 +94,7 @@ private fun ProfileScreenPreview() {
     EventifyTheme(darkTheme = true) {
         Surface {
             ProfileScreen(
-                state = ProfileState(
+                state = UiState.ShowProfile(
                     userInfo = UserShortInfo(
                         id = "",
                         firstName = "Иван",
@@ -100,7 +102,11 @@ private fun ProfileScreenPreview() {
                         email = "ivanov@mail.ru"
                     )
                 ),
-                actions = ProfileActions()
+                actions = object : ProfileListener {
+                    override fun onLogOut() = Unit
+                    override fun navigateToProfileEdit() = Unit
+                    override fun navigateToAppInfo() = Unit
+                }
             )
         }
     }

@@ -1,33 +1,24 @@
 package com.example.eventify.presentation.navigation.navgraphs
 
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
+import androidx.navigation.NavHostController
 import androidx.navigation.navigation
-import com.example.eventify.presentation.ui.account.aboutapp.AboutAppRoute
-import com.example.eventify.presentation.ui.account.profileedit.ProfileEditRoute
-import kotlinx.serialization.Serializable
+import com.example.eventify.presentation.navigation.ComposableFeatureEntry
+import com.example.eventify.presentation.ui.settings.aboutapp.AboutAppPath
+import com.example.eventify.presentation.ui.settings.aboutapp.SettingsRootPath
 
-
-fun NavGraphBuilder.SettingsNavGraph(
-    startDestination: SettingsRouter = SettingsRouter.ProfileEditRoute
+fun NavGraphBuilder.addSettingsNavGraph(
+    navController: NavHostController,
+    features: List<ComposableFeatureEntry>,
 ) {
-    navigation<RootRouter.SettingsRoute>(
-        startDestination = startDestination
-    ){
-        composable<SettingsRouter.ProfileEditRoute>{
-            ProfileEditRoute()
-        }
-        composable<SettingsRouter.AboutAppRoute>{
-            AboutAppRoute()
+    navigation(
+        route = SettingsRootPath.baseRoute,
+        startDestination = AboutAppPath
+    ) {
+        features.forEach { feature ->
+            with(feature) {
+                featureComposable(navController)
+            }
         }
     }
-}
-
-
-sealed class SettingsRouter: Destination {
-    @Serializable
-    data object ProfileEditRoute : SettingsRouter()
-
-    @Serializable
-    data object AboutAppRoute : SettingsRouter()
 }

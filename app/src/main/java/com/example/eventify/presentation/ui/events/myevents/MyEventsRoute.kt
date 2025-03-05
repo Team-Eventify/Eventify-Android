@@ -3,26 +3,53 @@ package com.example.eventify.presentation.ui.events.myevents
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavHostController
 import com.example.eventify.R
 import com.example.eventify.presentation.LocalTopBarState
 import com.example.eventify.presentation.TopBarSize
 import com.example.eventify.presentation.TopBarState
+import com.example.eventify.presentation.navigation.LocalFeaturesProvider
+import com.example.eventify.presentation.ui.events.eventdetail.EventDetailEntry
+import com.example.eventify.presentation.ui.events.eventsfeed.EventsFeedEntry
+import com.example.eventify.presentation.navigation.navigateNewTaskFeature
+import com.example.eventify.presentation.navigation.navigateToFeature
 import com.example.eventify.presentation.ui.common.screens.ErrorScreen
 import com.example.eventify.presentation.ui.events.myevents.components.EmptyMyEventsScreen
 import com.example.eventify.presentation.ui.events.myevents.components.LoadingMyEvents
+import com.example.eventify.presentation.ui.events.myevents.state.MyEventsListener
+import com.example.eventify.presentation.ui.events.myevents.state.UiState
 
 @Composable
 fun MyEventsRoute(
-    coordinator: MyEventsCoordinator = rememberMyEventsCoordinator()
+    navController: NavHostController
 ) {
-    val uiState by coordinator.screenStateFlow.collectAsStateWithLifecycle()
-    val actions = rememberMyEventsActions(coordinator)
+    val viewModel = hiltViewModel<MyEventsViewModel>()
+    val uiState by viewModel.stateFlow.collectAsStateWithLifecycle()
     val topBarState = LocalTopBarState.current
     val context = LocalContext.current
+    val features = LocalFeaturesProvider.current.features
+
+    val listener = object : MyEventsListener {
+        override fun onRefresh() {
+            viewModel.refresh()
+        }
+
+        override fun navigateToEvent(eventId: String) {
+            features.navigateToFeature<EventDetailEntry>(navController)
+        }
+
+        override fun navigateToFeedback(eventId: String) {
+            TODO("Not yet implemented")
+        }
+
+        override fun navigateToFeed() {
+            features.navigateNewTaskFeature<EventsFeedEntry, MyEventsEntry>(navController)
+        }
+    }
 
     // UI Rendering
     when (uiState) {
@@ -30,14 +57,14 @@ fun MyEventsRoute(
             LoadingMyEvents()
         }
         is UiState.Empty -> EmptyMyEventsScreen(
-            onActionClick = actions.navigateToFeed,
+            onActionClick = listener::navigateToFeed,
         )
         is UiState.Error -> ErrorScreen(
             title = stringResource(R.string.error_loading_my_events),
             description = (uiState as UiState.Error).message
         )
         is UiState.ShowMyEvents -> {
-            MyEventsScreen(uiState as UiState.ShowMyEvents, actions)
+            MyEventsScreen(uiState as UiState.ShowMyEvents, listener)
         }
     }
 
@@ -51,15 +78,3 @@ fun MyEventsRoute(
     }
 }
 
-
-@Composable
-fun rememberMyEventsActions(coordinator: MyEventsCoordinator): MyEventsActions {
-    return remember(coordinator) {
-        MyEventsActions(
-            onRefresh = coordinator.viewModel::refresh,
-            navigateToEvent = coordinator.viewModel::navigateToEvent,
-            navigateToFeedback = coordinator.viewModel::navigateToFeedback,
-            navigateToFeed = coordinator.viewModel::navigateToFeed
-        )
-    }
-}

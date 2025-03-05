@@ -2,6 +2,7 @@ package com.example.eventify.presentation.utils
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Modifier
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.repeatOnLifecycle
@@ -24,6 +25,19 @@ fun <T>ObserveAsState(
                 flow.collect(onEvent)
 
             }
+        }
+    }
+}
+
+@Composable
+fun <T>ObserveAsEvent(
+    flow: Flow<T>,
+    onEvent: suspend (T) -> Unit,
+) {
+    val lifecycleOwner = LocalLifecycleOwner.current
+    LaunchedEffect(flow, lifecycleOwner.lifecycle) {
+        lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            flow.collect(onEvent)
         }
     }
 }

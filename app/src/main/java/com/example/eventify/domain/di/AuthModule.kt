@@ -1,6 +1,5 @@
 package com.example.eventify.domain.di
 
-import android.content.Context
 import com.example.eventify.BuildConfig
 import com.example.eventify.data.repositories.tokens.EncryptedTokenProviderImpl
 import com.example.eventify.data.repositories.tokens.TokenProvider
@@ -19,7 +18,6 @@ import com.example.eventify.domain.SessionManagerRequestsImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Authenticator
 import okhttp3.Interceptor
@@ -62,5 +60,7 @@ object AuthModule {
     @Provides
     @Singleton
     fun provideRequestsSessionManager(usersRepository: UsersRepository, tokenProvider: TokenProvider): SessionManager = SessionManagerRequestsImpl(usersRepository = usersRepository, tokenProvider = tokenProvider)
+
+
 
 }

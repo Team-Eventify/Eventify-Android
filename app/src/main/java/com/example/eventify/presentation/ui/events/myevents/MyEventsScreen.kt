@@ -18,6 +18,8 @@ import com.example.eventify.presentation.models.ShortEventItem
 import com.example.eventify.presentation.ui.events.myevents.components.FinishedEventCard
 import com.example.eventify.presentation.ui.events.myevents.components.UpComingEventCard
 import com.example.eventify.presentation.ui.common.HeadingText
+import com.example.eventify.presentation.ui.events.myevents.state.MyEventsListener
+import com.example.eventify.presentation.ui.events.myevents.state.UiState
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 import com.example.eventify.presentation.ui.theme.LocalDimentions
 import com.google.accompanist.swiperefresh.SwipeRefresh
@@ -28,14 +30,14 @@ import java.util.UUID
 @Composable
 fun MyEventsScreen(
     state: UiState.ShowMyEvents,
-    actions: MyEventsActions,
+    actions: MyEventsListener,
 ) {
     val swipeRefreshState = rememberSwipeRefreshState(state.isRefreshing)
     val dimmentions = LocalDimentions.current
 
     SwipeRefresh(
         state = swipeRefreshState,
-        onRefresh = actions.onRefresh
+        onRefresh = actions::onRefresh
     ) {
         LazyColumn(
             contentPadding = dimmentions.windowPaddings,
@@ -48,7 +50,7 @@ fun MyEventsScreen(
             items(state.upComingEvents) { event ->
                 UpComingEventCard(
                     event = event,
-                    onClick = actions.navigateToEvent
+                    onClick = actions::navigateToEvent
                 )
             }
 
@@ -62,9 +64,9 @@ fun MyEventsScreen(
             items(state.finishedEvents) { event ->
                 FinishedEventCard(
                     event = event,
-                    onClick = actions.navigateToEvent,
+                    onClick = actions::navigateToEvent,
                     showFeedbackButton = false,
-                    onFeedbackAction = actions.navigateToFeedback
+                    onFeedbackAction = actions::navigateToFeedback
                 )
             }
         }
@@ -104,10 +106,12 @@ private fun MyEventsScreenDefaultDarkPreview() {
                         )
                     }
                 ),
-                actions = MyEventsActions(
-                    onRefresh = {},
-                    navigateToEvent = {}
-                )
+                actions = object : MyEventsListener {
+                    override fun onRefresh() = Unit
+                    override fun navigateToEvent(eventId: String) = Unit
+                    override fun navigateToFeedback(eventId: String) = Unit
+                    override fun navigateToFeed() = Unit
+                }
             )
         }
     }

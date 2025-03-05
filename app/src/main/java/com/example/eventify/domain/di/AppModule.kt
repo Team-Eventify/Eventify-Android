@@ -7,9 +7,8 @@ import coil3.request.CachePolicy
 import coil3.util.DebugLogger
 import com.example.eventify.data.remote.utils.AccessTokenInterceptor
 import com.example.eventify.data.remote.utils.TokenAuthenticator
-import com.example.eventify.presentation.navigation.DefaultNavigator
-import com.example.eventify.presentation.navigation.Navigator
-import com.example.eventify.presentation.navigation.navgraphs.AuthRouter
+import com.example.eventify.presentation.navigation.Features
+import com.example.eventify.presentation.navigation.FeaturesProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,9 +22,13 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+
     @Provides
     @Singleton
-    fun provideNavigator(): Navigator = DefaultNavigator(AuthRouter.LogInRoute)
+    fun provideFeaturesProvider(features: Features): FeaturesProvider = FeaturesProvider(
+        features = features
+    )
+
 
     @Provides
     @Singleton
