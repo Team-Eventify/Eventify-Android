@@ -8,4 +8,5 @@ interface RegisterListener {
     fun onRegister(): Unit
     fun onChangeOtp(otpValue: String): Unit
     fun onTriggerOtpBottomSheet(value: Boolean): Unit
+    fun goToPrivacyPolicy(): Unit
 }

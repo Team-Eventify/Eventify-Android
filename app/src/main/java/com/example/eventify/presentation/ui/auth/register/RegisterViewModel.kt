@@ -30,7 +30,7 @@ import kotlinx.coroutines.launch
 class RegisterViewModel @Inject constructor(
     private val otpRegisterUseCase: OtpRegisterUseCase,
     private val authRepository: AuthUserRepository,
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
 ) : ViewModel() {
     private val validateEmailUseCase: ValidateEmail = ValidateEmail()
     private val validatePasswordUseCase: ValidatePassword = ValidatePassword()
@@ -47,7 +47,9 @@ class RegisterViewModel @Inject constructor(
     fun changeLogin(value: String){
         _stateFlow.update { currentState ->
             currentState.copy(
-                login = value
+                login = value,
+                hasLoginError = false,
+                hasPasswordError = false,
             )
         }
     }
@@ -70,7 +72,9 @@ class RegisterViewModel @Inject constructor(
     fun changePassword(value: String){
         _stateFlow.update { currentState ->
             currentState.copy(
-                password = value
+                password = value,
+                hasLoginError = false,
+                hasPasswordError = false,
             )
         }
     }
@@ -116,9 +120,15 @@ class RegisterViewModel @Inject constructor(
         viewModelScope.launch {
             when (val result = authRepository.validateRegisterData(data = validationData)) {
                 is Result.Error -> {
-//                    SnackbarController.sendEvent(
-//                        SnackbarEvent(message = result.error.asUiText().asString(context))
-//                    )
+                    _stateFlow.update { currentState ->
+                        currentState.copy(
+                            hasPasswordError = true,
+                            hasLoginError = true,
+                        )
+                    }
+                    mutableSideEffect.send(SideEffect.FailRegister(
+                        message = result.error.asUiText().asString(context)
+                    ))
                 }
                 is Result.Success -> {
                     validationResultId = result.data
@@ -177,4 +187,5 @@ class RegisterViewModel @Inject constructor(
             }
         }
     }
+
 }

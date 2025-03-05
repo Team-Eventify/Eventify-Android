@@ -14,7 +14,7 @@
     <string name="forgot_password">Забыл пароль</string>
     <string name="login_action">Войти</string>
     <string name="logout_action">Выйти</string>
-    <string name="register_action">Зарегестрироваться</string>
+    <string name="register_action">Зарегистрироваться</string>
     <string name="default_offline_title">Нет соединения с интернетом</string>
     <string name="default_offline_message">Проверьте подключение к интернету и попробуйте еще раз.</string>
     <string name="organizer">Организатор</string>
@@ -88,4 +88,6 @@
     <string name="first_name">Имя</string>
     <string name="last_name">Фамилия</string>
     <string name="failed_load_profile">Не удалось загрузить твой профиль</string>
+    <string name="privacy_policy_text">Регистрируясь, Вы даете согласие на обработку</string>
+    <string name="privacy_policy_link">персональных данных</string>
 </resources>

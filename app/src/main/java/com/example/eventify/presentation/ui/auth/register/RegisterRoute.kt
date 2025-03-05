@@ -1,8 +1,11 @@
 package com.example.eventify.presentation.ui.auth.register
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
@@ -24,6 +27,8 @@ fun RegisterRoute(
     val topBarState = LocalTopBarState.current
     val features = LocalFeaturesProvider.current.features
     val snackBarState = LocaleSnackbarState.current
+    val context = LocalContext.current
+
 
     val listener = object : RegisterListener {
         override fun navigateToLogIn() {
@@ -52,6 +57,11 @@ fun RegisterRoute(
 
         override fun onTriggerOtpBottomSheet(value: Boolean) {
             viewModel.triggerOtpBottomSheet(value)
+        }
+
+        override fun goToPrivacyPolicy() {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://nometa.xyz"))
+            context.startActivity(intent)
         }
 
     }
