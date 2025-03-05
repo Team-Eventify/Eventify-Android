@@ -19,6 +19,7 @@ class RegisterCoordinator(
 fun rememberRegisterCoordinator(
     viewModel: RegisterViewModel = hiltViewModel()
 ): RegisterCoordinator {
+
     return remember(viewModel) {
         RegisterCoordinator(
             viewModel = viewModel
