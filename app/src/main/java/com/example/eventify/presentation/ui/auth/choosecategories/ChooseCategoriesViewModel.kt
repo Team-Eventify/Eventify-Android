@@ -7,15 +7,19 @@ import com.example.eventify.domain.Result
 import com.example.eventify.domain.usecases.account.SetUserCategoriesUseCase
 import com.example.eventify.domain.usecases.categories.GetCategoriesUseCase
 import com.example.eventify.presentation.models.CategorySelectItem
-import com.example.eventify.presentation.utils.asUiText
+import com.example.eventify.presentation.ui.auth.choosecategories.state.SetUpState
+import com.example.eventify.presentation.ui.auth.choosecategories.state.SideEffect
+import com.example.eventify.presentation.utils.asText
 import com.example.eventify.presentation.utils.toColorOrNull
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.channels.Channel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -26,23 +30,25 @@ class ChooseCategoriesViewModel @Inject constructor(
     private val getCategoriesUseCase: GetCategoriesUseCase,
     @ApplicationContext private val context: Context
 ) : ViewModel() {
+    private val mutableSideEffect = Channel<SideEffect>()
+    val sideEffect = mutableSideEffect.receiveAsFlow()
 
-    private val _stateFlow: MutableStateFlow<ChooseCategoriesState> = MutableStateFlow(ChooseCategoriesState())
-    val stateFlow: StateFlow<ChooseCategoriesState> = _stateFlow
+    private val _stateFlow: MutableStateFlow<SetUpState> = MutableStateFlow(SetUpState())
+    val stateFlow: StateFlow<SetUpState> = _stateFlow
         .onStart { loadData() }
         .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000L),
-            ChooseCategoriesState()
+            SetUpState()
         )
 
     fun loadData(){
         viewModelScope.launch {
             when (val result = getCategoriesUseCase()){
                 is Result.Error -> {
-//                    SnackbarController.sendEvent(
-//                        SnackbarEvent(message = result.error.asUiText().asString(context))
-//                    )
+                    mutableSideEffect.send(SideEffect.FailedProvideCategories(
+                        message = result.asText(context)
+                    ))
                 }
                 is Result.Success -> {
                     _stateFlow.update { currentState ->
@@ -61,9 +67,6 @@ class ChooseCategoriesViewModel @Inject constructor(
         }
     }
 
-    fun skipStep(){
-
-    }
 
     fun setCategories(){
         val selectedCategoryIds = stateFlow.value.categoryItems.filter { it.selected }.map { it.id }
@@ -71,11 +74,13 @@ class ChooseCategoriesViewModel @Inject constructor(
         viewModelScope.launch {
             when (val result = setCategoriesUseCase(selectedCategoryIds)){
                 is Result.Error -> {
-//                    SnackbarController.sendEvent(
-//                        SnackbarEvent(message = result.error.asUiText().asString(context))
-//                    )
+                    mutableSideEffect.send(SideEffect.FailedProvideCategories(
+                        message = result.asText(context)
+                    ))
                 }
-                is Result.Success -> {}
+                is Result.Success -> {
+                    mutableSideEffect.send(SideEffect.FinishSetUp)
+                }
             }
         }
     }
@@ -93,5 +98,4 @@ class ChooseCategoriesViewModel @Inject constructor(
             )
         }
     }
-
 }

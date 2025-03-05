@@ -161,7 +161,7 @@ class RegisterViewModel @Inject constructor(
             when (val result = otpRegisterUseCase(userData = userPayload)){
                 is Result.Error -> handleErrors(result.error)
                 is Result.Success -> {
-                    triggerOtpBottomSheet(false)
+                    mutableSideEffect.send(SideEffect.SuccessRegister)
                 }
             }
         }

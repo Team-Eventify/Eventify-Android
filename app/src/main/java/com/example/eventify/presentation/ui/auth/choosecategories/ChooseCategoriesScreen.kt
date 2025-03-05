@@ -11,9 +11,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import com.example.eventify.R
 import com.example.eventify.presentation.models.CategorySelectItem
+import com.example.eventify.presentation.ui.auth.choosecategories.state.SetUpListener
+import com.example.eventify.presentation.ui.auth.choosecategories.state.SetUpState
 import com.example.eventify.presentation.ui.common.AnnotationText
 import com.example.eventify.presentation.ui.common.BodyText
 import com.example.eventify.presentation.ui.common.CategorySelector
@@ -24,11 +27,12 @@ import com.example.eventify.presentation.ui.common.TitleText
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 import com.example.eventify.presentation.ui.theme.LocalDimentions
 import com.example.eventify.presentation.ui.theme.space20
+import java.util.UUID
 
 @Composable
 fun ChooseCategoriesScreen(
-    state: ChooseCategoriesState,
-    actions: ChooseCategoriesActions,
+    state: SetUpState,
+    actions: SetUpListener,
 ) {
     val dimmentions = LocalDimentions.current
 
@@ -47,7 +51,7 @@ fun ChooseCategoriesScreen(
 
             CategorySelector(
                 categories = state.categoryItems,
-                onClickCategory = actions.onChangeCategoryFilterActive
+                onClickCategory = actions::selectCategory
             )
         }
 
@@ -58,13 +62,13 @@ fun ChooseCategoriesScreen(
         ) {
             AnnotationText(text = stringResource(R.string.you_can_always_change_your_choice))
             PrimaryButton(
-                onClick = actions.onSubmit,
+                onClick = actions::nextStep,
                 enabled = state.isValidData
             ) {
                 PrimaryButtonText(text = stringResource(R.string.next))
             }
 
-            SkipTextButton(onClick = actions.onSkip)
+            SkipTextButton(onClick = actions::skip)
         }
     }
 }
@@ -75,18 +79,16 @@ private fun ChooseCategoriesScreenPreview() {
     EventifyTheme(darkTheme = true) {
         Surface {
             ChooseCategoriesScreen(
-                state = ChooseCategoriesState(
-                    categoryItems = listOf(
-                        CategorySelectItem(id = "", title = "Наука", selected = false, color = Color.Cyan),
-                        CategorySelectItem(id = "", title = "Наука", selected = false, color = Color.Cyan),
-                        CategorySelectItem(id = "", title = "Наука", selected = false, color = Color.Cyan),
-                        CategorySelectItem(id = "", title = "Наука", selected = false, color = Color.Cyan),
-                        CategorySelectItem(id = "", title = "Наука", selected = false, color = Color.Cyan),
-                        CategorySelectItem(id = "", title = "Наука", selected = false, color = Color.Cyan),
-                        CategorySelectItem(id = "", title = "Наука", selected = false, color = Color.Cyan),
-                        )
+                state = SetUpState(
+                    categoryItems = List(7) {
+                        CategorySelectItem(id = UUID.randomUUID().toString(), title = LoremIpsum().values.joinToString(), selected = false, color = Color.Cyan)
+                    }
                 ),
-                actions = ChooseCategoriesActions()
+                actions = object : SetUpListener {
+                    override fun selectCategory(categoryId: String, selected: Boolean) = Unit
+                    override fun skip() = Unit
+                    override fun nextStep() = Unit
+                }
             )
         }
     }

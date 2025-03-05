@@ -20,6 +20,7 @@ import com.example.eventify.presentation.ui.events.myevents.MyEventsEntry
 import com.example.eventify.presentation.ui.events.search.SearchEntry
 import com.example.eventify.presentation.ui.settings.aboutapp.AboutAppEntry
 import com.example.eventify.presentation.navigation.findOrNull
+import com.example.eventify.presentation.ui.auth.choosecategories.SetUpEntry
 
 
 @Composable
@@ -34,6 +35,7 @@ fun MainNavHost(
         features.findOrNull<LoginEntry>(),
         features.findOrNull<RegisterEntry>(),
         features.findOrNull<ResetPasswordEntry>(),
+        features.findOrNull<SetUpEntry>(),
     )
 
     val eventsFeatures: List<ComposableFeatureEntry> = listOfNotNull(

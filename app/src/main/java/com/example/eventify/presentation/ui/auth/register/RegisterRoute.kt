@@ -14,6 +14,7 @@ import com.example.eventify.presentation.LocaleSnackbarState
 import com.example.eventify.presentation.navigation.LocalFeaturesProvider
 import com.example.eventify.presentation.ui.auth.login.LoginEntry
 import com.example.eventify.presentation.navigation.navigateToFeature
+import com.example.eventify.presentation.ui.auth.choosecategories.SetUpEntry
 import com.example.eventify.presentation.ui.auth.register.state.RegisterListener
 import com.example.eventify.presentation.ui.auth.register.state.SideEffect
 import com.example.eventify.presentation.utils.ObserveAsEvent
@@ -69,7 +70,8 @@ fun RegisterRoute(
     ObserveAsEvent(viewModel.sideEffect) { sideEffect ->
         when (sideEffect) {
             SideEffect.SuccessRegister -> {
-//                features.navigateToFeature<>()
+                viewModel.triggerOtpBottomSheet(false)
+                features.navigateToFeature<SetUpEntry>(navController)
             }
             is SideEffect.FailRegister -> {
                 snackBarState.showSnackbar(
