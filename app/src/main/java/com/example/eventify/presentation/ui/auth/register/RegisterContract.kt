@@ -48,4 +48,5 @@ data class RegisterActions(
     val onRegister: () -> Unit,
     val onChangeOtp: (String) -> Unit,
     val onTriggerOtpBottomSheet: (Boolean) -> Unit,
+    val navigateToPrivacyPolicy: () -> Unit
 )

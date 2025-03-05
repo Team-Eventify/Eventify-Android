@@ -183,4 +183,10 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
+    fun navigateToPrivacyPolicy() {
+        viewModelScope.launch {
+            navigator.navigate(AuthRouter.PrivacyPolicyRoute)
+        }
+    }
+
 }

@@ -77,4 +77,6 @@
     <string name="finished_events">Finished events</string>
     <string name="email_confirmation">Email confirmation</string>
     <string name="otp_description">We have sent a confirmation code to your email. Please enter it below to complete the process.</string>
+    <string name="privacy_policy_text">By registering, you agree to the processing of</string>
+    <string name="privacy_policy_link">personal data</string>
 </resources>

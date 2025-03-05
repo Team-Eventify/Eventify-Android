@@ -1,7 +1,9 @@
 package com.example.eventify.presentation.ui.auth.register
 
 import android.content.res.Configuration
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -9,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -26,12 +29,16 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.eventify.R
 import com.example.eventify.presentation.ui.auth.register.components.RegistrationOtpBottomSheet
 import com.example.eventify.presentation.ui.common.ActionPrimaryText
+import com.example.eventify.presentation.ui.common.ActionText
 import com.example.eventify.presentation.ui.common.BodyText
 import com.example.eventify.presentation.ui.common.ErrorInputText
 import com.example.eventify.presentation.ui.common.PasswordInput
@@ -68,84 +75,100 @@ fun RegisterScreen(
         )
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(dimmentions.windowPaddings)
-        ,
-        verticalArrangement = Arrangement.Center
-    ) {
-        TitleText(text = stringResource(R.string.register))
-        Spacer(modifier = Modifier.height(5.dp))
-        BodyText(text = stringResource(R.string.register_request))
-        BodyText(text = stringResource(R.string.it_takes_less_then_minute))
-        Spacer(modifier = Modifier.height(30.dp))
-        TextInput(
-            text = state.login,
-            label = "Email",
-            placeholder = "ivanov@gmail.com",
-            onValueChange = actions.onChangeLogin,
-            isError = state.loginError != null || state.hasLoginError,
-            supportingText = {
-                state.loginError?.let { 
-                    ErrorInputText(text = it.asString())
-                }
-            },
+    Column(modifier = Modifier.fillMaxSize()) {
+        Spacer(modifier = Modifier.weight(1f))
+        Column(
             modifier = Modifier
-                .focusRequester(focusRequest),
-            keyboardOptions = KeyboardOptions(
-                imeAction = ImeAction.Next
-            ),
-            keyboardActions = KeyboardActions(
-                onNext = {
-                    focusManager.moveFocus(FocusDirection.Down)
-                }
-            )
-        )
-        Spacer(modifier = Modifier.height(10.dp))
-        PasswordInput(
-            text = state.password,
-            label = "Password",
-            placeholder = "yourpassword",
-            onValueChange = actions.onChangePassword,
-            isError = state.passwordError != null || state.hasPasswordError,
-            supportingText = {
-                state.passwordError?.let {
-                    ErrorInputText(text = it.asString())
-                }
-            },
-            keyboardOptions = KeyboardOptions(
-                imeAction = ImeAction.Done
-            ),
-            keyboardActions = KeyboardActions(
-                onDone = {
-                    focusManager.clearFocus()
-                }
-            )
-        )
-
-        Spacer(modifier = Modifier.height(30.dp))
-        PrimaryButton(
-            onClick = actions.onRequestOtp,
-            enabled = state.isValidFormData,
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            Text(text = stringResource(R.string.register_action), lineHeight = 22.sp, fontSize = 17.sp, fontWeight = FontWeight.Medium)
-        }
-        Spacer(modifier = Modifier.height(20.dp))
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
+                .padding(dimmentions.windowPaddings)
             ,
-            horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally)
+            verticalArrangement = Arrangement.Center,
         ) {
-            Text(text = stringResource(R.string.already_have_account_question))
-            ActionPrimaryText(
-                text = stringResource(R.string.login_action),
-                onClick = actions.navigateToLogIn
+            TitleText(text = stringResource(R.string.register))
+            Spacer(modifier = Modifier.height(5.dp))
+            BodyText(text = stringResource(R.string.register_request))
+            BodyText(text = stringResource(R.string.it_takes_less_then_minute))
+            Spacer(modifier = Modifier.height(30.dp))
+            TextInput(
+                text = state.login,
+                label = "Email",
+                placeholder = "ivanov@gmail.com",
+                onValueChange = actions.onChangeLogin,
+                isError = state.loginError != null || state.hasLoginError,
+                supportingText = {
+                    state.loginError?.let {
+                        ErrorInputText(text = it.asString())
+                    }
+                },
+                modifier = Modifier
+                    .focusRequester(focusRequest),
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Next
+                ),
+                keyboardActions = KeyboardActions(
+                    onNext = {
+                        focusManager.moveFocus(FocusDirection.Down)
+                    }
+                )
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            PasswordInput(
+                text = state.password,
+                label = "Password",
+                placeholder = "yourpassword",
+                onValueChange = actions.onChangePassword,
+                isError = state.passwordError != null || state.hasPasswordError,
+                supportingText = {
+                    state.passwordError?.let {
+                        ErrorInputText(text = it.asString())
+                    }
+                },
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Done
+                ),
+                keyboardActions = KeyboardActions(
+                    onDone = {
+                        focusManager.clearFocus()
+                    }
+                )
+            )
+
+            Spacer(modifier = Modifier.height(30.dp))
+            PrimaryButton(
+                onClick = actions.onRequestOtp,
+                enabled = state.isValidFormData,
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                Text(
+                    text = stringResource(R.string.register_action),
+                    lineHeight = 22.sp,
+                    fontSize = 17.sp,
+                    fontWeight = FontWeight.Medium
+                )
+            }
+            Spacer(modifier = Modifier.height(20.dp))
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally)
+            ) {
+                Text(text = stringResource(R.string.already_have_account_question))
+                ActionPrimaryText(
+                    text = stringResource(R.string.login_action),
+                    onClick = actions.navigateToLogIn
+                )
+            }
+        }
+        Spacer(modifier = Modifier.weight(1f))
+        Column(verticalArrangement = Arrangement.Bottom, modifier = Modifier.padding(dimmentions.windowPaddings).fillMaxWidth()) {
+            Text(text = stringResource(R.string.privacy_policy_text), textAlign = TextAlign.Center, modifier = Modifier.align(Alignment.CenterHorizontally), fontSize = 14.sp)
+            Text(text = stringResource(R.string.privacy_policy_link), fontSize = 14.sp, textDecoration = TextDecoration.Underline,
+                modifier = Modifier.align(Alignment.CenterHorizontally).clickable {
+                    actions.navigateToPrivacyPolicy()
+                }
             )
         }
+
     }
 }
 
@@ -165,6 +188,7 @@ private fun RegisterScreenDefaultDarkPreview() {
                     onRequestOtp = {},
                     onChangeOtp = {},
                     onTriggerOtpBottomSheet = {},
+                    navigateToPrivacyPolicy = {}
                 )
             )
         }
@@ -192,6 +216,7 @@ private fun RegisterScreenErrorLightPreview() {
                     onRequestOtp = {},
                     onChangeOtp = {},
                     onTriggerOtpBottomSheet = {},
+                    navigateToPrivacyPolicy = {}
                 )
             )
         }

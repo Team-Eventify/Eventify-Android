@@ -46,5 +46,5 @@ data class LogInActions(
     val onChangePassword: (String) -> Unit = {},
     val onSubmit: () -> Unit = {},
     val navigateToRegister: () -> Unit = {},
-    val navigateToResetPassword: () -> Unit = {}
+    val navigateToResetPassword: () -> Unit = {},
 )

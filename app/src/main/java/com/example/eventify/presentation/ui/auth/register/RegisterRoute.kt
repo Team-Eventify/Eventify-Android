@@ -34,7 +34,8 @@ fun rememberRegisterActions(coordinator: RegisterCoordinator): RegisterActions {
             onRegister = coordinator.viewModel::register,
             onChangeOtp = coordinator.viewModel::changeOtp,
             onRequestOtp = coordinator.viewModel::requestOtp,
-            onTriggerOtpBottomSheet = coordinator.viewModel::triggerOtpBottomSheet
+            onTriggerOtpBottomSheet = coordinator.viewModel::triggerOtpBottomSheet,
+            navigateToPrivacyPolicy = coordinator.viewModel::navigateToPrivacyPolicy
         )
     }
 }

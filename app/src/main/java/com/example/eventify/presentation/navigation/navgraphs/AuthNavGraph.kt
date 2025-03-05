@@ -7,6 +7,7 @@ import androidx.navigation.navigation
 import com.example.eventify.presentation.ui.auth.choosecategories.ChooseCategoriesRoute
 import com.example.eventify.presentation.ui.auth.login.LogInRoute
 import com.example.eventify.presentation.ui.auth.onboarding.OnBoardingRoute
+import com.example.eventify.presentation.ui.auth.privacypolicy.PrivacyPolicyRoute
 import com.example.eventify.presentation.ui.auth.register.RegisterRoute
 import com.example.eventify.presentation.ui.auth.resetpassword.ResetPasswordRoute
 import kotlinx.serialization.Serializable
@@ -29,6 +30,9 @@ fun NavGraphBuilder.AuthNavGraph(
         composable<AuthRouter.ResetPasswordRoute> {
             ResetPasswordRoute()
         }
+        composable<AuthRouter.PrivacyPolicyRoute> {
+            PrivacyPolicyRoute()
+        }
     }
 }
 
@@ -45,4 +49,7 @@ sealed class AuthRouter: Destination {
 
     @Serializable
     data object ChooseCategoriesRoute: AuthRouter()
+
+    @Serializable
+    data object PrivacyPolicyRoute: AuthRouter()
 }
