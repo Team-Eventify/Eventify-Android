@@ -1,7 +1,6 @@
 package com.example.eventify.presentation.ui.auth.onboarding
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -12,6 +11,7 @@ import androidx.compose.material3.TabRow
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.internal.composableLambdaInstance
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -23,6 +23,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.eventify.R
 import com.example.eventify.presentation.ui.auth.onboarding.components.OnboardingView
+import com.example.eventify.presentation.ui.auth.onboarding.state.OnBoardingItem
+import com.example.eventify.presentation.ui.auth.onboarding.state.OnBoardingListener
+import com.example.eventify.presentation.ui.auth.onboarding.state.OnBoardingState
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 import com.example.eventify.presentation.ui.theme.LocalDimentions
 
@@ -30,9 +33,8 @@ import com.example.eventify.presentation.ui.theme.LocalDimentions
 @Composable
 fun OnBoardingScreen(
     state: OnBoardingState,
-    actions: OnBoardingActions
+    actions: OnBoardingListener
 ) {
-    var currentPageState by remember { mutableStateOf(0) }
     val dimentions = LocalDimentions.current
 
     val items = listOf(
@@ -76,8 +78,8 @@ fun OnBoardingScreen(
         items.size
     }
 
-    LaunchedEffect(currentPageState) {
-        pagerState.animateScrollToPage(currentPageState)
+    LaunchedEffect(state.currentPage) {
+        pagerState.animateScrollToPage(state.currentPage)
     }
 
     Column(
@@ -85,13 +87,15 @@ fun OnBoardingScreen(
             .fillMaxSize()
     ) {
         TabRow(
-            selectedTabIndex = currentPageState,
+            selectedTabIndex = state.currentPage,
             containerColor = Color.Transparent
         ) {
             items.forEachIndexed { index, _ ->
                 Tab(
-                    selected = currentPageState == index,
-                    onClick = { currentPageState = index },
+                    selected = state.currentPage == index,
+                    onClick = {
+                        actions.goToPage(index)
+                    },
                     text = null
                 )
             }
@@ -106,13 +110,8 @@ fun OnBoardingScreen(
         ) { index ->
             OnboardingView(
                 itemState = items[index],
-                onNext = {
-                    if (index == items.size -1)
-                        actions.onFinishOnboarding()
-                    else
-                        currentPageState = (index + 1) % items.size
-                },
-                onSkip = actions.onFinishOnboarding
+                onNext = actions::nextPage,
+                onSkip = actions::finish
             )
         }
     }
@@ -126,8 +125,15 @@ private fun OnBoardingScreenPreview() {
             color = MaterialTheme.colorScheme.background
         ) {
             OnBoardingScreen(
-                state = OnBoardingState(),
-                actions = OnBoardingActions()
+                actions = object : OnBoardingListener {
+                    override fun nextPage() = Unit
+                    override fun previousPage() = Unit
+                    override fun goToPage(pageIndex: Int) = Unit
+                    override fun finish() = Unit
+                },
+                state = OnBoardingState(
+                    currentPage = 0
+                )
             )
         }
     }

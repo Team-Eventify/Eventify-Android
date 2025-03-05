@@ -1,4 +1,5 @@
-package com.example.eventify.presentation.navigation.entries
+package com.example.eventify.presentation.navigation
+
 
 open class BaseDestination(
     private val route: String,

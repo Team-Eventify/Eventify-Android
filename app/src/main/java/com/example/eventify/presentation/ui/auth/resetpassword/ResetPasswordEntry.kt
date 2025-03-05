@@ -1,10 +1,10 @@
-package com.example.eventify.presentation.navigation.entries.auth
+package com.example.eventify.presentation.ui.auth.resetpassword
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import com.example.eventify.presentation.navigation.ARG_SHARED_EMAIL
-import com.example.eventify.presentation.navigation.entries.ComposableFeatureEntry
-import com.example.eventify.presentation.ui.auth.resetpassword.ResetPasswordRoute
+import com.example.eventify.presentation.navigation.ComposableFeatureEntry
+import com.example.eventify.presentation.ui.auth.login.AuthRootPath
 import javax.inject.Inject
 
 

@@ -1,36 +1,33 @@
 package com.example.eventify.domain.di
 
-import com.example.eventify.presentation.navigation.Features
-import com.example.eventify.presentation.navigation.entries.FeatureEntry
-import com.example.eventify.presentation.navigation.entries.account.ProfileEditEntry
-import com.example.eventify.presentation.navigation.entries.account.ProfileEditEntryImpl
-import com.example.eventify.presentation.navigation.entries.account.ProfileEntry
-import com.example.eventify.presentation.navigation.entries.account.ProfileEntryImpl
-import com.example.eventify.presentation.navigation.entries.auth.LoginEntry
-import com.example.eventify.presentation.navigation.entries.auth.LoginEntryImpl
-import com.example.eventify.presentation.navigation.entries.auth.OnBoardingEntry
-import com.example.eventify.presentation.navigation.entries.auth.OnBoardingEntryImpl
-import com.example.eventify.presentation.navigation.entries.auth.RegisterEntry
-import com.example.eventify.presentation.navigation.entries.auth.RegisterEntryImpl
-import com.example.eventify.presentation.navigation.entries.auth.ResetPasswordEntry
-import com.example.eventify.presentation.navigation.entries.auth.ResetPasswordEntryImpl
-import com.example.eventify.presentation.navigation.entries.events.EventDetailEntry
-import com.example.eventify.presentation.navigation.entries.events.EventDetailEntryImpl
-import com.example.eventify.presentation.navigation.entries.events.EventsFeedFeatureEntry
-import com.example.eventify.presentation.navigation.entries.events.EventsFeedFeatureEntryImpl
-import com.example.eventify.presentation.navigation.entries.events.MyEventsEntry
-import com.example.eventify.presentation.navigation.entries.events.MyEventsEntryImpl
-import com.example.eventify.presentation.navigation.entries.events.SearchEntry
-import com.example.eventify.presentation.navigation.entries.events.SearchEntryImpl
-import com.example.eventify.presentation.navigation.entries.settings.AboutAppEntry
-import com.example.eventify.presentation.navigation.entries.settings.AboutAppEntryImpl
+import com.example.eventify.presentation.navigation.FeatureEntry
+import com.example.eventify.presentation.ui.account.profileedit.ProfileEditEntry
+import com.example.eventify.presentation.ui.account.profileedit.ProfileEditEntryImpl
+import com.example.eventify.presentation.ui.account.profile.ProfileEntry
+import com.example.eventify.presentation.ui.account.profile.ProfileEntryImpl
+import com.example.eventify.presentation.ui.auth.login.LoginEntry
+import com.example.eventify.presentation.ui.auth.login.LoginEntryImpl
+import com.example.eventify.presentation.ui.auth.onboarding.OnBoardingEntry
+import com.example.eventify.presentation.ui.auth.onboarding.OnBoardingEntryImpl
+import com.example.eventify.presentation.ui.auth.register.RegisterEntry
+import com.example.eventify.presentation.ui.auth.register.RegisterEntryImpl
+import com.example.eventify.presentation.ui.auth.resetpassword.ResetPasswordEntry
+import com.example.eventify.presentation.ui.auth.resetpassword.ResetPasswordEntryImpl
+import com.example.eventify.presentation.ui.events.eventdetail.EventDetailEntry
+import com.example.eventify.presentation.ui.events.eventdetail.EventDetailEntryImpl
+import com.example.eventify.presentation.ui.events.eventsfeed.EventsFeedEntry
+import com.example.eventify.presentation.ui.events.eventsfeed.EventsFeedEntryImpl
+import com.example.eventify.presentation.ui.events.myevents.MyEventsEntry
+import com.example.eventify.presentation.ui.events.myevents.MyEventsEntryImpl
+import com.example.eventify.presentation.ui.events.search.SearchEntry
+import com.example.eventify.presentation.ui.events.search.SearchEntryImpl
+import com.example.eventify.presentation.ui.settings.aboutapp.AboutAppEntry
+import com.example.eventify.presentation.ui.settings.aboutapp.AboutAppEntryImpl
 import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoMap
-import dagger.multibindings.Multibinds
 import javax.inject.Singleton
 
 @Module
@@ -84,8 +81,8 @@ abstract class FeaturesModule {
     @Binds
     @Singleton
     @IntoMap
-    @FeatureEntryKey(EventsFeedFeatureEntry::class)
-    abstract fun bindEventsFeedFeatureEntry(feature: EventsFeedFeatureEntryImpl): FeatureEntry
+    @FeatureEntryKey(EventsFeedEntry::class)
+    abstract fun bindEventsFeedFeatureEntry(feature: EventsFeedEntryImpl): FeatureEntry
 
     @Binds
     @Singleton

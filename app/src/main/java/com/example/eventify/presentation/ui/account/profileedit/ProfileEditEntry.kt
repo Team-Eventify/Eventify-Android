@@ -1,9 +1,9 @@
-package com.example.eventify.presentation.navigation.entries.account
+package com.example.eventify.presentation.ui.account.profileedit
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
-import com.example.eventify.presentation.navigation.entries.ComposableFeatureEntry
-import com.example.eventify.presentation.ui.account.profileedit.ProfileEditRoute
+import com.example.eventify.presentation.navigation.ComposableFeatureEntry
+import com.example.eventify.presentation.ui.account.profile.AccountRootPath
 import javax.inject.Inject
 
 val ProfileEditPath = AccountRootPath.updateAndGetPath("edit")

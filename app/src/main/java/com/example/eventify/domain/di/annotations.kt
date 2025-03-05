@@ -1,6 +1,6 @@
 package com.example.eventify.domain.di
 
-import com.example.eventify.presentation.navigation.entries.FeatureEntry
+import com.example.eventify.presentation.navigation.FeatureEntry
 import dagger.MapKey
 import javax.inject.Qualifier
 import kotlin.reflect.KClass

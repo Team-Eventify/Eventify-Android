@@ -3,9 +3,9 @@ package com.example.eventify.presentation.navigation.navgraphs
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.navigation
-import com.example.eventify.presentation.navigation.entries.ComposableFeatureEntry
-import com.example.eventify.presentation.navigation.entries.account.AccountRootPath
-import com.example.eventify.presentation.navigation.entries.account.ProfilePath
+import com.example.eventify.presentation.navigation.ComposableFeatureEntry
+import com.example.eventify.presentation.ui.account.profile.AccountRootPath
+import com.example.eventify.presentation.ui.account.profile.ProfilePath
 
 
 fun NavGraphBuilder.addAccountNavGraph(

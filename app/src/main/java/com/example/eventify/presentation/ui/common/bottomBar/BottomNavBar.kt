@@ -1,7 +1,6 @@
 package com.example.eventify.presentation.ui.common.bottomBar
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
@@ -21,10 +20,10 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.eventify.R
-import com.example.eventify.presentation.navigation.entries.account.ProfilePath
-import com.example.eventify.presentation.navigation.entries.events.EventFeedPath
-import com.example.eventify.presentation.navigation.entries.events.MyEventsPath
-import com.example.eventify.presentation.navigation.entries.events.SearchPath
+import com.example.eventify.presentation.ui.account.profile.ProfilePath
+import com.example.eventify.presentation.ui.events.eventsfeed.EventFeedPath
+import com.example.eventify.presentation.ui.events.myevents.MyEventsPath
+import com.example.eventify.presentation.ui.events.search.SearchPath
 
 @Composable
 fun BottomNavBar(

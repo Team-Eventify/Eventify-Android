@@ -34,14 +34,16 @@ import com.example.eventify.data.storages.SharedStorage
 import com.example.eventify.domain.SessionManager
 import com.example.eventify.domain.di.RequestsSessionManager
 import com.example.eventify.presentation.navigation.LocalFeaturesProvider
-import com.example.eventify.presentation.navigation.entries.auth.AuthRootPath
-import com.example.eventify.presentation.navigation.entries.events.EventsRootPath
+import com.example.eventify.presentation.ui.auth.login.AuthRootPath
+import com.example.eventify.presentation.ui.events.eventsfeed.EventsRootPath
 import com.example.eventify.presentation.navigation.navgraphs.MainNavHost
+import com.example.eventify.presentation.ui.auth.onboarding.OnBoardingPath
 import com.example.eventify.presentation.ui.common.EventifySnackbar
 import com.example.eventify.presentation.ui.common.bottomBar.BottomNavBar
 import com.example.eventify.presentation.ui.common.screens.NoInternetConnectionScreen
 import com.example.eventify.presentation.ui.common.topBar.EventifyTopAppBar
 import com.example.eventify.presentation.ui.theme.EventifyTheme
+import com.example.eventify.presentation.utils.isShowOnboarding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.runBlocking
 import rememberConnectivityState
@@ -136,7 +138,7 @@ class MainActivity : ComponentActivity() {
     private fun getStartDis(): String {
         return runBlocking {
             when {
-//                localeStorage.isShowOnboarding() -> OnBoardingPath
+                localeStorage.isShowOnboarding() -> OnBoardingPath.baseRoute
                 sessionManager.isLoggedIn() -> EventsRootPath.baseRoute
                 else -> AuthRootPath.baseRoute
             }

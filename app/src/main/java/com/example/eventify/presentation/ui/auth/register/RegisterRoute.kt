@@ -2,18 +2,14 @@ package com.example.eventify.presentation.ui.auth.register
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.example.eventify.presentation.LocalTopBarState
 import com.example.eventify.presentation.LocaleSnackbarState
 import com.example.eventify.presentation.navigation.LocalFeaturesProvider
-import com.example.eventify.presentation.navigation.entries.auth.LoginEntry
-import com.example.eventify.presentation.navigation.navigateNewTaskFeature
+import com.example.eventify.presentation.ui.auth.login.LoginEntry
 import com.example.eventify.presentation.navigation.navigateToFeature
 import com.example.eventify.presentation.ui.auth.register.state.RegisterListener
 import com.example.eventify.presentation.ui.auth.register.state.SideEffect

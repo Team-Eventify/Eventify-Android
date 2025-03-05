@@ -1,9 +1,9 @@
-package com.example.eventify.presentation.navigation.entries.auth
+package com.example.eventify.presentation.ui.auth.register
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
-import com.example.eventify.presentation.navigation.entries.ComposableFeatureEntry
-import com.example.eventify.presentation.ui.auth.register.RegisterRoute
+import com.example.eventify.presentation.navigation.ComposableFeatureEntry
+import com.example.eventify.presentation.ui.auth.login.AuthRootPath
 import javax.inject.Inject
 
 val RegisterPath = AuthRootPath.updateAndGetPath("register")

@@ -3,9 +3,9 @@ package com.example.eventify.presentation.navigation.navgraphs
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.navigation
-import com.example.eventify.presentation.navigation.entries.ComposableFeatureEntry
-import com.example.eventify.presentation.navigation.entries.settings.AboutAppPath
-import com.example.eventify.presentation.navigation.entries.settings.SettingsRootPath
+import com.example.eventify.presentation.navigation.ComposableFeatureEntry
+import com.example.eventify.presentation.ui.settings.aboutapp.AboutAppPath
+import com.example.eventify.presentation.ui.settings.aboutapp.SettingsRootPath
 
 fun NavGraphBuilder.addSettingsNavGraph(
     navController: NavHostController,

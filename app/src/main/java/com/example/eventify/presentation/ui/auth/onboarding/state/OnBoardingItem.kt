@@ -1,8 +1,8 @@
-package com.example.eventify.presentation.ui.auth.onboarding
+package com.example.eventify.presentation.ui.auth.onboarding.state
 
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.res.stringResource
+
 
 @Stable
 data class OnBoardingItem(
@@ -11,3 +11,4 @@ data class OnBoardingItem(
     val body: String? = null,
     val primaryButtonText: String
 )
+

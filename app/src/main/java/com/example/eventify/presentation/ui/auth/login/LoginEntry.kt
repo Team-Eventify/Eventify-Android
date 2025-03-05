@@ -1,10 +1,9 @@
-package com.example.eventify.presentation.navigation.entries.auth
+package com.example.eventify.presentation.ui.auth.login
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
-import com.example.eventify.presentation.navigation.entries.BaseDestination
-import com.example.eventify.presentation.navigation.entries.ComposableFeatureEntry
-import com.example.eventify.presentation.ui.auth.login.LogInRoute
+import com.example.eventify.presentation.navigation.BaseDestination
+import com.example.eventify.presentation.navigation.ComposableFeatureEntry
 import javax.inject.Inject
 
 val AuthRootPath = BaseDestination("auth")

@@ -1,4 +1,4 @@
-package com.example.eventify.presentation.navigation.entries
+package com.example.eventify.presentation.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavDeepLink

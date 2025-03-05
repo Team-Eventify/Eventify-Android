@@ -2,8 +2,6 @@ package com.example.eventify.presentation.navigation
 
 import androidx.compose.runtime.compositionLocalOf
 import androidx.navigation.NavController
-import com.example.eventify.presentation.navigation.entries.ComposableFeatureEntry
-import com.example.eventify.presentation.navigation.entries.FeatureEntry
 import javax.inject.Inject
 
 

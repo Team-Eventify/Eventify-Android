@@ -1,9 +1,9 @@
-package com.example.eventify.presentation.navigation.entries.events
+package com.example.eventify.presentation.ui.events.myevents
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
-import com.example.eventify.presentation.navigation.entries.ComposableFeatureEntry
-import com.example.eventify.presentation.ui.events.myevents.MyEventsRoute
+import com.example.eventify.presentation.navigation.ComposableFeatureEntry
+import com.example.eventify.presentation.ui.events.eventsfeed.EventsRootPath
 import javax.inject.Inject
 
 val MyEventsPath = EventsRootPath.updateAndGetPath("my-events")

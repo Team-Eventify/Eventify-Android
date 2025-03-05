@@ -5,26 +5,21 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.example.eventify.presentation.navigation.LocalFeaturesProvider
-import com.example.eventify.presentation.navigation.entries.BaseDestination
-import com.example.eventify.presentation.navigation.entries.ComposableFeatureEntry
-import com.example.eventify.presentation.navigation.entries.account.ProfileEditEntry
-import com.example.eventify.presentation.navigation.entries.account.ProfileEntry
-import com.example.eventify.presentation.navigation.entries.auth.AuthRootPath
-import com.example.eventify.presentation.navigation.entries.auth.LoginEntry
-import com.example.eventify.presentation.navigation.entries.auth.LoginPath
-import com.example.eventify.presentation.navigation.entries.auth.OnBoardingEntry
-import com.example.eventify.presentation.navigation.entries.auth.RegisterEntry
-import com.example.eventify.presentation.navigation.entries.auth.RegisterPath
-import com.example.eventify.presentation.navigation.entries.auth.ResetPasswordEntry
-import com.example.eventify.presentation.navigation.entries.events.EventDetailEntry
-import com.example.eventify.presentation.navigation.entries.events.EventsFeedFeatureEntry
-import com.example.eventify.presentation.navigation.entries.events.EventsRootPath
-import com.example.eventify.presentation.navigation.entries.events.MyEventsEntry
-import com.example.eventify.presentation.navigation.entries.events.SearchEntry
-import com.example.eventify.presentation.navigation.entries.settings.AboutAppEntry
+import com.example.eventify.presentation.navigation.ComposableFeatureEntry
+import com.example.eventify.presentation.navigation.find
+import com.example.eventify.presentation.ui.account.profileedit.ProfileEditEntry
+import com.example.eventify.presentation.ui.account.profile.ProfileEntry
+import com.example.eventify.presentation.ui.auth.login.AuthRootPath
+import com.example.eventify.presentation.ui.auth.login.LoginEntry
+import com.example.eventify.presentation.ui.auth.onboarding.OnBoardingEntry
+import com.example.eventify.presentation.ui.auth.register.RegisterEntry
+import com.example.eventify.presentation.ui.auth.resetpassword.ResetPasswordEntry
+import com.example.eventify.presentation.ui.events.eventdetail.EventDetailEntry
+import com.example.eventify.presentation.ui.events.eventsfeed.EventsFeedEntry
+import com.example.eventify.presentation.ui.events.myevents.MyEventsEntry
+import com.example.eventify.presentation.ui.events.search.SearchEntry
+import com.example.eventify.presentation.ui.settings.aboutapp.AboutAppEntry
 import com.example.eventify.presentation.navigation.findOrNull
-import kotlinx.serialization.Serializable
-
 
 
 @Composable
@@ -39,11 +34,10 @@ fun MainNavHost(
         features.findOrNull<LoginEntry>(),
         features.findOrNull<RegisterEntry>(),
         features.findOrNull<ResetPasswordEntry>(),
-        features.findOrNull<OnBoardingEntry>(),
     )
 
     val eventsFeatures: List<ComposableFeatureEntry> = listOfNotNull(
-        features.findOrNull<EventsFeedFeatureEntry>(),
+        features.findOrNull<EventsFeedEntry>(),
         features.findOrNull<EventDetailEntry>(),
         features.findOrNull<MyEventsEntry>(),
         features.findOrNull<SearchEntry>(),
@@ -58,14 +52,22 @@ fun MainNavHost(
         features.findOrNull<ProfileEditEntry>(),
     )
 
+    val onboarding = features.find<OnBoardingEntry>()
+
     NavHost(
         modifier = modifier,
         navController = navController,
         startDestination = startDestination
     ){
+        with(onboarding) {
+            featureComposable(navController)
+        }
+
         addAuthNavGraph(navController, authFeatures)
         addEventsNavGraph(navController, eventsFeatures)
         addSettingsNavGraph(navController, settingsFeatures)
         addAccountNavGraph(navController, accountFeatures)
+
+
     }
 }

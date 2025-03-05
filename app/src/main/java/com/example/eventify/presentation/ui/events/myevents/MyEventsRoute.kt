@@ -3,7 +3,6 @@ package com.example.eventify.presentation.ui.events.myevents
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -14,9 +13,8 @@ import com.example.eventify.presentation.LocalTopBarState
 import com.example.eventify.presentation.TopBarSize
 import com.example.eventify.presentation.TopBarState
 import com.example.eventify.presentation.navigation.LocalFeaturesProvider
-import com.example.eventify.presentation.navigation.entries.events.EventDetailEntry
-import com.example.eventify.presentation.navigation.entries.events.EventsFeedFeatureEntry
-import com.example.eventify.presentation.navigation.entries.events.MyEventsEntry
+import com.example.eventify.presentation.ui.events.eventdetail.EventDetailEntry
+import com.example.eventify.presentation.ui.events.eventsfeed.EventsFeedEntry
 import com.example.eventify.presentation.navigation.navigateNewTaskFeature
 import com.example.eventify.presentation.navigation.navigateToFeature
 import com.example.eventify.presentation.ui.common.screens.ErrorScreen
@@ -49,7 +47,7 @@ fun MyEventsRoute(
         }
 
         override fun navigateToFeed() {
-            features.navigateNewTaskFeature<EventsFeedFeatureEntry, MyEventsEntry>(navController)
+            features.navigateNewTaskFeature<EventsFeedEntry, MyEventsEntry>(navController)
         }
     }
 
