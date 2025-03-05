@@ -18,10 +18,12 @@ import com.example.eventify.presentation.TopBarAction
 import com.example.eventify.presentation.TopBarSize
 import com.example.eventify.presentation.TopBarState
 import com.example.eventify.presentation.navigation.LocalFeaturesProvider
+import com.example.eventify.presentation.navigation.clearNavigate
 import com.example.eventify.presentation.ui.account.profileedit.components.LoadingProfileEdit
 import com.example.eventify.presentation.ui.account.profileedit.state.ProfileEditListener
 import com.example.eventify.presentation.ui.account.profileedit.state.SideEffect
 import com.example.eventify.presentation.ui.account.profileedit.state.UiState
+import com.example.eventify.presentation.ui.auth.login.LoginEntry
 import com.example.eventify.presentation.ui.common.DefaultTopAppBar
 import com.example.eventify.presentation.ui.common.screens.ErrorScreen
 import com.example.eventify.presentation.utils.ObserveAsEvent
@@ -83,6 +85,10 @@ fun ProfileEditRoute(
                 snackBarState.showSnackbar(
                     message = context.getString(R.string.user_updated)
                 )
+            }
+
+            SideEffect.DeleteAccount -> {
+                features.clearNavigate<LoginEntry>(navController)
             }
         }
     }

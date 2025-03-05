@@ -213,11 +213,7 @@ class ProfileEditViewModel @Inject constructor(
     fun deleteAccount() {
         viewModelScope.launch {
             deleteAccountUseCase()
-//            navigator.navigate(RootRouter.AuthRoute) {
-//                popUpTo(0) {
-//                    inclusive = true
-//                }
-//            }
+            mutableSideEffect.send(SideEffect.DeleteAccount)
         }
     }
 }

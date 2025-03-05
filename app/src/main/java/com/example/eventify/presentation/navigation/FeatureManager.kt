@@ -65,3 +65,13 @@ inline fun <reified T : ComposableFeatureEntry, reified B : ComposableFeatureEnt
         )
     }
 }
+
+inline fun <reified T : ComposableFeatureEntry> Features.clearNavigate(
+    navController: NavController,
+    vararg arguments: Pair<String, Any?>,
+) = this.findOrNull<T>()?.let { destFeature ->
+    navController.navigate(destFeature.destination.toRoute(*arguments)) {
+        popUpTo(0) { inclusive = true } // Удаляет весь стек
+        launchSingleTop = true
+    }
+}

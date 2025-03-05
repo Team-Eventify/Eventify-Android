@@ -162,11 +162,6 @@ class RegisterViewModel @Inject constructor(
                 is Result.Error -> handleErrors(result.error)
                 is Result.Success -> {
                     triggerOtpBottomSheet(false)
-//                    navigator.navigate(AuthRouter.ChooseCategoriesRoute){
-//                        popUpTo(0) {
-//                            inclusive = true
-//                        }
-//                    }
                 }
             }
         }
@@ -174,18 +169,9 @@ class RegisterViewModel @Inject constructor(
     
 
     private suspend fun handleErrors(error: DataError){
-        when (error){
-            is DataError.Network -> {
-//                SnackbarController.sendEvent(
-//                    SnackbarEvent(message = error.asUiText().asString(context))
-//                )
-            }
-            else -> {
-//                SnackbarController.sendEvent(
-//                    SnackbarEvent(message = error.asUiText().asString(context))
-//                )
-            }
-        }
+        mutableSideEffect.send(SideEffect.FailRegister(
+            message = error.asUiText().asString(context)
+        ))
     }
 
 }

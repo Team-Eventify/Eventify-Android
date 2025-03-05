@@ -7,15 +7,18 @@ import com.example.eventify.domain.Result
 import com.example.eventify.domain.usecases.account.GetCurrentUserUseCase
 import com.example.eventify.domain.usecases.auth.LogOutUseCase
 import com.example.eventify.presentation.models.UserShortInfo
+import com.example.eventify.presentation.ui.account.profile.state.SideEffect
 import com.example.eventify.presentation.ui.account.profile.state.UiState
 import com.example.eventify.presentation.utils.asText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.channels.Channel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -26,6 +29,8 @@ class ProfileViewModel @Inject constructor(
     private val logOutUseCase: LogOutUseCase,
     @ApplicationContext private val context: Context,
 ) : ViewModel() {
+    private val mutableSideEffect = Channel<SideEffect>()
+    val sideEffect = mutableSideEffect.receiveAsFlow()
 
     private val _stateFlow: MutableStateFlow<UiState> = MutableStateFlow(UiState.Loading)
     val stateFlow: StateFlow<UiState> = _stateFlow
@@ -62,11 +67,7 @@ class ProfileViewModel @Inject constructor(
     fun logOut(){
         viewModelScope.launch {
             logOutUseCase()
-//            navigator.navigate(AuthRouter.LogInRoute){
-//                popUpTo(0) {
-//                    inclusive = true
-//                }
-//            }
+            mutableSideEffect.send(SideEffect.LogOut)
         }
     }
 }
