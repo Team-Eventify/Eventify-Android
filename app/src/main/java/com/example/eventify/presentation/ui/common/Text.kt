@@ -184,7 +184,7 @@ fun ErrorInputText(
 fun DisclaimerText(
     text: String,
     textDecoration: TextDecoration = TextDecoration.None,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Text(
         text = text,

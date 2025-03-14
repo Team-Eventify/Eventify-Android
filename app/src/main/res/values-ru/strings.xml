@@ -11,7 +11,7 @@
     <string name="save_changes">Сохранить изменения</string>
     <string name="save">Сохранить</string>
     <string name="my_categories">Мои категории</string>
-    <string name="forgot_password">Забыл пароль</string>
+    <string name="forgot_password">Забыли пароль?</string>
     <string name="login_action">Войти</string>
     <string name="logout_action">Выйти</string>
     <string name="register_action">Зарегистрироваться</string>

@@ -1,5 +1,6 @@
 package com.example.eventify.presentation.ui.auth.login
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,6 +22,7 @@ import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
@@ -59,13 +61,15 @@ fun LogInScreen(
             .padding(dimmentions.windowPaddings),
         verticalArrangement = Arrangement.Center
     ) {
+        Image(painter = painterResource(id=R.drawable.login_icon), contentDescription = null)
+        Spacer(modifier = Modifier.height(30.dp))
         TitleText(text = stringResource(R.string.log_in))
-        Spacer(modifier = Modifier.height(5.dp))
+        Spacer(modifier = Modifier.height(10.dp))
 
         BodyText(text = stringResource(R.string.pleace_login))
         BodyText(text = stringResource(R.string.it_takes_less_then_minute))
 
-        Spacer(modifier = Modifier.height(30.dp))
+        Spacer(modifier = Modifier.height(44.dp))
 
         TextInput(
             text = state.login,
