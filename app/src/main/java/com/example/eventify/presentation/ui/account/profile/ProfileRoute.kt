@@ -74,7 +74,7 @@ fun ProfileRoute(
         }
     }
 
-    LaunchedEffect(navController.currentDestination) {
+    LaunchedEffect(Unit) {
         topBarState.setUp(
             TopBarState.Base(
                 title = context.getString(R.string.profile),

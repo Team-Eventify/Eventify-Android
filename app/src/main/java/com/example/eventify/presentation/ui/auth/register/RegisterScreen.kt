@@ -79,16 +79,12 @@ fun RegisterScreen(
         )
     }
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
+    Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(dimmentions.windowPaddings)
-                .align(Alignment.Center)
-            ,
+                .align(Alignment.Center),
             verticalArrangement = Arrangement.Center
         ) {
             Image(painter = painterResource(id=R.drawable.auth_icon), contentDescription = null)
@@ -109,8 +105,7 @@ fun RegisterScreen(
                         ErrorInputText(text = it.asString())
                     }
                 },
-                modifier = Modifier
-                    .focusRequester(focusRequest),
+                modifier = Modifier.focusRequester(focusRequest),
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next
                 ),
@@ -146,16 +141,13 @@ fun RegisterScreen(
             PrimaryButton(
                 onClick = actions::onRequestOtp,
                 enabled = state.isValidFormData,
-                modifier = Modifier
-                    .fillMaxWidth()
+                modifier = Modifier.fillMaxWidth()
             ) {
                 Text(text = stringResource(R.string.register_action), lineHeight = 22.sp, fontSize = 17.sp, fontWeight = FontWeight.Medium)
             }
             Spacer(modifier = Modifier.height(20.dp))
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                ,
+                modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally)
             ) {
                 Text(text = stringResource(R.string.already_have_account_question))
@@ -169,7 +161,9 @@ fun RegisterScreen(
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.align(Alignment.BottomCenter).padding(vertical = 20.dp)
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(vertical = 20.dp)
         ) {
             DisclaimerText(
                 text = stringResource(R.string.privacy_policy_text)
