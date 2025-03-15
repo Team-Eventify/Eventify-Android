@@ -13,9 +13,9 @@ import com.example.eventify.presentation.LocalTopBarState
 import com.example.eventify.presentation.TopBarAction
 import com.example.eventify.presentation.TopBarSize
 import com.example.eventify.presentation.TopBarState
-import com.example.eventify.presentation.ui.account.profile.components.LoadingProfile
-import com.example.eventify.presentation.ui.account.profile.state.UiState
 import com.example.eventify.presentation.ui.account.profile_decor.state.ProfileDecorRouteListener
+import com.example.eventify.presentation.ui.account.profile_decor.state.ProfileDecorUiState
+import com.example.eventify.presentation.ui.account.profile_decor.state.TypesTheme
 import com.example.eventify.presentation.ui.common.screens.ErrorScreen
 
 @Composable
@@ -29,16 +29,18 @@ fun ProfileDecorRoute(navController: NavController) {
         override fun onBackClick() {
             navController.navigateUp()
         }
+        override fun changeTheme(typeOfTheme: TypesTheme) {
+            viewModel.changeTheme(typeOfTheme)
+        }
     }
 
     when (uiState) {
-        is UiState.Loading -> LoadingProfile()
-        is UiState.Error -> ErrorScreen(
-                title = stringResource(R.string.failed_load_profile),
-                description = (uiState as UiState.Error).message
+        is ProfileDecorUiState.Loading -> ProfileDecorScreen(uiState, listener)
+        is ProfileDecorUiState.Error -> ErrorScreen(
+            title = stringResource(R.string.failed_load_profile)
         )
-        is UiState.ShowProfile -> {
-            ProfileDecorScreen()
+        is ProfileDecorUiState.ProfileDecorData -> {
+            ProfileDecorScreen(uiState, listener)
         }
     }
 
