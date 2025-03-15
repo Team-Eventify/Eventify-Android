@@ -1,12 +1,9 @@
-package com.example.eventify.presentation.navigation.navgraphs
+package com.example.eventify.presentation.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.example.eventify.presentation.navigation.LocalFeaturesProvider
-import com.example.eventify.presentation.navigation.ComposableFeatureEntry
-import com.example.eventify.presentation.navigation.find
 import com.example.eventify.presentation.ui.account.profileedit.ProfileEditEntry
 import com.example.eventify.presentation.ui.account.profile.ProfileEntry
 import com.example.eventify.presentation.ui.auth.login.AuthRootPath
@@ -19,7 +16,11 @@ import com.example.eventify.presentation.ui.events.eventsfeed.EventsFeedEntry
 import com.example.eventify.presentation.ui.events.myevents.MyEventsEntry
 import com.example.eventify.presentation.ui.events.search.SearchEntry
 import com.example.eventify.presentation.ui.settings.aboutapp.AboutAppEntry
-import com.example.eventify.presentation.navigation.findOrNull
+import com.example.eventify.presentation.navigation.navgraphs.addAccountNavGraph
+import com.example.eventify.presentation.navigation.navgraphs.addAuthNavGraph
+import com.example.eventify.presentation.navigation.navgraphs.addEventsNavGraph
+import com.example.eventify.presentation.navigation.navgraphs.addSettingsNavGraph
+import com.example.eventify.presentation.ui.account.profile_decor.ProfileDecorEntry
 import com.example.eventify.presentation.ui.auth.choosecategories.SetUpEntry
 
 
@@ -52,6 +53,7 @@ fun MainNavHost(
     val accountFeatures: List<ComposableFeatureEntry> = listOfNotNull(
         features.findOrNull<ProfileEntry>(),
         features.findOrNull<ProfileEditEntry>(),
+        features.findOrNull<ProfileDecorEntry>(),
     )
 
     val onboarding = features.find<OnBoardingEntry>()

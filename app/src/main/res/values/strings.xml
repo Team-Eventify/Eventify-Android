@@ -91,4 +91,5 @@
     <string name="failed_load_profile">Failed to load your profile</string>
     <string name="privacy_policy_text">By registering, you agree to the processing of</string>
     <string name="privacy_policy_link">personal data</string>
+    <string name="design_section_title">Decor</string>
 </resources>

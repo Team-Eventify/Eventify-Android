@@ -90,4 +90,5 @@
     <string name="failed_load_profile">Не удалось загрузить твой профиль</string>
     <string name="privacy_policy_text">Регистрируясь, Вы даете согласие на обработку</string>
     <string name="privacy_policy_link">персональных данных</string>
+    <string name="design_section_title">Оформление</string>
 </resources>

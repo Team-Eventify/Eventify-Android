@@ -64,6 +64,8 @@ fun ProfileScreen(
 //                )
         )
         SettingsBlock {
+            NavigationSettingsItem(stringResource(R.string.design_section_title), onClick = actions::navigateToDecor)
+            HorizontalDivider()
             NavigationSettingsItem(stringResource(R.string.notifications), onClick = {})
             HorizontalDivider()
             NavigationSettingsItem(stringResource(R.string.help_and_support))
@@ -106,6 +108,7 @@ private fun ProfileScreenPreview() {
                     override fun onLogOut() = Unit
                     override fun navigateToProfileEdit() = Unit
                     override fun navigateToAppInfo() = Unit
+                    override fun navigateToDecor() = Unit
                 }
             )
         }

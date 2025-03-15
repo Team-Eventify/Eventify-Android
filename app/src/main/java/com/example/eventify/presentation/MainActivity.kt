@@ -36,7 +36,7 @@ import com.example.eventify.domain.di.RequestsSessionManager
 import com.example.eventify.presentation.navigation.LocalFeaturesProvider
 import com.example.eventify.presentation.ui.auth.login.AuthRootPath
 import com.example.eventify.presentation.ui.events.eventsfeed.EventsRootPath
-import com.example.eventify.presentation.navigation.navgraphs.MainNavHost
+import com.example.eventify.presentation.navigation.MainNavHost
 import com.example.eventify.presentation.ui.auth.onboarding.OnBoardingPath
 import com.example.eventify.presentation.ui.common.EventifySnackbar
 import com.example.eventify.presentation.ui.common.bottomBar.BottomNavBar

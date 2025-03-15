@@ -5,6 +5,8 @@ import com.example.eventify.presentation.ui.account.profileedit.ProfileEditEntry
 import com.example.eventify.presentation.ui.account.profileedit.ProfileEditEntryImpl
 import com.example.eventify.presentation.ui.account.profile.ProfileEntry
 import com.example.eventify.presentation.ui.account.profile.ProfileEntryImpl
+import com.example.eventify.presentation.ui.account.profile_decor.ProfileDecorEntry
+import com.example.eventify.presentation.ui.account.profile_decor.ProfileDecorEntryImpl
 import com.example.eventify.presentation.ui.auth.choosecategories.SetUpEntry
 import com.example.eventify.presentation.ui.auth.choosecategories.SetUpEntryImpl
 import com.example.eventify.presentation.ui.auth.login.LoginEntry
@@ -97,6 +99,12 @@ abstract class FeaturesModule {
     @IntoMap
     @FeatureEntryKey(ProfileEditEntry::class)
     abstract fun bindProfileEditEntry(feature: ProfileEditEntryImpl): FeatureEntry
+
+    @Binds
+    @Singleton
+    @IntoMap
+    @FeatureEntryKey(ProfileDecorEntry::class)
+    abstract fun bindProfileDecorEntry(feature: ProfileDecorEntryImpl): FeatureEntry
 
     @Binds
     @Singleton
