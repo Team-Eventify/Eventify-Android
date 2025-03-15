@@ -9,15 +9,12 @@ import javax.inject.Inject
 
 val EventsRootPath = BaseDestination("events")
 
-val EventFeedPath = EventsRootPath.updateAndGetPath("feed")
+val EventFeedPath = EventsRootPath.child("feed")
 
 
 interface EventsFeedEntry : ComposableFeatureEntry {
-    override val route: String
+    override val destination: BaseDestination
         get() = EventFeedPath
-
-    override val argumentsKeys: List<String>
-        get() = emptyList()
 }
 
 class EventsFeedEntryImpl @Inject constructor() : EventsFeedEntry {

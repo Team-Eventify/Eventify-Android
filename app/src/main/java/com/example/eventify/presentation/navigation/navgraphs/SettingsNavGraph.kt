@@ -13,7 +13,7 @@ fun NavGraphBuilder.addSettingsNavGraph(
 ) {
     navigation(
         route = SettingsRootPath.baseRoute,
-        startDestination = AboutAppPath
+        startDestination = AboutAppPath.baseRoute
     ) {
         features.forEach { feature ->
             with(feature) {

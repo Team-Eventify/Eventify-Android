@@ -14,8 +14,8 @@ import com.example.eventify.presentation.TopBarSize
 import com.example.eventify.presentation.TopBarState
 import com.example.eventify.presentation.navigation.ARG_EVENT_ID
 import com.example.eventify.presentation.navigation.LocalFeaturesProvider
-import com.example.eventify.presentation.ui.events.eventdetail.EventDetailEntry
 import com.example.eventify.presentation.navigation.navigateToFeature
+import com.example.eventify.presentation.ui.events.eventdetail.EventDetailEntry
 import com.example.eventify.presentation.ui.common.screens.ErrorScreen
 import com.example.eventify.presentation.ui.events.eventsfeed.components.LoadingEventFeed
 import com.example.eventify.presentation.ui.events.eventsfeed.state.EventFeedListener
@@ -35,10 +35,16 @@ fun EventsFeedRoute(
 
     val listener = object : EventFeedListener {
         override fun onEventClick(eventId: String) {
-            features.navigateToFeature<EventDetailEntry>(
-                navController,
-                ARG_EVENT_ID to eventId
-            )
+//            features.navigateToFeature<EventDetailEntry>(
+//                navController,
+//                ARG_EVENT_ID to eventId
+//            )
+
+            features.navigateToFeature<EventDetailEntry>(navController) {
+                path {
+                    put(ARG_EVENT_ID, eventId)
+                }
+            }
         }
 
         override fun onRefreshData() {
