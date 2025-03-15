@@ -1,5 +1,6 @@
 package com.example.eventify.presentation.ui.account.profile
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -7,7 +8,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.navigation.toRoute
 import com.example.eventify.R
 import com.example.eventify.presentation.LocalTopBarState
 import com.example.eventify.presentation.TopBarSize
@@ -68,11 +71,10 @@ fun ProfileRoute(
         UiState.Loading -> LoadingProfile()
         is UiState.ShowProfile -> {
             ProfileScreen((uiState as UiState.ShowProfile), listener)
-
         }
     }
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(navController.currentDestination) {
         topBarState.setUp(
             TopBarState.Base(
                 title = context.getString(R.string.profile),

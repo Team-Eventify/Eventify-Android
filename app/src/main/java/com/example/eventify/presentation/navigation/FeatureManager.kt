@@ -50,7 +50,7 @@ inline fun <reified T : FeatureEntry> Features.findOrNull(): T? = this[T::class.
 inline fun <reified T : ComposableFeatureEntry> Features.navigateToFeature(
     navController: NavController,
     vararg arguments: Pair<String, Any?>
-) = this.findOrNull<T>()?.let { navController.navigate(it.destination.toRoute(*arguments)) }
+) = this.findOrNull<T>()?.let { navController.navigate(it.destination.toRoute(*arguments)) { launchSingleTop = true } }
 
 inline fun <reified T : ComposableFeatureEntry, reified B : ComposableFeatureEntry> Features.navigateNewTaskFeature(
     navController: NavController,
