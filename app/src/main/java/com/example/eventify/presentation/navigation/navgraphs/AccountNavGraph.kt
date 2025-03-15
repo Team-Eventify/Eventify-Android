@@ -14,7 +14,7 @@ fun NavGraphBuilder.addAccountNavGraph(
 ) {
     navigation(
         route = AccountRootPath.baseRoute,
-        startDestination = ProfilePath
+        startDestination = ProfilePath.baseRoute
     ) {
         features.forEach { feature ->
             with(feature) {

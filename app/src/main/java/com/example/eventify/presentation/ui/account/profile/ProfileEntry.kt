@@ -8,14 +8,12 @@ import javax.inject.Inject
 
 val AccountRootPath = BaseDestination("account")
 
-val ProfilePath = AccountRootPath.updateAndGetPath("profile")
+val ProfilePath = AccountRootPath.child("profile")
+
 
 interface ProfileEntry : ComposableFeatureEntry {
-    override val route: String
+    override val destination: BaseDestination
         get() = ProfilePath
-
-    override val argumentsKeys: List<String>
-        get() = emptyList()
 }
 
 

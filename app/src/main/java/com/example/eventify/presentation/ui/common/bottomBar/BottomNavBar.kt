@@ -38,22 +38,22 @@ fun BottomNavBar(
             BottomBarItem(
                 titleResId = R.string.home,
                 iconResId = R.drawable.ic_house,
-                route = EventFeedPath
+                route = EventFeedPath.route
             ),
             BottomBarItem(
                 titleResId = R.string.search,
                 iconResId = R.drawable.ic_magnifying_glass,
-                route = SearchPath
+                route = SearchPath.route
             ),
             BottomBarItem(
                 titleResId = R.string.my_events,
                 iconResId = R.drawable.ic_bookmark,
-                route = MyEventsPath
+                route = MyEventsPath.route
             ),
             BottomBarItem(
                 titleResId = R.string.profile,
                 iconResId = R.drawable.ic_person,
-                route = ProfilePath
+                route = ProfilePath.route
             ),
         )
     }

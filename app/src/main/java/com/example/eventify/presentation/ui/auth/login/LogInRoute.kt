@@ -47,10 +47,11 @@ fun LogInRoute(
         }
 
         override fun navigateToResetPassword(sharedEmail: String?) {
-            features.navigateToFeature<ResetPasswordEntry>(
-                navController,
-                ARG_SHARED_EMAIL to sharedEmail
-            )
+            features.navigateToFeature<ResetPasswordEntry>(navController) {
+                query {
+                    put(ARG_SHARED_EMAIL, sharedEmail)
+                }
+            }
 
         }
     }
