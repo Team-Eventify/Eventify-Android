@@ -24,7 +24,6 @@ import com.example.eventify.presentation.ui.account.profileedit.state.ProfileEdi
 import com.example.eventify.presentation.ui.account.profileedit.state.SideEffect
 import com.example.eventify.presentation.ui.account.profileedit.state.UiState
 import com.example.eventify.presentation.ui.auth.login.LoginEntry
-import com.example.eventify.presentation.ui.common.DefaultTopAppBar
 import com.example.eventify.presentation.ui.common.screens.ErrorScreen
 import com.example.eventify.presentation.utils.ObserveAsEvent
 import okhttp3.internal.notifyAll

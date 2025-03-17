@@ -1,6 +1,8 @@
 package com.example.eventify.presentation.ui.auth.register
 
 import android.content.res.Configuration
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,7 +26,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -38,6 +42,7 @@ import com.example.eventify.presentation.ui.auth.register.state.RegisterListener
 import com.example.eventify.presentation.ui.auth.register.state.RegisterState
 import com.example.eventify.presentation.ui.common.ActionPrimaryText
 import com.example.eventify.presentation.ui.common.BodyText
+import com.example.eventify.presentation.ui.common.BorderedImage
 import com.example.eventify.presentation.ui.common.DisclaimerText
 import com.example.eventify.presentation.ui.common.ErrorInputText
 import com.example.eventify.presentation.ui.common.PasswordInput
@@ -74,23 +79,21 @@ fun RegisterScreen(
         )
     }
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
+    Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(dimmentions.windowPaddings)
-                .align(Alignment.Center)
-            ,
+                .align(Alignment.Center),
             verticalArrangement = Arrangement.Center
         ) {
+            Image(painter = painterResource(id=R.drawable.auth_icon), contentDescription = null)
+            Spacer(modifier = Modifier.height(30.dp))
             TitleText(text = stringResource(R.string.register))
-            Spacer(modifier = Modifier.height(5.dp))
+            Spacer(modifier = Modifier.height(10.dp))
             BodyText(text = stringResource(R.string.register_request))
             BodyText(text = stringResource(R.string.it_takes_less_then_minute))
-            Spacer(modifier = Modifier.height(30.dp))
+            Spacer(modifier = Modifier.height(44.dp))
             TextInput(
                 text = state.login,
                 label = "Email",
@@ -102,8 +105,7 @@ fun RegisterScreen(
                         ErrorInputText(text = it.asString())
                     }
                 },
-                modifier = Modifier
-                    .focusRequester(focusRequest),
+                modifier = Modifier.focusRequester(focusRequest),
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next
                 ),
@@ -139,16 +141,13 @@ fun RegisterScreen(
             PrimaryButton(
                 onClick = actions::onRequestOtp,
                 enabled = state.isValidFormData,
-                modifier = Modifier
-                    .fillMaxWidth()
+                modifier = Modifier.fillMaxWidth()
             ) {
                 Text(text = stringResource(R.string.register_action), lineHeight = 22.sp, fontSize = 17.sp, fontWeight = FontWeight.Medium)
             }
             Spacer(modifier = Modifier.height(20.dp))
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                ,
+                modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally)
             ) {
                 Text(text = stringResource(R.string.already_have_account_question))
@@ -164,18 +163,17 @@ fun RegisterScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
+                .padding(vertical = 20.dp)
         ) {
             DisclaimerText(
                 text = stringResource(R.string.privacy_policy_text)
             )
-            TextButton(
-                onClick = actions::goToPrivacyPolicy,
-            ) {
-                DisclaimerText(
-                    text = stringResource(R.string.privacy_policy_link),
-                    textDecoration = TextDecoration.Underline
-                )
-            }
+
+            DisclaimerText(
+                text = stringResource(R.string.privacy_policy_link),
+                textDecoration = TextDecoration.Underline,
+                modifier = Modifier.clickable { actions.goToPrivacyPolicy() }
+            )
         }
 
     }
