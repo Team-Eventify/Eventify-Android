@@ -14,7 +14,7 @@ fun NavGraphBuilder.addAuthNavGraph(
     ) {
     navigation(
         route = AuthRootPath.baseRoute,
-        startDestination = LoginPath
+        startDestination = LoginPath.baseRoute
     ) {
         features.forEach { feature ->
             with(feature) {

@@ -7,14 +7,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 
 interface FeatureEntry {
-    val route: String
-    val argumentsKeys: List<String>
+    val destination: BaseDestination
 }
 
 interface ComposableFeatureEntry : FeatureEntry {
-
-    val destination: BaseDestination
-        get() = BaseDestination(route, *argumentsKeys.toTypedArray())
 
     fun NavGraphBuilder.featureComposable(
         navController: NavHostController,

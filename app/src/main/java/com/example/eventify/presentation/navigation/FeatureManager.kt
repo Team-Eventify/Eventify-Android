@@ -10,16 +10,16 @@ typealias Features = Map<Class<out FeatureEntry>, @JvmSuppressWildcards FeatureE
 class FeaturesProvider @Inject constructor(val features: Features) {
 
     inline fun <reified Feature : ComposableFeatureEntry> NavController.navigateTo(
-        vararg arguments: Pair<String, Any?>
-    ) = features.findOrNull<Feature>()?.let { navigate(it.destination.toRoute(*arguments)) }
+        noinline builder: RouteBuilder.() -> Unit = {},
+        ) = features.findOrNull<Feature>()?.let { navigate(it.destination.applyBuilder(builder)) }
 
     inline fun <reified Feature : ComposableFeatureEntry, reified PopUpTo : ComposableFeatureEntry> NavController.navigateNewTask(
-        vararg arguments: Pair<String, Any?>,
+        noinline builder: RouteBuilder.() -> Unit = {},
         inclusive: Boolean = true,
     ) = features.findOrNull<Feature>()?.let { destFeature ->
         features.findOrNull<PopUpTo>()?.let { popUpToFeature ->
             navigateNewTask(
-                destFeature.destination.toRoute(*arguments),
+                destFeature.destination.applyBuilder(builder),
                 popUpToFeature.destination.baseRoute,
                 inclusive
             )
@@ -49,17 +49,21 @@ inline fun <reified T : FeatureEntry> Features.findOrNull(): T? = this[T::class.
 
 inline fun <reified T : ComposableFeatureEntry> Features.navigateToFeature(
     navController: NavController,
-    vararg arguments: Pair<String, Any?>
-) = this.findOrNull<T>()?.let { navController.navigate(it.destination.toRoute(*arguments)) { launchSingleTop = true } }
+    noinline builder: RouteBuilder.() -> Unit = {},
+) = this.findOrNull<T>()?.let {
+        navController.navigate(it.destination.applyBuilder(builder)) {
+            launchSingleTop = true
+        }
+}
 
 inline fun <reified T : ComposableFeatureEntry, reified B : ComposableFeatureEntry> Features.navigateNewTaskFeature(
     navController: NavController,
-    vararg arguments: Pair<String, Any?>,
+    noinline builder: RouteBuilder.() -> Unit = {},
     inclusive: Boolean = true,
 ) = this.findOrNull<T>()?.let { destFeature ->
     this.findOrNull<B>()?.let { popUpToFeature ->
         navController.navigateNewTask(
-            destFeature.destination.toRoute(*arguments),
+            destFeature.destination.applyBuilder(builder),
             popUpToFeature.destination.baseRoute,
             inclusive
         )
@@ -68,9 +72,9 @@ inline fun <reified T : ComposableFeatureEntry, reified B : ComposableFeatureEnt
 
 inline fun <reified T : ComposableFeatureEntry> Features.clearNavigate(
     navController: NavController,
-    vararg arguments: Pair<String, Any?>,
+    noinline builder: RouteBuilder.() -> Unit = {},
 ) = this.findOrNull<T>()?.let { destFeature ->
-    navController.navigate(destFeature.destination.toRoute(*arguments)) {
+    navController.navigate(destFeature.destination.applyBuilder(builder)) {
         popUpTo(0) { inclusive = true } // Удаляет весь стек
         launchSingleTop = true
     }

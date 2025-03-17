@@ -11,11 +11,8 @@ import javax.inject.Inject
 val OnBoardingPath = BaseDestination("onboarding")
 
 interface OnBoardingEntry : ComposableFeatureEntry {
-    override val route: String
-        get() = OnBoardingPath.baseRoute
-
-    override val argumentsKeys: List<String>
-        get() = emptyList()
+    override val destination: BaseDestination
+        get() = OnBoardingPath
 }
 
 class OnBoardingEntryImpl @Inject constructor() : OnBoardingEntry {
