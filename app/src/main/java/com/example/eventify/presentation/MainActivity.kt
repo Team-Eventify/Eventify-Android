@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
@@ -19,6 +20,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -34,12 +36,14 @@ import androidx.navigation.compose.rememberNavController
 import coil3.ImageLoader
 import com.example.eventify.data.storages.LocaleStorage
 import com.example.eventify.data.storages.SharedStorage
+import com.example.eventify.data.storages.StorageKeys
 import com.example.eventify.domain.SessionManager
 import com.example.eventify.domain.di.RequestsSessionManager
 import com.example.eventify.presentation.navigation.LocalFeaturesProvider
 import com.example.eventify.presentation.ui.auth.login.AuthRootPath
 import com.example.eventify.presentation.ui.events.eventsfeed.EventsRootPath
 import com.example.eventify.presentation.navigation.MainNavHost
+import com.example.eventify.presentation.ui.account.profile_decor.state.TypesTheme
 import com.example.eventify.presentation.ui.auth.onboarding.OnBoardingPath
 import com.example.eventify.presentation.ui.common.EventifySnackbar
 import com.example.eventify.presentation.ui.common.bottomBar.BottomNavBar
@@ -67,6 +71,8 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var imageLoader: ImageLoader
 
+    private lateinit var isDarkTheme: MutableState<Boolean?>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
@@ -83,8 +89,11 @@ class MainActivity : ComponentActivity() {
                 }
             }
 
+            isDarkTheme = remember { mutableStateOf(null) }
+            loadTheme()
+
             EventifyTheme(
-                darkTheme = isSystemInDarkTheme(),
+                darkTheme = if (isDarkTheme.value == null) isSystemInDarkTheme() else isDarkTheme.value!!,
                 dynamicColor = false,
                 LocaleImageLoader provides imageLoader,
                     LocalTopBarState provides topBarState,
@@ -164,6 +173,32 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-    
+
+    private fun loadTheme() {
+        val num: Int = localeStorage.getInt(StorageKeys.TYPE_THEME, -1)
+
+        when (num) {
+            -1 -> isDarkTheme.value = null
+            0 -> isDarkTheme.value = true
+            1 -> isDarkTheme.value = false
+        }
+    }
+
+    fun changeTheme(typeOfTheme: TypesTheme) {
+        when (typeOfTheme) {
+            TypesTheme.SYSTEM_THEME -> {
+                localeStorage.remove(StorageKeys.TYPE_THEME)
+                isDarkTheme.value = null
+            }
+            TypesTheme.LIGHT_THEME -> {
+                localeStorage.put(StorageKeys.TYPE_THEME, TypesTheme.LIGHT_THEME.ordinal)
+                isDarkTheme.value = false
+            }
+            TypesTheme.DARK_THEME -> {
+                localeStorage.put(StorageKeys.TYPE_THEME, TypesTheme.DARK_THEME.ordinal)
+                isDarkTheme.value = true
+            }
+        }
+    }
 }
 

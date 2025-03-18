@@ -24,7 +24,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.eventify.R
 import com.example.eventify.presentation.ui.account.profile_decor.state.ProfileDecorRouteListener
-import com.example.eventify.presentation.ui.account.profile_decor.state.ProfileDecorUiState
 import com.example.eventify.presentation.ui.account.profile_decor.state.TypesTheme
 import com.example.eventify.presentation.ui.common.BodyText
 import com.example.eventify.presentation.ui.common.SubHeadingText
@@ -32,7 +31,7 @@ import com.example.eventify.presentation.ui.theme.EventifyTheme
 import com.example.eventify.presentation.ui.theme.LocalDimentions
 
 @Composable
-fun ProfileDecorScreen(state: ProfileDecorUiState, actions: ProfileDecorRouteListener) {
+fun ProfileDecorScreen(actions: ProfileDecorRouteListener) {
     val dimmentions = LocalDimentions.current
 
     Column(modifier = Modifier.fillMaxSize().padding(dimmentions.windowPaddings)) {
@@ -84,7 +83,7 @@ fun ProfileDecorScreen(state: ProfileDecorUiState, actions: ProfileDecorRouteLis
 private fun ProfileDecorScreenPreview() {
     EventifyTheme(darkTheme = true) {
         Surface {
-            ProfileDecorScreen(state=ProfileDecorUiState.ProfileDecorData(typeOfTheme = null), actions=object : ProfileDecorRouteListener {
+            ProfileDecorScreen(actions=object : ProfileDecorRouteListener {
                 override fun onBackClick() = Unit
                 override fun changeTheme(typeOfTheme: TypesTheme) = Unit
             })
