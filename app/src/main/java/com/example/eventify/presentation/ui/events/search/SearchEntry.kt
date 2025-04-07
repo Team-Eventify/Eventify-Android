@@ -17,7 +17,7 @@ interface SearchEntry : ComposableFeatureEntry {
 class SearchEntryImpl @Inject constructor(): SearchEntry {
     @Composable
     override fun Composable(navController: NavHostController) {
-        SearchRoute()
+        SearchRoute(navController)
     }
 
 }

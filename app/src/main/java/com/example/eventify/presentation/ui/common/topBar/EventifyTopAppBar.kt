@@ -24,7 +24,9 @@ fun EventifyTopAppBar(
                 TopBarSize.LARGE -> TODO()
             }
         }
-        is TopBarState.Search -> TODO()
+        is TopBarState.Search -> {
+            SearchTopBar()
+        }
     }
 
 }
