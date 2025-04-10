@@ -4,6 +4,7 @@ import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -38,32 +39,32 @@ fun ProfileDecorScreen(actions: ProfileDecorRouteListener) {
         SubHeadingText("Тема")
         Spacer(modifier = Modifier.height(10.dp))
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-            Box(modifier = Modifier.border(2.dp, Color.Gray, shape = RoundedCornerShape(16.dp)).clickable { actions.changeTheme(TypesTheme.SYSTEM_THEME)  }) {
+            Box(modifier = Modifier.border(width = 2.dp, color = if (actions.getActiveTheme() == TypesTheme.SYSTEM_THEME) Color.White else Color.Gray, shape = RoundedCornerShape(16.dp)).clickable { actions.changeTheme(TypesTheme.SYSTEM_THEME)  }) {
                 Column(modifier = Modifier.padding(vertical=15.dp, horizontal=20.dp)) {
                     Image(
-                        painter = painterResource(R.drawable.circle_lefthalf_filled),
+                        painter = if (actions.getActiveTheme() == TypesTheme.DARK_THEME || (actions.getActiveTheme() == TypesTheme.SYSTEM_THEME && isSystemInDarkTheme())) painterResource(R.drawable.circle_lefthalf_filled) else painterResource(R.drawable.circle_lefthalf_filled_light),
                         contentDescription = null
                     )
                     Spacer(modifier = Modifier.height(20.dp))
                     BodyText("Система")
                 }
             }
-            Box(modifier = Modifier.border(2.dp, Color.Gray, shape = RoundedCornerShape(16.dp)).clickable { actions.changeTheme(TypesTheme.LIGHT_THEME)  }) {
+            Box(modifier = Modifier.border(width = 2.dp, color = if (actions.getActiveTheme() == TypesTheme.LIGHT_THEME) Color.Black else Color.Gray, shape = RoundedCornerShape(16.dp)).clickable { actions.changeTheme(TypesTheme.LIGHT_THEME)  }) {
                 Column(
                     modifier = Modifier.padding(vertical = 15.dp, horizontal = 20.dp)) {
                     Image(
-                        painter = painterResource(R.drawable.sun_max_fill),
+                        painter = if (actions.getActiveTheme() == TypesTheme.DARK_THEME || (actions.getActiveTheme() == TypesTheme.SYSTEM_THEME && isSystemInDarkTheme())) painterResource(R.drawable.sun_max_fill) else painterResource(R.drawable.sun_max_fill_light),
                         contentDescription = null
                     )
                     Spacer(modifier = Modifier.height(20.dp))
                     BodyText("Светлая")
                 }
             }
-            Box(modifier = Modifier.border(2.dp, Color.Gray, shape = RoundedCornerShape(16.dp)).clickable { actions.changeTheme(TypesTheme.DARK_THEME)  }) {
+            Box(modifier = Modifier.border(width = 2.dp, color = if (actions.getActiveTheme() == TypesTheme.DARK_THEME) Color.White else Color.Gray, shape = RoundedCornerShape(16.dp)).clickable { actions.changeTheme(TypesTheme.DARK_THEME)  }) {
                 Column(
                     modifier = Modifier.padding(vertical = 15.dp, horizontal = 20.dp)) {
                     Image(
-                        painter = painterResource(R.drawable.sun_max_fill),
+                        painter = if (actions.getActiveTheme() == TypesTheme.DARK_THEME || (actions.getActiveTheme() == TypesTheme.SYSTEM_THEME && isSystemInDarkTheme())) painterResource(R.drawable.moon_fill) else painterResource(R.drawable.moon_fill_light),
                         contentDescription = null
                     )
                     Spacer(modifier = Modifier.height(20.dp))
@@ -86,6 +87,7 @@ private fun ProfileDecorScreenPreview() {
             ProfileDecorScreen(actions=object : ProfileDecorRouteListener {
                 override fun onBackClick() = Unit
                 override fun changeTheme(typeOfTheme: TypesTheme) = Unit
+                override fun getActiveTheme() = TypesTheme.SYSTEM_THEME
             })
         }
     }

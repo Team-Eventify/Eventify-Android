@@ -5,6 +5,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import com.example.eventify.R
+import com.example.eventify.presentation.LocalAppThemeState
 import com.example.eventify.presentation.LocalTopBarState
 import com.example.eventify.presentation.MainActivity
 import com.example.eventify.presentation.TopBarAction
@@ -17,14 +18,17 @@ import com.example.eventify.presentation.ui.account.profile_decor.state.TypesThe
 fun ProfileDecorRoute(navController: NavController) {
     val topBarState = LocalTopBarState.current
     val context = LocalContext.current
-    val activity = context as? MainActivity
+    val appThemeManager = LocalAppThemeState.current
 
     val listener = object : ProfileDecorRouteListener {
         override fun onBackClick() {
             navController.navigateUp()
         }
         override fun changeTheme(typeOfTheme: TypesTheme) {
-            activity?.changeTheme(typeOfTheme)
+            appThemeManager.changeTheme(typeOfTheme)
+        }
+        override fun getActiveTheme(): TypesTheme {
+            return appThemeManager.getTypeTheme()
         }
     }
 
