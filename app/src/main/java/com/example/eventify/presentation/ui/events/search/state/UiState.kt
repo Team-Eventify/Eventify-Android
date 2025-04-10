@@ -18,8 +18,8 @@ data class SearchUiState(
 enum class SearchMode(
     @StringRes val labelResId: Int,
 ) {
-    Events(R.string.events_feed_title),
-    Categories(R.string.my_categories),
+    Events(R.string.events),
+    Categories(R.string.categories),
 }
 
 sealed class SearchResult {

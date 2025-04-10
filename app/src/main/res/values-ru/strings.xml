@@ -91,4 +91,6 @@
     <string name="privacy_policy_text">Регистрируясь, Вы даете согласие на обработку</string>
     <string name="privacy_policy_link">персональных данных</string>
     <string name="failed_to_load_data">Не удалось загрузить данные</string>
+    <string name="events">События</string>
+    <string name="categories">Категории</string>
 </resources>

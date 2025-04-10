@@ -25,8 +25,16 @@ fun EventifyTopAppBar(
             }
         }
         is TopBarState.Search -> {
-            SearchTopBar()
+            SearchTopBar(
+                value = state.searchText,
+                onValueChanged = state.onChangeText,
+                onLeadingIconClick = state.onLeadingIconClick,
+                onTrailingIconClick = state.onTrailingIconClick,
+                modifier = modifier
+            )
         }
+
+        is TopBarState.ExpandedSearch -> TODO()
     }
 
 }
