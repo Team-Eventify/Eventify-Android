@@ -91,4 +91,5 @@
     <string name="privacy_policy_text">Регистрируясь, Вы даете согласие на обработку</string>
     <string name="privacy_policy_link">персональных данных</string>
     <string name="design_section_title">Оформление</string>
+    <string name="icon_logo_update">Иконка приложения обновлена</string>
 </resources>

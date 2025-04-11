@@ -12,7 +12,7 @@ import com.example.eventify.presentation.ui.account.profile_decor.state.TypesThe
 class AppThemeManager(
     val localeStorage: LocaleStorage,
 ) {
-    lateinit var isDarkTheme: MutableState<Boolean?>
+    var isDarkTheme: MutableState<Boolean?>
 
     init {
         val num: Int = localeStorage.getInt(StorageKeys.TYPE_THEME, -1)

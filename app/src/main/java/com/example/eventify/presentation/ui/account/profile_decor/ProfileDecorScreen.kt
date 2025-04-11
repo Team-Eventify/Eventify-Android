@@ -14,9 +14,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,7 +28,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.eventify.R
+import com.example.eventify.presentation.models.LogoIcon
 import com.example.eventify.presentation.ui.account.profile_decor.state.ProfileDecorRouteListener
+import com.example.eventify.presentation.ui.account.profile_decor.state.ProfileDecorUiState
 import com.example.eventify.presentation.ui.account.profile_decor.state.TypesTheme
 import com.example.eventify.presentation.ui.common.BodyText
 import com.example.eventify.presentation.ui.common.SubHeadingText
@@ -32,50 +38,85 @@ import com.example.eventify.presentation.ui.theme.EventifyTheme
 import com.example.eventify.presentation.ui.theme.LocalDimentions
 
 @Composable
-fun ProfileDecorScreen(actions: ProfileDecorRouteListener) {
+fun ProfileDecorScreen(uiState: ProfileDecorUiState, actions: ProfileDecorRouteListener) {
     val dimmentions = LocalDimentions.current
 
     Column(modifier = Modifier.fillMaxSize().padding(dimmentions.windowPaddings)) {
         SubHeadingText("Тема")
-        Spacer(modifier = Modifier.height(10.dp))
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-            Box(modifier = Modifier.border(width = 2.dp, color = if (actions.getActiveTheme() == TypesTheme.SYSTEM_THEME) Color.White else Color.Gray, shape = RoundedCornerShape(16.dp)).clickable { actions.changeTheme(TypesTheme.SYSTEM_THEME)  }) {
-                Column(modifier = Modifier.padding(vertical=15.dp, horizontal=20.dp)) {
-                    Image(
-                        painter = if (actions.getActiveTheme() == TypesTheme.DARK_THEME || (actions.getActiveTheme() == TypesTheme.SYSTEM_THEME && isSystemInDarkTheme())) painterResource(R.drawable.circle_lefthalf_filled) else painterResource(R.drawable.circle_lefthalf_filled_light),
-                        contentDescription = null
+        Spacer(modifier = Modifier.height(10.dp),)
+        Row(modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween) {
+            Box(modifier = Modifier.border(width = 2.dp,
+                color = if (actions.getActiveTheme() == TypesTheme.SYSTEM_THEME) Color.White else Color.Gray,
+                shape = RoundedCornerShape(16.dp)).clickable { actions.changeTheme(TypesTheme.SYSTEM_THEME)
+                },) {
+                Column(modifier = Modifier.padding(vertical=15.dp, horizontal=20.dp),) {
+                    Icon(
+                        painter = painterResource(R.drawable.circle_lefthalf_filled),
+                        contentDescription = null,
+                        tint = if (actions.getActiveTheme() == TypesTheme.DARK_THEME
+                            || (actions.getActiveTheme() == TypesTheme.SYSTEM_THEME && isSystemInDarkTheme()))
+                            Color.White
+                        else Color.Black,
                     )
                     Spacer(modifier = Modifier.height(20.dp))
                     BodyText("Система")
                 }
             }
-            Box(modifier = Modifier.border(width = 2.dp, color = if (actions.getActiveTheme() == TypesTheme.LIGHT_THEME) Color.Black else Color.Gray, shape = RoundedCornerShape(16.dp)).clickable { actions.changeTheme(TypesTheme.LIGHT_THEME)  }) {
+            Box(modifier = Modifier.border(width = 2.dp,
+                color = if (actions.getActiveTheme() == TypesTheme.LIGHT_THEME) Color.Black else Color.Gray,
+                shape = RoundedCornerShape(16.dp)).clickable { actions.changeTheme(TypesTheme.LIGHT_THEME) },) {
                 Column(
-                    modifier = Modifier.padding(vertical = 15.dp, horizontal = 20.dp)) {
-                    Image(
-                        painter = if (actions.getActiveTheme() == TypesTheme.DARK_THEME || (actions.getActiveTheme() == TypesTheme.SYSTEM_THEME && isSystemInDarkTheme())) painterResource(R.drawable.sun_max_fill) else painterResource(R.drawable.sun_max_fill_light),
-                        contentDescription = null
+                    modifier = Modifier.padding(vertical = 15.dp, horizontal = 20.dp),) {
+                    Icon(
+                        painter = painterResource(R.drawable.sun_max_fill),
+                        contentDescription = null,
+                        tint = if (actions.getActiveTheme() == TypesTheme.DARK_THEME
+                            || (actions.getActiveTheme() == TypesTheme.SYSTEM_THEME && isSystemInDarkTheme()))
+                            Color.White
+                        else Color.Black,
                     )
-                    Spacer(modifier = Modifier.height(20.dp))
+                    Spacer(modifier = Modifier.height(20.dp),)
                     BodyText("Светлая")
                 }
             }
             Box(modifier = Modifier.border(width = 2.dp, color = if (actions.getActiveTheme() == TypesTheme.DARK_THEME) Color.White else Color.Gray, shape = RoundedCornerShape(16.dp)).clickable { actions.changeTheme(TypesTheme.DARK_THEME)  }) {
                 Column(
-                    modifier = Modifier.padding(vertical = 15.dp, horizontal = 20.dp)) {
-                    Image(
-                        painter = if (actions.getActiveTheme() == TypesTheme.DARK_THEME || (actions.getActiveTheme() == TypesTheme.SYSTEM_THEME && isSystemInDarkTheme())) painterResource(R.drawable.moon_fill) else painterResource(R.drawable.moon_fill_light),
-                        contentDescription = null
+                    modifier = Modifier.padding(vertical = 15.dp, horizontal = 20.dp),) {
+                    Icon(
+                        painter = painterResource(R.drawable.moon_fill),
+                        contentDescription = null,
+                        tint = if (actions.getActiveTheme() == TypesTheme.DARK_THEME
+                            || (actions.getActiveTheme() == TypesTheme.SYSTEM_THEME && isSystemInDarkTheme()))
+                            Color.White
+                        else Color.Black,
                     )
-                    Spacer(modifier = Modifier.height(20.dp))
+                    Spacer(modifier = Modifier.height(20.dp),)
                     BodyText("Темная")
                 }
             }
         }
-        HorizontalDivider(modifier = Modifier.padding(vertical=20.dp))
+        HorizontalDivider(modifier = Modifier.padding(vertical=20.dp),)
 
         SubHeadingText("Иконка приложения")
 
+
+        Row(modifier = Modifier.fillMaxWidth()
+            .padding(top = 20.dp),
+            horizontalArrangement = Arrangement.SpaceBetween) {
+            uiState.listIcons.forEach { item ->
+                Column(modifier = Modifier.clickable {
+                    actions.changeIcon(item)
+                }){
+                    Image(
+                        painter = painterResource(item.icon),
+                        contentDescription = null,
+
+                        )
+                    Text(item.title)
+                }
+            }
+        }
     }
 }
 
@@ -84,10 +125,11 @@ fun ProfileDecorScreen(actions: ProfileDecorRouteListener) {
 private fun ProfileDecorScreenPreview() {
     EventifyTheme(darkTheme = true) {
         Surface {
-            ProfileDecorScreen(actions=object : ProfileDecorRouteListener {
+            ProfileDecorScreen(uiState = ProfileDecorUiState(), actions=object : ProfileDecorRouteListener {
                 override fun onBackClick() = Unit
                 override fun changeTheme(typeOfTheme: TypesTheme) = Unit
                 override fun getActiveTheme() = TypesTheme.SYSTEM_THEME
+                override fun changeIcon(icon: LogoIcon) = Unit
             })
         }
     }
