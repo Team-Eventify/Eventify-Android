@@ -7,5 +7,8 @@ data class ProfileDecorUiState(
     val listIcons: List<LogoIcon> = listOf<LogoIcon>(LogoIcon("Основная", R.drawable.icon_logo_1, "com.example.eventify.alias.iconLogo1"),
         LogoIcon("Основная", R.drawable.icon_logo_3, "com.example.eventify.alias.iconLogo3"),
         LogoIcon("Основная", R.drawable.icon_logo_4, "com.example.eventify.alias.iconLogo4"),
-        LogoIcon("Основная", R.drawable.icon_logo_5, "com.example.eventify.alias.iconLogo5"))
+        LogoIcon("Основная", R.drawable.icon_logo_5, "com.example.eventify.alias.iconLogo5")),
+    val isSystemOrDarkTheme: Boolean = true,
+    val activeTypeOfTheme: Boolean? = null
+
 )

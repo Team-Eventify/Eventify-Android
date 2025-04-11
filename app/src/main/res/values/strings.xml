@@ -93,4 +93,10 @@
     <string name="privacy_policy_link">personal data</string>
     <string name="design_section_title">Decor</string>
     <string name="icon_logo_update">Icon was updated</string>
+    <string name="icon_logo">App icon</string>
+    <string name="dark_theme_title">Dark</string>
+    <string name="light_theme_title">Light</string>
+    <string name="system_theme_ttile">System</string>
+    <string name="theme_title">Theme</string>
+
 </resources>

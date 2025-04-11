@@ -1,5 +1,6 @@
 package com.example.eventify.presentation.ui.account.profile_decor
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
@@ -26,7 +27,11 @@ fun ProfileDecorRoute(navController: NavController) {
     val context = LocalContext.current
     val appThemeManager = LocalAppThemeState.current
     val snackBarState = LocaleSnackbarState.current
-    val uiState = ProfileDecorUiState()
+
+    val uiState = ProfileDecorUiState(
+        isSystemOrDarkTheme = appThemeManager.getTypeTheme() == TypesTheme.DARK_THEME
+            || (appThemeManager.getTypeTheme() == TypesTheme.SYSTEM_THEME && isSystemInDarkTheme()),
+        activeTypeOfTheme = appThemeManager.isDarkTheme.value)
 
     val listener = object : ProfileDecorRouteListener {
         override fun onBackClick() {

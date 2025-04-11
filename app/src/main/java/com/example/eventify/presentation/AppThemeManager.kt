@@ -12,11 +12,10 @@ import com.example.eventify.presentation.ui.account.profile_decor.state.TypesThe
 class AppThemeManager(
     val localeStorage: LocaleStorage,
 ) {
-    var isDarkTheme: MutableState<Boolean?>
+    var isDarkTheme: MutableState<Boolean?> = mutableStateOf(null)
 
     init {
         val num: Int = localeStorage.getInt(StorageKeys.TYPE_THEME, -1)
-        isDarkTheme = mutableStateOf(null)
         when (num) {
             -1 -> isDarkTheme.value = null
             0 -> isDarkTheme.value = true

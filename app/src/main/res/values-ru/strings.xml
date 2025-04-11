@@ -92,4 +92,9 @@
     <string name="privacy_policy_link">персональных данных</string>
     <string name="design_section_title">Оформление</string>
     <string name="icon_logo_update">Иконка приложения обновлена</string>
+    <string name="icon_logo">Иконка приложения обновлена</string>
+    <string name="dark_theme_title">Темная</string>
+    <string name="light_theme_title">Светлая</string>
+    <string name="system_theme_ttile">Системная</string>
+    <string name="theme_title">Тема</string>
 </resources>
