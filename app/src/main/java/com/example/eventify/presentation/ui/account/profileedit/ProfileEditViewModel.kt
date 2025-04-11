@@ -79,19 +79,15 @@ class ProfileEditViewModel @Inject constructor(
 
 
     fun saveUser() {
-        val isValidaData = listOf(
-            validateEmail(),
-            validateTelegramName()
-        ).all { it }
-
-        if (!isValidaData) return
+        val validEmail = validateEmail() ?: return
+        val validTelegram = validateTelegramName() ?: return
 
         val userData = (stateFlow.value as? UiState.ShowProfileEdit)?.let {
             UserChange(
                 firstName = it.firstName,
                 lastName = it.lastName,
-                email = it.email,
-                telegramName = it.telegramName
+                email = validEmail,
+                telegramName = validTelegram
             )
         } ?: return
 
@@ -149,22 +145,22 @@ class ProfileEditViewModel @Inject constructor(
     }
 
 
-    private fun validateEmail(): Boolean{
-        val validationResult = (_stateFlow.value as? UiState.ShowProfileEdit)?.let {
-            validateEmailUseCase(it.email)
-        } ?: return false
+    private fun validateEmail(): String? {
+        val currentState = (_stateFlow.value as? UiState.ShowProfileEdit) ?: return null
 
-        val (error, hasError) = when (validationResult) {
-            is Result.Error -> validationResult.error.asUiText() to true
-            is Result.Success -> null to false
+        return when (val result = validateEmailUseCase(currentState.email)) {
+            is Result.Error -> {
+                _stateFlow.update {
+                    currentState.copy(
+                        emailError = result.error.asUiText(),
+                        hasEmailError = true,
+                    )
+                }
+                null
+            }
+
+            is Result.Success -> result.data
         }
-        _stateFlow.update { currentState ->
-            (currentState as? UiState.ShowProfileEdit)?.copy(
-                emailError = error,
-                hasEmailError = hasError
-            ) ?: currentState
-        }
-        return validationResult is Result.Success
     }
 
         fun changeUserFirstName(value: String) {
@@ -191,23 +187,22 @@ class ProfileEditViewModel @Inject constructor(
             }
         }
 
-    private fun validateTelegramName(): Boolean{
-        val validationResult = (_stateFlow.value as? UiState.ShowProfileEdit)?.let {
-            validateTelegramNameUseCase(it.telegramName)
-        } ?: return false
+    private fun validateTelegramName(): String? {
+        val currentState = (_stateFlow.value as? UiState.ShowProfileEdit) ?: return null
 
-        val (error, hasError) = when (validationResult){
-            is Result.Error -> validationResult.error.asUiText() to true
-            is Result.Success -> null to false
-        }
-        _stateFlow.update { currentState ->
-            (currentState as? UiState.ShowProfileEdit)?.copy(
-                telegramNameError = error,
-                hasTelegramNameError = hasError
-            ) ?: currentState
-        }
+        return when (val result = validateTelegramNameUseCase(currentState.telegramName)) {
+            is Result.Error -> {
+                _stateFlow.update {
+                    currentState.copy(
+                        telegramNameError = result.error.asUiText(),
+                        hasTelegramNameError = true,
+                    )
+                }
+                null
+            }
 
-        return validationResult is Result.Success
+            is Result.Success -> result.data
+        }
     }
 
     fun deleteAccount() {

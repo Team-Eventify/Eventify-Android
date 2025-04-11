@@ -8,7 +8,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.ime
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.waterfall
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -17,40 +19,46 @@ import androidx.compose.material3.SheetState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.eventify.R
-import com.example.eventify.presentation.ui.auth.register.state.OTP_LENGTH
 import com.example.eventify.presentation.ui.common.AnnotationText
-import com.example.eventify.presentation.ui.common.PrimaryButtonText
 import com.example.eventify.presentation.ui.common.TitleText
-import com.example.eventify.presentation.ui.common.buttons.PrimaryButton
 import com.example.eventify.presentation.ui.common.otp.OtpTextField
 import com.example.eventify.presentation.ui.theme.EventifyTheme
-import com.example.eventify.presentation.ui.theme.space32
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegistrationOtpBottomSheet(
-    otpValue: String?,
+    otpValue: String,
     onSubmit: () -> Unit,
     onChangeOtpValue: (String) -> Unit,
     onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier,
-    sheetState: SheetState = rememberModalBottomSheetState(),
+    hasError: Boolean = false,
+    sheetState: SheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
 ) {
+    val focusRequester = remember { FocusRequester() }
+
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
+
     ModalBottomSheet(
         sheetState = sheetState,
         onDismissRequest = onDismissRequest,
         modifier = modifier,
         containerColor = MaterialTheme.colorScheme.surfaceContainer,
         sheetMaxWidth = BottomSheetDefaults.SheetMaxWidth,
-        windowInsets = WindowInsets.ime
     ){
 
         Column(
@@ -70,17 +78,21 @@ fun RegistrationOtpBottomSheet(
             Spacer(modifier = Modifier.height(22.dp))
             OtpTextField(
                 otpCount = 6,
-                text = otpValue ?: "",
+                text = otpValue,
                 onTextChange = onChangeOtpValue,
+                hasError = hasError,
+                onSubmit = onSubmit,
+                modifier = Modifier
+                    .focusRequester(focusRequester)
             )
 
-            PrimaryButton(
-                onClick = onSubmit,
-                enabled = otpValue?.let { it.length == OTP_LENGTH } ?: false,
-            ) {
-                PrimaryButtonText(text = stringResource(R.string.next))
-            }
-            Spacer(Modifier.height(space32))
+//            PrimaryButton(
+//                onClick = onSubmit,
+//                enabled =  otpValue.length == OTP_LENGTH,
+//            ) {
+//                PrimaryButtonText(text = stringResource(R.string.next))
+//            }
+//            Spacer(Modifier.height(space16))
         }
     }
 }

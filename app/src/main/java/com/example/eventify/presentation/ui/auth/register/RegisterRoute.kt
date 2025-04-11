@@ -24,7 +24,7 @@ fun RegisterRoute(
     navController: NavHostController
 ) {
     val viewModel = hiltViewModel<RegisterViewModel>()
-    val uiState by viewModel.stateFlow.collectAsStateWithLifecycle()
+    val uiState by viewModel.state.collectAsStateWithLifecycle()
     val topBarState = LocalTopBarState.current
     val features = LocalFeaturesProvider.current.features
     val snackBarState = LocaleSnackbarState.current

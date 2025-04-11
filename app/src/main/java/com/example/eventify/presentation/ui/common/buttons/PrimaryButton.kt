@@ -18,7 +18,7 @@ fun PrimaryButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    content: @Composable() (RowScope.() -> Unit)
+    content: @Composable() (RowScope.() -> Unit),
 ) {
     Button(
         onClick = onClick,
