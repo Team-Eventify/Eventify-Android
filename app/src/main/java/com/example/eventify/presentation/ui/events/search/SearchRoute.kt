@@ -12,6 +12,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import com.example.eventify.presentation.LocalTopBarState
 import com.example.eventify.presentation.TopBarState
+import com.example.eventify.presentation.navigation.ARG_CATEGORY_ID
 import com.example.eventify.presentation.navigation.ARG_EVENT_ID
 import com.example.eventify.presentation.navigation.LocalFeaturesProvider
 import com.example.eventify.presentation.navigation.navigateToFeature
@@ -21,6 +22,7 @@ import com.example.eventify.presentation.ui.events.search.state.CategoryId
 import com.example.eventify.presentation.ui.events.search.state.EventId
 import com.example.eventify.presentation.ui.events.search.state.SearchListener
 import com.example.eventify.presentation.ui.events.search.state.SearchMode
+import com.example.eventify.presentation.ui.searchresult.SearchDetailEntry
 
 @Composable
 fun SearchRoute(
@@ -45,7 +47,11 @@ fun SearchRoute(
         }
 
         override fun onCategoryClick(categoryId: CategoryId) {
-            TODO("Not yet implemented")
+            features.navigateToFeature<SearchDetailEntry>(navController) {
+                query {
+                    put(ARG_CATEGORY_ID, categoryId)
+                }
+            }
         }
 
         override fun onChangeSearchQuery(value: String) {

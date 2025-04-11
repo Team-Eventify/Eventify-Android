@@ -21,6 +21,7 @@ import com.example.eventify.presentation.ui.events.search.SearchEntry
 import com.example.eventify.presentation.ui.settings.aboutapp.AboutAppEntry
 import com.example.eventify.presentation.navigation.findOrNull
 import com.example.eventify.presentation.ui.auth.choosecategories.SetUpEntry
+import com.example.eventify.presentation.ui.searchresult.SearchDetailEntry
 
 
 @Composable
@@ -43,6 +44,7 @@ fun MainNavHost(
         features.findOrNull<EventDetailEntry>(),
         features.findOrNull<MyEventsEntry>(),
         features.findOrNull<SearchEntry>(),
+        features.findOrNull<SearchDetailEntry>()
     )
 
     val settingsFeatures: List<ComposableFeatureEntry> = listOfNotNull(
