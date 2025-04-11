@@ -4,7 +4,7 @@ import com.example.eventify.domain.Error
 import com.example.eventify.domain.Result
 
 class ValidatePassword: Validator<String, PasswordValidationError> {
-    override fun invoke(value: String): Result<Unit, PasswordValidationError> {
+    override fun invoke(value: String): Result<String, PasswordValidationError> {
         if (value.isBlank())
             return Result.Error(PasswordValidationError.IS_EMPTY)
 
@@ -17,7 +17,7 @@ class ValidatePassword: Validator<String, PasswordValidationError> {
         if (value.length < MIN_CHARACTERS)
             return Result.Error(PasswordValidationError.TOO_SHORT)
 
-        return Result.Success(Unit)
+        return Result.Success(value)
     }
 
     companion object{

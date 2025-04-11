@@ -11,8 +11,12 @@ class OtpRegisterUseCase @Inject constructor(
     private val authRepository: AuthUserRepository,
     private val tokenProvider: TokenProvider
 ) {
-    suspend operator fun invoke(userData: OtpUserCreate): Result<Unit, DataError> =
-        when (val result = authRepository.otpRegisterUser(user = userData)) {
+    suspend operator fun invoke(userData: OtpUserCreate): Result<Unit, DataError> {
+        // TODO это мок
+        if (userData.code != "999999") {
+            return Result.Error(DataError.Network.BAD_REQUEST)
+        }
+        return when (val result = authRepository.otpRegisterUser(user = userData)) {
             is Result.Error -> Result.Error(result.error)
             is Result.Success -> {
                 val tokenData = result.data
@@ -24,4 +28,5 @@ class OtpRegisterUseCase @Inject constructor(
                 Result.Success(Unit)
             }
         }
+    }
 }
