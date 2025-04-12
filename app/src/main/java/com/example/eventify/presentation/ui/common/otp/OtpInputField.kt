@@ -2,6 +2,7 @@ package com.example.eventify.presentation.ui.common.otp
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -14,16 +15,22 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.android.awaitFrame
+import kotlinx.coroutines.suspendCancellableCoroutine
 
 @Composable
 fun OtpTextField(
@@ -31,7 +38,8 @@ fun OtpTextField(
     modifier: Modifier = Modifier,
     hasError: Boolean = false,
     otpCount: Int = 6,
-    onTextChange: (String) -> Unit
+    onTextChange: (String) -> Unit,
+    onSubmit: (() -> Unit)? = null,
 ) {
     LaunchedEffect(Unit) {
         if (text.length > otpCount) {
@@ -39,16 +47,27 @@ fun OtpTextField(
         }
     }
 
+
     BasicTextField(
-        modifier = modifier,
+        modifier = Modifier
+            .then(modifier)
+        ,
         value = TextFieldValue(text, selection = TextRange(text.length)),
         onValueChange = {
             if (it.text.length <= otpCount) {
                 onTextChange(it.text)
             }
         },
+        keyboardActions = KeyboardActions(
+            onDone = {
+                onSubmit?.invoke()
+            }
+        ),
         cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.NumberPassword,
+            imeAction = ImeAction.Done
+        ),
         decorationBox = {
             Row(
                 horizontalArrangement = Arrangement.spacedBy(10.dp)
