@@ -1,5 +1,8 @@
 package com.example.eventify.presentation.ui.auth.login
 
+import android.content.Context
+import com.example.eventify.R
+import com.example.eventify.data.exceptions.isNotFound
 import com.example.eventify.domain.models.UserCredentials
 import com.example.eventify.domain.usecases.auth.LoginUseCase
 import com.example.eventify.presentation.ui.auth.login.state.LogInState
@@ -48,9 +51,7 @@ class LogInViewModel @Inject constructor(
 
     fun logIn() {
         launchCatching(
-            catch = {
-                // TODO обработать
-            }
+            catch = ::handleErrors
         ) {
             if (!validateFormData()) return@launchCatching
 
@@ -67,8 +68,33 @@ class LogInViewModel @Inject constructor(
 
     }
 
-    private fun handleErrors(error: Throwable){
-        // TODO обработать
+    private fun handleErrors(exception: Throwable): Unit {
+        _stateFlow.update { currentState ->
+            currentState.copy(
+                hasLoginError = true,
+                hasPasswordError = true,
+                loginError = null,
+                passwordError = null,
+            )
+        }
+        when {
+            exception.isNotFound() -> mutableSideEffect.trySend(SideEffect.UnsuccessLogIn)
+            else -> mutableSideEffect.trySend(SideEffect.ServerError)
+        }
+    }
+
+    override fun updateAuthStateToUnauthorized() {
+        mutableSideEffect.trySend(
+            SideEffect.UnsuccessLogIn
+        )
+        _stateFlow.update { currentState ->
+            currentState.copy(
+                hasLoginError = true,
+                hasPasswordError = true,
+                loginError = null,
+                passwordError = null,
+            )
+        }
     }
 
     private fun validateFormData(): Boolean{

@@ -6,6 +6,7 @@ import com.example.eventify.data.repositories.auth.AuthUserRepository
 import com.example.eventify.domain.models.OtpUserCreate
 import com.example.eventify.domain.models.RegisterValidationData
 import com.example.eventify.domain.usecases.auth.OtpRegisterUseCase
+import com.example.eventify.domain.usecases.auth.isIncorrectOtp
 import com.example.eventify.presentation.ui.auth.register.state.OtpState
 import com.example.eventify.presentation.ui.auth.register.state.RegisterPayloadState
 import com.example.eventify.presentation.ui.auth.register.state.RegisterUiState
@@ -93,19 +94,7 @@ class RegisterViewModel @Inject constructor(
             )
 
         launchCatching(
-            catch = { error ->
-                mutableOtpState.update { OtpState.None }
-
-                mutableRegisterPayloadState.update { currentState ->
-                    currentState.copy(
-                        hasPasswordError = false,
-                        hasLoginError = false,
-                    )
-                }
-                mutableSideEffect.trySend(SideEffect.FailRegister(
-                    message = error.message
-                ))
-            }
+            catch = ::handleOtpErrors
         ) {
             authRepository.validateRegisterData(data = otpData).let {
                 validationResultId = it
@@ -128,7 +117,7 @@ class RegisterViewModel @Inject constructor(
         } ?: return
 
         launchCatching(
-            catch = ::handleOtpErrors
+            catch = ::handleRegisterErrors
         ) {
             otpRegisterUseCase(userData = userPayload)
             mutableSideEffect.send(SideEffect.SuccessRegister)
@@ -151,8 +140,29 @@ class RegisterViewModel @Inject constructor(
 
     }
 
+    /**
+     * Handles errors after sending validation request to get otp
+     **/
     private fun handleOtpErrors(error: Throwable){
-        // TODO обработать
+        when {
+            else -> mutableSideEffect.trySend(SideEffect.ServerError)
+        }
+    }
+
+    /**
+     * Handles errors after sending register request with otp value
+    **/
+    private fun handleRegisterErrors(error: Throwable) {
+        when {
+            error.isIncorrectOtp() -> {
+                mutableOtpState.update { currentState ->
+                    (currentState as? OtpState.ShowOtp)?.copy(
+                        hasError = true
+                    ) ?: currentState
+                }
+            }
+            else -> mutableSideEffect.trySend(SideEffect.ServerError)
+        }
     }
 
 }

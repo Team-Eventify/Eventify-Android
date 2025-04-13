@@ -94,5 +94,7 @@
     <string name="failed_to_load_data">Failed to load data</string>
     <string name="events">Events</string>
     <string name="categories">Categories</string>
+    <string name="incorrect_auth_data">Incorrect login or password</string>
+    <string name="incorrect_otp">Incorrect code</string>
 
 </resources>

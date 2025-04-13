@@ -44,7 +44,7 @@ open class BaseViewModel : ViewModel() {
         }
     }
 
-    protected fun updateAuthStateToUnauthorized() {
+    open fun updateAuthStateToUnauthorized() {
         launchCatching {
             authProvider.updateState(AuthorizeType.Unauthorized)
         }

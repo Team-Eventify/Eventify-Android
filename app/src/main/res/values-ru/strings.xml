@@ -93,4 +93,6 @@
     <string name="failed_to_load_data">Не удалось загрузить данные</string>
     <string name="events">События</string>
     <string name="categories">Категории</string>
+    <string name="incorrect_auth_data">Неверный логин или пароль</string>
+    <string name="incorrect_otp">Неверный код</string>
 </resources>
