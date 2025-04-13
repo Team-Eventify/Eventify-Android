@@ -2,10 +2,7 @@ package com.example.eventify.presentation.ui.account.profileedit
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -18,15 +15,12 @@ import com.example.eventify.presentation.TopBarAction
 import com.example.eventify.presentation.TopBarSize
 import com.example.eventify.presentation.TopBarState
 import com.example.eventify.presentation.navigation.LocalFeaturesProvider
-import com.example.eventify.presentation.navigation.clearNavigate
 import com.example.eventify.presentation.ui.account.profileedit.components.LoadingProfileEdit
 import com.example.eventify.presentation.ui.account.profileedit.state.ProfileEditListener
 import com.example.eventify.presentation.ui.account.profileedit.state.SideEffect
 import com.example.eventify.presentation.ui.account.profileedit.state.UiState
-import com.example.eventify.presentation.ui.auth.login.LoginEntry
 import com.example.eventify.presentation.ui.common.screens.ErrorScreen
 import com.example.eventify.presentation.utils.ObserveAsEvent
-import okhttp3.internal.notifyAll
 
 @Composable
 fun ProfileEditRoute(
@@ -37,7 +31,6 @@ fun ProfileEditRoute(
     val topBarState = LocalTopBarState.current
     val context = LocalContext.current
     val snackBarState = LocaleSnackbarState.current
-    val features = LocalFeaturesProvider.current.features
 
     val listener = object : ProfileEditListener {
         override fun onSubmit() {
@@ -86,8 +79,16 @@ fun ProfileEditRoute(
                 )
             }
 
-            SideEffect.DeleteAccount -> {
-                features.clearNavigate<LoginEntry>(navController)
+            SideEffect.AccountDeleted -> {
+                snackBarState.showSnackbar(
+                    message = "Аккаунт удален"
+                )
+            }
+
+            SideEffect.FailedDeleteAccount -> {
+                snackBarState.showSnackbar(
+                    message = "Не удалось удалить аккаунт"
+                )
             }
         }
     }

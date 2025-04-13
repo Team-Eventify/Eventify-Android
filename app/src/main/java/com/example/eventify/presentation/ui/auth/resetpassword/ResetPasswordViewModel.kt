@@ -2,7 +2,6 @@ package com.example.eventify.presentation.ui.auth.resetpassword
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.example.eventify.domain.validation.ValidateEmail
 import com.example.eventify.presentation.navigation.ARG_SHARED_EMAIL
 import com.example.eventify.presentation.ui.auth.resetpassword.state.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,7 +19,6 @@ class ResetPasswordViewModel @Inject constructor(
     private val sharedEmail by lazy {
         savedStateHandle.get<String?>(ARG_SHARED_EMAIL) ?: ""
     }
-    private val validateEmail = ValidateEmail()
     private val _stateFlow: MutableStateFlow<UiState> =
         MutableStateFlow(UiState(
             email = sharedEmail

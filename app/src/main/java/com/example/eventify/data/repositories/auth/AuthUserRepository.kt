@@ -3,16 +3,14 @@ package com.example.eventify.data.repositories.auth
 import com.example.eventify.domain.models.TokenData
 import com.example.eventify.domain.models.UserCreate
 import com.example.eventify.domain.models.UserCredentials
-import com.example.eventify.domain.DataError
-import com.example.eventify.domain.Result
 import com.example.eventify.domain.models.OtpUserCreate
 import com.example.eventify.domain.models.RegisterValidationData
 
 interface AuthUserRepository {
-    suspend fun refreshAccessToken(refreshToken: String): Result<TokenData, DataError>
-    suspend fun registerUser(user: UserCreate): Result<TokenData, DataError>
-    suspend fun logInUser(credentials: UserCredentials): Result<TokenData, DataError>
-    suspend fun validateRegisterData(data: RegisterValidationData): Result<String, DataError>
-    suspend fun otpRegisterUser(user: OtpUserCreate): Result<TokenData, DataError>
+    suspend fun refreshAccessToken(refreshToken: String): TokenData
+    suspend fun registerUser(user: UserCreate): TokenData
+    suspend fun logInUser(credentials: UserCredentials): TokenData
+    suspend fun validateRegisterData(data: RegisterValidationData): String
+    suspend fun otpRegisterUser(user: OtpUserCreate): TokenData
 }
 

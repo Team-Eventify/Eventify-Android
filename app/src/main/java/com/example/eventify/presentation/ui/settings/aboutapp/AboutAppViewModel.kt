@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.eventify.R
 import com.example.eventify.presentation.ui.settings.aboutapp.state.AboutAppState
-import com.example.eventify.presentation.utils.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
@@ -38,7 +37,7 @@ class AboutAppViewModel @Inject constructor(
 
             _stateFlow.update { currentState ->
                 currentState.copy(
-                    versionName = UiText.StringResource(R.string.version, args = arrayOf(versionName))
+                    versionName = context.getString(R.string.version, versionName)
                 )
             }
         }

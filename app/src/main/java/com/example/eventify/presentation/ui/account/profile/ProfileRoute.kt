@@ -22,7 +22,6 @@ import com.example.eventify.presentation.ui.settings.aboutapp.AboutAppEntry
 import com.example.eventify.presentation.navigation.navigateToFeature
 import com.example.eventify.presentation.ui.account.profile.components.LoadingProfile
 import com.example.eventify.presentation.ui.account.profile.state.ProfileListener
-import com.example.eventify.presentation.ui.account.profile.state.SideEffect
 import com.example.eventify.presentation.ui.account.profile.state.UiState
 import com.example.eventify.presentation.ui.auth.login.LoginEntry
 import com.example.eventify.presentation.ui.common.screens.ErrorScreen
@@ -50,14 +49,6 @@ fun ProfileRoute(
 
         override fun navigateToAppInfo() {
             features.navigateToFeature<AboutAppEntry>(navController)
-        }
-    }
-
-    ObserveAsEvent(viewModel.sideEffect) { sideEffect ->
-        when (sideEffect) {
-            SideEffect.LogOut -> {
-                features.clearNavigate<LoginEntry>(navController)
-            }
         }
     }
 

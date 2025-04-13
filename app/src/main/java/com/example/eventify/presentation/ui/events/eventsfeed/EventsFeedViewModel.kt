@@ -1,15 +1,11 @@
 package com.example.eventify.presentation.ui.events.eventsfeed
 
-import android.content.Context
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.eventify.domain.Result
 import com.example.eventify.domain.models.toShortEventItem
 import com.example.eventify.domain.usecases.events.GetEventsUseCase
 import com.example.eventify.presentation.ui.events.eventsfeed.state.UiState
-import com.example.eventify.presentation.utils.asUiText
+import com.example.eventify.presentation.utils.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,26 +15,21 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+
 @HiltViewModel
 class EventsFeedViewModel @Inject constructor(
     private val getEventsUseCase: GetEventsUseCase,
-    @ApplicationContext private val context: Context,
-) : ViewModel() {
+) : BaseViewModel() {
 
     private val _stateFlow: MutableStateFlow<UiState> = MutableStateFlow(UiState.Loading)
     val stateFlow: StateFlow<UiState> = _stateFlow
-        .onStart { loadData() }
+        .onStart { loadEvents() }
         .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000L),
             UiState.Loading
         )
 
-    fun loadData() {
-        viewModelScope.launch {
-            loadEvents()
-        }
-    }
 
     fun refreshData() {
         viewModelScope.launch {
@@ -53,20 +44,25 @@ class EventsFeedViewModel @Inject constructor(
         }
     }
 
-    private suspend fun loadEvents(){
-        _stateFlow.update { _ ->
-            when (val result = getEventsUseCase()){
-                is Result.Error -> {
-                    UiState.Error(
-                        message = result.error.asUiText().asString(context)
-                    )
-                }
-                is Result.Success -> {
-                    UiState.ShowFeed(
-                        events = result.data.map { it.toShortEventItem() }
-                    )
-                }
+    private fun loadEvents(){
+        launchCatching(
+            catch = ::handleErrors
+        ) {
+            _stateFlow.update {
+                UiState.ShowFeed(
+                    events = getEventsUseCase().map {
+                        it.toShortEventItem()
+                    }
+                )
             }
+        }
+    }
+
+    private fun handleErrors(exception: Throwable) {
+        _stateFlow.update {
+            UiState.Error(
+                message = exception.message
+            )
         }
     }
 }

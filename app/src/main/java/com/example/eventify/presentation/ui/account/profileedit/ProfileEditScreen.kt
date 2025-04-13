@@ -84,7 +84,7 @@ fun ProfileEditScreen(
             text = state.email,
             onChange = actions::onChangeEmail,
             isError = state.emailError != null || state.hasEmailError,
-            supportingText = state.emailError?.asString(),
+            supportingText = state.emailError,
             modifier = Modifier
 //                .shimmer(showShimmer = state.isLoading)
         )
@@ -95,7 +95,7 @@ fun ProfileEditScreen(
             onChange = actions::onChangeTelegram,
             prefix = "@",
             isError = state.telegramNameError != null || state.hasTelegramNameError,
-            supportingText = state.telegramNameError?.asString(),
+            supportingText = state.telegramNameError,
             modifier = Modifier
 //                .shimmer(showShimmer = state.isLoading)
         )

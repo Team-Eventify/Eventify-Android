@@ -2,14 +2,13 @@ package com.example.eventify.presentation.ui.account.profileedit.state
 
 import androidx.compose.runtime.Stable
 import com.example.eventify.presentation.models.CategorySelectItem
-import com.example.eventify.presentation.utils.UiText
 
 @Stable
 sealed class UiState {
     data class ShowProfileEdit(
         val email: String = "",
         val hasEmailError: Boolean = false,
-        val emailError: UiText? = null,
+        val emailError: String? = null,
 
         val firstName: String = "",
         val firstNameError: String? = null,
@@ -19,7 +18,7 @@ sealed class UiState {
 
         val telegramName: String = "",
         val hasTelegramNameError: Boolean = false,
-        val telegramNameError: UiText? = null,
+        val telegramNameError: String? = null,
 
         val categoryItems: List<CategorySelectItem> = emptyList()
     ) : UiState()

@@ -98,7 +98,7 @@ fun RegisterScreen(
                 isError = state.payloadState.hasLoginError,
                 supportingText = {
                     state.payloadState.loginError?.let {
-                        ErrorInputText(text = it.asString())
+                        ErrorInputText(text = it)
                     }
                 },
                 modifier = Modifier.focusRequester(focusRequest),
@@ -120,7 +120,7 @@ fun RegisterScreen(
                 isError = state.payloadState.hasPasswordError,
                 supportingText = {
                     state.payloadState.passwordError?.let {
-                        ErrorInputText(text = it.asString())
+                        ErrorInputText(text = it)
                     }
                 },
                 keyboardOptions = KeyboardOptions(
