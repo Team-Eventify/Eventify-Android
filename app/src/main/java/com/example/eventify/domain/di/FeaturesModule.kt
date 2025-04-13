@@ -23,6 +23,8 @@ import com.example.eventify.presentation.ui.events.myevents.MyEventsEntry
 import com.example.eventify.presentation.ui.events.myevents.MyEventsEntryImpl
 import com.example.eventify.presentation.ui.events.search.SearchEntry
 import com.example.eventify.presentation.ui.events.search.SearchEntryImpl
+import com.example.eventify.presentation.ui.searchresult.SearchDetailEntry
+import com.example.eventify.presentation.ui.searchresult.SearchDetailEntryImpl
 import com.example.eventify.presentation.ui.settings.aboutapp.AboutAppEntry
 import com.example.eventify.presentation.ui.settings.aboutapp.AboutAppEntryImpl
 import dagger.Binds
@@ -109,6 +111,12 @@ abstract class FeaturesModule {
     @IntoMap
     @FeatureEntryKey(SetUpEntry::class)
     abstract fun bindSetUpEntry(feature: SetUpEntryImpl): FeatureEntry
+
+    @Binds
+    @Singleton
+    @IntoMap
+    @FeatureEntryKey(SearchDetailEntry::class)
+    abstract fun bindSearchDetailEntry(feature: SearchDetailEntryImpl): FeatureEntry
 
 }
 

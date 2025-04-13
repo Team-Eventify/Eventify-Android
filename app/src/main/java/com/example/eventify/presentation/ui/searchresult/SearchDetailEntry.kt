@@ -1,23 +1,31 @@
-package com.example.eventify.presentation.ui.events.search
+package com.example.eventify.presentation.ui.searchresult
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import com.example.eventify.presentation.navigation.ARG_CATEGORY_ID
 import com.example.eventify.presentation.navigation.BaseDestination
 import com.example.eventify.presentation.navigation.ComposableFeatureEntry
 import com.example.eventify.presentation.ui.events.eventsfeed.EventsRootPath
 import javax.inject.Inject
 
-val SearchPath = EventsRootPath.child("search")
+val SearchDetailPath = EventsRootPath.child(
+    "search-detail",
+    ARG_CATEGORY_ID,
+)
 
-interface SearchEntry : ComposableFeatureEntry {
+
+
+interface SearchDetailEntry : ComposableFeatureEntry {
     override val destination: BaseDestination
-        get() = SearchPath
+        get() = SearchDetailPath
+
 }
 
-class SearchEntryImpl @Inject constructor(): SearchEntry {
+
+class SearchDetailEntryImpl @Inject constructor() : SearchDetailEntry {
     @Composable
     override fun Composable(navController: NavHostController) {
-        SearchRoute(navController)
+        SearchDetailRoute(navController)
     }
 
 }
