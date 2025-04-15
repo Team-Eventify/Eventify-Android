@@ -1,19 +1,14 @@
 package com.example.eventify.presentation.ui.account.profileedit
 
-import android.content.Context
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.eventify.domain.usecases.GetCategoriesWithUserSelection
 import com.example.eventify.domain.usecases.account.ChangeUserUseCase
 import com.example.eventify.domain.usecases.account.DeleteAccountUseCase
 import com.example.eventify.domain.usecases.account.GetCurrentUserUseCase
 import com.example.eventify.domain.usecases.account.SetUserCategoriesUseCase
-import com.example.eventify.domain.validation.ValidateEmail
-import com.example.eventify.domain.validation.ValidateTelegramName
 import com.example.eventify.presentation.ui.account.profileedit.state.SideEffect
 import com.example.eventify.presentation.ui.account.profileedit.state.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.channels.Channel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow
@@ -23,11 +18,9 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
-import com.example.eventify.domain.Result
 import com.example.eventify.domain.models.UserChange
-import com.example.eventify.presentation.utils.asText
-import com.example.eventify.presentation.utils.asUiText
+import com.example.eventify.presentation.utils.BaseViewModel
+
 
 @HiltViewModel
 class ProfileEditViewModel @Inject constructor(
@@ -36,10 +29,7 @@ class ProfileEditViewModel @Inject constructor(
     private val changeUserUseCase: ChangeUserUseCase,
     private val setUserCategoriesUseCase: SetUserCategoriesUseCase,
     private val deleteAccountUseCase: DeleteAccountUseCase,
-    @ApplicationContext private val context: Context
-) : ViewModel() {
-    private val validateTelegramNameUseCase = ValidateTelegramName()
-    private val validateEmailUseCase = ValidateEmail()
+) : BaseViewModel() {
 
     private val mutableSideEffect = Channel<SideEffect>()
     val sideEffect = mutableSideEffect.receiveAsFlow()
@@ -55,17 +45,15 @@ class ProfileEditViewModel @Inject constructor(
 
 
     private fun loadData() {
-        viewModelScope.launch {
-            _stateFlow.update { currentState ->
-                val userData = when (val userResult = getCurrentUserUseCase()) {
-                    is Result.Error -> return@update UiState.Error
-                    is Result.Success -> userResult.data
-                }
-                val categories = when (val categoriesResult = getCategoriesWithUserSelection()) {
-                    is Result.Error -> return@update UiState.Error
-                    is Result.Success -> categoriesResult.data
-                }
+        launchCatching(
+            catch = {
+                _stateFlow.update { UiState.Error }
+            }
+        ) {
+            val userData = getCurrentUserUseCase()
+            val categories = getCategoriesWithUserSelection()
 
+            _stateFlow.update {
                 UiState.ShowProfileEdit(
                     firstName = userData.firstName,
                     lastName = userData.lastName,
@@ -74,6 +62,7 @@ class ProfileEditViewModel @Inject constructor(
                     categoryItems = categories,
                 )
             }
+
         }
     }
 
@@ -95,28 +84,15 @@ class ProfileEditViewModel @Inject constructor(
             it.categoryItems.filter { categoryItem -> categoryItem.selected }.map { categoryItem -> categoryItem.id }
         } ?: return
 
-        viewModelScope.launch {
-            when (val userResult = changeUserUseCase(userData)){
-                is Result.Error -> {
-                    mutableSideEffect.send(SideEffect.FailUpdate(
-                        userResult.asText(context)
-                    ))
-                    return@launch
-                }
-                is Result.Success -> {}
+        launchCatching(
+            catch = {
+                // TODO обработать ошибку
             }
-
-            when (val categoriesResult = setUserCategoriesUseCase(categoryIds = categoryIds)){
-                is Result.Error -> {
-                    mutableSideEffect.send(SideEffect.FailUpdate(
-                        categoriesResult.asText(context)
-                    ))
-                    return@launch
-                }
-                is Result.Success -> {}
-            }
-
+        ) {
+            changeUserUseCase(userData)
+            setUserCategoriesUseCase(categoryIds = categoryIds)
             mutableSideEffect.send(SideEffect.SuccessUpdate)
+
         }
     }
 
@@ -148,19 +124,8 @@ class ProfileEditViewModel @Inject constructor(
     private fun validateEmail(): String? {
         val currentState = (_stateFlow.value as? UiState.ShowProfileEdit) ?: return null
 
-        return when (val result = validateEmailUseCase(currentState.email)) {
-            is Result.Error -> {
-                _stateFlow.update {
-                    currentState.copy(
-                        emailError = result.error.asUiText(),
-                        hasEmailError = true,
-                    )
-                }
-                null
-            }
+        return currentState.email
 
-            is Result.Success -> result.data
-        }
     }
 
         fun changeUserFirstName(value: String) {
@@ -190,25 +155,18 @@ class ProfileEditViewModel @Inject constructor(
     private fun validateTelegramName(): String? {
         val currentState = (_stateFlow.value as? UiState.ShowProfileEdit) ?: return null
 
-        return when (val result = validateTelegramNameUseCase(currentState.telegramName)) {
-            is Result.Error -> {
-                _stateFlow.update {
-                    currentState.copy(
-                        telegramNameError = result.error.asUiText(),
-                        hasTelegramNameError = true,
-                    )
-                }
-                null
-            }
-
-            is Result.Success -> result.data
-        }
+        return currentState.telegramName
     }
 
     fun deleteAccount() {
-        viewModelScope.launch {
+        launchCatching(
+            catch = {
+                mutableSideEffect.trySend(SideEffect.FailedDeleteAccount)
+            }
+        ) {
             deleteAccountUseCase()
-            mutableSideEffect.send(SideEffect.DeleteAccount)
+            updateAuthStateToUnauthorized()
+            mutableSideEffect.send(SideEffect.AccountDeleted)
         }
     }
 }

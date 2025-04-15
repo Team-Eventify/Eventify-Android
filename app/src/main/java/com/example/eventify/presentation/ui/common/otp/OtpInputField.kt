@@ -60,7 +60,8 @@ fun OtpTextField(
         },
         keyboardActions = KeyboardActions(
             onDone = {
-                onSubmit?.invoke()
+                if (text.length == otpCount)
+                    onSubmit?.invoke()
             }
         ),
         cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),

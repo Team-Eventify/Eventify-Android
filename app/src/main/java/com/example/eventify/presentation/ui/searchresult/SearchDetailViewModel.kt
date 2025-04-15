@@ -2,18 +2,15 @@ package com.example.eventify.presentation.ui.searchresult
 
 import android.content.Context
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.eventify.data.remote.models.events.EventsFilterData
 import com.example.eventify.data.repositories.category.CategoryRepository
-import com.example.eventify.domain.DataError
-import com.example.eventify.domain.Result
 import com.example.eventify.domain.models.toShortEventItem
 import com.example.eventify.domain.usecases.events.GetEventsUseCase
 import com.example.eventify.presentation.navigation.ARG_CATEGORY_ID
 import com.example.eventify.presentation.ui.searchresult.state.SearchData
 import com.example.eventify.presentation.ui.searchresult.state.SearchDetailUiState
-import com.example.eventify.presentation.utils.asText
+import com.example.eventify.presentation.utils.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -45,7 +42,7 @@ class SearchDetailViewModel @Inject constructor(
     private val getEventsUseCase: GetEventsUseCase,
     private val categoryRepository: CategoryRepository,
     @ApplicationContext private val context: Context,
-) : ViewModel() {
+) : BaseViewModel() {
     private val navArgs = SearchNavArgs.from(savedStateHandle)
 
     private val mutableStateFlow = MutableStateFlow<SearchDetailUiState>(SearchDetailUiState.Loading)
@@ -59,42 +56,34 @@ class SearchDetailViewModel @Inject constructor(
             SearchDetailUiState.Loading
         )
 
-    private suspend fun load() {
+    private fun load() {
         val filter = EventsFilterData(
             categoryIds = navArgs.categoryId?.let { listOf(it) }
         )
-        mutableStateFlow.update {
-            val searchedCategory = navArgs.categoryId?.let { categoryId ->
-                 when (val categoryResult = categoryRepository.readCategory(categoryId)){
-                    is Result.Error -> null
-                    is Result.Success -> categoryResult.data
-                }
+
+        launchCatching(
+            catch = {
+                // TODO
             }
-
-
-            when (val result = getEventsUseCase(filter)) {
-                is Result.Error -> when (result.error) {
-                    DataError.Network.NOT_FOUND -> {
-                        SearchDetailUiState.NotFound
-                    }
-
-                    else -> SearchDetailUiState.Error(
-                        message = result.asText(context)
-                    )
+        ) {
+            mutableStateFlow.update {
+                val searchedCategory = navArgs.categoryId?.let { categoryId ->
+                    categoryRepository.readCategory(categoryId)
                 }
-                is Result.Success -> {
-                    if (result.data.isEmpty()) {
-                        return@update SearchDetailUiState.NotFound
-                    }
 
-                    SearchDetailUiState.ShowEvents(
-                        items = result.data.map { it.toShortEventItem() },
-                        searchData = SearchData(
-                            category = searchedCategory
-                        )
+                val events = getEventsUseCase(filter)
+
+                SearchDetailUiState.ShowEvents(
+                    items = events
+                        .map {
+                            it.toShortEventItem()
+                        },
+                    searchData = SearchData(
+                        category = searchedCategory
                     )
-                }
+                )
             }
         }
+
     }
 }

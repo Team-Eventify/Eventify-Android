@@ -17,6 +17,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -34,6 +35,7 @@ import com.example.eventify.presentation.ui.common.AnnotationText
 import com.example.eventify.presentation.ui.common.TitleText
 import com.example.eventify.presentation.ui.common.otp.OtpTextField
 import com.example.eventify.presentation.ui.theme.EventifyTheme
+import com.example.eventify.presentation.ui.theme.space12
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -75,7 +77,10 @@ fun RegistrationOtpBottomSheet(
             AnnotationText(
                 text = stringResource(R.string.otp_description)
             )
-            Spacer(modifier = Modifier.height(22.dp))
+            Text(
+                text = stringResource(R.string.incorrect_otp).takeIf { hasError } ?: "",
+                color = MaterialTheme.colorScheme.error,
+            )
             OtpTextField(
                 otpCount = 6,
                 text = otpValue,
@@ -85,14 +90,6 @@ fun RegistrationOtpBottomSheet(
                 modifier = Modifier
                     .focusRequester(focusRequester)
             )
-
-//            PrimaryButton(
-//                onClick = onSubmit,
-//                enabled =  otpValue.length == OTP_LENGTH,
-//            ) {
-//                PrimaryButtonText(text = stringResource(R.string.next))
-//            }
-//            Spacer(Modifier.height(space16))
         }
     }
 }
