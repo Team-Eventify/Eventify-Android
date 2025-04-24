@@ -2,12 +2,12 @@ package com.example.eventify.presentation.ui.events.eventdetail.state
 
 import com.example.eventify.domain.models.FullEventDetail
 
-sealed class UiState {
-    data object Loading : UiState()
+sealed class EventDetailUiState {
+    data object Loading : EventDetailUiState()
     data class Error(
         val message: String,
-    ) : UiState()
+    ) : EventDetailUiState()
     data class ShowEvent(
         val event: FullEventDetail,
-    ) : UiState()
+    ) : EventDetailUiState()
 }

@@ -30,7 +30,8 @@ sealed class SearchResult {
         val items: List<Category> = emptyList(),
     ) : SearchResult()
     data class Error(
-        val message: String,
+        val message: String? = null,
     ) : SearchResult()
     data object None : SearchResult()
+    data object Empty : SearchResult()
 }

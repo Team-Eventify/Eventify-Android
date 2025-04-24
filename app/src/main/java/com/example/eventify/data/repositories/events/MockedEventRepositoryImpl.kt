@@ -3,6 +3,7 @@ package com.example.eventify.data.repositories.events
 import com.example.eventify.domain.models.Event
 import com.example.eventify.data.remote.models.events.EventsFilterData
 import com.example.eventify.domain.models.EventDetail
+import com.example.eventify.domain.models.EventState
 import com.github.javafaker.Faker
 import java.util.UUID
 import java.util.concurrent.TimeUnit
@@ -28,7 +29,7 @@ class MockedEventRepositoryImpl : EventsRepository {
         id = UUID.randomUUID().toString(),
         title = faker.lorem().sentence(),
         description = faker.lorem().paragraph(),
-        state = "",
+        state = EventState.PUBLISHED,
         capacity = Random.nextInt(10, 200),
         start = faker.date().past(30, TimeUnit.DAYS).time / 1000,
         end = faker.date().past(60, TimeUnit.DAYS).time / 1000,

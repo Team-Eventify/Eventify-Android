@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import com.example.eventify.R
+import com.example.eventify.domain.models.EventState
 import com.example.eventify.presentation.LocalTopBarState
 import com.example.eventify.presentation.TopBarSize
 import com.example.eventify.presentation.TopBarState
@@ -85,6 +86,7 @@ private fun EventsFeedScreenDefaultDarkPreview() {
                                 .joinToString { it },
                             cover = "",
                             start = Random.nextLong(),
+                            state = EventState.PUBLISHED,
                             end = Random.nextLong(),
                             location = LoremIpsum(15)
                                 .values

@@ -10,4 +10,5 @@ interface SearchListener {
     fun onChangeSearchQuery(value: String)
     fun search()
     fun cleanSearch()
+    fun refresh()
 }

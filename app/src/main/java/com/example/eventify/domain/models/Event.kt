@@ -10,7 +10,7 @@ data class Event(
     val end: Long,
     val organizationID: String,
     val start: Long,
-    val state: String,
+    val state: EventState,
     val title: String,
     val location: String,
     val subscribed: Boolean,
@@ -25,5 +25,6 @@ fun Event.toShortEventItem() = ShortEventItem(
     start = start,
     end = end,
     cover = cover,
-    location = location
+    location = location,
+    state = state,
 )

@@ -1,8 +1,13 @@
 package com.example.eventify.presentation.ui.events.search
 
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.example.eventify.data.exceptions.isNotFound
+import com.example.eventify.data.exceptions.isServerError
+import com.example.eventify.data.exceptions.isUnauthorized
 import com.example.eventify.data.remote.models.events.EventsFilterData
+import com.example.eventify.domain.models.isHidden
 import com.example.eventify.domain.models.toShortEventItem
 import com.example.eventify.domain.usecases.categories.GetCategoriesUseCase
 import com.example.eventify.domain.usecases.events.GetEventsUseCase
@@ -12,6 +17,8 @@ import com.example.eventify.presentation.ui.events.search.state.SearchResult
 import com.example.eventify.presentation.ui.events.search.state.SearchUiState
 import com.example.eventify.presentation.utils.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.MutableSharedFlow
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -23,6 +30,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+@OptIn(FlowPreview::class)
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
@@ -46,7 +54,7 @@ class SearchViewModel @Inject constructor(
             searchMode = mode,
         )
     }
-        .distinctUntilChanged()
+//        .distinctUntilChanged()
         .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000L),
@@ -61,47 +69,55 @@ class SearchViewModel @Inject constructor(
         launchCatching {
             combine(
                 _searchModeStateFlow,
-                _searchQueryStateFlow,
-            ) { mode, query ->
-                Pair(mode, query)
-            }
-            .debounce(200)
+                _searchQueryStateFlow.debounce(200),
+            ) { mode, query -> mode to query }
             .collectLatest { (mode, query) ->
-                _searchResultStateFlow.update {
-                    when (mode) {
-                        SearchMode.Events -> fetchEvents(query)
-                        SearchMode.Categories -> fetchCategories(query)
-                    }
+                when (mode) {
+                    SearchMode.Events -> fetchEvents(query)
+                    SearchMode.Categories -> fetchCategories(query)
                 }
             }
         }
     }
 
 
-    private suspend fun fetchEvents(query: String): SearchResult {
-        val queryFilter = EventsFilterData(
-            title = query
-        ).takeIf { query.isNotEmpty() }
+    private fun fetchEvents(query: String) {
+        launchCatching(catch = ::handleErrors) {
+            val queryFilter = EventsFilterData(
+                title = query
+            ).takeIf { query.isNotEmpty() }
 
-        return SearchResult.Events(
-            items = getEventsUseCase(queryFilter).map {
-                it.toShortEventItem()
+            _searchResultStateFlow.update {
+                SearchResult.Events(
+                    items = getEventsUseCase(queryFilter)
+                        .filter { !it.state.isHidden() }
+                        .map {
+                            it.toShortEventItem()
+                        }
+                )
             }
-        )
+
+        }
     }
 
-    private suspend fun fetchCategories(query: String): SearchResult {
-        return SearchResult.Categories(
-            items = getCategoriesUseCase()
-                .filter { it.title.contains(query, ignoreCase = true) }
-        )
+    private fun fetchCategories(query: String) {
+        launchCatching(catch = ::handleErrors) {
+            _searchResultStateFlow.update {
+                getCategoriesUseCase()
+                    .filter {
+                        it.title.contains(query, ignoreCase = true)
+                    }
+                    .takeIf { it.isNotEmpty() }?.let { categories ->
+                        SearchResult.Categories(items = categories)
+                    } ?: SearchResult.Empty
+
+            }
+        }
     }
 
     fun changeSearchMode(mode: SearchMode) {
         viewModelScope.launch {
-            _searchModeStateFlow.update {
-                mode
-            }
+            _searchModeStateFlow.update { mode }
         }
     }
 
@@ -114,6 +130,16 @@ class SearchViewModel @Inject constructor(
     fun cleanSearchQuery() {
         viewModelScope.launch {
             _searchQueryStateFlow.update { "" }
+        }
+    }
+
+    private fun handleErrors(error: Throwable) {
+        when {
+            error.isServerError() -> _searchResultStateFlow.update { SearchResult.Error() }
+
+            error.isNotFound() -> _searchResultStateFlow.update { SearchResult.Empty }
+
+            else -> _searchResultStateFlow.update { SearchResult.Error() }
         }
     }
 }

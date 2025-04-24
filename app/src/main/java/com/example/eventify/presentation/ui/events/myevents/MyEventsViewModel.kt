@@ -1,9 +1,8 @@
 package com.example.eventify.presentation.ui.events.myevents
 
-import android.content.Context
-import androidx.compose.material3.SnackbarDuration
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.eventify.domain.models.isHidden
+import com.example.eventify.domain.models.isSubscribeEnabled
 import com.example.eventify.domain.models.toShortEventItem
 import com.example.eventify.domain.usecases.events.GetSubscribedEventsUseCase
 import com.example.eventify.presentation.ui.events.myevents.state.UiState
@@ -16,16 +15,15 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
-import java.util.Date
+
 
 @HiltViewModel
 class MyEventsViewModel @Inject constructor(
     private val getSubscribedEventsUseCase: GetSubscribedEventsUseCase,
 ) : BaseViewModel() {
 
-    private val _stateFlow: MutableStateFlow<UiState> = MutableStateFlow(UiState.Initial)
-    val stateFlow: StateFlow<UiState> = _stateFlow
+    private val mutableStateFlow: MutableStateFlow<UiState> = MutableStateFlow(UiState.Initial)
+    val stateFlow: StateFlow<UiState> = mutableStateFlow
         .onStart { loadEvents() }
         .stateIn(
             viewModelScope,
@@ -35,34 +33,35 @@ class MyEventsViewModel @Inject constructor(
 
 
     fun refresh(){
-        viewModelScope.launch {
-            _stateFlow.update { currentState ->
-                when (currentState) {
-                    is UiState.Empty -> currentState.copy(isRefreshing = true)
-                    is UiState.Error -> currentState.copy(isRefreshing = true)
-                    is UiState.ShowMyEvents -> currentState.copy(isRefreshing = true)
-                    UiState.Initial -> return@launch
-                }
+        mutableStateFlow.update { currentState ->
+            when (currentState) {
+                is UiState.Empty -> currentState.copy(isRefreshing = true)
+                is UiState.Error -> currentState.copy(isRefreshing = true)
+                is UiState.ShowMyEvents -> currentState.copy(isRefreshing = true)
+                UiState.Initial -> return
             }
-            loadEvents()
         }
+        loadEvents()
+
     }
 
     private fun loadEvents(){
         launchCatching(
-            catch = {
-                // TODO обработать
+            catch = { error ->
+                mutableStateFlow.update { UiState.Error(message = error.message) }
             }
         ) {
-            val currentDateTime = Date().time
-            _stateFlow.update {
+            mutableStateFlow.update {
                 getSubscribedEventsUseCase()
                     .map { it.toShortEventItem() }
+                    .filter { !it.state.isHidden() }
                     .let { events ->
-                        UiState.ShowMyEvents(
-                            upComingEvents = events.filter { it.start >= currentDateTime },
-                            finishedEvents = events.filter { it.end < currentDateTime }
-                        )
+                        events.takeIf { it.isNotEmpty() }?.let {
+                            UiState.ShowMyEvents(
+                                upComingEvents = events.filter { it.state.isSubscribeEnabled() },
+                                finishedEvents = events.filter { !it.state.isSubscribeEnabled() }
+                            )
+                        } ?: UiState.Empty()
                     }
             }
         }

@@ -28,6 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.credentials.internal.toJetpackGetException
 import com.example.eventify.presentation.ui.common.CategoryCard
+import com.example.eventify.presentation.ui.common.screens.BaseInfoScreen
 import com.example.eventify.presentation.ui.common.topBar.SearchTopBar
 import com.example.eventify.presentation.ui.events.search.components.CategoriesSearch
 import com.example.eventify.presentation.ui.events.search.components.EventsSearch
@@ -82,6 +83,7 @@ fun SearchScreen(
             is SearchResult.Error -> {
                 FailedSearch(
                     message = state.searchResult.message,
+                    onRefresh = listener::refresh,
                 )
             }
             is SearchResult.Events -> {
@@ -89,6 +91,8 @@ fun SearchScreen(
                     events = state.searchResult.items,
                     onEventClick = listener::onEventClick,
                 )
+            }
+            SearchResult.Empty -> {
             }
             SearchResult.None -> {}
         }
@@ -172,6 +176,10 @@ private fun SearchScreenPreview() {
                 }
 
                 override fun cleanSearch() {
+                    TODO("Not yet implemented")
+                }
+
+                override fun refresh() {
                     TODO("Not yet implemented")
                 }
             }

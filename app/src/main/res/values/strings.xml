@@ -96,5 +96,6 @@
     <string name="categories">Categories</string>
     <string name="incorrect_auth_data">Incorrect login or password</string>
     <string name="incorrect_otp">Incorrect code</string>
-
+    <string name="subscribe_for_event_action">I will go!</string>
+    <string name="unsubscribe_for_event_action">Cancel appointment</string>
 </resources>
