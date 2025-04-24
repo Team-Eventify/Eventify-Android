@@ -58,11 +58,11 @@ fun OnboardingView(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            PrimaryButton(
-                onClick = onNext
-            ) {
-                PrimaryButtonText(itemState.primaryButtonText)
-            }
+//            PrimaryButton(
+//                onClick = onNext
+//            ) {
+           //     PrimaryButtonText(itemState.primaryButtonText)
+//            }
             SkipOnboardingButton(onClick = onSkip)
         }
     }
@@ -78,7 +78,6 @@ private fun PreviewOnboardingViewDark() {
                    primaryImage = painterResource(R.drawable.ic_launcher_foreground),
                    title = "Актуальные мероприятия",
                    body = "Все события вашего университета теперь собраны в одном удобном приложении.",
-                   primaryButtonText = stringResource(R.string.next)
                ),
                 onNext = {},
                 onSkip = {}
@@ -97,7 +96,6 @@ private fun PreviewOnboardingViewLight() {
                     primaryImage = painterResource(R.drawable.ic_launcher_foreground),
                     title = "Актуальные мероприятия",
                     body = "Все события вашего университета теперь собраны в одном удобном приложении.",
-                    primaryButtonText = stringResource(R.string.next)
                 ),
                 onNext = {},
                 onSkip = {}
