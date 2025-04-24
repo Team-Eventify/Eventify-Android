@@ -71,6 +71,7 @@ fun EventDetailScreen(
     val topBarState = LocalTopBarState.current
     var isShowFullSizeImage by remember { mutableStateOf(false) }
 
+
     LaunchedEffect(Unit) {
         topBarState.setUp(
             TopBarState.Base(
