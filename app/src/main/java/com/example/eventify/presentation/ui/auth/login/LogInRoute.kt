@@ -3,9 +3,11 @@ package com.example.eventify.presentation.ui.auth.login
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import com.example.eventify.R
 import com.example.eventify.presentation.LocalTopBarState
 import com.example.eventify.presentation.LocaleSnackbarState
 import com.example.eventify.presentation.navigation.ARG_SHARED_EMAIL
@@ -27,6 +29,7 @@ fun LogInRoute(
     val uiState by viewModel.stateFlow.collectAsStateWithLifecycle()
     val topBarState = LocalTopBarState.current
     val snackBarState = LocaleSnackbarState.current
+    val context = LocalContext.current
     val features = LocalFeaturesProvider.current.features
 
     val listener = object : LoginListener {
@@ -47,10 +50,11 @@ fun LogInRoute(
         }
 
         override fun navigateToResetPassword(sharedEmail: String?) {
-            features.navigateToFeature<ResetPasswordEntry>(
-                navController,
-                ARG_SHARED_EMAIL to sharedEmail
-            )
+            features.navigateToFeature<ResetPasswordEntry>(navController) {
+                query {
+                    put(ARG_SHARED_EMAIL, sharedEmail)
+                }
+            }
 
         }
     }
@@ -58,14 +62,18 @@ fun LogInRoute(
 
     ObserveAsEvent(viewModel.sideEffect) { sideEffect ->
         when (sideEffect) {
-            SideEffect.ServerError -> TODO()
+            SideEffect.ServerError -> {
+                snackBarState.showSnackbar(
+                    message = context.getString(R.string.server_error)
+                )
+            }
             SideEffect.SuccessLogIn -> {
                 features.navigateNewTaskFeature<EventsFeedEntry, LoginEntry>(navController)
             }
-            is SideEffect.UnsuccessLogIn -> {
+            SideEffect.UnsuccessLogIn -> {
                 snackBarState.showSnackbar(
-                        message = sideEffect.message ?: "error"
-                    )
+                    message = context.getString(R.string.incorrect_auth_data)
+                )
             }
         }
     }

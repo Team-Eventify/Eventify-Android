@@ -10,5 +10,9 @@ data class BottomBarItem(
     @StringRes val titleResId: Int,
     val route: String,
     val nestedRoutes: List<String> = emptyList()
-)
+) {
+    fun contains(value: String?): Boolean {
+        return value == route || value in nestedRoutes
+    }
+}
 

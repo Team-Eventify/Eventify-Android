@@ -13,7 +13,7 @@ fun NavGraphBuilder.addEventsNavGraph(
 ) {
     navigation(
         route = EventsRootPath.baseRoute,
-        startDestination = EventFeedPath
+        startDestination = EventFeedPath.baseRoute
     ) {
         features.forEach { feature ->
             with(feature) {

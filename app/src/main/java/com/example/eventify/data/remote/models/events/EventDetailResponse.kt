@@ -1,6 +1,7 @@
 package com.example.eventify.data.remote.models.events
 
 import com.example.eventify.domain.models.EventDetail
+import com.example.eventify.domain.models.toEventState
 
 data class EventDetailResponse(
     val capacity: Int,
@@ -28,7 +29,7 @@ fun EventDetailResponse.toEventDetail() = EventDetail(
     organizationID = this.organizationID ,
     pictures = this.pictures.map { "https://eventify.website/api/v1/files/$it" },
     start = this.start ,
-    state = this.state ,
+    state = this.state.toEventState() ,
     subscribed = this.subscribed ,
     title = this.title,
     categories = this.categories

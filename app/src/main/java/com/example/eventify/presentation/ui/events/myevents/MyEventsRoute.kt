@@ -12,6 +12,7 @@ import com.example.eventify.R
 import com.example.eventify.presentation.LocalTopBarState
 import com.example.eventify.presentation.TopBarSize
 import com.example.eventify.presentation.TopBarState
+import com.example.eventify.presentation.navigation.ARG_EVENT_ID
 import com.example.eventify.presentation.navigation.LocalFeaturesProvider
 import com.example.eventify.presentation.ui.events.eventdetail.EventDetailEntry
 import com.example.eventify.presentation.ui.events.eventsfeed.EventsFeedEntry
@@ -39,7 +40,11 @@ fun MyEventsRoute(
         }
 
         override fun navigateToEvent(eventId: String) {
-            features.navigateToFeature<EventDetailEntry>(navController)
+            features.navigateToFeature<EventDetailEntry>(navController) {
+                path {
+                    put(ARG_EVENT_ID, eventId)
+                }
+            }
         }
 
         override fun navigateToFeedback(eventId: String) {

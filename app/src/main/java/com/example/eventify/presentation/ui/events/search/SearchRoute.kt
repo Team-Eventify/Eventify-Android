@@ -3,54 +3,80 @@ package com.example.eventify.presentation.ui.events.search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavHostController
+import com.example.eventify.presentation.LocalTopBarState
+import com.example.eventify.presentation.TopBarState
+import com.example.eventify.presentation.navigation.ARG_CATEGORY_ID
+import com.example.eventify.presentation.navigation.ARG_EVENT_ID
+import com.example.eventify.presentation.navigation.LocalFeaturesProvider
+import com.example.eventify.presentation.navigation.navigateToFeature
+import com.example.eventify.presentation.ui.events.eventdetail.EventDetailEntry
 import com.example.eventify.presentation.ui.events.search.components.EventsSearchBar
+import com.example.eventify.presentation.ui.events.search.state.CategoryId
+import com.example.eventify.presentation.ui.events.search.state.EventId
+import com.example.eventify.presentation.ui.events.search.state.SearchListener
+import com.example.eventify.presentation.ui.events.search.state.SearchMode
+import com.example.eventify.presentation.ui.searchresult.SearchDetailEntry
 
 @Composable
 fun SearchRoute(
-    coordinator: SearchCoordinator = rememberSearchCoordinator()
+    navController: NavHostController,
 ) {
-    val uiState by coordinator.screenStateFlow.collectAsStateWithLifecycle()
-    val actions = rememberSearchActions(coordinator)
+    val viewModel = hiltViewModel<SearchViewModel>()
+    val uiState by viewModel.stateFlow.collectAsStateWithLifecycle()
+    val topBarState = LocalTopBarState.current
+    val features = LocalFeaturesProvider.current.features
 
-//    LaunchedEffect(Unit) {
-//        scaffoldViewState.value = scaffoldViewState.value.copy(
-//            showBottomBar = true,
-//            topBar = {
-//                EventsSearchBar(
-//                    query = uiState.searchText,
-//                    onSearch = { actions.onSearch() },
-//                    onQueryChange = actions.onSearchTextChanged,
-//                    onActiveChange = actions.onChangeActiveSearchBar,
-//                    active = uiState.isActiveSearchBar,
-//                    onClearQuery = actions.onClearSearchText,
-//                    searchItems = uiState.categories,
-//                    onChangeCategoryFilterActive = actions.onChangeCategoryFilterActive
-//                )
-//            }
-//        )
-//
-//    }
-//
-//    // UI Rendering
-//    SearchScreen(uiState, actions)
+    val listener = object : SearchListener {
+        override fun changeSearchMode(mode: SearchMode) {
+            viewModel.changeSearchMode(mode)
+        }
 
-}
+        override fun onEventClick(eventId: EventId) {
+            features.navigateToFeature<EventDetailEntry>(navController){
+                path {
+                    put(ARG_EVENT_ID, eventId)
+                }
+            }
+        }
 
+        override fun onCategoryClick(categoryId: CategoryId) {
+            features.navigateToFeature<SearchDetailEntry>(navController) {
+                query {
+                    put(ARG_CATEGORY_ID, categoryId)
+                }
+            }
+        }
 
-@Composable
-fun rememberSearchActions(coordinator: SearchCoordinator): SearchActions {
-    return remember(coordinator) {
-        SearchActions(
-            onSearch = coordinator.viewModel::search,
-            onSearchTextChanged = coordinator.viewModel::changeSearchText,
-            onChangeActiveSearchBar = coordinator.viewModel::changeSearchBarActive,
-            onClearSearchText = coordinator.viewModel::clearSearchText,
-            onRefreshData = coordinator.viewModel::refresh,
-            onChangeCategoryFilterActive = coordinator.viewModel::changeCategoryFilterActive,
-            onClickEventItem = coordinator.viewModel::goToEventDetail
-        )
+        override fun onChangeSearchQuery(value: String) {
+            viewModel.changeSearchQuery(value)
+        }
+
+        override fun search() = Unit
+
+        override fun cleanSearch() {
+            viewModel.cleanSearchQuery()
+        }
+
+        override fun refresh() {
+            // TODO implement
+        }
+
+    }
+
+    SearchScreen(
+        state = uiState,
+        listener = listener,
+    )
+
+    LaunchedEffect(Unit) {
+        topBarState.hide()
     }
 }
+

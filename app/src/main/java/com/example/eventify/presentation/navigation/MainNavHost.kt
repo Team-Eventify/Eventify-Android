@@ -22,6 +22,7 @@ import com.example.eventify.presentation.navigation.navgraphs.addEventsNavGraph
 import com.example.eventify.presentation.navigation.navgraphs.addSettingsNavGraph
 import com.example.eventify.presentation.ui.account.profile_decor.ProfileDecorEntry
 import com.example.eventify.presentation.ui.auth.choosecategories.SetUpEntry
+import com.example.eventify.presentation.ui.searchresult.SearchDetailEntry
 
 
 @Composable
@@ -44,6 +45,7 @@ fun MainNavHost(
         features.findOrNull<EventDetailEntry>(),
         features.findOrNull<MyEventsEntry>(),
         features.findOrNull<SearchEntry>(),
+        features.findOrNull<SearchDetailEntry>()
     )
 
     val settingsFeatures: List<ComposableFeatureEntry> = listOfNotNull(

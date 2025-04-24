@@ -9,6 +9,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import com.example.eventify.R
 import com.example.eventify.presentation.LocalTopBarState
 import com.example.eventify.presentation.LocaleSnackbarState
 import com.example.eventify.presentation.navigation.LocalFeaturesProvider
@@ -24,7 +25,7 @@ fun RegisterRoute(
     navController: NavHostController
 ) {
     val viewModel = hiltViewModel<RegisterViewModel>()
-    val uiState by viewModel.stateFlow.collectAsStateWithLifecycle()
+    val uiState by viewModel.state.collectAsStateWithLifecycle()
     val topBarState = LocalTopBarState.current
     val features = LocalFeaturesProvider.current.features
     val snackBarState = LocaleSnackbarState.current
@@ -76,6 +77,12 @@ fun RegisterRoute(
             is SideEffect.FailRegister -> {
                 snackBarState.showSnackbar(
                     message = sideEffect.message ?: ""
+                )
+            }
+
+            SideEffect.ServerError -> {
+                snackBarState.showSnackbar(
+                    message = context.getString(R.string.server_error)
                 )
             }
         }

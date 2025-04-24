@@ -3,6 +3,7 @@ package com.example.eventify.presentation.ui.events.myevents
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -14,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import com.example.eventify.R
+import com.example.eventify.domain.models.EventState
 import com.example.eventify.presentation.models.ShortEventItem
 import com.example.eventify.presentation.ui.events.myevents.components.FinishedEventCard
 import com.example.eventify.presentation.ui.events.myevents.components.UpComingEventCard
@@ -41,7 +43,9 @@ fun MyEventsScreen(
     ) {
         LazyColumn(
             contentPadding = dimmentions.windowPaddings,
-            verticalArrangement = Arrangement.spacedBy(10.dp)
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+            modifier = Modifier
+                .fillMaxSize()
         ) {
             item {
                 if (state.upComingEvents.isNotEmpty())
@@ -92,7 +96,8 @@ private fun MyEventsScreenDefaultDarkPreview() {
                             description = LoremIpsum(3).values.joinToString(),
                             start = 1231313,
                             end = 231231312,
-                            location = LoremIpsum(2).values.joinToString()
+                            location = LoremIpsum(2).values.joinToString(),
+                            state = EventState.PUBLISHED,
                         )
                     },
                     finishedEvents = List(3) {
@@ -102,7 +107,8 @@ private fun MyEventsScreenDefaultDarkPreview() {
                             description = LoremIpsum(3).values.joinToString(),
                             start = 1231313,
                             end = 231231312,
-                            location = LoremIpsum(2).values.joinToString()
+                            location = LoremIpsum(2).values.joinToString(),
+                            state = EventState.FINISHED,
                         )
                     }
                 ),

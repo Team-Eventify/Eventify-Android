@@ -1,7 +1,6 @@
 package com.example.eventify.presentation.ui.events.myevents.components
 
 import android.content.res.Configuration
-import android.graphics.Bitmap.Config
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,14 +20,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.composed
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import com.example.eventify.R
+import com.example.eventify.domain.models.EventState
 import com.example.eventify.presentation.models.ShortEventItem
 import com.example.eventify.presentation.ui.common.EventCardTitle
 import com.example.eventify.presentation.ui.common.UpComingEventInfoTag
@@ -36,7 +34,7 @@ import com.example.eventify.presentation.ui.theme.EventifyTheme
 import com.example.eventify.presentation.utils.asDate
 import com.example.eventify.presentation.utils.asTime
 import java.util.UUID
-import kotlin.random.Random
+
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -53,7 +51,7 @@ fun UpComingEventCard(
         modifier = Modifier
             .fillMaxWidth()
             .height(IntrinsicSize.Min) // Ensures height matches content
-            .composed { modifier }
+            .then(modifier)
     ) {
         Row(
             horizontalArrangement = Arrangement.Start,
@@ -114,7 +112,8 @@ private fun PreviewMyEventCardLight() {
                 description = "",
                 start = 1231313,
                 end = 231231312,
-                location = LoremIpsum(2).values.joinToString()
+                location = LoremIpsum(2).values.joinToString(),
+                state = EventState.PUBLISHED,
             )
         )
     }

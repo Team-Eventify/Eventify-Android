@@ -1,18 +1,14 @@
 package com.example.eventify.presentation.ui.auth.choosecategories
 
-import android.content.Context
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.eventify.domain.Result
 import com.example.eventify.domain.usecases.account.SetUserCategoriesUseCase
 import com.example.eventify.domain.usecases.categories.GetCategoriesUseCase
 import com.example.eventify.presentation.models.CategorySelectItem
 import com.example.eventify.presentation.ui.auth.choosecategories.state.SetUpState
 import com.example.eventify.presentation.ui.auth.choosecategories.state.SideEffect
-import com.example.eventify.presentation.utils.asText
+import com.example.eventify.presentation.utils.BaseViewModel
 import com.example.eventify.presentation.utils.toColorOrNull
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.channels.Channel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow
@@ -22,14 +18,12 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 
 @HiltViewModel
 class ChooseCategoriesViewModel @Inject constructor(
     private val setCategoriesUseCase: SetUserCategoriesUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
-    @ApplicationContext private val context: Context
-) : ViewModel() {
+) : BaseViewModel() {
     private val mutableSideEffect = Channel<SideEffect>()
     val sideEffect = mutableSideEffect.receiveAsFlow()
 
@@ -42,27 +36,25 @@ class ChooseCategoriesViewModel @Inject constructor(
             SetUpState()
         )
 
-    fun loadData(){
-        viewModelScope.launch {
-            when (val result = getCategoriesUseCase()){
-                is Result.Error -> {
-                    mutableSideEffect.send(SideEffect.FailedProvideCategories(
-                        message = result.asText(context)
-                    ))
-                }
-                is Result.Success -> {
-                    _stateFlow.update { currentState ->
-                        currentState.copy(
-                            categoryItems = result.data.map {
-                                CategorySelectItem(
-                                    id = it.id,
-                                    title = it.title,
-                                    color = it.color.toColorOrNull()!!
-                                )
-                            }
+    private fun loadData(){
+        launchCatching(
+            catch = {
+                mutableSideEffect.trySend(SideEffect.FailedProvideCategories(
+                    message = it.message
+                ))
+            }
+        ) {
+            val categories = getCategoriesUseCase()
+            _stateFlow.update { currentState ->
+                currentState.copy(
+                    categoryItems = categories.map {
+                        CategorySelectItem(
+                            id = it.id,
+                            title = it.title,
+                            color = it.color.toColorOrNull()!!
                         )
                     }
-                }
+                )
             }
         }
     }
@@ -71,17 +63,16 @@ class ChooseCategoriesViewModel @Inject constructor(
     fun setCategories(){
         val selectedCategoryIds = stateFlow.value.categoryItems.filter { it.selected }.map { it.id }
 
-        viewModelScope.launch {
-            when (val result = setCategoriesUseCase(selectedCategoryIds)){
-                is Result.Error -> {
-                    mutableSideEffect.send(SideEffect.FailedProvideCategories(
-                        message = result.asText(context)
-                    ))
-                }
-                is Result.Success -> {
-                    mutableSideEffect.send(SideEffect.FinishSetUp)
-                }
+        launchCatching(
+            catch = {
+                mutableSideEffect.trySend(SideEffect.FailedProvideCategories(
+                    message = it.message
+                ))
             }
+        ) {
+            setCategoriesUseCase(selectedCategoryIds)
+            mutableSideEffect.send(SideEffect.FinishSetUp)
+
         }
     }
 

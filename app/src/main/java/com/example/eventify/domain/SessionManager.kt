@@ -24,14 +24,9 @@ class SessionManagerRequestsImpl @Inject constructor(
         try {
             if (!tokenProvider.isValidData()) return false
             val userId = tokenProvider.getUserId() ?: return false
-
-            return when (usersRepository.getUserInfo(userId)){
-                is Result.Error -> false
-                is Result.Success -> true
-            }
-
+            usersRepository.getUserInfo(userId)
+            return true
         } catch (e: Exception){
-            Timber.e(e)
             return false
         }
     }

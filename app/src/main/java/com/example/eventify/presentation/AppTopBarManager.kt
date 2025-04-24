@@ -37,7 +37,14 @@ sealed class TopBarState {
     ) : TopBarState()
 
     data class Search(
-        val searchText: String
+        val searchText: String,
+        val onChangeText: (String) -> Unit,
+        val onLeadingIconClick: (() -> Unit)? = null,
+        val onTrailingIconClick: (() -> Unit)? = null,
+    ) : TopBarState()
+
+    data class ExpandedSearch(
+        val searchText: String,
     ) : TopBarState()
 }
 

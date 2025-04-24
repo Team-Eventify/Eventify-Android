@@ -91,6 +91,7 @@
     <string name="failed_load_profile">Failed to load your profile</string>
     <string name="privacy_policy_text">By registering, you agree to the processing of</string>
     <string name="privacy_policy_link">personal data</string>
+
     <string name="design_section_title">Decor</string>
     <string name="icon_logo_update">Icon was updated</string>
     <string name="icon_logo">App icon</string>
@@ -99,4 +100,11 @@
     <string name="system_theme_ttile">System</string>
     <string name="theme_title">Theme</string>
 
+    <string name="failed_to_load_data">Failed to load data</string>
+    <string name="events">Events</string>
+    <string name="categories">Categories</string>
+    <string name="incorrect_auth_data">Incorrect login or password</string>
+    <string name="incorrect_otp">Incorrect code</string>
+    <string name="subscribe_for_event_action">I will go!</string>
+    <string name="unsubscribe_for_event_action">Cancel appointment</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.example.eventify.data.remote.models.events
 
 import com.example.eventify.domain.models.Event
+import com.example.eventify.domain.models.toEventState
 
 data class EventInfoResponse(
     val id: String,
@@ -25,7 +26,7 @@ fun EventInfoResponse.toEventInfo(): Event = Event(
     end = end,
     organizationID = organizationID,
     start = start,
-    state = state,
+    state = state.toEventState(),
     title = title,
     location = location,
     cover = cover,

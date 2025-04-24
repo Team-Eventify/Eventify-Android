@@ -17,7 +17,6 @@ import com.example.eventify.presentation.TopBarAction
 import com.example.eventify.presentation.TopBarSize
 import com.example.eventify.presentation.TopBarState
 import com.example.eventify.presentation.ui.settings.aboutapp.state.AboutAppListener
-import com.example.eventify.presentation.ui.common.DefaultTopAppBar
 
 
 @Composable

@@ -24,6 +24,7 @@ import com.example.eventify.presentation.ui.account.profile.ProfilePath
 import com.example.eventify.presentation.ui.events.eventsfeed.EventFeedPath
 import com.example.eventify.presentation.ui.events.myevents.MyEventsPath
 import com.example.eventify.presentation.ui.events.search.SearchPath
+import com.example.eventify.presentation.ui.searchresult.SearchDetailPath
 
 @Composable
 fun BottomNavBar(
@@ -38,22 +39,25 @@ fun BottomNavBar(
             BottomBarItem(
                 titleResId = R.string.home,
                 iconResId = R.drawable.ic_house,
-                route = EventFeedPath
+                route = EventFeedPath.route
             ),
             BottomBarItem(
                 titleResId = R.string.search,
                 iconResId = R.drawable.ic_magnifying_glass,
-                route = SearchPath
+                route = SearchPath.route,
+                nestedRoutes = listOf(
+                    SearchDetailPath.route,
+                )
             ),
             BottomBarItem(
                 titleResId = R.string.my_events,
                 iconResId = R.drawable.ic_bookmark,
-                route = MyEventsPath
+                route = MyEventsPath.route
             ),
             BottomBarItem(
                 titleResId = R.string.profile,
                 iconResId = R.drawable.ic_person,
-                route = ProfilePath
+                route = ProfilePath.route
             ),
         )
     }
@@ -84,8 +88,9 @@ fun BottomNavBar(
                             fontSize = 12.sp
                         )
                     },
-                    selected = currentRoute == item.route,
+                    selected = item.contains(currentRoute),
                     onClick = {
+                        if (item.route == currentRoute) return@NavigationBarItem
                         navController.navigate(item.route)
                     },
                     colors = NavigationBarItemDefaults.colors(

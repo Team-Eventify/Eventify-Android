@@ -1,171 +1,145 @@
 package com.example.eventify.presentation.ui.events.search
 
-import androidx.compose.ui.graphics.Color
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.eventify.data.exceptions.isNotFound
+import com.example.eventify.data.exceptions.isServerError
+import com.example.eventify.data.exceptions.isUnauthorized
 import com.example.eventify.data.remote.models.events.EventsFilterData
-import com.example.eventify.domain.Result
+import com.example.eventify.domain.models.isHidden
 import com.example.eventify.domain.models.toShortEventItem
 import com.example.eventify.domain.usecases.categories.GetCategoriesUseCase
 import com.example.eventify.domain.usecases.events.GetEventsUseCase
-import com.example.eventify.presentation.models.CategorySelectItem
-import com.example.eventify.presentation.utils.toColor
+import com.example.eventify.presentation.navigation.ARG_SEARCH_TEXT
+import com.example.eventify.presentation.ui.events.search.state.SearchMode
+import com.example.eventify.presentation.ui.events.search.state.SearchResult
+import com.example.eventify.presentation.ui.events.search.state.SearchUiState
+import com.example.eventify.presentation.utils.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.MutableSharedFlow
 import javax.inject.Inject
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
+@OptIn(FlowPreview::class)
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getCategoriesUseCase: GetCategoriesUseCase,
     private val getEventsUseCase: GetEventsUseCase,
-) : ViewModel() {
+) : BaseViewModel() {
 
-    private val sharedQuery = ""
-    private val _stateFlow: MutableStateFlow<SearchState> = MutableStateFlow(SearchState(
-        searchText = sharedQuery ?: ""
-    ))
-    val stateFlow: StateFlow<SearchState> = _stateFlow
-        .onStart { loadData() }
+    private val sharedSearchQuery = savedStateHandle[ARG_SEARCH_TEXT] ?: ""
+    private val _searchQueryStateFlow = MutableStateFlow(sharedSearchQuery)
+    private val _searchResultStateFlow = MutableStateFlow<SearchResult>(SearchResult.None)
+    private val _searchModeStateFlow = MutableStateFlow(SearchMode.Events)
+
+    val stateFlow = combine(
+        _searchModeStateFlow,
+        _searchResultStateFlow,
+        _searchQueryStateFlow,
+    ) { mode, result, query ->
+        SearchUiState(
+            searchText = query,
+            searchResult = result,
+            searchMode = mode,
+        )
+    }
+//        .distinctUntilChanged()
         .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000L),
-            SearchState(searchText = sharedQuery ?: "")
+            SearchUiState(
+                searchText = sharedSearchQuery,
+                searchResult = SearchResult.None,
+                searchMode = SearchMode.Events,
+            )
         )
 
-    private suspend fun loadSearchData(){
-        when (val result = getCategoriesUseCase()){
-            is Result.Error -> {
-//                SnackbarController.sendEvent(
-//                    SnackbarEvent(message = result.error.toString())
-//                )
-            }
-            is Result.Success -> {
-                _stateFlow.update { currentState ->
-                    currentState.copy(
-                        categories = result.data.map {
-                            CategorySelectItem(
-                                id = it.id,
-                                title = it.title,
-                                selected = false,
-                                color = it.color.toColor(Color.Blue)
-                            )
-                        }
-                    )
+    init {
+        launchCatching {
+            combine(
+                _searchModeStateFlow,
+                _searchQueryStateFlow.debounce(200),
+            ) { mode, query -> mode to query }
+            .collectLatest { (mode, query) ->
+                when (mode) {
+                    SearchMode.Events -> fetchEvents(query)
+                    SearchMode.Categories -> fetchCategories(query)
                 }
             }
         }
     }
 
-    private suspend fun searchEvents(){
-        val filterData = stateFlow.value.categories.let { categories ->
-            EventsFilterData(
-                categoryIds = categories.filter { it.selected }.map { it.id }
-            )
-        }
-        when (val response = getEventsUseCase(filter = filterData)){
-            is Result.Error -> TODO()
-            is Result.Success -> {
-                _stateFlow.update { currentState ->
-                    currentState.copy(
-                        searchedEvents = response.data.map { it.toShortEventItem() }
-                    )
-                }
+
+    private fun fetchEvents(query: String) {
+        launchCatching(catch = ::handleErrors) {
+            val queryFilter = EventsFilterData(
+                title = query
+            ).takeIf { query.isNotEmpty() }
+
+            _searchResultStateFlow.update {
+                SearchResult.Events(
+                    items = getEventsUseCase(queryFilter)
+                        .filter { !it.state.isHidden() }
+                        .map {
+                            it.toShortEventItem()
+                        }
+                )
             }
+
         }
     }
 
-    fun changeCategoryFilterActive(categoryId: String, value: Boolean){
-        viewModelScope.launch {
-            _stateFlow.update { currentState ->
-                currentState.copy(
-                    categories = currentState.categories.map { category ->
-                        if (category.id == categoryId) {
-                            category.copy(selected = value)
-                        } else {
-                            category
-                        }
+    private fun fetchCategories(query: String) {
+        launchCatching(catch = ::handleErrors) {
+            _searchResultStateFlow.update {
+                getCategoriesUseCase()
+                    .filter {
+                        it.title.contains(query, ignoreCase = true)
                     }
-                )
+                    .takeIf { it.isNotEmpty() }?.let { categories ->
+                        SearchResult.Categories(items = categories)
+                    } ?: SearchResult.Empty
+
             }
         }
     }
 
-    private fun loadData(){
+    fun changeSearchMode(mode: SearchMode) {
         viewModelScope.launch {
-            _stateFlow.update { it.copy(isLoading = true) }
-            loadSearchData()
-            _stateFlow.update { it.copy(isLoading = false) }
+            _searchModeStateFlow.update { mode }
         }
     }
 
-    fun search(){
-        Timber.d("On Search")
+    fun changeSearchQuery(value: String) {
         viewModelScope.launch {
-            _stateFlow.update { currentState ->
-                currentState.copy(
-                    isActiveSearchBar = false
-                )
-            }
-            searchEvents()
+            _searchQueryStateFlow.update { value }
         }
     }
 
-    fun changeSearchText(value: String){
-        Timber.d("On ChangeSearchText")
-
+    fun cleanSearchQuery() {
         viewModelScope.launch {
-            _stateFlow.update { currentState ->
-                currentState.copy(
-                    searchText = value,
-                    categories = currentState.categories.map { category -> category.copy(isShow = category.title.contains(value))}
-                )
-            }
+            _searchQueryStateFlow.update { "" }
         }
     }
 
-    fun changeSearchBarActive(value: Boolean){
-        Timber.d("On ChangeSearchBarActive")
+    private fun handleErrors(error: Throwable) {
+        when {
+            error.isServerError() -> _searchResultStateFlow.update { SearchResult.Error() }
 
-        viewModelScope.launch {
-            _stateFlow.update { currentState ->
-                currentState.copy(
-                    isActiveSearchBar = value
-                )
-            }
-        }
-    }
+            error.isNotFound() -> _searchResultStateFlow.update { SearchResult.Empty }
 
-    fun clearSearchText(){
-        viewModelScope.launch {
-            _stateFlow.update { currentState ->
-                currentState.copy(
-                    isActiveSearchBar = false,
-                    searchText = ""
-                )
-            }
-        }
-    }
-
-    fun refresh() {
-        viewModelScope.launch {
-            _stateFlow.update { it.copy(isRefreshing = true) }
-            searchEvents()
-            _stateFlow.update { it.copy(isRefreshing = false) }
-        }
-    }
-
-    fun goToEventDetail(eventId: String){
-        viewModelScope.launch {
-//            navigator.navigate(RootRouter.EventDetailRoute(eventId))
+            else -> _searchResultStateFlow.update { SearchResult.Error() }
         }
     }
 }

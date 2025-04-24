@@ -10,18 +10,15 @@ import com.example.eventify.data.remote.models.auth.RefreshTokenRequestData
 import com.example.eventify.data.remote.models.auth.RegisterUserRequestData
 import com.example.eventify.data.remote.models.auth.RegisterValidationRequest
 import com.example.eventify.data.remote.utils.handle
-import com.example.eventify.domain.DataError
-import com.example.eventify.domain.Result
 import com.example.eventify.domain.models.OtpUserCreate
 import com.example.eventify.domain.models.RegisterValidationData
-import timber.log.Timber
 import javax.inject.Inject
 
 class AuthUserRepositoryImpl @Inject constructor (
     private val dataSource: AuthAPI
 ): AuthUserRepository {
-    override suspend fun refreshAccessToken(refreshToken: String): Result<TokenData, DataError> = try {
-        dataSource.refreshAccessToken(
+    override suspend fun refreshAccessToken(refreshToken: String): TokenData {
+        return dataSource.refreshAccessToken(
             data = RefreshTokenRequestData(
                 refresh = refreshToken
             )
@@ -35,13 +32,10 @@ class AuthUserRepositoryImpl @Inject constructor (
             }
         }
 
-    } catch (e: Exception){
-        Timber.e(e)
-        Result.Error(DataError.Network.UNKNOWN)
     }
 
-    override suspend fun registerUser(user: UserCreate): Result<TokenData, DataError> = try {
-        dataSource.registerUser(
+    override suspend fun registerUser(user: UserCreate): TokenData {
+        return dataSource.registerUser(
             user = RegisterUserRequestData(
                 email = user.email,
                 password = user.password
@@ -56,14 +50,10 @@ class AuthUserRepositoryImpl @Inject constructor (
             }
         }
 
-    } catch (e: Exception){
-        Timber.e(e)
-        Result.Error(DataError.Network.UNKNOWN)
     }
 
-
-    override suspend fun logInUser(credentials: UserCredentials): Result<TokenData, DataError> = try {
-        dataSource.logInUser(
+    override suspend fun logInUser(credentials: UserCredentials): TokenData {
+        return dataSource.logInUser(
             payload = LogInRequestData(
                 email = credentials.login,
                 password = credentials.password
@@ -78,13 +68,10 @@ class AuthUserRepositoryImpl @Inject constructor (
             }
         }
 
-    } catch (e: Exception){
-        Timber.e(e)
-        Result.Error(DataError.Network.UNKNOWN)
     }
 
-    override suspend fun validateRegisterData(data: RegisterValidationData): Result<String, DataError> = try {
-        dataSource.validateRegisterData(
+    override suspend fun validateRegisterData(data: RegisterValidationData): String {
+        return dataSource.validateRegisterData(
             data = RegisterValidationRequest(
                 email = data.email,
                 password = data.password
@@ -94,13 +81,10 @@ class AuthUserRepositoryImpl @Inject constructor (
                 it.validation_id
             }
         }
-    } catch (e: Exception) {
-        Timber.e(e)
-        Result.Error(DataError.Network.UNKNOWN)
     }
 
-    override suspend fun otpRegisterUser(user: OtpUserCreate): Result<TokenData, DataError> = try {
-        dataSource.otpRegisterUser(
+    override suspend fun otpRegisterUser(user: OtpUserCreate): TokenData {
+        return dataSource.otpRegisterUser(
             validationId = user.validationResultId,
             user = OtpRegisterUserRequest(
                 email = user.email,
@@ -116,8 +100,5 @@ class AuthUserRepositoryImpl @Inject constructor (
                 )
             }
         }
-    } catch (e: Exception) {
-        Timber.e(e)
-        Result.Error(DataError.Network.UNKNOWN)
     }
 }

@@ -90,6 +90,7 @@
     <string name="failed_load_profile">Не удалось загрузить твой профиль</string>
     <string name="privacy_policy_text">Регистрируясь, Вы даете согласие на обработку</string>
     <string name="privacy_policy_link">персональных данных</string>
+
     <string name="design_section_title">Оформление</string>
     <string name="icon_logo_update">Иконка приложения обновлена</string>
     <string name="icon_logo">Иконка приложения обновлена</string>
@@ -97,4 +98,12 @@
     <string name="light_theme_title">Светлая</string>
     <string name="system_theme_ttile">Системная</string>
     <string name="theme_title">Тема</string>
+
+    <string name="failed_to_load_data">Не удалось загрузить данные</string>
+    <string name="events">События</string>
+    <string name="categories">Категории</string>
+    <string name="incorrect_auth_data">Неверный логин или пароль</string>
+    <string name="incorrect_otp">Неверный код</string>
+    <string name="subscribe_for_event_action">Я пойду!</string>
+    <string name="unsubscribe_for_event_action">Отменить запись</string>
 </resources>

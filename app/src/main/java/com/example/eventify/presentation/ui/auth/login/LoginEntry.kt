@@ -8,14 +8,11 @@ import javax.inject.Inject
 
 val AuthRootPath = BaseDestination("auth")
 
-val LoginPath = AuthRootPath.updateAndGetPath("login")
+val LoginPath = AuthRootPath.child("login")
 
 interface LoginEntry : ComposableFeatureEntry {
-    override val route: String
+    override val destination: BaseDestination
         get() = LoginPath
-
-    override val argumentsKeys: List<String>
-        get() = emptyList()
 }
 
 class LoginEntryImpl @Inject constructor() : LoginEntry {

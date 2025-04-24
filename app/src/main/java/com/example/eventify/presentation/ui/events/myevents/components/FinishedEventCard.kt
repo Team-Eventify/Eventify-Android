@@ -31,6 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import com.example.eventify.R
+import com.example.eventify.domain.models.EventState
 import com.example.eventify.presentation.models.ShortEventItem
 import com.example.eventify.presentation.ui.common.EventCardTitle
 import com.example.eventify.presentation.ui.common.FinishedEventInfoChip
@@ -130,7 +131,8 @@ private fun PreviewMyPastEventCardDark() {
                 description = "",
                 start = Random.nextLong(),
                 end = Random.nextLong(),
-                location = LoremIpsum(2).values.joinToString()
+                location = LoremIpsum(2).values.joinToString(),
+                state = EventState.FINISHED,
             )
         )
     }
@@ -151,7 +153,8 @@ private fun PreviewMyPastEventCardDarkWithButton() {
                 description = "",
                 start = 1231313,
                 end = 231231312,
-                location = LoremIpsum(2).values.joinToString()
+                location = LoremIpsum(2).values.joinToString(),
+                state = EventState.FINISHED,
             )
         )
     }

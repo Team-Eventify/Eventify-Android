@@ -47,7 +47,7 @@ fun AboutAppScreen(
                 .fillMaxWidth(.3f)
         )
         Text(
-            text = state.versionName.asString()
+            text = state.versionName
         )
 
         SettingsBlock{

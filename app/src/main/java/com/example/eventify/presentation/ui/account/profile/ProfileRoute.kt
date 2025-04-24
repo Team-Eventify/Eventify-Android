@@ -1,5 +1,6 @@
 package com.example.eventify.presentation.ui.account.profile
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -7,7 +8,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.navigation.toRoute
 import com.example.eventify.R
 import com.example.eventify.presentation.LocalTopBarState
 import com.example.eventify.presentation.TopBarSize
@@ -19,7 +22,6 @@ import com.example.eventify.presentation.ui.settings.aboutapp.AboutAppEntry
 import com.example.eventify.presentation.navigation.navigateToFeature
 import com.example.eventify.presentation.ui.account.profile.components.LoadingProfile
 import com.example.eventify.presentation.ui.account.profile.state.ProfileListener
-import com.example.eventify.presentation.ui.account.profile.state.SideEffect
 import com.example.eventify.presentation.ui.account.profile.state.UiState
 import com.example.eventify.presentation.ui.account.profile_decor.ProfileDecorEntry
 import com.example.eventify.presentation.ui.auth.login.LoginEntry
@@ -55,14 +57,6 @@ fun ProfileRoute(
         }
     }
 
-    ObserveAsEvent(viewModel.sideEffect) { sideEffect ->
-        when (sideEffect) {
-            SideEffect.LogOut -> {
-                features.clearNavigate<LoginEntry>(navController)
-            }
-        }
-    }
-
     when (uiState) {
         is UiState.Error -> {
             ErrorScreen(
@@ -73,7 +67,6 @@ fun ProfileRoute(
         UiState.Loading -> LoadingProfile()
         is UiState.ShowProfile -> {
             ProfileScreen((uiState as UiState.ShowProfile), listener)
-
         }
     }
 

@@ -27,7 +27,7 @@ fun DefaultTopAppBar(
         title = {
             Text(text = title)
         },
-        navigationIcon =  onNavigateUp?.let {
+        navigationIcon = onNavigateUp?.let {
             {
                 IconButton(
                     onClick = it

@@ -9,14 +9,11 @@ import javax.inject.Inject
 
 val SettingsRootPath = BaseDestination("settings")
 
-val AboutAppPath = SettingsRootPath.updateAndGetPath("about-app")
+val AboutAppPath = SettingsRootPath.child("about-app")
 
 interface AboutAppEntry : ComposableFeatureEntry {
-    override val route: String
+    override val destination: BaseDestination
         get() = AboutAppPath
-
-    override val argumentsKeys: List<String>
-        get() = emptyList()
 }
 
 class AboutAppEntryImpl @Inject constructor(): AboutAppEntry {
