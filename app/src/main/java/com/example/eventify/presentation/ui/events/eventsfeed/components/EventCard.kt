@@ -32,6 +32,7 @@ import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.example.eventify.R
+import com.example.eventify.domain.models.EventState
 import com.example.eventify.presentation.LocaleImageLoader
 import com.example.eventify.presentation.models.ShortEventItem
 import com.example.eventify.presentation.ui.common.BodyText
@@ -135,6 +136,7 @@ private fun PreviewEventCardDark() {
                         .joinToString(),
                     start = 1324412412,
                     end = 1324419999,
+                    state = EventState.UNKNOWN,
                     location = LoremIpsum(15)
                         .values
                         .joinToString(),
@@ -160,6 +162,7 @@ private fun PreviewEventCardLight() {
                         .values
                         .joinToString(),
                     start = 1324412412,
+                    state = EventState.UNKNOWN,
                     end = 1324419999,
                     location = LoremIpsum(2)
                         .values

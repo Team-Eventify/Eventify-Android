@@ -64,6 +64,10 @@ fun SearchRoute(
             viewModel.cleanSearchQuery()
         }
 
+        override fun refresh() {
+            // TODO implement
+        }
+
     }
 
     SearchScreen(

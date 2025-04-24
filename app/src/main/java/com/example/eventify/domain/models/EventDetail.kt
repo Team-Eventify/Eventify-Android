@@ -17,7 +17,7 @@ data class EventDetail(
     val pictures: List<PictureUUID>,
     val categories: List<CategoryUUID>? = null,
     val start: Long,
-    val state: String,
+    val state: EventState,
     val subscribed: Boolean,
     val title: String
 ) {

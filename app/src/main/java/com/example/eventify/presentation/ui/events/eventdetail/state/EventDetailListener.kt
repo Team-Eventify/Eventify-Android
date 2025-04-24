@@ -4,7 +4,6 @@ import com.example.eventify.domain.models.FullEventDetail
 
 interface EventDetailListener {
     fun navigateUp(): Unit
-    fun onSubscribe(): Unit
-    fun onUnsubscribe(): Unit
+    fun onActionClick(): Unit
     fun goToRatePage(): Unit
 }

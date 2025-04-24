@@ -95,4 +95,6 @@
     <string name="categories">Категории</string>
     <string name="incorrect_auth_data">Неверный логин или пароль</string>
     <string name="incorrect_otp">Неверный код</string>
+    <string name="subscribe_for_event_action">Я пойду!</string>
+    <string name="unsubscribe_for_event_action">Отменить запись</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.example.eventify.presentation.ui.events.eventdetail
 
+import android.annotation.SuppressLint
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -29,6 +30,7 @@ import androidx.compose.ui.unit.sp
 import com.example.eventify.R
 import com.example.eventify.domain.models.Category
 import com.example.eventify.domain.models.EventDetail
+import com.example.eventify.domain.models.EventState
 import com.example.eventify.domain.models.FullEventDetail
 import com.example.eventify.domain.models.Organization
 import com.example.eventify.presentation.LocalTopBarState
@@ -39,13 +41,11 @@ import com.example.eventify.presentation.ui.events.eventdetail.components.ImageP
 import com.example.eventify.presentation.ui.events.eventdetail.components.OrganizationInfoPanel
 import com.example.eventify.presentation.ui.common.BodyText
 import com.example.eventify.presentation.ui.common.ChipInfo
-import com.example.eventify.presentation.ui.common.buttons.PrimaryButton
-import com.example.eventify.presentation.ui.common.PrimaryButtonText
-import com.example.eventify.presentation.ui.common.buttons.PrimaryDeclineButton
 import com.example.eventify.presentation.ui.common.CategoryTagChip
 import com.example.eventify.presentation.ui.common.EventImage
+import com.example.eventify.presentation.ui.events.eventdetail.components.EventActionButton
 import com.example.eventify.presentation.ui.events.eventdetail.state.EventDetailListener
-import com.example.eventify.presentation.ui.events.eventdetail.state.UiState
+import com.example.eventify.presentation.ui.events.eventdetail.state.EventDetailUiState
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 import com.example.eventify.presentation.ui.theme.LocalDimentions
 import com.example.eventify.presentation.utils.asDate
@@ -56,12 +56,13 @@ import java.util.UUID
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun EventDetailScreen(
-    state: UiState.ShowEvent,
+    state: EventDetailUiState.ShowEvent,
     actions: EventDetailListener,
 ) {
     val pagerState = rememberPagerState(pageCount = { state.event.eventInfo.pictures.size})
     val dimmentions = LocalDimentions.current
     val topBarState = LocalTopBarState.current
+
 
     LaunchedEffect(Unit) {
         topBarState.setUp(
@@ -129,21 +130,28 @@ fun EventDetailScreen(
             )
             Spacer(modifier = Modifier.height(20.dp))
 
-            if (state.event.eventInfo.subscribed) {
-                PrimaryDeclineButton(
-                    onClick = actions::onUnsubscribe,
-                    enabled = !state.event.eventInfo.isFinished,
-                ) {
-                    PrimaryButtonText(text = "Отменить запись на мероприятие")
-                }
-            } else {
-                PrimaryButton(
-                    onClick = actions::onSubscribe,
-                    enabled = !state.event.eventInfo.isFinished,
-                ) {
-                    PrimaryButtonText(text = "Я пойду!")
-                }
-            }
+            EventActionButton(
+                eventState = state.event.eventInfo.state,
+                isSubscribed = state.event.eventInfo.subscribed,
+                onClick = actions::onActionClick
+            )
+
+
+//            if (state.event.eventInfo.subscribed) {
+//                PrimaryDeclineButton(
+//                    onClick = actions::onUnsubscribe,
+//                    enabled = !state.event.eventInfo.isFinished,
+//                ) {
+//                    PrimaryButtonText(text = "Отменить запись на мероприятие")
+//                }
+//            } else {
+//                PrimaryButton(
+//                    onClick = actions::onSubscribe,
+//                    enabled = !state.event.eventInfo.isFinished,
+//                ) {
+//                    PrimaryButtonText(text = "Я пойду!")
+//                }
+//            }
 
 //            PrimaryButton(onClick = actions.goToRatePage) {
 //                PrimaryButtonText(stringResource(R.string.to_rate))
@@ -156,19 +164,20 @@ fun EventDetailScreen(
 @Composable
 @Preview(name = "EventDetailDark", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Preview(name = "EventDetailLight", uiMode = Configuration.UI_MODE_NIGHT_NO)
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 private fun EventDetailScreenLightPreview() {
     EventifyTheme {
-        Scaffold { _ ->
+        Scaffold {  _ ->
             EventDetailScreen(
-                state = UiState.ShowEvent(
+                state = EventDetailUiState.ShowEvent(
                     event = FullEventDetail(
                         eventInfo = EventDetail(
                             id = UUID.randomUUID().toString(),
                             title = LoremIpsum(5).values.joinToString(),
                             description = LoremIpsum(50).values.joinToString(),
                             start = 0,
+                            state = EventState.PUBLISHED,
                             end = 0,
-                            state = "",
                             capacity = 0,
                             location = "",
                             cover = "",
@@ -195,8 +204,7 @@ private fun EventDetailScreenLightPreview() {
                 ),
                 actions = object : EventDetailListener {
                     override fun navigateUp() = Unit
-                    override fun onSubscribe() = Unit
-                    override fun onUnsubscribe() = Unit
+                    override fun onActionClick() = Unit
                     override fun goToRatePage() = Unit
                 },
             )

@@ -1,5 +1,6 @@
 package com.example.eventify.presentation.models
 
+import com.example.eventify.domain.models.EventState
 import com.example.eventify.presentation.utils.asDate
 import com.example.eventify.presentation.utils.toLocalDateTime
 import java.time.Duration
@@ -23,6 +24,7 @@ data class ShortEventItem(
     val description: String,
     val cover: String = "",
     val start: Long,
+    val state: EventState,
     val end: Long,
     val location: String
 ){

@@ -7,3 +7,11 @@ fun Throwable.isUnauthorized(): Boolean {
 fun Throwable.isNotFound(): Boolean {
     return this is NetworkException && this.error.status == 404
 }
+
+fun Throwable.isNotFoundOrEmpty(): Boolean {
+    return this is NetworkException && this.error.status == 404
+}
+
+fun Throwable.isServerError(): Boolean {
+    return this is NetworkException && this.error.status >= 500
+}

@@ -1,6 +1,7 @@
 package com.example.eventify.presentation.ui.events.eventsfeed
 
 import androidx.lifecycle.viewModelScope
+import com.example.eventify.domain.models.isHidden
 import com.example.eventify.domain.models.toShortEventItem
 import com.example.eventify.domain.usecases.events.GetEventsUseCase
 import com.example.eventify.presentation.ui.events.eventsfeed.state.UiState
@@ -50,9 +51,11 @@ class EventsFeedViewModel @Inject constructor(
         ) {
             _stateFlow.update {
                 UiState.ShowFeed(
-                    events = getEventsUseCase().map {
-                        it.toShortEventItem()
-                    }
+                    events = getEventsUseCase()
+                        .filter { !it.state.isHidden() }
+                        .map {
+                            it.toShortEventItem()
+                        }
                 )
             }
         }
