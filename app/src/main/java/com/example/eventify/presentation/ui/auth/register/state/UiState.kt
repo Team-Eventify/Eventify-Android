@@ -1,9 +1,11 @@
 package com.example.eventify.presentation.ui.auth.register.state
 
 import androidx.compose.runtime.Stable
+import com.example.eventify.domain.validation.Email
+import com.example.eventify.domain.validation.OTP
+import com.example.eventify.domain.validation.Password
 
 
-const val OTP_LENGTH = 6
 
 
 @Stable
@@ -17,11 +19,11 @@ data class RegisterUiState(
 
 
 data class RegisterPayloadState(
-    val login: String = "",
+    val login: Email = Email(),
     val hasLoginError: Boolean = false,
     val loginError: String? = null,
 
-    val password: String = "",
+    val password: Password = Password(),
     val hasPasswordError: Boolean = false,
     val passwordError: String? = null,
 ) {
@@ -35,7 +37,8 @@ sealed class OtpState {
     data object None : OtpState()
     data object Requested : OtpState()
     data class ShowOtp(
-        val value: String = "",
+        val otp: OTP = OTP(),
         val hasError: Boolean = false,
+        val errorMessage: String? = null,
     ) : OtpState()
 }

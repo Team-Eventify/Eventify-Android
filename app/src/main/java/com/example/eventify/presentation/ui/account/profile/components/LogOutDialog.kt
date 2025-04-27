@@ -30,7 +30,11 @@ fun LogOutDialog(
         containerColor = MaterialTheme.colorScheme.surfaceContainer,
         shape = RoundedCornerShape(14.dp),
         icon = {
-               Icon(painter = painterResource(id = R.drawable.round_logout_24), contentDescription = null)
+               Icon(
+                   painter = painterResource(id = R.drawable.round_logout_24),
+                   contentDescription = null,
+                   tint = MaterialTheme.colorScheme.primary,
+               )
         },
         title = {
             Text(

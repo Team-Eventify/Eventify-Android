@@ -2,11 +2,16 @@ package com.example.eventify.presentation.ui.auth.register
 
 import android.content.Context
 import androidx.lifecycle.viewModelScope
+import com.example.eventify.R
 import com.example.eventify.data.repositories.auth.AuthUserRepository
 import com.example.eventify.domain.models.OtpUserCreate
 import com.example.eventify.domain.models.RegisterValidationData
 import com.example.eventify.domain.usecases.auth.OtpRegisterUseCase
 import com.example.eventify.domain.usecases.auth.isIncorrectOtp
+import com.example.eventify.domain.validation.Email
+import com.example.eventify.domain.validation.InvalidEmailException
+import com.example.eventify.domain.validation.OTP
+import com.example.eventify.domain.validation.Password
 import com.example.eventify.presentation.ui.auth.register.state.OtpState
 import com.example.eventify.presentation.ui.auth.register.state.RegisterPayloadState
 import com.example.eventify.presentation.ui.auth.register.state.RegisterUiState
@@ -30,7 +35,7 @@ class RegisterViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
 ) : BaseViewModel() {
 
-    private var validationResultId: String? = null
+    private var validationResultId = MutableStateFlow<String?>(null)
 
     private val mutableSideEffect = Channel<SideEffect>()
     val sideEffect = mutableSideEffect.receiveAsFlow()
@@ -54,7 +59,7 @@ class RegisterViewModel @Inject constructor(
         )
 
 
-    fun changeLogin(value: String){
+    fun changeLogin(value: Email){
         mutableRegisterPayloadState.update { currentState ->
             currentState.copy(
                 login = value,
@@ -64,7 +69,7 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
-    fun changePassword(value: String){
+    fun changePassword(value: Password){
         mutableRegisterPayloadState.update { currentState ->
             currentState.copy(
                 password = value,
@@ -74,51 +79,49 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
-    fun changeOtp(value: String){
+    fun changeOtp(value: OTP){
         mutableOtpState.update { currentState ->
             (currentState as? OtpState.ShowOtp)?.copy(
-                value = value,
+                otp = value,
                 hasError = false,
             ) ?: currentState
         }
     }
 
-    fun requestOtp() {
+    fun register() {
+        launchCatching(catch = ::handleRegisterErrors) {
+            val email = mutableRegisterPayloadState.value.login.takeIf { it.isValid } ?: return@launchCatching
+            val password = mutableRegisterPayloadState.value.password.takeIf { it.isValid } ?: return@launchCatching
 
-        val validLogin = validateEmail() ?: return
-        val validPassword = validatePassword() ?: return
-
-        val otpData = RegisterValidationData(
-                email = validLogin,
-                password = validPassword,
+            val otpData = RegisterValidationData(
+                email = email.value,
+                password = password.value,
             )
 
-        launchCatching(
-            catch = ::handleOtpErrors
-        ) {
-            authRepository.validateRegisterData(data = otpData).let {
-                validationResultId = it
+
+            authRepository.validateRegisterData(data = otpData).let { resultId ->
+                validationResultId.update { resultId }
             }
             triggerOtpBottomSheet(true)
         }
     }
 
 
-    fun register(){
-        if (validationResultId == null) return
+    fun validateOtp(){
+        launchCatching(catch = ::handleOtpErrors) {
+            val validationId = validationResultId.value ?: return@launchCatching
+            val email = mutableRegisterPayloadState.value.login.takeIf { it.isValid } ?: return@launchCatching
+            val password = mutableRegisterPayloadState.value.password.takeIf { it.isValid } ?: return@launchCatching
 
-        val userPayload = (mutableOtpState.value as? OtpState.ShowOtp)?.value?.let { otp ->
-            OtpUserCreate(
-                email = mutableRegisterPayloadState.value.login,
-                password = mutableRegisterPayloadState.value.password,
-                code = otp,
-                validationResultId = validationResultId!!
-            )
-        } ?: return
+            val userPayload = (mutableOtpState.value as? OtpState.ShowOtp)?.otp?.let { otp ->
+                OtpUserCreate(
+                    email = email.value,
+                    password = password.value,
+                    code = otp.value,
+                    validationResultId = validationId
+                )
+            } ?: return@launchCatching
 
-        launchCatching(
-            catch = ::handleRegisterErrors
-        ) {
             otpRegisterUseCase(userData = userPayload)
             mutableSideEffect.send(SideEffect.SuccessRegister)
         }
@@ -130,22 +133,28 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
-    private fun validateEmail(): String? {
-        return mutableRegisterPayloadState.value.login
-
-    }
-
-    private fun validatePassword(): String? {
-        return mutableRegisterPayloadState.value.password
-
-    }
-
     /**
      * Handles errors after sending validation request to get otp
      **/
     private fun handleOtpErrors(error: Throwable){
+
         when {
-            else -> mutableSideEffect.trySend(SideEffect.ServerError)
+            error.isIncorrectOtp() -> {
+                mutableOtpState.update { currentState ->
+                    (currentState as? OtpState.ShowOtp)?.copy(
+                        hasError = true,
+                        errorMessage = context.getString(R.string.incorrect_otp)
+                    ) ?: currentState
+                }
+            }
+            else -> {
+                mutableOtpState.update { currentState ->
+                    (currentState as? OtpState.ShowOtp)?.copy(
+                        hasError = true,
+                        errorMessage = context.getString(R.string.server_error)
+                    ) ?: currentState
+                }
+            }
         }
     }
 
@@ -154,15 +163,17 @@ class RegisterViewModel @Inject constructor(
     **/
     private fun handleRegisterErrors(error: Throwable) {
         when {
-            error.isIncorrectOtp() -> {
-                mutableOtpState.update { currentState ->
-                    (currentState as? OtpState.ShowOtp)?.copy(
-                        hasError = true
+            else -> {
+                mutableRegisterPayloadState.update { currentState ->
+                    (currentState as? RegisterPayloadState)?.copy(
+                        hasPasswordError = true,
+                        hasLoginError = true,
                     ) ?: currentState
                 }
+                mutableSideEffect.trySend(SideEffect.ServerError)
             }
-            else -> mutableSideEffect.trySend(SideEffect.ServerError)
         }
     }
+
 
 }

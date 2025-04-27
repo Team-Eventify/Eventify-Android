@@ -5,18 +5,13 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.ime
-import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.waterfall
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetState
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -31,22 +26,22 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.eventify.R
+import com.example.eventify.domain.validation.asOTP
+import com.example.eventify.presentation.ui.auth.register.state.OtpState
 import com.example.eventify.presentation.ui.common.AnnotationText
 import com.example.eventify.presentation.ui.common.TitleText
 import com.example.eventify.presentation.ui.common.otp.OtpTextField
 import com.example.eventify.presentation.ui.theme.EventifyTheme
-import com.example.eventify.presentation.ui.theme.space12
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegistrationOtpBottomSheet(
-    otpValue: String,
+    otpState: OtpState.ShowOtp,
     onSubmit: () -> Unit,
     onChangeOtpValue: (String) -> Unit,
     onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier,
-    hasError: Boolean = false,
     sheetState: SheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
 ) {
     val focusRequester = remember { FocusRequester() }
@@ -78,14 +73,14 @@ fun RegistrationOtpBottomSheet(
                 text = stringResource(R.string.otp_description)
             )
             Text(
-                text = stringResource(R.string.incorrect_otp).takeIf { hasError } ?: "",
+                text = otpState.errorMessage.takeIf { !it.isNullOrEmpty() } ?: "",
                 color = MaterialTheme.colorScheme.error,
             )
             OtpTextField(
                 otpCount = 6,
-                text = otpValue,
+                text = otpState.otp.value,
                 onTextChange = onChangeOtpValue,
-                hasError = hasError,
+                hasError = otpState.hasError && !otpState.errorMessage.isNullOrEmpty(),
                 onSubmit = onSubmit,
                 modifier = Modifier
                     .focusRequester(focusRequester)
@@ -100,7 +95,9 @@ fun RegistrationOtpBottomSheet(
 private fun PreviewRegistrationOtpBottomSheet() {
     EventifyTheme {
         RegistrationOtpBottomSheet(
-            otpValue = "123",
+            otpState = OtpState.ShowOtp(
+                otp = "123".asOTP(),
+            ),
             onChangeOtpValue = {},
             onDismissRequest = {},
             onSubmit = {},)

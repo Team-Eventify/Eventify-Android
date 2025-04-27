@@ -30,7 +30,11 @@ fun DeleteAccountDialog(
         containerColor = MaterialTheme.colorScheme.surfaceContainer,
         shape = RoundedCornerShape(14.dp),
         icon = {
-            Icon(painter = painterResource(id = R.drawable.round_delete_forever_24), contentDescription = null)
+            Icon(
+                painter = painterResource(id = R.drawable.round_delete_forever_24),
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
+            )
         },
         title = {
             Text(
@@ -40,7 +44,7 @@ fun DeleteAccountDialog(
             )
         },
         text = {
-            AnnotationText(text = "Аккаунт будет удален перманентно. Вы не сможете его воссатновить")
+            AnnotationText(text = "Аккаунт будет удален перманентно. Вы не сможете его воссатновить.")
         },
         confirmButton = {
             TextButton(

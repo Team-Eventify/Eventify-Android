@@ -5,27 +5,15 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.internal.composableLambdaInstance
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -36,10 +24,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.eventify.R
-import com.example.eventify.presentation.ui.auth.onboarding.components.OnboardingView
 import com.example.eventify.presentation.ui.auth.onboarding.state.OnBoardingItem
 import com.example.eventify.presentation.ui.auth.onboarding.state.OnBoardingListener
-import com.example.eventify.presentation.ui.auth.onboarding.state.OnBoardingState
 import com.example.eventify.presentation.ui.common.PrimaryButtonText
 import com.example.eventify.presentation.ui.common.TitleText
 import com.example.eventify.presentation.ui.common.buttons.PrimaryButton
@@ -49,7 +35,6 @@ import com.example.eventify.presentation.ui.theme.LocalDimentions
 
 @Composable
 fun OnBoardingScreen(
-    state: OnBoardingState,
     actions: OnBoardingListener
 ) {
     val dimentions = LocalDimentions.current
@@ -77,76 +62,67 @@ fun OnBoardingScreen(
         ),
 
     )
-//
-//    val pagerState = rememberPagerState{
-//        items.size
-//    }
-//
-//    LaunchedEffect(state.currentPage) {
-//        pagerState.animateScrollToPage(state.currentPage)
-//    }
-//
-//    Column(
-//        modifier = Modifier
-//            .fillMaxSize()
-//    ) {
-//        TabRow(
-//            selectedTabIndex = state.currentPage,
-//            containerColor = Color.Transparent
-//        ) {
-//            items.forEachIndexed { index, _ ->
-//                Tab(
-//                    selected = state.currentPage == index,
-//                    onClick = {
-//                        actions.goToPage(index)
-//                    },
-//                    text = null
-//                )
-//            }
-//        }
-//        HorizontalPager(
-//            state = pagerState,
-//            userScrollEnabled = false,
-//            contentPadding = dimentions.windowPaddings,
-//            pageSpacing = 20.dp,
-//            modifier = Modifier
-//                .fillMaxSize()
-//        ) { index ->
-//            OnboardingView(
-//                itemState = items[index],
-//                onNext = actions::nextPage,
-//                onSkip = actions::finish
-//            )
-//        }
-//    }
 
-    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxSize().padding(dimentions.windowPaddings)) {
-        Image(painter = painterResource(R.drawable.ic_launcher_foreground),
-            contentDescription = stringResource(R.string.app_name))
-        Spacer(modifier = Modifier.height(10.dp))
-        TitleText(text = stringResource(R.string.app_name))
-        Spacer(modifier = Modifier.height(40.dp))
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(dimentions.windowPaddings)
+    ) {
+        Image(
+            painter = painterResource(R.drawable.ic_launcher_foreground),
+            contentDescription = stringResource(R.string.app_name),
+        )
+        Spacer(
+            modifier = Modifier.height(10.dp),
+            )
+        TitleText(
+            text = stringResource(R.string.app_name),
+        )
+        Spacer(
+            modifier = Modifier.height(40.dp),
+        )
         items.forEach { item ->
-            Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth().padding(vertical=10.dp)) {
-                Image(painter = item.primaryImage,
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical=10.dp)
+            ) {
+                Image(
+                    painter = item.primaryImage,
                     contentDescription = null,
                     modifier = Modifier
                         .width(52.dp)
                         .height(52.dp))
-                Spacer(modifier = Modifier.width(12.dp))
+                Spacer(
+                    modifier = Modifier
+                        .width(12.dp)
+                )
                 Column {
-                    Text(text = item.title,
+                    Text(
+                        text = item.title,
                         fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold)
-                    Text(text=item.body,
+                        fontWeight = FontWeight.Bold,
+                        )
+                    Text(
+                        text=item.body,
                         fontSize = 16.sp,
-                        color = Color.White.copy(alpha = 0.5f))
+                        color = Color.White.copy(alpha = 0.5f)
+                    )
                 }
             }
         }
-        Spacer(modifier = Modifier.weight(1f))
-        PrimaryButton(onClick = actions::finish,) {
-            PrimaryButtonText(text = stringResource(R.string.next))
+        Spacer(
+            modifier = Modifier
+                .weight(1f)
+        )
+        PrimaryButton(
+            onClick = actions::flowNext,
+        ) {
+            PrimaryButtonText(
+                text = stringResource(R.string.next),
+            )
         }
     }
 }
@@ -160,14 +136,8 @@ private fun OnBoardingScreenPreview() {
         ) {
             OnBoardingScreen(
                 actions = object : OnBoardingListener {
-                    override fun nextPage() = Unit
-                    override fun previousPage() = Unit
-                    override fun goToPage(pageIndex: Int) = Unit
-                    override fun finish() = Unit
+                    override fun flowNext() = Unit
                 },
-                state = OnBoardingState(
-                    currentPage = 0
-                )
             )
         }
     }
