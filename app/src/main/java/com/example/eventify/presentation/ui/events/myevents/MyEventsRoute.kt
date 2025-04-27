@@ -56,6 +56,10 @@ fun MyEventsRoute(
         }
     }
 
+    LaunchedEffect(Unit) {
+        viewModel.loadEvents()
+    }
+
     // UI Rendering
     when (uiState) {
         UiState.Initial -> {

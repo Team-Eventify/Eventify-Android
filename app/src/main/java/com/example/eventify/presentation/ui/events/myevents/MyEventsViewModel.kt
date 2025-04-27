@@ -1,6 +1,5 @@
 package com.example.eventify.presentation.ui.events.myevents
 
-import androidx.lifecycle.viewModelScope
 import com.example.eventify.domain.models.isHidden
 import com.example.eventify.domain.models.isSubscribeEnabled
 import com.example.eventify.domain.models.toShortEventItem
@@ -11,9 +10,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 
@@ -23,14 +20,7 @@ class MyEventsViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     private val mutableStateFlow: MutableStateFlow<UiState> = MutableStateFlow(UiState.Initial)
-    val stateFlow: StateFlow<UiState> = mutableStateFlow
-        .onStart { loadEvents() }
-        .stateIn(
-            viewModelScope,
-            SharingStarted.WhileSubscribed(5000L),
-            UiState.Initial
-        )
-
+    val stateFlow: StateFlow<UiState> = mutableStateFlow.asStateFlow()
 
     fun refresh(){
         mutableStateFlow.update { currentState ->
@@ -38,14 +28,14 @@ class MyEventsViewModel @Inject constructor(
                 is UiState.Empty -> currentState.copy(isRefreshing = true)
                 is UiState.Error -> currentState.copy(isRefreshing = true)
                 is UiState.ShowMyEvents -> currentState.copy(isRefreshing = true)
-                UiState.Initial -> return
+                UiState.Initial -> currentState
             }
         }
         loadEvents()
 
     }
 
-    private fun loadEvents(){
+    fun loadEvents(){
         launchCatching(
             catch = { error ->
                 mutableStateFlow.update { UiState.Error(message = error.message) }
