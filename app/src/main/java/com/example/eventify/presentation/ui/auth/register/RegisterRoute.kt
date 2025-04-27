@@ -10,6 +10,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.example.eventify.R
+import com.example.eventify.domain.validation.Email
+import com.example.eventify.domain.validation.Password
+import com.example.eventify.domain.validation.asEmail
+import com.example.eventify.domain.validation.asOTP
+import com.example.eventify.domain.validation.asPassword
 import com.example.eventify.presentation.LocalTopBarState
 import com.example.eventify.presentation.LocaleSnackbarState
 import com.example.eventify.presentation.navigation.LocalFeaturesProvider
@@ -38,23 +43,23 @@ fun RegisterRoute(
         }
 
         override fun onChangeLogin(login: String) {
-            viewModel.changeLogin(login)
+            viewModel.changeLogin(login.asEmail())
         }
 
         override fun onChangePassword(password: String) {
-            viewModel.changePassword(password)
+            viewModel.changePassword(password.asPassword())
         }
 
         override fun onRequestOtp() {
-            viewModel.requestOtp()
-        }
-
-        override fun onRegister() {
             viewModel.register()
         }
 
+        override fun onRegister() {
+            viewModel.validateOtp()
+        }
+
         override fun onChangeOtp(otpValue: String) {
-            viewModel.changeOtp(otpValue)
+            viewModel.changeOtp(otpValue.asOTP())
         }
 
         override fun onTriggerOtpBottomSheet(value: Boolean) {

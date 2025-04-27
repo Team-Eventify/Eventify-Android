@@ -68,9 +68,8 @@ fun RegisterScreen(
             },
             sheetState = sheetState,
             onChangeOtpValue = actions::onChangeOtp,
-            otpValue = state.otpState.value,
             onSubmit = actions::onRegister,
-            hasError = state.otpState.hasError
+            otpState = state.otpState,
         )
     }
 
@@ -91,7 +90,7 @@ fun RegisterScreen(
             BodyText(text = stringResource(R.string.it_takes_less_then_minute))
             Spacer(modifier = Modifier.height(44.dp))
             TextInput(
-                text = state.payloadState.login,
+                text = state.payloadState.login.value,
                 label = "Email",
                 placeholder = "ivanov@gmail.com",
                 onValueChange = actions::onChangeLogin,
@@ -113,7 +112,7 @@ fun RegisterScreen(
             )
             Spacer(modifier = Modifier.height(10.dp))
             PasswordInput(
-                text = state.payloadState.password,
+                text = state.payloadState.password.value,
                 label = "Password",
                 placeholder = "yourpassword",
                 onValueChange = actions::onChangePassword,
@@ -140,7 +139,7 @@ fun RegisterScreen(
                         actions.onRequestOtp()
                     }
               },
-                enabled = state.payloadState.login.isNotEmpty() && state.payloadState.password.isNotEmpty(),
+                enabled = state.payloadState.login.value.isNotEmpty() && state.payloadState.password.value.isNotEmpty(),
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(

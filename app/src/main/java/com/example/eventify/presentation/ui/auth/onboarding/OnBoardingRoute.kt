@@ -10,7 +10,6 @@ import com.example.eventify.presentation.LocalTopBarState
 import com.example.eventify.presentation.navigation.LocalFeaturesProvider
 import com.example.eventify.presentation.navigation.navigateNewTaskFeature
 import com.example.eventify.presentation.ui.auth.onboarding.state.OnBoardingListener
-import com.example.eventify.presentation.ui.auth.onboarding.state.SideEffect
 import com.example.eventify.presentation.ui.auth.register.RegisterEntry
 import com.example.eventify.presentation.utils.ObserveAsEvent
 
@@ -19,36 +18,13 @@ import com.example.eventify.presentation.utils.ObserveAsEvent
 fun OnBoardingRoute(
     navController: NavHostController,
 ) {
-    val viewModel = hiltViewModel<OnBoardingViewModel>()
-    val state by viewModel.stateFlow.collectAsStateWithLifecycle()
     val topBarState = LocalTopBarState.current
     val features = LocalFeaturesProvider.current.features
 
     val listener = object : OnBoardingListener {
-        override fun nextPage() {
-            viewModel.nextPage()
-        }
+        override fun flowNext() {
+            features.navigateNewTaskFeature<RegisterEntry, OnBoardingEntry>(navController)
 
-        override fun previousPage() {
-            viewModel.goToPreviousPage()
-        }
-
-        override fun goToPage(pageIndex: Int) {
-            viewModel.goToPage(pageIndex)
-        }
-
-        override fun finish() {
-            viewModel.finishOnboarding()
-        }
-
-
-    }
-
-    ObserveAsEvent(viewModel.sideEffect) { sideEffect ->
-        when (sideEffect) {
-            SideEffect.FinishOnBoarding -> {
-                features.navigateNewTaskFeature<RegisterEntry, OnBoardingEntry>(navController)
-            }
         }
     }
 
@@ -56,6 +32,6 @@ fun OnBoardingRoute(
         topBarState.hide()
     }
 
-    OnBoardingScreen(state, listener)
+    OnBoardingScreen(listener)
 }
 

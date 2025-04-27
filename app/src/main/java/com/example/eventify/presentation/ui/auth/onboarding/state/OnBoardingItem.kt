@@ -8,7 +8,6 @@ import androidx.compose.ui.graphics.painter.Painter
 data class OnBoardingItem(
     val primaryImage: Painter,
     val title: String,
-    val body: String? = null,
-    val primaryButtonText: String
+    val body: String
 )
 
