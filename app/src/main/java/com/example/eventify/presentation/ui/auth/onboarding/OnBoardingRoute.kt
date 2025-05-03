@@ -18,11 +18,13 @@ import com.example.eventify.presentation.utils.ObserveAsEvent
 fun OnBoardingRoute(
     navController: NavHostController,
 ) {
+    val viewModel = hiltViewModel<OnBoardingViewModel>()
     val topBarState = LocalTopBarState.current
     val features = LocalFeaturesProvider.current.features
 
     val listener = object : OnBoardingListener {
         override fun flowNext() {
+            viewModel.finishOnboarding()
             features.navigateNewTaskFeature<RegisterEntry, OnBoardingEntry>(navController)
 
         }
