@@ -2,17 +2,16 @@ package com.example.eventify.presentation.ui.account.profile_decor
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import com.example.eventify.presentation.navigation.BaseDestination
 import com.example.eventify.presentation.navigation.ComposableFeatureEntry
 import com.example.eventify.presentation.ui.account.profile.AccountRootPath
 import javax.inject.Inject
 
-val ProfileDecorPath = AccountRootPath.updateAndGetPath("decor")
+val ProfileDecorPath = AccountRootPath.child("decor")
 
 interface ProfileDecorEntry: ComposableFeatureEntry {
-    override val route: String
+    override val destination: BaseDestination
         get() = ProfileDecorPath
-    override val argumentsKeys: List<String>
-        get() = emptyList()
 }
 
 class ProfileDecorEntryImpl @Inject constructor(): ProfileDecorEntry {

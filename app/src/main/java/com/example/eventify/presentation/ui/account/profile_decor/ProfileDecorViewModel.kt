@@ -34,9 +34,8 @@ class ProfileDecorViewModel @Inject constructor(
                 PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
                 PackageManager.DONT_KILL_APP
             )
-
             context.packageManager.setComponentEnabledSetting(
-                ComponentName(context, prevAlias ?: "com.example.eventify.alias.iconLogo1"),
+                ComponentName(context, prevAlias ?: "com.example.eventify.presentation.MainActivity"),
                 PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                 PackageManager.DONT_KILL_APP
             )

@@ -39,10 +39,10 @@ import com.example.eventify.data.storages.SharedStorage
 import com.example.eventify.domain.SessionManager
 import com.example.eventify.domain.di.RequestsSessionManager
 import com.example.eventify.presentation.navigation.LocalFeaturesProvider
+import com.example.eventify.presentation.navigation.MainNavHost
 import com.example.eventify.presentation.navigation.clearNavigate
 import com.example.eventify.presentation.ui.auth.login.AuthRootPath
 import com.example.eventify.presentation.ui.events.eventsfeed.EventsRootPath
-import com.example.eventify.presentation.navigation.navgraphs.MainNavHost
 import com.example.eventify.presentation.navigation.navigateToFeature
 import com.example.eventify.presentation.ui.auth.login.LoginEntry
 import com.example.eventify.presentation.ui.auth.onboarding.OnBoardingPath
@@ -92,6 +92,8 @@ class MainActivity : ComponentActivity() {
                     connectionState === NetworkConnectionState.Available
                 }
             }
+            val appThemeState = rememberAppTheme(localeStorage)
+
 
             val startDist = remember {
                 getStartDis()
@@ -99,12 +101,13 @@ class MainActivity : ComponentActivity() {
 
 
             EventifyTheme(
-                darkTheme = isSystemInDarkTheme(),
+                darkTheme = (if (appThemeState.isDarkTheme.value == null) isSystemInDarkTheme() else appThemeState.isDarkTheme.value) == true,
                 dynamicColor = false,
                 LocaleImageLoader provides imageLoader,
                     LocalTopBarState provides topBarState,
                     LocalFeaturesProvider provides application.featuresProvider,
                     LocaleSnackbarState provides snackbarHostState,
+                    LocalAppThemeState provides appThemeState,
                 ) {
                 LaunchedEffect(Unit) {
                     enableEdgeToEdge(
