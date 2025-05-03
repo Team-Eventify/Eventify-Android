@@ -27,7 +27,7 @@ class LogInViewModel @Inject constructor(
     private val mutableSideEffect = Channel<SideEffect>()
     val sideEffect: Flow<SideEffect> = mutableSideEffect.receiveAsFlow()
 
-    private val _stateFlow: MutableStateFlow<LogInState> = MutableStateFlow(LogInState.default())
+    private val _stateFlow: MutableStateFlow<LogInState> = MutableStateFlow(LogInState())
     val stateFlow: StateFlow<LogInState> = _stateFlow.asStateFlow()
 
     fun changeLogin(value: String) {

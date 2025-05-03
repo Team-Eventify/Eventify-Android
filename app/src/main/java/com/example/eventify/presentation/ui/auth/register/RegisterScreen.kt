@@ -1,5 +1,6 @@
 package com.example.eventify.presentation.ui.auth.register
 
+import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -29,12 +31,19 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.eventify.R
+import com.example.eventify.domain.validation.Email
+import com.example.eventify.domain.validation.Password
+import com.example.eventify.presentation.ui.auth.login.state.LogInState
 import com.example.eventify.presentation.ui.auth.register.components.RegistrationOtpBottomSheet
 import com.example.eventify.presentation.ui.auth.register.state.OtpState
 import com.example.eventify.presentation.ui.auth.register.state.RegisterListener
+import com.example.eventify.presentation.ui.auth.register.state.RegisterPayloadState
 import com.example.eventify.presentation.ui.auth.register.state.RegisterUiState
 import com.example.eventify.presentation.ui.common.ActionPrimaryText
 import com.example.eventify.presentation.ui.common.BodyText
@@ -44,6 +53,7 @@ import com.example.eventify.presentation.ui.common.PasswordInput
 import com.example.eventify.presentation.ui.common.buttons.PrimaryButton
 import com.example.eventify.presentation.ui.common.TextInput
 import com.example.eventify.presentation.ui.common.TitleText
+import com.example.eventify.presentation.ui.theme.EventifyTheme
 import com.example.eventify.presentation.ui.theme.LocalDimentions
 
 
@@ -68,7 +78,13 @@ fun RegisterScreen(
             },
             sheetState = sheetState,
             onChangeOtpValue = actions::onChangeOtp,
-            onSubmit = actions::onRegister,
+            onSubmit = { otp ->
+                actions.onRegister(
+                    login = state.payloadState.login.value,
+                    password = state.payloadState.password.value,
+                    otp = otp
+                )
+           },
             otpState = state.otpState,
         )
     }
@@ -136,7 +152,10 @@ fun RegisterScreen(
             PrimaryButton(
                 onClick = {
                     if (!state.isOtpRequested) {
-                        actions.onRequestOtp()
+                        actions.onRequestOtp(
+                            login = state.payloadState.login.value,
+                            password = state.payloadState.password.value,
+                        )
                     }
               },
                 enabled = state.payloadState.login.value.isNotEmpty() && state.payloadState.password.value.isNotEmpty(),
@@ -185,54 +204,54 @@ fun RegisterScreen(
 
 }
 
-//@Composable
-//@Preview(name = "Register Default Dark", showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-//@Preview(name = "Register Default Light", showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
-//private fun RegisterScreenDefaultDarkPreview() {
-//    EventifyTheme {
-//        Surface {
-//            RegisterScreen(
-//                state = RegisterState(),
-//                actions = object : RegisterListener {
-//                    override fun navigateToLogIn() = Unit
-//                    override fun onChangeLogin(login: String) = Unit
-//                    override fun onChangePassword(password: String) = Unit
-//                    override fun onRequestOtp() = Unit
-//                    override fun onRegister() = Unit
-//                    override fun onChangeOtp(otpValue: String) = Unit
-//                    override fun onTriggerOtpBottomSheet(value: Boolean) = Unit
-//                    override fun goToPrivacyPolicy() = Unit
-//                }
-//            )
-//        }
-//    }
-//}
 
-//@Composable
-//@Preview(name = "Register Error Dark", showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-//@Preview(name = "Register Error Light", showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
-//private fun RegisterScreenErrorLightPreview() {
-//    EventifyTheme {
-//        Surface {
-//            RegisterScreen(
-//                state = RegisterState(
-//                    login = "",
-//                    hasLoginError = true,
-//                    password = "",
-//                    passwordError = UiText.DynamicString("Ошибка")
-//                ),
-//                actions = object : RegisterListener {
-//                    override fun navigateToLogIn() = Unit
-//                    override fun onChangeLogin(login: String) = Unit
-//                    override fun onChangePassword(password: String) = Unit
-//                    override fun onRequestOtp() = Unit
-//                    override fun onRegister() = Unit
-//                    override fun onChangeOtp(otpValue: String) = Unit
-//                    override fun onTriggerOtpBottomSheet(value: Boolean) = Unit
-//                    override fun goToPrivacyPolicy() = Unit
-//                }
-//            )
-//        }
-//    }
-//}
+@Composable
+@Preview(name = "Register Dark", showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(name = "Register Light", showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
+private fun RegisterScreenErrorLightPreview(
+    @PreviewParameter(RegisterPreviewParameterProvider::class) state: RegisterUiState
+) {
+    EventifyTheme {
+        Surface {
+            RegisterScreen(
+                state = state,
+                actions = object : RegisterListener {
+                    override fun navigateToLogIn() = Unit
+                    override fun onChangeLogin(login: String) = Unit
+                    override fun onChangePassword(password: String) = Unit
+                    override fun onRequestOtp(login: String, password: String) = Unit
+                    override fun onRegister(login: String, password: String, otp: String) = Unit
+                    override fun onChangeOtp(otpValue: String) = Unit
+                    override fun onTriggerOtpBottomSheet(value: Boolean) = Unit
+                    override fun goToPrivacyPolicy() = Unit
+                }
+            )
+        }
+    }
+}
+
+
+class RegisterPreviewParameterProvider : PreviewParameterProvider<RegisterUiState> {
+    override val values = sequenceOf(
+        RegisterUiState(),
+        RegisterUiState(
+            payloadState = RegisterPayloadState(
+                login = Email("login@mail.ru"),
+                password = Password("asdfsadfsdf")
+            )
+        ),
+        RegisterUiState(
+            payloadState = RegisterPayloadState(
+                login = Email("login@mail.ru"),
+                loginError = "Invalid email",
+                hasLoginError = true,
+                password = Password("asdfsadfsdf"),
+                passwordError = "Too short",
+                hasPasswordError = true,
+            )
+        ),
+    )
+}
+
+
 

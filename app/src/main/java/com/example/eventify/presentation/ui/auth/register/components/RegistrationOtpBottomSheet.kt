@@ -38,7 +38,7 @@ import com.example.eventify.presentation.ui.theme.EventifyTheme
 @Composable
 fun RegistrationOtpBottomSheet(
     otpState: OtpState.ShowOtp,
-    onSubmit: () -> Unit,
+    onSubmit: (String) -> Unit,
     onChangeOtpValue: (String) -> Unit,
     onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier,
@@ -81,7 +81,9 @@ fun RegistrationOtpBottomSheet(
                 text = otpState.otp.value,
                 onTextChange = onChangeOtpValue,
                 hasError = otpState.hasError && !otpState.errorMessage.isNullOrEmpty(),
-                onSubmit = onSubmit,
+                onSubmit = {
+                    onSubmit(otpState.otp.value)
+                },
                 modifier = Modifier
                     .focusRequester(focusRequester)
             )

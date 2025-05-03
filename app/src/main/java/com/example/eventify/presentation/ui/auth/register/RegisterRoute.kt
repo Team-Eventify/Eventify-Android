@@ -29,10 +29,11 @@ import com.example.eventify.presentation.ui.auth.register.state.RegisterListener
 import com.example.eventify.presentation.ui.auth.register.state.SideEffect
 import com.example.eventify.presentation.utils.ObserveAsEvent
 import kotlinx.coroutines.launch
+import androidx.core.net.toUri
 
 @Composable
 fun RegisterRoute(
-    navController: NavHostController
+    navController: NavHostController,
 ) {
     val viewModel = hiltViewModel<RegisterViewModel>()
     val uiState by viewModel.state.collectAsStateWithLifecycle()
@@ -59,12 +60,19 @@ fun RegisterRoute(
             viewModel.changePassword(password.asPassword())
         }
 
-        override fun onRequestOtp() {
-            viewModel.register()
+        override fun onRequestOtp(login: String, password: String) {
+            viewModel.register(
+                login = login,
+                password = password,
+            )
         }
 
-        override fun onRegister() {
-            viewModel.validateOtp()
+        override fun onRegister(login: String, password: String, otp: String) {
+            viewModel.validateOtp(
+                login = login,
+                password = password,
+                otp = otp,
+            )
         }
 
         override fun onChangeOtp(otpValue: String) {
@@ -76,7 +84,7 @@ fun RegisterRoute(
         }
 
         override fun goToPrivacyPolicy() {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://nometa.xyz"))
+            val intent = Intent(Intent.ACTION_VIEW, "https://nometa.xyz".toUri())
             context.startActivity(intent)
         }
 

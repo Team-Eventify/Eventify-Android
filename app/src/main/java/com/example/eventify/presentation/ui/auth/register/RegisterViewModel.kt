@@ -9,7 +9,6 @@ import com.example.eventify.domain.models.RegisterValidationData
 import com.example.eventify.domain.usecases.auth.OtpRegisterUseCase
 import com.example.eventify.domain.usecases.auth.isIncorrectOtp
 import com.example.eventify.domain.validation.Email
-import com.example.eventify.domain.validation.InvalidEmailException
 import com.example.eventify.domain.validation.OTP
 import com.example.eventify.domain.validation.Password
 import com.example.eventify.presentation.ui.auth.register.state.OtpState
@@ -88,14 +87,15 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
-    fun register() {
+    fun register(
+        login: String,
+        password: String
+    ) {
         launchCatching(catch = ::handleRegisterErrors) {
-            val email = mutableRegisterPayloadState.value.login.takeIf { it.isValid } ?: return@launchCatching
-            val password = mutableRegisterPayloadState.value.password.takeIf { it.isValid } ?: return@launchCatching
-
+            // TODO needs validation
             val otpData = RegisterValidationData(
-                email = email.value,
-                password = password.value,
+                email = login,
+                password = password,
             )
 
 
@@ -107,20 +107,21 @@ class RegisterViewModel @Inject constructor(
     }
 
 
-    fun validateOtp(){
+    fun validateOtp(
+        login: String,
+        password: String,
+        otp: String,
+    ){
         launchCatching(catch = ::handleOtpErrors) {
             val validationId = validationResultId.value ?: return@launchCatching
-            val email = mutableRegisterPayloadState.value.login.takeIf { it.isValid } ?: return@launchCatching
-            val password = mutableRegisterPayloadState.value.password.takeIf { it.isValid } ?: return@launchCatching
 
-            val userPayload = (mutableOtpState.value as? OtpState.ShowOtp)?.otp?.let { otp ->
-                OtpUserCreate(
-                    email = email.value,
-                    password = password.value,
-                    code = otp.value,
+            // TODO needs validation
+            val userPayload = OtpUserCreate(
+                    email = login,
+                    password = password,
+                    code = otp,
                     validationResultId = validationId
                 )
-            } ?: return@launchCatching
 
             otpRegisterUseCase(userData = userPayload)
             mutableSideEffect.send(SideEffect.SuccessRegister)
