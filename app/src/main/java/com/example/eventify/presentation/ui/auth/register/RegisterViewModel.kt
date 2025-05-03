@@ -78,13 +78,14 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
-    fun changeOtp(value: OTP){
+    fun updateOtp(value: OTP){
         mutableOtpState.update { currentState ->
             (currentState as? OtpState.ShowOtp)?.copy(
                 otp = value,
                 hasError = false,
             ) ?: currentState
         }
+
     }
 
     fun register(

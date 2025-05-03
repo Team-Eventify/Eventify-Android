@@ -15,6 +15,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.SheetState
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -39,7 +41,6 @@ import androidx.compose.ui.unit.sp
 import com.example.eventify.R
 import com.example.eventify.domain.validation.Email
 import com.example.eventify.domain.validation.Password
-import com.example.eventify.presentation.ui.auth.login.state.LogInState
 import com.example.eventify.presentation.ui.auth.register.components.RegistrationOtpBottomSheet
 import com.example.eventify.presentation.ui.auth.register.state.OtpState
 import com.example.eventify.presentation.ui.auth.register.state.RegisterListener
@@ -68,7 +69,9 @@ fun RegisterScreen(
     }
     val focusManager = LocalFocusManager.current
     val dimmentions = LocalDimentions.current
-    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true) {
+        it != SheetValue.Hidden
+    }
 
 
     if (state.otpState is OtpState.ShowOtp) {
@@ -82,7 +85,7 @@ fun RegisterScreen(
                 actions.onRegister(
                     login = state.payloadState.login.value,
                     password = state.payloadState.password.value,
-                    otp = otp
+                    otp = otp,
                 )
            },
             otpState = state.otpState,

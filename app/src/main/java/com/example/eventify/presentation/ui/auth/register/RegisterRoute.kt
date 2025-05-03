@@ -1,7 +1,6 @@
 package com.example.eventify.presentation.ui.auth.register
 
 import android.content.Intent
-import android.net.Uri
 import androidx.activity.ComponentActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -14,8 +13,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.example.eventify.R
 import com.example.eventify.domain.services.AccountCredentialManager
-import com.example.eventify.domain.validation.Email
-import com.example.eventify.domain.validation.Password
 import com.example.eventify.domain.validation.asEmail
 import com.example.eventify.domain.validation.asOTP
 import com.example.eventify.domain.validation.asPassword
@@ -76,7 +73,7 @@ fun RegisterRoute(
         }
 
         override fun onChangeOtp(otpValue: String) {
-            viewModel.changeOtp(otpValue.asOTP())
+            viewModel.updateOtp(otpValue.asOTP())
         }
 
         override fun onTriggerOtpBottomSheet(value: Boolean) {
