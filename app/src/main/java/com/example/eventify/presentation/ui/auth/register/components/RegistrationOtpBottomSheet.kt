@@ -85,6 +85,7 @@ fun RegistrationOtpBottomSheet(
                 text = otpState.otp.value,
                 onTextChange = onChangeOtpValue,
                 hasError = otpState.hasError && !otpState.errorMessage.isNullOrEmpty(),
+                isSuccess = otpState.isSuccess,
                 onSubmit = {
                     onSubmit(otpState.otp.value)
                 },

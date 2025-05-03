@@ -40,5 +40,6 @@ sealed class OtpState {
         val otp: OTP = OTP(),
         val hasError: Boolean = false,
         val errorMessage: String? = null,
+        val isSuccess: Boolean = false,
     ) : OtpState()
 }

@@ -37,6 +37,7 @@ fun OtpTextField(
     text: String,
     modifier: Modifier = Modifier,
     hasError: Boolean = false,
+    isSuccess: Boolean = false,
     otpCount: Int = 6,
     onTextChange: (String) -> Unit,
     onSubmit: (() -> Unit)? = null,
@@ -78,6 +79,7 @@ fun OtpTextField(
                         index = index,
                         text = text,
                         hasError = hasError,
+                        isSuccess = isSuccess,
                         isFocused = index == text.length,
                         modifier = Modifier
                             .aspectRatio(1f)
@@ -96,10 +98,12 @@ private fun OtpCharView(
     isFocused: Boolean,
     modifier: Modifier = Modifier,
     hasError: Boolean = false,
+    isSuccess: Boolean = false,
 ) {
     val borderColor = when {
-        isFocused -> MaterialTheme.colorScheme.primary
         hasError -> MaterialTheme.colorScheme.error
+        isSuccess -> MaterialTheme.colorScheme.primary
+        isFocused -> MaterialTheme.colorScheme.primary
         else -> Color.Transparent
     }
     Box(

@@ -27,6 +27,9 @@ import com.example.eventify.presentation.ui.auth.register.state.SideEffect
 import com.example.eventify.presentation.utils.ObserveAsEvent
 import kotlinx.coroutines.launch
 import androidx.core.net.toUri
+import com.example.eventify.domain.services.SignUpResult
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 
 @Composable
 fun RegisterRoute(
@@ -96,8 +99,8 @@ fun RegisterRoute(
                         login = uiState.payloadState.login.value,
                         password = uiState.payloadState.password.value,
                     )
+                    features.navigateToFeature<SetUpEntry>(navController)
                 }
-                features.navigateToFeature<SetUpEntry>(navController)
             }
             is SideEffect.FailRegister -> {
                 snackBarState.showSnackbar(

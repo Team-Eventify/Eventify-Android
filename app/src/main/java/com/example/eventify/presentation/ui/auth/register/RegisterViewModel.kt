@@ -19,6 +19,7 @@ import com.example.eventify.presentation.utils.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -125,6 +126,16 @@ class RegisterViewModel @Inject constructor(
                 )
 
             otpRegisterUseCase(userData = userPayload)
+
+            // Show otp value is success
+            mutableOtpState.update { currentState ->
+                (currentState as? OtpState.ShowOtp)?.copy(
+                    isSuccess = true,
+                    hasError = false,
+                    errorMessage = null,
+                ) ?: currentState
+            }
+            delay(1000)
             mutableSideEffect.send(SideEffect.SuccessRegister)
         }
     }
