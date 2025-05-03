@@ -4,6 +4,7 @@ import android.content.Context
 import com.example.eventify.R
 import com.example.eventify.data.exceptions.isNotFound
 import com.example.eventify.domain.models.UserCredentials
+import com.example.eventify.domain.services.Password
 import com.example.eventify.domain.usecases.auth.LoginUseCase
 import com.example.eventify.presentation.ui.auth.login.state.LogInState
 import com.example.eventify.presentation.ui.auth.login.state.SideEffect
@@ -49,18 +50,14 @@ class LogInViewModel @Inject constructor(
         }
     }
 
-    fun logIn() {
+    fun logIn(login: String, password: String) {
         launchCatching(
             catch = ::handleErrors
         ) {
-            if (!validateFormData()) return@launchCatching
-
-            val userCredentials = stateFlow.value.run {
-                UserCredentials(
+            val userCredentials = UserCredentials(
                     login = login,
                     password = password
                 )
-            }
 
             loginUseCase(credentials = userCredentials)
             mutableSideEffect.send(SideEffect.SuccessLogIn)
