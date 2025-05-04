@@ -5,7 +5,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.eventify.presentation.LocaleSnackbarState
+import com.example.eventify.presentation.LocalSnackbarState
+import com.example.eventify.presentation.ui.common.snackbar.SnackbarType
 import com.example.eventify.presentation.navigation.LocalFeaturesProvider
 import com.example.eventify.presentation.navigation.clearNavigate
 import com.example.eventify.presentation.navigation.navigateNewTaskFeature
@@ -21,7 +22,7 @@ fun SetUpRoute(
     val viewModel = hiltViewModel<ChooseCategoriesViewModel>()
     val uiState by viewModel.stateFlow.collectAsState()
     val features = LocalFeaturesProvider.current.features
-    val snackBarState = LocaleSnackbarState.current
+    val snackBarState = LocalSnackbarState.current
 
     val listener = object : SetUpListener {
         override fun selectCategory(categoryId: String, selected: Boolean) {
@@ -40,8 +41,9 @@ fun SetUpRoute(
     ObserveAsEvent(viewModel.sideEffect) { sideEffect ->
         when (sideEffect) {
             is SideEffect.FailedProvideCategories -> {
-                snackBarState.showSnackbar(
-                    message = sideEffect.message ?: ""
+                snackBarState.show(
+                    message = sideEffect.message ?: "",
+                    type = SnackbarType.Error,
                 )
             }
             SideEffect.FinishSetUp -> {

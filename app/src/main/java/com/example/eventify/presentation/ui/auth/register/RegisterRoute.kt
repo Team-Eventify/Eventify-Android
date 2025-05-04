@@ -10,13 +10,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.example.eventify.R
-import com.example.eventify.domain.validation.Email
-import com.example.eventify.domain.validation.Password
 import com.example.eventify.domain.validation.asEmail
 import com.example.eventify.domain.validation.asOTP
 import com.example.eventify.domain.validation.asPassword
+import com.example.eventify.presentation.LocalSnackbarState
 import com.example.eventify.presentation.LocalTopBarState
-import com.example.eventify.presentation.LocaleSnackbarState
+import com.example.eventify.presentation.ui.common.snackbar.SnackbarType
 import com.example.eventify.presentation.navigation.LocalFeaturesProvider
 import com.example.eventify.presentation.ui.auth.login.LoginEntry
 import com.example.eventify.presentation.navigation.navigateToFeature
@@ -33,7 +32,7 @@ fun RegisterRoute(
     val uiState by viewModel.state.collectAsStateWithLifecycle()
     val topBarState = LocalTopBarState.current
     val features = LocalFeaturesProvider.current.features
-    val snackBarState = LocaleSnackbarState.current
+    val snackBarState = LocalSnackbarState.current
     val context = LocalContext.current
 
 
@@ -80,14 +79,18 @@ fun RegisterRoute(
                 features.navigateToFeature<SetUpEntry>(navController)
             }
             is SideEffect.FailRegister -> {
-                snackBarState.showSnackbar(
-                    message = sideEffect.message ?: ""
+                snackBarState.show(
+                    message = sideEffect.message ?: "",
+                    type = SnackbarType.Error,
+                    force = true,
                 )
             }
 
             SideEffect.ServerError -> {
-                snackBarState.showSnackbar(
-                    message = context.getString(R.string.server_error)
+                snackBarState.show(
+                    message = context.getString(R.string.server_error),
+                    type = SnackbarType.Error,
+                    force = true,
                 )
             }
         }

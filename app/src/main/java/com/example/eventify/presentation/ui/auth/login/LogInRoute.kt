@@ -8,8 +8,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.example.eventify.R
+import com.example.eventify.presentation.LocalSnackbarState
 import com.example.eventify.presentation.LocalTopBarState
-import com.example.eventify.presentation.LocaleSnackbarState
+import com.example.eventify.presentation.ui.common.snackbar.SnackbarType
 import com.example.eventify.presentation.navigation.ARG_SHARED_EMAIL
 import com.example.eventify.presentation.navigation.LocalFeaturesProvider
 import com.example.eventify.presentation.ui.auth.register.RegisterEntry
@@ -28,7 +29,7 @@ fun LogInRoute(
     val viewModel = hiltViewModel<LogInViewModel>()
     val uiState by viewModel.stateFlow.collectAsStateWithLifecycle()
     val topBarState = LocalTopBarState.current
-    val snackBarState = LocaleSnackbarState.current
+    val snackBarState = LocalSnackbarState.current
     val context = LocalContext.current
     val features = LocalFeaturesProvider.current.features
 
@@ -59,20 +60,24 @@ fun LogInRoute(
         }
     }
 
-
     ObserveAsEvent(viewModel.sideEffect) { sideEffect ->
         when (sideEffect) {
+
             SideEffect.ServerError -> {
-                snackBarState.showSnackbar(
-                    message = context.getString(R.string.server_error)
+                snackBarState.show(
+                    message = context.getString(R.string.server_error),
+                    type = SnackbarType.Error,
+                    force = true,
                 )
             }
             SideEffect.SuccessLogIn -> {
                 features.navigateNewTaskFeature<EventsFeedEntry, LoginEntry>(navController)
             }
             SideEffect.UnsuccessLogIn -> {
-                snackBarState.showSnackbar(
-                    message = context.getString(R.string.incorrect_auth_data)
+                snackBarState.show(
+                    message = context.getString(R.string.incorrect_auth_data),
+                    type = SnackbarType.Error,
+                    force = true,
                 )
             }
         }

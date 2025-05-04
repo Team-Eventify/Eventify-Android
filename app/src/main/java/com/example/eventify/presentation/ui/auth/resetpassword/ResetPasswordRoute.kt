@@ -6,8 +6,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.example.eventify.presentation.LocalSnackbarState
 import com.example.eventify.presentation.LocalTopBarState
-import com.example.eventify.presentation.LocaleSnackbarState
 import com.example.eventify.presentation.ui.auth.resetpassword.state.ResetPasswordListener
 
 @Composable
@@ -17,7 +17,7 @@ fun ResetPasswordRoute(
     val viewModel = hiltViewModel<ResetPasswordViewModel>()
     val uiState by viewModel.stateFlow.collectAsState()
     val topBarState = LocalTopBarState.current
-    val snackBarState = LocaleSnackbarState.current
+    val snackBarState = LocalSnackbarState.current
 
     val listener = object : ResetPasswordListener {
         override fun submit() {

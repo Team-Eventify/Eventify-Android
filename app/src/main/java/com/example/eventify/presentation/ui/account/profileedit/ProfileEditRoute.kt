@@ -9,12 +9,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.example.eventify.R
+import com.example.eventify.presentation.LocalSnackbarState
 import com.example.eventify.presentation.LocalTopBarState
-import com.example.eventify.presentation.LocaleSnackbarState
+import com.example.eventify.presentation.ui.common.snackbar.SnackbarType
 import com.example.eventify.presentation.TopBarAction
 import com.example.eventify.presentation.TopBarSize
 import com.example.eventify.presentation.TopBarState
-import com.example.eventify.presentation.navigation.LocalFeaturesProvider
 import com.example.eventify.presentation.ui.account.profileedit.components.LoadingProfileEdit
 import com.example.eventify.presentation.ui.account.profileedit.state.ProfileEditListener
 import com.example.eventify.presentation.ui.account.profileedit.state.SideEffect
@@ -30,7 +30,7 @@ fun ProfileEditRoute(
     val uiState by viewModel.stateFlow.collectAsStateWithLifecycle()
     val topBarState = LocalTopBarState.current
     val context = LocalContext.current
-    val snackBarState = LocaleSnackbarState.current
+    val snackBarState = LocalSnackbarState.current
 
     val listener = object : ProfileEditListener {
         override fun onSubmit() {
@@ -69,25 +69,29 @@ fun ProfileEditRoute(
     ObserveAsEvent(viewModel.sideEffect) { sideEffect ->
         when (sideEffect) {
             is SideEffect.FailUpdate -> {
-                snackBarState.showSnackbar(
-                    message = sideEffect.message ?: ""
+                snackBarState.show(
+                    message = sideEffect.message ?: "",
+                    type = SnackbarType.Error
                 )
             }
             SideEffect.SuccessUpdate -> {
-                snackBarState.showSnackbar(
-                    message = context.getString(R.string.user_updated)
+                snackBarState.show(
+                    message = context.getString(R.string.user_updated),
+                    type = SnackbarType.Success
                 )
             }
 
             SideEffect.AccountDeleted -> {
-                snackBarState.showSnackbar(
-                    message = "Аккаунт удален"
+                snackBarState.show(
+                    message = "Аккаунт удален",
+                    type = SnackbarType.Success,
                 )
             }
 
             SideEffect.FailedDeleteAccount -> {
-                snackBarState.showSnackbar(
-                    message = "Не удалось удалить аккаунт"
+                snackBarState.show(
+                    message = "Не удалось удалить аккаунт",
+                    type = SnackbarType.Error,
                 )
             }
         }

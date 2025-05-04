@@ -15,20 +15,18 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.flowWithLifecycle
@@ -46,9 +44,10 @@ import com.example.eventify.presentation.navigation.navgraphs.MainNavHost
 import com.example.eventify.presentation.navigation.navigateToFeature
 import com.example.eventify.presentation.ui.auth.login.LoginEntry
 import com.example.eventify.presentation.ui.auth.onboarding.OnBoardingPath
-import com.example.eventify.presentation.ui.common.EventifySnackbar
 import com.example.eventify.presentation.ui.common.bottomBar.BottomNavBar
 import com.example.eventify.presentation.ui.common.screens.NoInternetConnectionScreen
+import com.example.eventify.presentation.ui.common.snackbar.AppSnackbarState
+import com.example.eventify.presentation.ui.common.snackbar.SnackbarHost
 import com.example.eventify.presentation.ui.common.topBar.EventifyTopAppBar
 import com.example.eventify.presentation.ui.events.eventsfeed.EventsFeedEntry
 import com.example.eventify.presentation.ui.theme.EventifyTheme
@@ -83,20 +82,17 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val topBarState = rememberTopBarState()
-            val snackbarHostState = remember { SnackbarHostState() }
             val navController = rememberNavController()
+            val scope = rememberCoroutineScope()
+            val controller = remember { AppSnackbarState(scope) }
             val connectionState by rememberConnectivityState()
             val lifecycleOwner = LocalLifecycleOwner.current
+            val startDist = remember { getStartDis() }
             val isConnected by remember(connectionState) {
                 derivedStateOf {
                     connectionState === NetworkConnectionState.Available
                 }
             }
-
-            val startDist = remember {
-                getStartDis()
-            }
-
 
             EventifyTheme(
                 darkTheme = isSystemInDarkTheme(),
@@ -104,7 +100,7 @@ class MainActivity : ComponentActivity() {
                 LocaleImageLoader provides imageLoader,
                     LocalTopBarState provides topBarState,
                     LocalFeaturesProvider provides application.featuresProvider,
-                    LocaleSnackbarState provides snackbarHostState,
+                    LocalSnackbarState provides controller
                 ) {
                 LaunchedEffect(Unit) {
                     enableEdgeToEdge(
@@ -147,11 +143,6 @@ class MainActivity : ComponentActivity() {
                         bottomBar = {
                             BottomNavBar(navController)
                         },
-                        snackbarHost = {
-                            SnackbarHost(snackbarHostState){
-                                EventifySnackbar(it)
-                            }
-                        },
                     ) { innerPadding ->
                         MainNavHost(
                             navController = navController,
@@ -164,6 +155,8 @@ class MainActivity : ComponentActivity() {
                     if (!isConnected) {
                         NoInternetConnectionScreen()
                     }
+
+                    SnackbarHost()
 
                 }
             }
