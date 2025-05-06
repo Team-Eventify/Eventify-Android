@@ -14,12 +14,12 @@ data class SearchUiState(
     val searchMode: SearchMode,
 )
 
-
+// Order is important to preview
 enum class SearchMode(
     @StringRes val labelResId: Int,
 ) {
-    Events(R.string.events),
     Categories(R.string.categories),
+    Events(R.string.events),
 }
 
 sealed class SearchResult {
