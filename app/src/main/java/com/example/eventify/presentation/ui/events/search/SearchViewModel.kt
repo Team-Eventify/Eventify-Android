@@ -41,7 +41,7 @@ class SearchViewModel @Inject constructor(
     private val sharedSearchQuery = savedStateHandle[ARG_SEARCH_TEXT] ?: ""
     private val _searchQueryStateFlow = MutableStateFlow(sharedSearchQuery)
     private val _searchResultStateFlow = MutableStateFlow<SearchResult>(SearchResult.None)
-    private val _searchModeStateFlow = MutableStateFlow(SearchMode.Events)
+    private val _searchModeStateFlow = MutableStateFlow(SearchMode.Categories)
 
     val stateFlow = combine(
         _searchModeStateFlow,
