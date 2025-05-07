@@ -7,6 +7,8 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerScope
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -18,7 +20,8 @@ import kotlinx.coroutines.launch
 fun ImagePager(
     pagerState: PagerState,
     modifier: Modifier = Modifier,
-    pageContent: @Composable() (PagerScope.(page: Int) -> Unit)
+    key: ((Int) -> Any)? = null,
+    pageContent: @Composable() (PagerScope.(page: Int) -> Unit),
 ) {
     val coroutineScope = rememberCoroutineScope()
     val isSingleImage = remember(pagerState) { pagerState.pageCount <= 1 }

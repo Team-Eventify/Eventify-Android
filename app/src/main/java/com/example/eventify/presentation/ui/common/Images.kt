@@ -29,13 +29,12 @@ import com.example.eventify.presentation.utils.conditional
 fun EventImage(
     uri: String?,
     modifier: Modifier = Modifier,
-    contentScale: ContentScale = ContentScale.Crop,
-    alignment: Alignment = Alignment.Center
+    contentScale: ContentScale = ContentScale.FillWidth,
+    shimmerMode: BlendMode = BlendMode.SrcAtop,
+    alignment: Alignment = Alignment.Center,
 ) {
     val localeImageLoader = LocaleImageLoader.current
-
     var showShimmer by remember { mutableStateOf(false) }
-    var showFullSize by remember { mutableStateOf(false) }
 
     AsyncImage(
         model = ImageRequest.Builder(context = LocalContext.current)
@@ -45,7 +44,7 @@ fun EventImage(
         error = painterResource(R.drawable.underfind_event_image),
         placeholder = painterResource(R.drawable.underfind_event_image),
         contentDescription = null,
-        contentScale = ContentScale.FillWidth,
+        contentScale = contentScale,
         alignment = alignment,
         imageLoader = localeImageLoader,
         onLoading = {
@@ -58,18 +57,11 @@ fun EventImage(
             showShimmer = false
         },
         modifier = Modifier
-            .fillMaxWidth()
-            .conditional(!showFullSize) {
-                height(200.dp)
-            }
-            .clickable {
-                showFullSize = !showFullSize
-            }
             .animateContentSize()
             .shimmer(
                 showShimmer = showShimmer,
-                blendMode = BlendMode.SrcAtop
+                blendMode = shimmerMode,
             )
-            .clip(RoundedCornerShape(10.dp))
+            .then(modifier)
     )
 }
