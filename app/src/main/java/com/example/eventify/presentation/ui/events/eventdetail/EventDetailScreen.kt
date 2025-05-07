@@ -2,6 +2,7 @@ package com.example.eventify.presentation.ui.events.eventdetail
 
 import android.annotation.SuppressLint
 import android.content.res.Configuration
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -19,6 +20,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -50,6 +55,7 @@ import com.example.eventify.presentation.ui.theme.EventifyTheme
 import com.example.eventify.presentation.ui.theme.LocalDimentions
 import com.example.eventify.presentation.utils.asDate
 import com.example.eventify.presentation.utils.asTime
+import com.example.eventify.presentation.utils.conditional
 import com.example.eventify.presentation.utils.toColorOrNull
 import java.util.UUID
 
@@ -62,7 +68,7 @@ fun EventDetailScreen(
     val pagerState = rememberPagerState(pageCount = { state.event.eventInfo.pictures.size})
     val dimmentions = LocalDimentions.current
     val topBarState = LocalTopBarState.current
-
+    var isShowFullSizeImage by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         topBarState.setUp(
@@ -83,15 +89,20 @@ fun EventDetailScreen(
     ) {
 
         ImagePager(
-            pagerState = pagerState
+            pagerState = pagerState,
+            key = state.event.eventInfo.pictures::get
         ){ page ->
-            val url = state.event.eventInfo.pictures[page]
             EventImage(
-                uri = url,
+                uri = state.event.eventInfo.pictures[page],
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(200.dp)
+                    .conditional(!isShowFullSizeImage) {
+                        height(200.dp)
+                    }
                     .clip(RoundedCornerShape(10.dp))
+                    .clickable {
+                        isShowFullSizeImage = !isShowFullSizeImage
+                    }
             )
         }
         Column(
@@ -135,27 +146,6 @@ fun EventDetailScreen(
                 isSubscribed = state.event.eventInfo.subscribed,
                 onClick = actions::onActionClick
             )
-
-
-//            if (state.event.eventInfo.subscribed) {
-//                PrimaryDeclineButton(
-//                    onClick = actions::onUnsubscribe,
-//                    enabled = !state.event.eventInfo.isFinished,
-//                ) {
-//                    PrimaryButtonText(text = "Отменить запись на мероприятие")
-//                }
-//            } else {
-//                PrimaryButton(
-//                    onClick = actions::onSubscribe,
-//                    enabled = !state.event.eventInfo.isFinished,
-//                ) {
-//                    PrimaryButtonText(text = "Я пойду!")
-//                }
-//            }
-
-//            PrimaryButton(onClick = actions.goToRatePage) {
-//                PrimaryButtonText(stringResource(R.string.to_rate))
-//            }
         }
     }
 }
