@@ -1,11 +1,13 @@
 package com.example.eventify.presentation.ui.account.profileedit
 
 import android.content.res.Configuration
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -60,6 +62,7 @@ fun ProfileEditScreen(
         verticalArrangement = Arrangement.spacedBy(10.dp, Alignment.Top),
         horizontalAlignment = Alignment.Start,
         modifier = Modifier
+            .background(MaterialTheme.colorScheme.background)
             .padding(dimmentions.windowPaddings)
             .verticalScroll(scrollState)
     ) {

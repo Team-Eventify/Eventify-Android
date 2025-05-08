@@ -32,6 +32,7 @@ fun LoadingProfileEdit(
     Column(
         verticalArrangement = Arrangement.spacedBy(space20, Alignment.Top),
         modifier = Modifier
+            .background(MaterialTheme.colorScheme.background)
             .fillMaxSize()
             .padding(dims.windowPaddings)
             .shimmer()

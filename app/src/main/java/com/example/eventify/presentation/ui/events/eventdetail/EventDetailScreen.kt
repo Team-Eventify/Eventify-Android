@@ -3,6 +3,7 @@ package com.example.eventify.presentation.ui.events.eventdetail
 import android.annotation.SuppressLint
 import android.content.res.Configuration
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -69,6 +70,7 @@ fun EventDetailScreen(
     val dimmentions = LocalDimentions.current
     val topBarState = LocalTopBarState.current
     var isShowFullSizeImage by remember { mutableStateOf(false) }
+
 
     LaunchedEffect(Unit) {
         topBarState.setUp(

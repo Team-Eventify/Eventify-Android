@@ -28,6 +28,7 @@ fun LoadingEvent() {
         modifier = Modifier
             .padding(10.dp)
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
             .shimmer(showShimmer = true)
     ) {
         Box(
