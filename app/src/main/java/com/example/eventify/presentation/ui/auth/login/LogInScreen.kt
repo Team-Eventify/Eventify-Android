@@ -1,5 +1,6 @@
 package com.example.eventify.presentation.ui.auth.login
 
+import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,6 +28,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import com.example.eventify.R
 import com.example.eventify.presentation.ui.auth.login.state.LogInState
@@ -121,7 +124,12 @@ fun LogInScreen(
         Spacer(modifier = Modifier.height(30.dp))
         PrimaryButton(
             enabled = state.isValidForm,
-            onClick = actions::onSubmit,
+            onClick = {
+                actions.login(
+                    login = state.login,
+                    password = state.password,
+                )
+            },
             modifier = Modifier
                 .fillMaxWidth()
         ) {
@@ -143,21 +151,20 @@ fun LogInScreen(
 }
 
 @Composable
-@Preview(name = "LogIn Default Dark", showBackground = true)
-private fun LogInScreenDarkPreview() {
-    EventifyTheme(
-        darkTheme = true
-    ) {
+@Preview(name = "LogIn Dark", showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(name = "LogIn Light", showBackground = true,  uiMode = Configuration.UI_MODE_NIGHT_NO)
+private fun LogInScreenDarkPreview(@PreviewParameter(LoginPreviewParameterProvider::class) state: LogInState ) {
+    EventifyTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ){
             LogInScreen(
-                state = LogInState.default(),
+                state = state,
                 actions = object : LoginListener {
                     override fun onChangeLogin(login: String) = Unit
                     override fun onChangePassword(password: String) = Unit
-                    override fun onSubmit() = Unit
+                    override fun login(login: String, password: String) = Unit
                     override fun navigateToRegister() = Unit
                     override fun navigateToResetPassword(sharedEmail: String?) = Unit
                 }
@@ -166,85 +173,15 @@ private fun LogInScreenDarkPreview() {
     }
 }
 
-@Composable
-@Preview(name = "LogIn Invalid Form Dark", showBackground = true)
-private fun LogInScreenInvalidDarkPreview() {
-    EventifyTheme(
-        darkTheme = true
-    ) {
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.background
-        ){
-            LogInScreen(
-                state = LogInState(
-                    login = "",
-                    loginError = "Короткий",
-                    password = "",
-                    passwordError = "Глупый",
-                ),
-                actions = object : LoginListener {
-                    override fun onChangeLogin(login: String) = Unit
-                    override fun onChangePassword(password: String) = Unit
-                    override fun onSubmit() = Unit
-                    override fun navigateToRegister() = Unit
-                    override fun navigateToResetPassword(sharedEmail: String?) = Unit
-                }
-            )
-        }
-    }
-}
-
-@Composable
-@Preview(name = "LogIn Default Light", showBackground = true)
-private fun LogInScreenLightPreview() {
-    EventifyTheme(
-        darkTheme = false
-    ) {
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.background
-        ){
-            LogInScreen(
-                state = LogInState.default(),
-                actions = object : LoginListener {
-                    override fun onChangeLogin(login: String) = Unit
-                    override fun onChangePassword(password: String) = Unit
-                    override fun onSubmit() = Unit
-                    override fun navigateToRegister() = Unit
-                    override fun navigateToResetPassword(sharedEmail: String?) = Unit
-                }
-            )
-        }
-    }
-}
-
-@Composable
-@Preview(name = "LogIn Invalid Form Light", showBackground = true)
-private fun LogInScreenInvalidLightPreview() {
-    EventifyTheme(
-        darkTheme = false
-    ) {
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.background
-        ){
-            LogInScreen(
-                state = LogInState(
-                    login = "",
-                    loginError = "Короткий",
-                    password = "",
-                    passwordError = "Глупый"
-                ),
-                actions = object : LoginListener {
-                    override fun onChangeLogin(login: String) = Unit
-                    override fun onChangePassword(password: String) = Unit
-                    override fun onSubmit() = Unit
-                    override fun navigateToRegister() = Unit
-                    override fun navigateToResetPassword(sharedEmail: String?) = Unit
-                }
-            )
-        }
-    }
+class LoginPreviewParameterProvider : PreviewParameterProvider<LogInState> {
+    override val values = sequenceOf(
+        LogInState(),
+        LogInState(
+            login = "",
+            loginError = "Короткий",
+            password = "",
+            passwordError = "Глупый"
+        ),
+    )
 }
 

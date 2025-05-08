@@ -1,13 +1,13 @@
 package com.example.eventify.presentation.ui.auth.login.state
 
 data class LogInState(
-    val login: String,
+    val login: String = "",
     val hasLoginError: Boolean = false,
-    val loginError: String?,
+    val loginError: String? = null,
 
-    val password: String,
+    val password: String = "",
     val hasPasswordError: Boolean = false,
-    val passwordError: String?,
+    val passwordError: String? = null,
 
     ){
     val isValidLogin: Boolean
@@ -18,13 +18,4 @@ data class LogInState(
 
     val isValidForm: Boolean
         get() = isValidLogin && isValidPassword
-
-    companion object {
-        fun default() = LogInState(
-            login = "",
-            loginError = null,
-            password = "",
-            passwordError = null,
-        )
-    }
 }

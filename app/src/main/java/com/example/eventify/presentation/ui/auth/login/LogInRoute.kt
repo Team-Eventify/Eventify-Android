@@ -1,13 +1,17 @@
 package com.example.eventify.presentation.ui.auth.login
 
+import androidx.activity.ComponentActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.example.eventify.R
+import com.example.eventify.domain.services.AccountCredentialManager
 import com.example.eventify.presentation.LocalTopBarState
 import com.example.eventify.presentation.LocaleSnackbarState
 import com.example.eventify.presentation.navigation.ARG_SHARED_EMAIL
@@ -20,6 +24,7 @@ import com.example.eventify.presentation.navigation.navigateToFeature
 import com.example.eventify.presentation.ui.auth.login.state.LoginListener
 import com.example.eventify.presentation.ui.auth.login.state.SideEffect
 import com.example.eventify.presentation.utils.ObserveAsEvent
+import kotlinx.coroutines.launch
 
 @Composable
 fun LogInRoute(
@@ -31,6 +36,21 @@ fun LogInRoute(
     val snackBarState = LocaleSnackbarState.current
     val context = LocalContext.current
     val features = LocalFeaturesProvider.current.features
+    val scope = rememberCoroutineScope()
+    val credentialManager = remember {
+        AccountCredentialManager(context as ComponentActivity)
+    }
+
+    LaunchedEffect(Unit) {
+        scope.launch {
+            credentialManager.signIn { login, password ->
+                viewModel.logIn(
+                    login = login,
+                    password = password,
+                )
+            }
+        }
+    }
 
     val listener = object : LoginListener {
         override fun onChangeLogin(login: String) {
@@ -41,8 +61,8 @@ fun LogInRoute(
             viewModel.changePassword(password)
         }
 
-        override fun onSubmit() {
-            viewModel.logIn()
+        override fun login(login: String, password: String) {
+            viewModel.logIn(login, password)
         }
 
         override fun navigateToRegister() {
