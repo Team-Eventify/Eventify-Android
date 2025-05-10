@@ -4,6 +4,9 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid) apply false
     kotlin("plugin.serialization") version "1.9.21"
     id("com.google.gms.google-services") version "4.4.2" apply false
+    id("com.google.dagger.hilt.android") version "2.56.2" apply false
+    id("core-convention")
+    id("feature-convention")
 }
 
 buildscript {
