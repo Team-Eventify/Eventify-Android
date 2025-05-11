@@ -1,10 +1,8 @@
 import java.util.Properties
 
 plugins {
-    alias(libs.plugins.androidApplication)
+    id("android-common-convention")
 
-    id("kotlin-kapt")
-    id("kotlinx-serialization")
 }
 
 
@@ -13,6 +11,12 @@ android {
 }
 
 dependencies {
+    // Compose
+    implementation(libs.androidx.material3)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.foundation)
+    implementation(libs.androidx.navigation.compose)
 
 
 }

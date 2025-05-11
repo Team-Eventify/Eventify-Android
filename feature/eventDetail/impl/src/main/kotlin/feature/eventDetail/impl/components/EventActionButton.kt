@@ -5,13 +5,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.eventify.R
-import com.example.eventify.domain.models.EventState
-import com.example.eventify.domain.models.isSubscribeEnabled
-import com.example.eventify.presentation.ui.common.PrimaryButtonText
-import com.example.eventify.presentation.ui.common.buttons.PrimaryButton
-import com.example.eventify.presentation.ui.common.buttons.PrimaryDeclineButton
-import com.example.eventify.presentation.ui.theme.EventifyTheme
 
 
 @Composable

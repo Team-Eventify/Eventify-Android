@@ -9,5 +9,6 @@ android {
 
 dependencies {
     api(project(":feature:profileEdit:api"))
+    implementation(project(":data"))
 
 }

@@ -3,25 +3,22 @@ package feature.eventDetail.impl
 import android.content.Context
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.example.eventify.R
-import com.example.eventify.data.exceptions.isNotFound
-import com.example.eventify.domain.models.isSubscribeEnabled
-import com.example.eventify.domain.usecases.events.GetEventDetailUseCase
-import com.example.eventify.domain.usecases.events.SubscribeForEventUseCase
-import com.example.eventify.domain.usecases.events.UnsubscribeForEventUseCase
-import com.example.eventify.presentation.navigation.ARG_EVENT_ID
-import com.example.eventify.presentation.ui.events.eventdetail.state.SideEffect
-import com.example.eventify.presentation.ui.events.eventdetail.state.EventDetailUiState
-import com.example.eventify.presentation.utils.BaseViewModel
+import core.common.navigation.ARG_EVENT_ID
+import core.common.BaseViewModel
+import core.common.extentions.isNotFound
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import domain.events.GetEventDetailUseCase
+import domain.events.SubscribeForEventUseCase
+import domain.events.UnsubscribeForEventUseCase
+import feature.eventDetail.impl.state.EventDetailUiState
+import feature.eventDetail.impl.state.SideEffect
 import kotlinx.coroutines.channels.Channel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
@@ -31,7 +28,7 @@ import kotlinx.coroutines.flow.update
 
 
 @HiltViewModel
-class EventDetailViewModel @Inject constructor(
+internal class EventDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getEventDetailUseCase: GetEventDetailUseCase,
     private val subscribedEventsUseCase: SubscribeForEventUseCase,

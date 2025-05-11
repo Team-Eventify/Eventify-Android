@@ -1,8 +1,9 @@
 package feature.eventFeed.impl
 
 import androidx.lifecycle.viewModelScope
-import core.common.viewmodel.BaseViewModel
+import core.common.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import domain.events.GetEventsUseCase
 import feature.eventFeed.impl.state.UiState
 import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow

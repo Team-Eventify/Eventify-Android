@@ -9,6 +9,6 @@ android {
 }
 
 dependencies {
-
+    api(project(":feature:resetPassword:api"))
 
 }

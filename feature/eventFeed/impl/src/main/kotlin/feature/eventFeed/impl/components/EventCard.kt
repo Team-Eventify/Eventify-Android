@@ -30,7 +30,7 @@ import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import uikit.theme.EventifyTheme
+import uikit.EventifyTheme
 
 
 @OptIn(ExperimentalLayoutApi::class)

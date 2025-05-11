@@ -29,8 +29,15 @@ include(
 
 include(
     ":core:common",
-    ":core:domain",
-    ":core:data",
+    ":core:featureManager",
+)
+
+include(
+    ":data",
+)
+
+include(
+    ":domain",
 )
 
 
@@ -61,8 +68,4 @@ include(
     ":feature:profileEdit:impl",
 )
 
-include(
-    ":featureManager:api",
-    ":featureManager:impl",
-)
  

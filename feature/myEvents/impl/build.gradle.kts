@@ -9,6 +9,9 @@ android {
 }
 
 dependencies {
+    api(project(":feature:myEvents:api"))
 
+    api(project(":feature:eventFeed:api"))
+    api(project(":feature:eventDetail:api"))
 
 }

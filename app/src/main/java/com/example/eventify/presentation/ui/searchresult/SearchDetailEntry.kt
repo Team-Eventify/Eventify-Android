@@ -5,7 +5,6 @@ import androidx.navigation.NavHostController
 import com.example.eventify.presentation.navigation.ARG_CATEGORY_ID
 import com.example.eventify.presentation.navigation.BaseDestination
 import com.example.eventify.presentation.navigation.ComposableFeatureEntry
-import com.example.eventify.presentation.ui.events.eventsfeed.EventsRootPath
 import javax.inject.Inject
 
 val SearchDetailPath = EventsRootPath.child(

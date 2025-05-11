@@ -10,7 +10,6 @@
               <build path="$PROJECT_DIR$/build-logic" name="build-logic">
                 <projects>
                   <project path="$PROJECT_DIR$/build-logic" />
-                  <project path="$PROJECT_DIR$/build-logic/convention" />
                 </projects>
               </build>
             </builds>
@@ -24,14 +23,46 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/build-logic" />
-            <option value="$PROJECT_DIR$/build-logic/convention" />
+            <option value="$PROJECT_DIR$/core" />
+            <option value="$PROJECT_DIR$/core/common" />
+            <option value="$PROJECT_DIR$/core/featureManager" />
+            <option value="$PROJECT_DIR$/data" />
+            <option value="$PROJECT_DIR$/domain" />
             <option value="$PROJECT_DIR$/feature" />
+            <option value="$PROJECT_DIR$/feature/aboutApp" />
+            <option value="$PROJECT_DIR$/feature/aboutApp/api" />
+            <option value="$PROJECT_DIR$/feature/aboutApp/impl" />
+            <option value="$PROJECT_DIR$/feature/eventDetail" />
+            <option value="$PROJECT_DIR$/feature/eventDetail/api" />
+            <option value="$PROJECT_DIR$/feature/eventDetail/impl" />
+            <option value="$PROJECT_DIR$/feature/eventFeed" />
+            <option value="$PROJECT_DIR$/feature/eventFeed/api" />
+            <option value="$PROJECT_DIR$/feature/eventFeed/impl" />
             <option value="$PROJECT_DIR$/feature/login" />
             <option value="$PROJECT_DIR$/feature/login/api" />
             <option value="$PROJECT_DIR$/feature/login/impl" />
+            <option value="$PROJECT_DIR$/feature/myEvents" />
+            <option value="$PROJECT_DIR$/feature/myEvents/api" />
+            <option value="$PROJECT_DIR$/feature/myEvents/impl" />
+            <option value="$PROJECT_DIR$/feature/onboarding" />
+            <option value="$PROJECT_DIR$/feature/onboarding/api" />
+            <option value="$PROJECT_DIR$/feature/onboarding/impl" />
+            <option value="$PROJECT_DIR$/feature/profile" />
+            <option value="$PROJECT_DIR$/feature/profile/api" />
+            <option value="$PROJECT_DIR$/feature/profile/impl" />
+            <option value="$PROJECT_DIR$/feature/profileEdit" />
+            <option value="$PROJECT_DIR$/feature/profileEdit/api" />
+            <option value="$PROJECT_DIR$/feature/profileEdit/impl" />
             <option value="$PROJECT_DIR$/feature/register" />
             <option value="$PROJECT_DIR$/feature/register/api" />
             <option value="$PROJECT_DIR$/feature/register/impl" />
+            <option value="$PROJECT_DIR$/feature/resetPassword" />
+            <option value="$PROJECT_DIR$/feature/resetPassword/api" />
+            <option value="$PROJECT_DIR$/feature/resetPassword/impl" />
+            <option value="$PROJECT_DIR$/feature/setup" />
+            <option value="$PROJECT_DIR$/feature/setup/api" />
+            <option value="$PROJECT_DIR$/feature/setup/impl" />
+            <option value="$PROJECT_DIR$/uikit" />
           </set>
         </option>
       </GradleProjectSettings>

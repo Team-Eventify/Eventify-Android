@@ -10,5 +10,6 @@ android {
 
 dependencies {
     api(project(":feature:onboarding:api"))
+    api(project(":feature:register:api"))
 
 }

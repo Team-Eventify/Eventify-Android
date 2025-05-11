@@ -1,14 +1,16 @@
 package feature.profileEdit.impl
 
 import androidx.lifecycle.viewModelScope
-import com.example.eventify.domain.usecases.GetCategoriesWithUserSelection
-import com.example.eventify.domain.usecases.account.ChangeUserUseCase
-import com.example.eventify.domain.usecases.account.DeleteAccountUseCase
-import com.example.eventify.domain.usecases.account.GetCurrentUserUseCase
-import com.example.eventify.domain.usecases.account.SetUserCategoriesUseCase
-import com.example.eventify.presentation.ui.account.profileedit.state.SideEffect
-import com.example.eventify.presentation.ui.account.profileedit.state.UiState
+import core.common.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import data.models.UserChange
+import domain.GetCategoriesWithUserSelection
+import domain.account.ChangeUserUseCase
+import domain.account.DeleteAccountUseCase
+import domain.account.GetCurrentUserUseCase
+import domain.account.SetUserCategoriesUseCase
+import feature.profileEdit.impl.state.SideEffect
+import feature.profileEdit.impl.state.UiState
 import kotlinx.coroutines.channels.Channel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow
@@ -18,12 +20,11 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import com.example.eventify.domain.models.UserChange
-import com.example.eventify.presentation.utils.BaseViewModel
+import kotlin.collections.filter
 
 
 @HiltViewModel
-class ProfileEditViewModel @Inject constructor(
+internal class ProfileEditViewModel @Inject constructor(
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
     private val getCategoriesWithUserSelection: GetCategoriesWithUserSelection,
     private val changeUserUseCase: ChangeUserUseCase,

@@ -4,7 +4,9 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.example.eventify.presentation.navigation.ARG_SHARED_EMAIL
 import com.example.eventify.presentation.ui.auth.resetpassword.state.UiState
+import core.common.navigation.ARG_SHARED_EMAIL
 import dagger.hilt.android.lifecycle.HiltViewModel
+import feature.resetPassword.impl.state.UiState
 import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.MutableStateFlow

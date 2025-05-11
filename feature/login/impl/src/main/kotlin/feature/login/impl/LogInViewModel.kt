@@ -1,6 +1,10 @@
 package feature.login.impl
 
+import core.common.BaseViewModel
+import core.common.extentions.isNotFound
 import dagger.hilt.android.lifecycle.HiltViewModel
+import data.models.UserCredentials
+import domain.auth.LoginUseCase
 import feature.login.impl.state.LogInState
 import feature.login.impl.state.SideEffect
 import kotlinx.coroutines.channels.Channel
@@ -48,9 +52,9 @@ internal class LogInViewModel @Inject constructor(
             catch = ::handleErrors
         ) {
             val userCredentials = UserCredentials(
-                    login = login,
-                    password = password
-                )
+                login = login,
+                password = password
+            )
 
             loginUseCase(credentials = userCredentials)
             mutableSideEffect.send(SideEffect.SuccessLogIn)

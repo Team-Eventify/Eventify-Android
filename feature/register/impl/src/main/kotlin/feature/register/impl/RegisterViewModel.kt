@@ -2,22 +2,19 @@ package feature.register.impl
 
 import android.content.Context
 import androidx.lifecycle.viewModelScope
-import com.example.eventify.R
-import com.example.eventify.data.repositories.auth.AuthUserRepository
-import com.example.eventify.domain.models.OtpUserCreate
-import com.example.eventify.domain.models.RegisterValidationData
-import com.example.eventify.domain.usecases.auth.OtpRegisterUseCase
-import com.example.eventify.domain.usecases.auth.isIncorrectOtp
-import com.example.eventify.domain.validation.Email
-import com.example.eventify.domain.validation.OTP
-import com.example.eventify.domain.validation.Password
-import com.example.eventify.presentation.ui.auth.register.state.OtpState
-import com.example.eventify.presentation.ui.auth.register.state.RegisterPayloadState
-import com.example.eventify.presentation.ui.auth.register.state.RegisterUiState
-import com.example.eventify.presentation.ui.auth.register.state.SideEffect
-import com.example.eventify.presentation.utils.BaseViewModel
+import core.common.BaseViewModel
+
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import data.models.OtpUserCreate
+import data.models.RegisterValidationData
+import data.repositories.auth.AuthUserRepository
+import domain.auth.OtpRegisterUseCase
+import domain.auth.isIncorrectOtp
+import feature.register.impl.state.OtpState
+import feature.register.impl.state.RegisterPayloadState
+import feature.register.impl.state.RegisterUiState
+import feature.register.impl.state.SideEffect
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import javax.inject.Inject
@@ -119,11 +116,11 @@ class RegisterViewModel @Inject constructor(
 
             // TODO needs validation
             val userPayload = OtpUserCreate(
-                    email = login,
-                    password = password,
-                    code = otp,
-                    validationResultId = validationId
-                )
+                email = login,
+                password = password,
+                code = otp,
+                validationResultId = validationId
+            )
 
             otpRegisterUseCase(userData = userPayload)
 

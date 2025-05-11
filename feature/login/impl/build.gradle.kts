@@ -10,10 +10,11 @@ android {
 
 dependencies {
     implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
+//    kapt(libs.hilt.android.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
     implementation(project(":feature:login:api"))
     implementation(project(":feature:register:api"))
     implementation(project(":feature:resetPassword:api"))
+    implementation(project(":data"))
 }

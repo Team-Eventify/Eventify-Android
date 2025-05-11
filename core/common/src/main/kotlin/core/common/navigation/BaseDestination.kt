@@ -1,8 +1,5 @@
 package core.common.navigation
 
-
-
-
 open class BaseDestination(
     val route: String,
     vararg argumentsKeys: String

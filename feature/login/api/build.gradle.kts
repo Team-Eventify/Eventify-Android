@@ -1,13 +1,6 @@
 
-import java.util.Properties
-
 plugins {
-    alias(libs.plugins.androidApplication)
-    alias(libs.plugins.jetbrainsKotlinAndroid)
-
-    id("kotlin-kapt")
-    id("kotlinx-serialization")
-    id("com.google.gms.google-services")
+    id("android-common-convention")
 }
 
 
@@ -16,5 +9,6 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:common"))
 }
 

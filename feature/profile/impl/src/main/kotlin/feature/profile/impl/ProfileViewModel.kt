@@ -1,11 +1,10 @@
 package feature.profile.impl
 
 import androidx.lifecycle.viewModelScope
-import com.example.eventify.domain.usecases.account.GetCurrentUserUseCase
-import com.example.eventify.presentation.models.UserShortInfo
-import com.example.eventify.presentation.ui.account.profile.state.UiState
-import com.example.eventify.presentation.utils.BaseViewModel
+import core.common.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import domain.account.GetCurrentUserUseCase
+import feature.profile.impl.state.UiState
 import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +15,7 @@ import kotlinx.coroutines.flow.update
 
 
 @HiltViewModel
-class ProfileViewModel @Inject constructor(
+internal class ProfileViewModel @Inject constructor(
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
 ) : BaseViewModel() {
     private val _stateFlow: MutableStateFlow<UiState> = MutableStateFlow(UiState.Loading)

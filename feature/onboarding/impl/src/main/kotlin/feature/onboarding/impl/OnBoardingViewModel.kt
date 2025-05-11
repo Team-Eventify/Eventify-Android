@@ -1,9 +1,6 @@
 package feature.onboarding.impl
 
-import com.example.eventify.data.storages.LocaleStorage
-import com.example.eventify.data.storages.SharedStorage
-import com.example.eventify.data.storages.StorageKeys
-import com.example.eventify.presentation.utils.BaseViewModel
+import core.common.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

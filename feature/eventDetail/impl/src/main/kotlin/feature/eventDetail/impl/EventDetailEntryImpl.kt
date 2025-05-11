@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import feature.eventDetail.api.EventDetailEntry
+import feature.eventDetail.impl.ui.EventDetailRoute
 import javax.inject.Inject
 
 

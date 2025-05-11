@@ -37,6 +37,8 @@ import com.example.eventify.presentation.ui.common.keyboards.otp.OtpKeyboard
 import com.example.eventify.presentation.ui.common.otp.OtpTextField
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 import com.example.eventify.presentation.ui.theme.space12
+import feature.register.impl.state.OtpState
+import uikit.components.otp.OtpTextField
 
 
 @OptIn(ExperimentalMaterial3Api::class)

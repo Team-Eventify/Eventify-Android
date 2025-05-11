@@ -1,11 +1,8 @@
 package feature.register.api
 
-import androidx.compose.runtime.Composable
-import androidx.navigation.NavHostController
-import com.example.eventify.presentation.navigation.BaseDestination
-import com.example.eventify.presentation.navigation.ComposableFeatureEntry
-import com.example.eventify.presentation.ui.auth.login.AuthRootPath
-import javax.inject.Inject
+import core.common.navigation.BaseDestination
+import core.common.navigation.ComposableFeatureEntry
+
 
 val RegisterPath = AuthRootPath.child("register")
 
