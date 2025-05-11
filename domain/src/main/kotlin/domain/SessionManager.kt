@@ -8,12 +8,6 @@ interface SessionManager {
     suspend fun isLoggedIn(): Boolean
 }
 
-class SessionManagerImpl @Inject constructor(
-    private val tokenProvider: TokenProvider
-) : SessionManager {
-    override suspend fun isLoggedIn(): Boolean = tokenProvider.isValidData()
-}
-
 class SessionManagerRequestsImpl @Inject constructor(
     private val usersRepository: UsersRepository,
     private val tokenProvider: TokenProvider

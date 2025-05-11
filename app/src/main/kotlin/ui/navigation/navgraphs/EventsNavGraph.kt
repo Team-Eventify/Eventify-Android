@@ -12,8 +12,8 @@ fun NavGraphBuilder.addEventsNavGraph(
     features: List<ComposableFeatureEntry>,
 ) {
     navigation(
-        route = EventFeedPath.baseRoute,
-        startDestination = EventsRoot.baseRoute
+        route = EventsRoot.baseRoute,
+        startDestination = EventFeedPath.baseRoute
     ) {
         features.forEach { feature ->
             with(feature) {

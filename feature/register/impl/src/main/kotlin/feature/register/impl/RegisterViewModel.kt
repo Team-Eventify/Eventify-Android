@@ -24,6 +24,8 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import com.example.eventify.uikit.R as UiKitR
+
 
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
@@ -153,7 +155,7 @@ class RegisterViewModel @Inject constructor(
                 mutableOtpState.update { currentState ->
                     (currentState as? OtpState.ShowOtp)?.copy(
                         hasError = true,
-                        errorMessage = context.getString(R.string.incorrect_otp)
+                        errorMessage = context.getString(UiKitR.string.incorrect_otp)
                     ) ?: currentState
                 }
             }
@@ -161,7 +163,7 @@ class RegisterViewModel @Inject constructor(
                 mutableOtpState.update { currentState ->
                     (currentState as? OtpState.ShowOtp)?.copy(
                         hasError = true,
-                        errorMessage = context.getString(R.string.server_error)
+                        errorMessage = context.getString(UiKitR.string.server_error)
                     ) ?: currentState
                 }
             }

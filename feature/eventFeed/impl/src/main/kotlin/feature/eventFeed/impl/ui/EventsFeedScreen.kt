@@ -22,7 +22,9 @@ import java.util.UUID
 import kotlin.random.Random
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.google.accompanist.swiperefresh.SwipeRefresh
-
+import data.models.EventState
+import domain.models.ShortEventItem
+import com.example.eventify.uikit.R as UiKitR
 
 @Composable
 internal fun EventsFeedScreen(
@@ -43,7 +45,7 @@ internal fun EventsFeedScreen(
                 .fillMaxSize()
         ) {
             item {
-                HeadingText(stringResource(R.string.popular_events))
+                HeadingText(stringResource(UiKitR.string.popular_events))
             }
             items(
                 items = state.events,

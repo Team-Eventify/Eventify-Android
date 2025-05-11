@@ -28,14 +28,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
+import coil3.compose.AsyncImage
+import coil3.request.ImageRequest
+import coil3.request.crossfade
+import core.common.extentions.asTime
+import data.models.EventState
+import domain.models.ShortEventItem
 import uikit.EventifyTheme
 import uikit.LocaleImageLoader
 import uikit.components.BodyText
 import uikit.components.EventCardTitle
 import uikit.components.EventInfoTag
 import uikit.components.shimmer
+import com.example.eventify.uikit.R as UiKitR
 
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -68,8 +73,8 @@ internal fun EventCard(
                     .data("https://eventify.website/api/v1/files/${event.cover}")
                     .crossfade(true)
                     .build(),
-                error = painterResource(R.drawable.underfind_event_image),
-                placeholder = painterResource(R.drawable.underfind_event_image),
+                error = painterResource(UiKitR.drawable.underfind_event_image),
+                placeholder = painterResource(UiKitR.drawable.underfind_event_image),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 alignment = Alignment.Center,

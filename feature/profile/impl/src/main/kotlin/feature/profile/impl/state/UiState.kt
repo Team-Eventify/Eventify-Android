@@ -1,6 +1,7 @@
 package feature.profile.impl.state
 
-import com.example.eventify.presentation.models.UserShortInfo
+import domain.models.UserShortInfo
+
 
 sealed class UiState {
     data class ShowProfile(

@@ -25,8 +25,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.eventify.R
-import com.example.eventify.presentation.ui.theme.EventifyTheme
+import com.example.eventify.uikit.R as UiKitR
+import uikit.EventifyTheme
 
 @Composable
 fun UserProfilePanel(
@@ -40,7 +40,7 @@ fun UserProfilePanel(
         if (!firstName.isNullOrEmpty() || !lastName.isNullOrEmpty())
             "$lastName $firstName"
         else
-            context.getString(R.string.empty_profile_name)
+            context.getString(UiKitR.string.empty_profile_name)
     }
     Card(
         modifier = Modifier
@@ -67,12 +67,12 @@ fun UserProfilePanel(
                     fontWeight = FontWeight.Medium
                 )
                 Text(
-                    text = stringResource(R.string.edit_profile),
+                    text = stringResource(UiKitR.string.edit_profile),
                     fontSize = 17.sp,
                     fontWeight = FontWeight.Light
                 )
             }
-            Icon(painter = painterResource(R.drawable.ic_arrow_right), contentDescription = "arrow right")
+            Icon(painter = painterResource(UiKitR.drawable.ic_arrow_right), contentDescription = "arrow right")
         }
     }
 }

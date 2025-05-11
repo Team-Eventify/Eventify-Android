@@ -15,9 +15,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.eventify.R
-import com.example.eventify.presentation.ui.common.AnnotationText
-import com.example.eventify.presentation.ui.theme.EventifyTheme
+import uikit.EventifyTheme
+import uikit.components.AnnotationText
+import com.example.eventify.uikit.R as UiKitR
+
 
 @Composable
 fun DeleteAccountDialog(
@@ -31,7 +32,7 @@ fun DeleteAccountDialog(
         shape = RoundedCornerShape(14.dp),
         icon = {
             Icon(
-                painter = painterResource(id = R.drawable.round_delete_forever_24),
+                painter = painterResource(id = UiKitR.drawable.round_delete_forever_24),
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.primary,
             )

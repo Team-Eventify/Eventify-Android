@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import com.example.eventify.uikit.R as UiKitR
 
 @HiltViewModel
 class AboutAppViewModel @Inject constructor(
@@ -36,7 +37,7 @@ class AboutAppViewModel @Inject constructor(
 
             _stateFlow.update { currentState ->
                 currentState.copy(
-                    versionName = context.getString(R.string.version, versionName)
+                    versionName = context.getString(UiKitR.string.version, versionName)
                 )
             }
         }

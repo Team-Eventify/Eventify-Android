@@ -33,11 +33,12 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.flowWithLifecycle
 import androidx.navigation.compose.rememberNavController
 import coil3.ImageLoader
+import com.example.eventify.featuresProvider
 import com.example.eventify.uikit.R
+import core.common.extentions.isShowOnboarding
 import core.common.navigation.AuthRoot
 import core.common.navigation.EventsRoot
 import uikit.components.screens.NoInternetConnectionScreen
-import featuresProvider
 import ui.navigation.navgraphs.MainNavHost
 import core.common.secure.AuthorizeType
 import core.common.storages.LocaleStorage

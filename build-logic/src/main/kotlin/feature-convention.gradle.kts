@@ -23,12 +23,10 @@ dependencies {
 
 
     // Hilt
-    implementation(libs.hilt.android)
-//    kapt(libs.hilt.android.compiler)
-    implementation(libs.androidx.hilt.navigation.compose)
 
     implementation(project(":uikit"))
     implementation(project(":core:common"))
     implementation(project(":domain"))
+    implementation(project(":data"))
     implementation(project(":core:featureManager"))
 }

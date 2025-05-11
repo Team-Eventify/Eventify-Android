@@ -5,7 +5,7 @@ import core.common.navigation.BaseDestination
 import core.common.navigation.ComposableFeatureEntry
 
 
-val ProfilePath = AccountRoot
+val ProfilePath = AccountRoot.child("profile")
 
 
 interface ProfileEntry : ComposableFeatureEntry {

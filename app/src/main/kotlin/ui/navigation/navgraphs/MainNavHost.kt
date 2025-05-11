@@ -31,7 +31,7 @@ fun MainNavHost(
     val authFeatures: List<ComposableFeatureEntry> = listOfNotNull(
         features.find<LoginEntry>(),
         features.find<RegisterEntry>(),
-        features.find<ResetPasswordEntry>(),
+//        features.find<ResetPasswordEntry>(),
 //        features.find<SetUpEntry>(),
     )
 

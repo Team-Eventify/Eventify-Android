@@ -1,7 +1,15 @@
-package core.common.storages
+package core.common
 
 import android.content.Context
 import com.google.gson.GsonBuilder
+import core.common.secure.tokens.EncryptedTokenProviderImpl
+import core.common.secure.tokens.TokenProvider
+import core.common.storages.EncryptedStorage
+import core.common.storages.EncryptedStorageImpl
+import core.common.storages.LocaleStorage
+import core.common.storages.SharedPreferencesStorageImpl
+import core.common.storages.SharedStorage
+import core.common.storages.Storages
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,7 +20,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object StoragesModule {
+object CoreCommonModule {
 
     @EncryptedStorage
     @Provides
@@ -39,4 +47,12 @@ object StoragesModule {
             storageName = Storages.SHARED
         )
     }
+//
+    @Provides
+    @Singleton
+    fun provideTokenManager(
+        @EncryptedStorage localeStorage: LocaleStorage,
+    ): TokenProvider = EncryptedTokenProviderImpl(
+        localeStorage = localeStorage,
+    )
 }

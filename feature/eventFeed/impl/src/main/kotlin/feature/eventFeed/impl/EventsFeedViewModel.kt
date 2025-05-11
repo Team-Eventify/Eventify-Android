@@ -5,6 +5,7 @@ import core.common.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import domain.events.GetEventsUseCase
 import domain.extentions.isHidden
+import domain.models.toShort
 import feature.eventFeed.impl.state.UiState
 import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow
@@ -53,7 +54,7 @@ internal class EventsFeedViewModel @Inject constructor(
                     events = getEventsUseCase()
                         .filter { !it.state.isHidden() }
                         .map {
-                            it.toShortEventItem()
+                            it.toShort()
                         }
                 )
             }

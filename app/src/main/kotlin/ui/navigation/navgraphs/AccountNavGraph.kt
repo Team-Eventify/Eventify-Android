@@ -13,8 +13,8 @@ fun NavGraphBuilder.addAccountNavGraph(
     features: List<ComposableFeatureEntry>,
 ) {
     navigation(
-        route = ProfilePath.baseRoute,
-        startDestination = AccountRoot.baseRoute
+        route = AccountRoot.baseRoute,
+        startDestination = ProfilePath.baseRoute
     ) {
         features.forEach { feature ->
             with(feature) {

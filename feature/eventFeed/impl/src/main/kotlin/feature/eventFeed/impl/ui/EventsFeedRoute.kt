@@ -20,7 +20,7 @@ import uikit.components.topBar.TopBarState
 import core.featureManager.LocalFeaturesProvider
 import core.featureManager.navigateToFeature
 import uikit.components.screens.ErrorScreen
-
+import com.example.eventify.uikit.R as UiKitR
 
 @Composable
 internal fun EventsFeedRoute(
@@ -50,7 +50,7 @@ internal fun EventsFeedRoute(
 
     when (uiState){
         is UiState.Error -> ErrorScreen(
-            title = stringResource(R.string.error_load_feed),
+            title = stringResource(UiKitR.string.error_load_feed),
             description = (uiState as UiState.Error).message
         )
         UiState.Loading -> LoadingEventFeed()
@@ -62,7 +62,7 @@ internal fun EventsFeedRoute(
     LaunchedEffect(Unit) {
         topBarState.setUp(
             TopBarState.Base(
-                title = context.getString(R.string.events_feed_title),
+                title = context.getString(UiKitR.string.events_feed_title),
                 size = TopBarSize.SMALL,
             )
         )

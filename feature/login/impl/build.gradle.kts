@@ -2,7 +2,8 @@
 plugins {
     id("feature-convention")
     alias(libs.plugins.compose.compiler)
-
+    id("com.google.devtools.ksp")
+    id("dagger.hilt.android.plugin")
 }
 
 
@@ -11,13 +12,16 @@ android {
 }
 
 dependencies {
-    implementation(libs.hilt.android)
 //    kapt(libs.hilt.android.compiler)
-    implementation(libs.androidx.hilt.navigation.compose)
 
     implementation(project(":feature:login:api"))
     implementation(project(":feature:register:api"))
     implementation(project(":feature:resetPassword:api"))
     implementation(project(":feature:eventFeed:api"))
-    implementation(project(":data"))
+
+    // Hilt
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
+
 }

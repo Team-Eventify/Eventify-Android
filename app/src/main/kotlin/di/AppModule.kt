@@ -5,15 +5,15 @@ import coil3.ImageLoader
 import coil3.network.okhttp.OkHttpNetworkFetcherFactory
 import coil3.request.CachePolicy
 import coil3.util.DebugLogger
-import com.example.eventify.data.remote.utils.AccessTokenInterceptor
-import com.example.eventify.data.remote.utils.TokenAuthenticator
-import com.example.eventify.presentation.navigation.Features
-import com.example.eventify.presentation.navigation.FeaturesProvider
+import core.featureManager.Features
+import core.featureManager.FeaturesProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import data.remote.utils.AccessTokenInterceptor
+import data.remote.utils.TokenAuthenticator
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import javax.inject.Singleton
@@ -23,11 +23,9 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-    @Provides
-    @Singleton
-    fun provideFeaturesProvider(features: Features): FeaturesProvider = FeaturesProvider(
-        features = features
-    )
+//    @Provides
+//    @Singleton
+//    fun provideFeaturesProvider(features: Features): FeaturesProvider = FeaturesProvider(features)
 
 
     @Provides

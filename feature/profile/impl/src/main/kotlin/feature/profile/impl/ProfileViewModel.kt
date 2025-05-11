@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-
+import domain.models.UserShortInfo
 
 @HiltViewModel
 internal class ProfileViewModel @Inject constructor(

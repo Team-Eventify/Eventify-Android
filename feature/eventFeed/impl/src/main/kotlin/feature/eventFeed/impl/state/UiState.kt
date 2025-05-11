@@ -1,5 +1,7 @@
 package feature.eventFeed.impl.state
 
+import domain.models.ShortEventItem
+
 
 internal sealed class UiState {
     data class Error(

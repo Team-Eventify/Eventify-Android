@@ -1,4 +1,4 @@
-package core.common
+package core.common.extentions
 
 import androidx.compose.ui.graphics.Color
 import androidx.core.graphics.toColorInt

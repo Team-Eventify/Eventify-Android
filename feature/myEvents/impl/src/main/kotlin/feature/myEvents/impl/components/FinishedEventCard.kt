@@ -30,7 +30,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
-
+import core.common.extentions.asDate
+import core.common.extentions.asTime
+import data.models.EventState
+import domain.models.ShortEventItem
+import uikit.EventifyTheme
+import uikit.components.EventCardTitle
+import uikit.components.FinishedEventInfoChip
+import com.example.eventify.uikit.R as UiKitR
 import kotlin.random.Random
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -83,7 +90,7 @@ fun FinishedEventCard(
 
                 // Right Image
                 Image(
-                    painter = painterResource(R.drawable.eventify_group_1),
+                    painter = painterResource(UiKitR.drawable.eventify_group_1),
                     contentDescription = null,
                     colorFilter = ColorFilter.tint(Color(0xFF858591)),
                     contentScale = ContentScale.FillHeight, // Adjust to fill the container's height
@@ -100,7 +107,7 @@ fun FinishedEventCard(
                         .fillMaxWidth()
                 ) {
                     Text(
-                        text = stringResource(R.string.feedback_action),
+                        text = stringResource(UiKitR.string.feedback_action),
                         fontWeight = FontWeight.Medium
                     )
                 }

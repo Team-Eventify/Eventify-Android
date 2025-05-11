@@ -6,18 +6,13 @@ plugins {
     alias(libs.plugins.compose.compiler)
 
 //
-    id("kotlin-kapt")
-//    id("com.google.dagger.hilt.android")
-//    id("kotlinx-serialization")
-//    id("com.google.gms.google-services")
-//    id("android-common-convention")
+//    id("kotlin-kapt")
+
+    id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
 }
 
-fun loadProperties(filename: String): Properties {
-    val properties = Properties()
-    file(filename).inputStream().use { properties.load(it) }
-    return properties
-}
+
 
 android {
     namespace = "com.example.eventify"
@@ -55,36 +50,14 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-
-    val releaseProperties = loadProperties("../release.properties")
-    val debugProperties = loadProperties("../debug.properties")
-
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-            signingConfig = signingConfigs.getByName("debug")
-            buildConfigField("String", "APPMETRICA_API_KEY", "\"${releaseProperties["appmetrica.api.key"]}\"")
-            buildConfigField("String", "API_BASE_URL", "\"${releaseProperties["api.base.url"]}\"")
-        }
-        debug {
-            buildConfigField("String", "APPMETRICA_API_KEY", "\"${debugProperties["appmetrica.api.key"]}\"")
-            buildConfigField("String", "API_BASE_URL", "\"${debugProperties["api.base.url"]}\"")
-        }
-    }
 }
 
 dependencies {
     implementation(project(":core:common"))
-    implementation(project(":domain"))
     implementation(project(":core:featureManager"))
+    implementation(project(":data"))
+    implementation(project(":domain"))
 
-    implementation(libs.hilt.android.compiler)
-    implementation(libs.hilt.android)
     implementation(libs.coil3.coil.compose)
     implementation(libs.coil.network.okhttp)
     implementation(libs.okhttp)
@@ -100,9 +73,14 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.material3)
-    kapt(libs.hilt.android.compiler) // annotation processor
-    implementation(libs.hilt.android) // runtime
+
+
     implementation(libs.androidx.runtime)
+
+    // HIlt
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
 
 
     implementation(project(":feature:login:impl"))
@@ -117,12 +95,10 @@ dependencies {
     implementation(project(":feature:aboutApp:impl"))
     implementation(project(":uikit"))
 
-}
 
 
-kapt {
-    correctErrorTypes = true
 }
+
 
 
 

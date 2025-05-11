@@ -1,6 +1,6 @@
 package feature.myEvents.impl.state
 
-import com.example.eventify.presentation.models.ShortEventItem
+import domain.models.ShortEventItem
 
 sealed class UiState {
     data object Initial : UiState()

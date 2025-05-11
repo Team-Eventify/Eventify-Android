@@ -1,6 +1,5 @@
 package feature.myEvents.impl.ui
 
-import android.R.attr.path
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -10,6 +9,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import core.common.navigation.ARG_EVENT_ID
+import core.featureManager.LocalFeaturesProvider
+import core.featureManager.navigateNewTaskFeature
+import core.featureManager.navigateToFeature
 import feature.eventDetail.api.EventDetailEntry
 import feature.eventFeed.api.EventsFeedEntry
 import feature.myEvents.api.MyEventsEntry
@@ -18,9 +20,11 @@ import feature.myEvents.impl.MyEventsViewModel
 import feature.myEvents.impl.components.EmptyMyEventsScreen
 import feature.myEvents.impl.components.LoadingMyEvents
 import feature.myEvents.impl.state.UiState
+import uikit.components.screens.ErrorScreen
 import uikit.components.topBar.LocalTopBarState
 import uikit.components.topBar.TopBarSize
 import uikit.components.topBar.TopBarState
+import com.example.eventify.uikit.R as UiKitR
 
 
 @Composable
@@ -68,7 +72,7 @@ fun MyEventsRoute(
             onActionClick = listener::navigateToFeed,
         )
         is UiState.Error -> ErrorScreen(
-            title = stringResource(R.string.error_loading_my_events),
+            title = stringResource(UiKitR.string.error_loading_my_events),
             description = (uiState as UiState.Error).message
         )
         is UiState.ShowMyEvents -> {
@@ -79,7 +83,7 @@ fun MyEventsRoute(
     LaunchedEffect(Unit) {
         topBarState.setUp(
             TopBarState.Base(
-                title = context.getString(R.string.my_events_title),
+                title = context.getString(UiKitR.string.my_events_title),
                 size = TopBarSize.SMALL,
             )
         )

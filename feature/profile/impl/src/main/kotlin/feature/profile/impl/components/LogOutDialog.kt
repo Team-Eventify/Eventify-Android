@@ -1,7 +1,5 @@
 package feature.profile.impl.components
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
@@ -16,8 +14,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.eventify.R
-import com.example.eventify.presentation.ui.theme.EventifyTheme
+import uikit.EventifyTheme
+import com.example.eventify.uikit.R as UiKitR
 
 @Composable
 fun LogOutDialog(
@@ -31,7 +29,7 @@ fun LogOutDialog(
         shape = RoundedCornerShape(14.dp),
         icon = {
                Icon(
-                   painter = painterResource(id = R.drawable.round_logout_24),
+                   painter = painterResource(id = UiKitR.drawable.round_logout_24),
                    contentDescription = null,
                    tint = MaterialTheme.colorScheme.primary,
                )

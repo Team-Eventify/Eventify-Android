@@ -3,6 +3,9 @@ package feature.myEvents.impl
 import core.common.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import domain.events.GetSubscribedEventsUseCase
+import domain.extentions.isHidden
+import domain.extentions.isSubscribeEnabled
+import domain.models.toShort
 import feature.myEvents.impl.state.UiState
 import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow
@@ -40,7 +43,7 @@ class MyEventsViewModel @Inject constructor(
         ) {
             mutableStateFlow.update {
                 getSubscribedEventsUseCase()
-                    .map { it.toShortEventItem() }
+                    .map { it.toShort() }
                     .filter { !it.state.isHidden() }
                     .let { events ->
                         events.takeIf { it.isNotEmpty() }?.let {

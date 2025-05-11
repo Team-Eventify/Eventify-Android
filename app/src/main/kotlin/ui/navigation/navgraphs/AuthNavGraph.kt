@@ -13,8 +13,8 @@ fun NavGraphBuilder.addAuthNavGraph(
     features: List<ComposableFeatureEntry>,
     ) {
     navigation(
-        route = LoginPath.baseRoute,
-        startDestination = AuthRoot.baseRoute
+        route = AuthRoot.baseRoute,
+        startDestination = LoginPath.baseRoute
     ) {
         features.forEach { feature ->
             with(feature) {

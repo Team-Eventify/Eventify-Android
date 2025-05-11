@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import domain.models.CategorySelectItem
 import feature.profileEdit.api.ProfileEditListener
 import feature.profileEdit.impl.components.CategorySelector
+import feature.profileEdit.impl.components.DeleteAccountDialog
 import feature.profileEdit.impl.components.ProfileEditInput
 import feature.profileEdit.impl.state.UiState
 import uikit.EventifyTheme

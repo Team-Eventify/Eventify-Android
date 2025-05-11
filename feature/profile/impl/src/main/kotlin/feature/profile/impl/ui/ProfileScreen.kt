@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import domain.models.UserShortInfo
 import feature.profile.api.ProfileListener
 import feature.profile.impl.components.LogOutDialog
 import feature.profile.impl.components.UserProfilePanel

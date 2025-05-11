@@ -13,6 +13,7 @@ import data.remote.utils.isAuthRequired
 val Response.responseCount: Int
     get() = generateSequence(this) { it.priorResponse }.count()
 
+
 class TokenAuthenticator @Inject constructor(
     private val tokenProvider: TokenProvider,
     private val authRepository: AuthUserRepository

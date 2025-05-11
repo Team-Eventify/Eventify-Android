@@ -25,15 +25,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
-import com.example.eventify.R
-import com.example.eventify.domain.models.EventState
-import com.example.eventify.presentation.models.ShortEventItem
-import com.example.eventify.presentation.ui.common.EventCardTitle
-import com.example.eventify.presentation.ui.common.UpComingEventInfoTag
-import com.example.eventify.presentation.ui.theme.EventifyTheme
-import com.example.eventify.presentation.utils.asDate
-import com.example.eventify.presentation.utils.asTime
+import core.common.extentions.asDate
+import core.common.extentions.asTime
+import data.models.EventState
+import domain.models.ShortEventItem
+import uikit.EventifyTheme
+import uikit.components.EventCardTitle
+import uikit.components.UpComingEventInfoTag
 import java.util.UUID
+import com.example.eventify.uikit.R as UiKitR
 
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -85,7 +85,7 @@ fun UpComingEventCard(
 
             // Right Image
             Image(
-                painter = painterResource(R.drawable.eventify_group_1),
+                painter = painterResource(UiKitR.drawable.eventify_group_1),
                 contentDescription = null,
                 contentScale = ContentScale.FillHeight, // Adjust to fill the container's height
                 modifier = Modifier

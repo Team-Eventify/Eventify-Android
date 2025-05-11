@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.sp
 import uikit.EventifyTheme
+import com.example.eventify.uikit.R as UiKitR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -43,7 +44,7 @@ fun EventDetailTopAppBar(
                 onClick = onNavigateUp
             ) {
                 Icon(
-                    painter = painterResource(R.drawable.ic_chevron_right),
+                    painter = painterResource(UiKitR.drawable.ic_chevron_right),
                     contentDescription = ""
                 )
             }
@@ -53,7 +54,7 @@ fun EventDetailTopAppBar(
                 onClick = { /*Share*/ }
             ) {
                 Icon(
-                    painter = painterResource(R.drawable.ic_arrow_turn_up_right),
+                    painter = painterResource(UiKitR.drawable.ic_arrow_turn_up_right),
                     contentDescription = ""
                 )
             }

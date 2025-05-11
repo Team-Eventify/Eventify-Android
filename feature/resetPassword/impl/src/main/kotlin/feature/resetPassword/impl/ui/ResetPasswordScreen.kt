@@ -17,6 +17,12 @@ import feature.resetPassword.api.ResetPasswordListener
 import feature.resetPassword.impl.state.UiState
 import uikit.EventifyTheme
 import uikit.LocalDimentions
+import uikit.components.BodyText
+import uikit.components.TitleText
+import uikit.components.PrimaryButtonText
+import com.example.eventify.uikit.R as UiKitR
+import uikit.components.TextInput
+import uikit.components.buttons.PrimaryButton
 
 @Composable
 fun ResetPasswordScreen(
@@ -30,7 +36,7 @@ fun ResetPasswordScreen(
             .padding(dimmentions.windowPaddings),
         verticalArrangement = Arrangement.Center
     ) {
-        Image(painter = painterResource(id= R.drawable.resetpassword_icon), contentDescription = null)
+        Image(painter = painterResource(id= UiKitR.drawable.resetpassword_icon), contentDescription = null)
         Spacer(modifier = Modifier.height(30.dp))
         TitleText(text = "Сброс пароля")
         Spacer(modifier = Modifier.height(12.dp))

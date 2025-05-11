@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -13,6 +14,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import domain.models.ShortEventItem
 import feature.myEvents.api.MyEventsListener
 import feature.myEvents.impl.components.FinishedEventCard
 import feature.myEvents.impl.components.UpComingEventCard
@@ -22,14 +26,15 @@ import uikit.LocalDimentions
 import uikit.components.HeadingText
 import java.util.UUID
 import kotlin.collections.isNotEmpty
-
+import data.models.EventState
+import com.example.eventify.uikit.R as UiKitR
 
 @Composable
 fun MyEventsScreen(
     state: UiState.ShowMyEvents,
     actions: MyEventsListener,
 ) {
-    val swipeRefreshState = rememberSwipeRefreshState(state.isRefreshing)
+    val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = state.isRefreshing)
     val dimmentions = LocalDimentions.current
 
     SwipeRefresh(
@@ -44,7 +49,7 @@ fun MyEventsScreen(
         ) {
             item {
                 if (state.upComingEvents.isNotEmpty())
-                    HeadingText(text = stringResource(R.string.upcoming_events))
+                    HeadingText(text = stringResource(UiKitR.string.upcoming_events))
             }
             items(state.upComingEvents) { event ->
                 UpComingEventCard(
@@ -57,7 +62,7 @@ fun MyEventsScreen(
             item {
                 if (state.finishedEvents.isNotEmpty()){
                     Spacer(modifier = Modifier.height(10.dp))
-                    HeadingText(text = stringResource(R.string.finished_events))
+                    HeadingText(text = stringResource(UiKitR.string.finished_events))
                 }
             }
             items(state.finishedEvents) { event ->

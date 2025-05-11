@@ -79,8 +79,8 @@ fun RegisterScreen(
             onChangeOtpValue = actions::onChangeOtp,
             onSubmit = { otp ->
                 actions.onRegister(
-                    login = state.payloadState.login.value,
-                    password = state.payloadState.password.value,
+                    login = state.payloadState.login,
+                    password = state.payloadState.password,
                     otp = otp,
                 )
            },
@@ -105,7 +105,7 @@ fun RegisterScreen(
             BodyText(text = stringResource(UiKitR.string.it_takes_less_then_minute))
             Spacer(modifier = Modifier.height(44.dp))
             TextInput(
-                text = state.payloadState.login.value,
+                text = state.payloadState.login,
                 label = "Email",
                 placeholder = "ivanov@gmail.com",
                 onValueChange = actions::onChangeLogin,
@@ -127,7 +127,7 @@ fun RegisterScreen(
             )
             Spacer(modifier = Modifier.height(10.dp))
             PasswordInput(
-                text = state.payloadState.password.value,
+                text = state.payloadState.password,
                 label = "Password",
                 placeholder = "yourpassword",
                 onValueChange = actions::onChangePassword,
@@ -152,12 +152,12 @@ fun RegisterScreen(
                 onClick = {
                     if (!state.isOtpRequested) {
                         actions.onRequestOtp(
-                            login = state.payloadState.login.value,
-                            password = state.payloadState.password.value,
+                            login = state.payloadState.login,
+                            password = state.payloadState.password,
                         )
                     }
               },
-                enabled = state.payloadState.login.value.isNotEmpty() && state.payloadState.password.value.isNotEmpty(),
+                enabled = state.payloadState.login.isNotEmpty() && state.payloadState.password.isNotEmpty(),
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(

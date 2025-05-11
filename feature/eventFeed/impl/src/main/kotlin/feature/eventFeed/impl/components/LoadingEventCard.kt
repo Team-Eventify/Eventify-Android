@@ -10,8 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -21,9 +19,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.eventify.R
-import com.example.eventify.presentation.ui.common.shimmer
-import com.example.eventify.presentation.ui.theme.EventifyTheme
+import uikit.components.shimmer
+import com.example.eventify.uikit.R as UiKitR
+import uikit.EventifyTheme
 
 @Composable
 internal fun LoadingEventCard(
@@ -39,7 +37,7 @@ internal fun LoadingEventCard(
             )
     ) {
         Image(
-            painter = painterResource(R.drawable.underfind_event_image),
+            painter = painterResource(UiKitR.drawable.underfind_event_image),
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier

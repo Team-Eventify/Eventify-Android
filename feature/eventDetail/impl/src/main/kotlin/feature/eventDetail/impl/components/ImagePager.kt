@@ -53,19 +53,3 @@ fun ImagePager(
         }
     }
 }
-
-@Preview(showBackground = true)
-@Composable
-private fun ImagePagerPreview() {
-//    EventifyTheme(darkTheme = true) {
-//        Surface {
-//            ImagePager(
-//                images = listOf(
-//                    painterResource(R.drawable.default_event_image),
-//                    painterResource(R.drawable.misis_cj_image),
-//                    painterResource(R.drawable.default_event_image),
-//                )
-//            )
-//        }
-//    }
-}

@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.eventify.uikit.R as UiKitR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -25,7 +26,7 @@ internal fun EventsFeedTopAppBar(
         ),
         modifier = modifier,
         title = {
-            Text(stringResource(R.string.events_feed_title))
+            Text(stringResource(UiKitR.string.events_feed_title))
         }
     )
 }

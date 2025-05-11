@@ -1,6 +1,6 @@
 package di
 
-import com.example.eventify.presentation.navigation.Features
+import core.featureManager.Features
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent

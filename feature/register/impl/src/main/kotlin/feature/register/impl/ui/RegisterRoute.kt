@@ -23,6 +23,7 @@ import uikit.components.topBar.LocalTopBarState
 import uikit.utils.ObserveAsEvent
 import core.featureManager.LocalFeaturesProvider
 import core.featureManager.navigateToFeature
+import com.example.eventify.uikit.R as UiKitR
 
 @Composable
 fun RegisterRoute(
@@ -89,10 +90,11 @@ fun RegisterRoute(
                 viewModel.triggerOtpBottomSheet(false)
                 scope.launch {
                     credentialManager.signUp(
-                        login = uiState.payloadState.login.value,
-                        password = uiState.payloadState.password.value,
+                        login = uiState.payloadState.login,
+                        password = uiState.payloadState.password,
                     )
-                    features.navigateToFeature<SetUpEntry>(navController)
+//                    features.navigateToFeature<SetUpEntry>(navController)
+                    // TODO
                 }
             }
             is SideEffect.FailRegister -> {
@@ -103,7 +105,7 @@ fun RegisterRoute(
 
             SideEffect.ServerError -> {
                 snackBarState.showSnackbar(
-                    message = context.getString(R.string.server_error)
+                    message = context.getString(UiKitR.string.server_error)
                 )
             }
         }

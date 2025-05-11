@@ -2,7 +2,8 @@
 plugins {
     id("feature-convention")
     alias(libs.plugins.compose.compiler)
-
+    id("com.google.devtools.ksp")
+    id("dagger.hilt.android.plugin")
 }
 
 
@@ -14,6 +15,11 @@ dependencies {
     api(project(":feature:eventDetail:api"))
     implementation(project(":core:common"))
     implementation(libs.coil3.coil.compose)
-    implementation(project(":data"))
+
+    // Hilt
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
+
 
 }

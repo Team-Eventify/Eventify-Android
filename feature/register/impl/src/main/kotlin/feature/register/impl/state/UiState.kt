@@ -16,11 +16,11 @@ data class RegisterUiState(
 
 
 data class RegisterPayloadState(
-    val login: Email = Email(),
+    val login: String = "",
     val hasLoginError: Boolean = false,
     val loginError: String? = null,
 
-    val password: Password = Password(),
+    val password: String = "",
     val hasPasswordError: Boolean = false,
     val passwordError: String? = null,
 ) {

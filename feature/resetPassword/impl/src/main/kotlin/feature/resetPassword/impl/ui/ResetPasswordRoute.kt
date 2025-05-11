@@ -6,10 +6,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.eventify.presentation.LocalTopBarState
-import com.example.eventify.presentation.LocaleSnackbarState
-import com.example.eventify.presentation.ui.auth.resetpassword.state.ResetPasswordListener
+import feature.resetPassword.api.ResetPasswordListener
 import feature.resetPassword.impl.ResetPasswordViewModel
+import uikit.LocaleSnackbarState
+import uikit.components.topBar.LocalTopBarState
 
 @Composable
 fun ResetPasswordRoute(
