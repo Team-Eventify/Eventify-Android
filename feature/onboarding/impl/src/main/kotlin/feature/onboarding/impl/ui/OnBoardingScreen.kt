@@ -24,7 +24,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import feature.onboarding.api.OnBoardingListener
+import feature.onboarding.impl.state.OnBoardingItem
 import uikit.EventifyTheme
+import uikit.LocalDimentions
+import uikit.components.PrimaryButtonText
+import uikit.components.TitleText
+import uikit.components.buttons.PrimaryButton
 
 
 @Composable

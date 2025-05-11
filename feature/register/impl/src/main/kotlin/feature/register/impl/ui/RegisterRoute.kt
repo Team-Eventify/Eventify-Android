@@ -18,7 +18,11 @@ import feature.login.api.LoginEntry
 import feature.register.api.RegisterListener
 import feature.register.impl.RegisterViewModel
 import feature.register.impl.state.SideEffect
+import uikit.LocaleSnackbarState
 import uikit.components.topBar.LocalTopBarState
+import uikit.utils.ObserveAsEvent
+import core.featureManager.LocalFeaturesProvider
+import core.featureManager.navigateToFeature
 
 @Composable
 fun RegisterRoute(
@@ -42,11 +46,11 @@ fun RegisterRoute(
         }
 
         override fun onChangeLogin(login: String) {
-            viewModel.changeLogin(login.asEmail())
+            viewModel.changeLogin(login)
         }
 
         override fun onChangePassword(password: String) {
-            viewModel.changePassword(password.asPassword())
+            viewModel.changePassword(password)
         }
 
         override fun onRequestOtp(login: String, password: String) {
@@ -65,7 +69,7 @@ fun RegisterRoute(
         }
 
         override fun onChangeOtp(otpValue: String) {
-            viewModel.updateOtp(otpValue.asOTP())
+            viewModel.updateOtp(otpValue)
         }
 
         override fun onTriggerOtpBottomSheet(value: Boolean) {

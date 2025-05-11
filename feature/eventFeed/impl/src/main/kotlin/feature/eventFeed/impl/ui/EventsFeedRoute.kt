@@ -1,6 +1,5 @@
 package feature.eventFeed.impl.ui
 
-import android.R.attr.path
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -9,19 +8,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import com.example.eventify.R
-import com.example.eventify.presentation.LocalTopBarState
-import com.example.eventify.presentation.TopBarSize
-import com.example.eventify.presentation.TopBarState
-import com.example.eventify.presentation.navigation.ARG_EVENT_ID
-import com.example.eventify.presentation.navigation.LocalFeaturesProvider
-import com.example.eventify.presentation.navigation.navigateToFeature
-import com.example.eventify.presentation.ui.common.screens.ErrorScreen
-import com.example.eventify.presentation.ui.events.eventsfeed.state.EventFeedListener
+import core.common.navigation.ARG_EVENT_ID
 import feature.eventDetail.api.EventDetailEntry
+import feature.eventFeed.api.EventFeedListener
 import feature.eventFeed.impl.EventsFeedViewModel
 import feature.eventFeed.impl.components.LoadingEventFeed
 import feature.eventFeed.impl.state.UiState
+import uikit.components.topBar.LocalTopBarState
+import uikit.components.topBar.TopBarSize
+import uikit.components.topBar.TopBarState
+import core.featureManager.LocalFeaturesProvider
+import core.featureManager.navigateToFeature
+import uikit.components.screens.ErrorScreen
 
 
 @Composable
@@ -37,11 +35,6 @@ internal fun EventsFeedRoute(
 
     val listener = object : EventFeedListener {
         override fun onEventClick(eventId: String) {
-//            features.navigateToFeature<EventDetailEntry>(
-//                navController,
-//                ARG_EVENT_ID to eventId
-//            )
-
             features.navigateToFeature<EventDetailEntry>(navController) {
                 path {
                     put(ARG_EVENT_ID, eventId)

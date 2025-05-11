@@ -23,4 +23,5 @@ dependencies {
     implementation(project(":uikit"))
     implementation(project(":core:common"))
     implementation(project(":domain"))
+    implementation(project(":core:featureManager"))
 }

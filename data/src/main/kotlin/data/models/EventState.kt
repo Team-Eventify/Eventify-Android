@@ -9,3 +9,10 @@ enum class EventState {
     PUBLISHED,
     UNKNOWN,
 }
+
+fun String.toEventState(): EventState = try {
+        EventState.valueOf(this)
+    } catch (e: IllegalArgumentException) {
+        EventState.UNKNOWN
+    }
+

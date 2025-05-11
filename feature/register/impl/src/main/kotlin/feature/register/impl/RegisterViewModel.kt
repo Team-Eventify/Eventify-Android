@@ -56,7 +56,7 @@ class RegisterViewModel @Inject constructor(
         )
 
 
-    fun changeLogin(value: Email){
+    fun changeLogin(value: String){
         mutableRegisterPayloadState.update { currentState ->
             currentState.copy(
                 login = value,
@@ -66,7 +66,7 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
-    fun changePassword(value: Password){
+    fun changePassword(value: String){
         mutableRegisterPayloadState.update { currentState ->
             currentState.copy(
                 password = value,
@@ -76,7 +76,7 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
-    fun updateOtp(value: OTP){
+    fun updateOtp(value: String){
         mutableOtpState.update { currentState ->
             (currentState as? OtpState.ShowOtp)?.copy(
                 otp = value,

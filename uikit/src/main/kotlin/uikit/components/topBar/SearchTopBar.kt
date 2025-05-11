@@ -2,23 +2,14 @@ package uikit.components.topBar
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.DockedSearchBar
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.SearchBar
-import androidx.compose.material3.SearchBarDefaults
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -34,10 +25,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.eventify.R
-import com.example.eventify.presentation.ui.theme.EventifyTheme
-import com.example.eventify.presentation.ui.theme.space20
-import com.example.eventify.presentation.ui.theme.space4
+import uikit.EventifyTheme
+import uikit.space20
+import uikit.space4
+import com.example.eventify.uikit.R as UiKitR
 
 
 @Composable
@@ -85,7 +76,7 @@ fun SearchInputField(
         onValueChange = onValueChanged,
         placeholder = {
             Text(
-                text = stringResource(R.string.search),
+                text = stringResource(UiKitR.string.search),
             )
         },
         leadingIcon = {
@@ -95,7 +86,7 @@ fun SearchInputField(
                 modifier = Modifier.offset(x = space4)
             ) {
                 Icon(
-                    painter = painterResource(R.drawable.ic_search),
+                    painter = painterResource(UiKitR.drawable.ic_search),
                     contentDescription = null,
                 )
             }
@@ -107,7 +98,7 @@ fun SearchInputField(
                 modifier = Modifier.offset(x = -space4)
             ) {
                 Icon(
-                    painter = painterResource(R.drawable.round_close_24),
+                    painter = painterResource(UiKitR.drawable.round_close_24),
                     contentDescription = null,
                 )
             }

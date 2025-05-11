@@ -11,6 +11,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import domain.events.GetEventDetailUseCase
 import domain.events.SubscribeForEventUseCase
 import domain.events.UnsubscribeForEventUseCase
+import domain.extentions.isSubscribeEnabled
 import feature.eventDetail.impl.state.EventDetailUiState
 import feature.eventDetail.impl.state.SideEffect
 import kotlinx.coroutines.channels.Channel

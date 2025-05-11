@@ -1,7 +1,6 @@
 package uikit.components.topBar
 
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -14,9 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.eventify.presentation.TopBarSize
-import com.example.eventify.presentation.TopBarState
-import com.example.eventify.presentation.ui.theme.EventifyTheme
+import uikit.EventifyTheme
 
 
 @OptIn(ExperimentalMaterial3Api::class)

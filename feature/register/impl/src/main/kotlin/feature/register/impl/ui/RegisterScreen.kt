@@ -40,9 +40,19 @@ import androidx.compose.ui.unit.sp
 import feature.register.api.RegisterListener
 import feature.register.impl.components.RegistrationOtpBottomSheet
 import feature.register.impl.state.OtpState
+import feature.register.impl.state.RegisterPayloadState
 import feature.register.impl.state.RegisterUiState
+import uikit.EventifyTheme
 import uikit.LocalDimentions
-
+import uikit.components.ActionPrimaryText
+import uikit.components.BodyText
+import uikit.components.DisclaimerText
+import uikit.components.ErrorInputText
+import uikit.components.PasswordInput
+import uikit.components.TextInput
+import uikit.components.TitleText
+import uikit.components.buttons.PrimaryButton
+import com.example.eventify.uikit.R as UiKitR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -225,16 +235,16 @@ class RegisterPreviewParameterProvider : PreviewParameterProvider<RegisterUiStat
         RegisterUiState(),
         RegisterUiState(
             payloadState = RegisterPayloadState(
-                login = Email("login@mail.ru"),
-                password = Password("asdfsadfsdf")
+                login = "login@mail.ru",
+                password = "asdfsadfsdf",
             )
         ),
         RegisterUiState(
             payloadState = RegisterPayloadState(
-                login = Email("login@mail.ru"),
+                login = "login@mail.ru",
                 loginError = "Invalid email",
                 hasLoginError = true,
-                password = Password("asdfsadfsdf"),
+                password = "asdfsadfsdf",
                 passwordError = "Too short",
                 hasPasswordError = true,
             )

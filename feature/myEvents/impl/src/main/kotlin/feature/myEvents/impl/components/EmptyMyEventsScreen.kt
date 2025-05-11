@@ -1,18 +1,13 @@
 package feature.myEvents.impl.components
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.eventify.R
-import com.example.eventify.presentation.LocalTopBarState
-import com.example.eventify.presentation.TopBarSize
-import com.example.eventify.presentation.TopBarState
-import com.example.eventify.presentation.ui.common.BorderedImage
-import com.example.eventify.presentation.ui.common.buttons.PrimaryActionButton
-import com.example.eventify.presentation.ui.common.screens.BaseInfoScreen
+import uikit.components.BorderedImage
+import uikit.components.buttons.PrimaryActionButton
+import uikit.components.screens.BaseInfoScreen
 
 @Composable
 fun EmptyMyEventsScreen(

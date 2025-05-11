@@ -31,6 +31,11 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import uikit.EventifyTheme
+import uikit.LocaleImageLoader
+import uikit.components.BodyText
+import uikit.components.EventCardTitle
+import uikit.components.EventInfoTag
+import uikit.components.shimmer
 
 
 @OptIn(ExperimentalLayoutApi::class)

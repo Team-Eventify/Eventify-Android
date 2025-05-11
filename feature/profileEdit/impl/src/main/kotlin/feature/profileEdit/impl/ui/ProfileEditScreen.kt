@@ -19,9 +19,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
+import domain.models.CategorySelectItem
 import feature.profileEdit.api.ProfileEditListener
+import feature.profileEdit.impl.components.ProfileEditInput
 import feature.profileEdit.impl.state.UiState
+import uikit.EventifyTheme
 import uikit.LocalDimentions
+import uikit.components.AnnotationText
+import uikit.components.CategorySelector
+import uikit.components.PrimaryButtonText
+import uikit.components.SubHeadingText
+import uikit.components.buttons.PrimaryButton
 import kotlin.random.Random
 
 @Composable

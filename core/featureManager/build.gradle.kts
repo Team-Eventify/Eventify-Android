@@ -1,11 +1,12 @@
 
 plugins {
     id("core-convention")
+    id("kotlinx-serialization")
 }
 
 
 android {
-    namespace = "com.example.eventify.core.common"
+    namespace = "com.example.eventify.core.featureManager"
 }
 
 dependencies {

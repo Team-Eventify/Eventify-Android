@@ -2,7 +2,6 @@ package feature.eventDetail.impl.ui
 
 import android.annotation.SuppressLint
 import android.content.res.Configuration
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,6 +17,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -32,21 +32,28 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import domain.models.FullEventDetail
 import feature.eventDetail.api.EventDetailListener
 import feature.eventDetail.impl.components.EventActionButton
 import feature.eventDetail.impl.components.ImagePager
 import feature.eventDetail.impl.components.OrganizationInfoPanel
 import feature.eventDetail.impl.state.EventDetailUiState
+import uikit.EventifyTheme
 import uikit.LocalDimentions
+import uikit.components.BodyText
+import uikit.components.CategoryTagChip
+import uikit.components.ChipInfo
+import uikit.components.EventImage
 import uikit.components.topBar.LocalTopBarState
 import uikit.components.topBar.TopBarAction
 import uikit.components.topBar.TopBarSize
 import uikit.components.topBar.TopBarState
 import uikit.utils.conditional
 import java.util.UUID
-import kotlin.collections.get
+import com.example.eventify.uikit.R as UiKitR
 
-@OptIn(ExperimentalLayoutApi::class, ExperimentalFoundationApi::class)
+
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun EventDetailScreen(
     state: EventDetailUiState.ShowEvent,
@@ -64,7 +71,7 @@ internal fun EventDetailScreen(
                 title = state.event.eventInfo.title,
                 size = TopBarSize.MEDIUM,
                 leftAction = TopBarAction(
-                    iconRes = R.drawable.ic_chevron_right,
+                    iconRes = UiKitR.drawable.ic_chevron_right,
                     onClick = actions::navigateUp
                 )
             )
@@ -94,7 +101,7 @@ internal fun EventDetailScreen(
             )
         }
         Column(
-            modifier = padding(dimmentions.windowPaddings)
+            modifier = Modifier.padding(dimmentions.windowPaddings)
         ) {
 
             FlowRow(
@@ -117,7 +124,7 @@ internal fun EventDetailScreen(
 
 
             Text(
-                text = stringResource(R.string.organizer),
+                text = stringResource(UiKitR.string.organizer),
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 fontSize = 12.sp
             )
@@ -163,7 +170,7 @@ private fun EventDetailScreenLightPreview() {
                             organizationID = UUID.randomUUID().toString(),
                             pictures = emptyList(),
                         ),
-                        categories = List(5){
+                        categories = List(5) {
                             Category(
                                 id = UUID.randomUUID().toString(),
                                 color = "#A3C7FF",

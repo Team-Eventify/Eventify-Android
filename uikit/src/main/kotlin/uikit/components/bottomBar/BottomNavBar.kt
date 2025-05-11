@@ -14,11 +14,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.eventify.uikit.R as UiKitR
 
 @Composable
 fun BottomNavBar(
@@ -31,26 +31,26 @@ fun BottomNavBar(
     val items = remember {
         listOf(
             BottomBarItem(
-                titleResId = R.string.home,
-                iconResId = R.drawable.ic_house,
+                titleResId = UiKitR.string.home,
+                iconResId = UiKitR.drawable.ic_house,
                 route = EventFeedPath.route
             ),
             BottomBarItem(
-                titleResId = R.string.search,
-                iconResId = R.drawable.ic_magnifying_glass,
+                titleResId = UiKitR.string.search,
+                iconResId = UiKitR.drawable.ic_magnifying_glass,
                 route = SearchPath.route,
                 nestedRoutes = listOf(
                     SearchDetailPath.route,
                 )
             ),
             BottomBarItem(
-                titleResId = R.string.my_events,
-                iconResId = R.drawable.ic_bookmark,
+                titleResId = UiKitR.string.my_events,
+                iconResId = UiKitR.drawable.ic_bookmark,
                 route = MyEventsPath.route
             ),
             BottomBarItem(
-                titleResId = R.string.profile,
-                iconResId = R.drawable.ic_person,
+                titleResId = UiKitR.string.profile,
+                iconResId = UiKitR.drawable.ic_person,
                 route = ProfilePath.route
             ),
         )

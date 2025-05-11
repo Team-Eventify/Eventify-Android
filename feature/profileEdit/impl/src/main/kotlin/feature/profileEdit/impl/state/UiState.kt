@@ -1,7 +1,7 @@
 package feature.profileEdit.impl.state
 
 import androidx.compose.runtime.Stable
-import com.example.eventify.presentation.models.CategorySelectItem
+import domain.models.CategorySelectItem
 
 @Stable
 sealed class UiState {

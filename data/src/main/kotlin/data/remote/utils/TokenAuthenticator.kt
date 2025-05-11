@@ -1,7 +1,7 @@
 package data.remote .utils
 
-import com.example.eventify.data.repositories.auth.AuthUserRepository
-import com.example.eventify.data.repositories.tokens.TokenProvider
+import core.common.secure.tokens.TokenProvider
+import data.repositories.auth.AuthUserRepository
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
 import okhttp3.Request

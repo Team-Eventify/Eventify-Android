@@ -19,7 +19,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import feature.aboutApp.impl.state.AboutAppListener
 import feature.aboutApp.impl.state.AboutAppState
+import uikit.EventifyTheme
 import uikit.LocalDimentions
+import com.example.eventify.uikit.R as UiKitR
+
 
 
 @Composable
@@ -37,7 +40,7 @@ fun AboutAppScreen(
             .padding(dimmentions.windowPaddings)
     ) {
         Image(
-            painter = painterResource(R.drawable.ic_launcher_foreground),
+            painter = painterResource(UiKitR.drawable.ic_launcher_foreground),
             contentDescription = null,
             contentScale = ContentScale.FillWidth,
             modifier = Modifier
@@ -48,29 +51,29 @@ fun AboutAppScreen(
         )
 
         SettingsBlock{
-            NavigationSettingsItem(text = stringResource(R.string.about_us))
+            NavigationSettingsItem(text = stringResource(UiKitR.string.about_us))
         }
 
         SettingsBlock{
             NavigationSettingsItem(
-                text = stringResource(R.string.privacy_policy),
+                text = stringResource(UiKitR.string.privacy_policy),
                 onClick = actions::goPrivacyPolicy,
             )
             HorizontalDivider()
             NavigationSettingsItem(
-                text = stringResource(R.string.terms_of_use),
+                text = stringResource(UiKitR.string.terms_of_use),
                 onClick = actions::goTermsOfUse,
             )
             HorizontalDivider()
             NavigationSettingsItem(
-                text = stringResource(R.string.information_security),
+                text = stringResource(UiKitR.string.information_security),
                 onClick = actions::goToInformationSecurity,
             )
         }
 
         SettingsBlock{
             NavigationSettingsItem(
-                text = stringResource(R.string.donate),
+                text = stringResource(UiKitR.string.donate),
                 onClick = actions::goToDonate,
             )
         }
@@ -82,7 +85,7 @@ fun AboutAppScreen(
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 private fun AboutAppScreenPreview() {
-    EventifyTheme(dynamicColor = true) {
+    EventifyTheme {
         AboutAppScreen(
             state = AboutAppState(),
             actions = object : AboutAppListener {

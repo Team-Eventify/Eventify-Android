@@ -17,7 +17,9 @@ import feature.myEvents.api.MyEventsListener
 import feature.myEvents.impl.components.FinishedEventCard
 import feature.myEvents.impl.components.UpComingEventCard
 import feature.myEvents.impl.state.UiState
+import uikit.EventifyTheme
 import uikit.LocalDimentions
+import uikit.components.HeadingText
 import java.util.UUID
 import kotlin.collections.isNotEmpty
 

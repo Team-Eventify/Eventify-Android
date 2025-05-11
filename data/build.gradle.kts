@@ -1,6 +1,8 @@
+
 plugins {
     id("kotlinx-serialization")
-    id("core-convention")
+    id("android-common-convention")
+
 }
 
 android {
@@ -8,7 +10,11 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:common"))
+
     implementation(libs.retrofit)
     implementation(libs.gson)
     implementation(libs.converter.gson)
+    implementation(libs.hilt.android)
+
 }

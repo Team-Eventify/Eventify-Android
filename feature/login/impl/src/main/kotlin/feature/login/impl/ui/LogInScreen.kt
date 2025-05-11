@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -33,6 +35,16 @@ import feature.login.api.LoginListener
 import feature.login.impl.state.LogInState
 import uikit.EventifyTheme
 import uikit.LocalDimentions
+import uikit.components.ActionPrimaryText
+import uikit.components.ActionText
+import uikit.components.BodyText
+import uikit.components.ErrorInputText
+import uikit.components.PasswordInput
+import uikit.components.PrimaryButtonText
+import uikit.components.TextInput
+import uikit.components.TitleText
+import uikit.components.buttons.PrimaryButton
+
 
 @Composable
 internal fun LogInScreen(

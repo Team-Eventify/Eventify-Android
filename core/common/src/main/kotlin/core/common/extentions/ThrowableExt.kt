@@ -1,5 +1,7 @@
 package core.common.extentions
 
+import core.common.exceptions.NetworkException
+
 
 fun Throwable.isUnauthorized(): Boolean {
     return this is NetworkException && this.error.status == 401

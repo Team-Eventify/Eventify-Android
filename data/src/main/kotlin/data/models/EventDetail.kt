@@ -1,5 +1,7 @@
 package data.models
 
+import data.remote.models.events.EventDetailResponse
+
 typealias PictureUUID = String
 typealias CategoryUUID = String
 
@@ -17,5 +19,23 @@ data class EventDetail(
     val state: EventState,
     val subscribed: Boolean,
     val title: String
+)
+
+
+// TODO refactor pictures
+fun EventDetailResponse.toBusiness() = EventDetail(
+    capacity = this.capacity ,
+    cover = this.cover ,
+    description = this.description ,
+    end = this.end ,
+    id = this.id ,
+    location = this.location ,
+    organizationID = this.organizationID ,
+    pictures = this.pictures.map { "https://eventify.website/api/v1/files/$it" },
+    start = this.start ,
+    state = this.state.toEventState() ,
+    subscribed = this.subscribed ,
+    title = this.title,
+    categories = this.categories
 )
 

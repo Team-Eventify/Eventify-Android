@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
+import uikit.LocaleImageLoader
 import java.util.UUID
 
 @Composable

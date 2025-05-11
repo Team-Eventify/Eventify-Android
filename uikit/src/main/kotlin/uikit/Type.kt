@@ -6,12 +6,13 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import com.example.eventify.R
+import com.example.eventify.uikit.R as UiKitR
+
 
 val SFCompatFamily = FontFamily(
-    Font(R.font.sf_compact_rounded_regular, FontWeight.Normal),
-    Font(R.font.sf_compact_rounded_medium, FontWeight.Medium),
-    Font(R.font.sf_compact_rounded_memibold, FontWeight.Bold)
+    Font(UiKitR.font.sf_compact_rounded_regular, FontWeight.Normal),
+    Font(UiKitR.font.sf_compact_rounded_medium, FontWeight.Medium),
+    Font(UiKitR.font.sf_compact_rounded_memibold, FontWeight.Bold)
 )
 
 // Set of Material typography styles to start with

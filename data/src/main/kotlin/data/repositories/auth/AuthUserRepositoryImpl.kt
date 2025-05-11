@@ -5,6 +5,7 @@ import data.models.RegisterValidationData
 import data.models.TokenData
 import data.models.UserCreate
 import data.models.UserCredentials
+import data.models.toTokenData
 import data.remote.api.AuthAPI
 import data.remote.models.auth.LogInRequestData
 import data.remote.models.auth.OtpRegisterUserRequest
@@ -42,13 +43,7 @@ class AuthUserRepositoryImpl @Inject constructor (
                 password = user.password
             )
         ).handle{
-            transformSuccess {
-                TokenData(
-                    refreshToken = it.refreshToken,
-                    accessToken = it.accessToken,
-                    userID = it.userID
-                )
-            }
+            transformSuccess { it.toTokenData() }
         }
 
     }
@@ -60,13 +55,7 @@ class AuthUserRepositoryImpl @Inject constructor (
                 password = credentials.password
             )
         ).handle{
-            transformSuccess {
-                TokenData(
-                    refreshToken = it.refreshToken,
-                    accessToken = it.accessToken,
-                    userID = it.userID
-                )
-            }
+            transformSuccess { it.toTokenData() }
         }
 
     }
@@ -93,13 +82,7 @@ class AuthUserRepositoryImpl @Inject constructor (
                 code = user.code
             ),
         ).handle {
-            transformSuccess {
-                TokenData(
-                    refreshToken = it.refreshToken,
-                    accessToken = it.accessToken,
-                    userID = it.userID
-                )
-            }
+            transformSuccess { it.toTokenData() }
         }
     }
 }

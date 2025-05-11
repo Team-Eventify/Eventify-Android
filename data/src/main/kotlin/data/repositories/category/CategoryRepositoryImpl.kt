@@ -1,6 +1,7 @@
 package data.repositories.category
 
 import data.models.Category
+import data.models.toBusiness
 import data.remote.api.CategoryAPI
 import data.remote.utils.handle
 import javax.inject.Inject
@@ -15,7 +16,7 @@ class CategoryRepositoryImpl @Inject constructor(
             }
 
             transformSuccess { body ->
-                body.map { it.toCategoryInfo() }
+                body.map { it.toBusiness() }
             }
         }
 
@@ -24,7 +25,7 @@ class CategoryRepositoryImpl @Inject constructor(
 
     override suspend fun readCategory(categoryId: String): Category  {
         return dataSource.readCategory(categoryId = categoryId).handle {
-            transformSuccess { it.toCategoryInfo() }
+            transformSuccess { it.toBusiness() }
         }
     }
 

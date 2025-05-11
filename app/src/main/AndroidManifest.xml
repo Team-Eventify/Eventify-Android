@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <application
-        android:name=".EventifyApp"
+        android:name="EventifyApp"
         android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -20,7 +20,7 @@
             android:name="androidx.credentials.CredentialProvider"
             android:value="com.google.android.gms.auth.api.credentials.CredentialProvider" />
         <activity
-            android:name=".ui.MainActivity"
+            android:name="ui.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.SplashScreen.Started">
@@ -31,15 +31,15 @@
 
             </intent-filter>
         </activity>
-        <service
-            android:name=".domain.services.FirebaseNotificationService"
-            android:enabled="true"
-            android:exported="false">
-            <intent-filter android:priority="100">
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
-        <service android:name="io.appmetrica.analytics.push.provider.firebase.AppMetricaMessagingService" tools:node="remove"/>
+<!--        <service-->
+<!--            android:name=".domain.services.FirebaseNotificationService"-->
+<!--            android:enabled="true"-->
+<!--            android:exported="false">-->
+<!--            <intent-filter android:priority="100">-->
+<!--                <action android:name="com.google.firebase.MESSAGING_EVENT" />-->
+<!--            </intent-filter>-->
+<!--        </service>-->
+<!--        <service android:name="io.appmetrica.analytics.push.provider.firebase.AppMetricaMessagingService" tools:node="remove"/>-->
     </application>
 
 

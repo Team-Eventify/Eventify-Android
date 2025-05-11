@@ -1,5 +1,7 @@
 package core.common.exceptions
 
+import kotlinx.serialization.Serializable
+
 
 @Serializable
 data class NetworkError(

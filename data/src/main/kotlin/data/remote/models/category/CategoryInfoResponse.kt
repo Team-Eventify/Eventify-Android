@@ -6,11 +6,4 @@ data class CategoryInfoResponse(
     val title: String,
     val color: String,
     val cover: String
-){
-    fun toCategoryInfo() = Category(
-        id = id,
-        title = title,
-        color = color,
-        cover = cover
-    )
-}
+)

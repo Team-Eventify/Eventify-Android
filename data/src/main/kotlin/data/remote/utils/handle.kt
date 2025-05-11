@@ -1,7 +1,7 @@
 package data.remote.utils
 
-import data.exceptions.NetworkError
-import data.exceptions.NetworkException
+import core.common.exceptions.NetworkError
+import core.common.exceptions.NetworkException
 import retrofit2.Response
 
 

@@ -1,4 +1,4 @@
-package data.remote .models.events
+package data.remote.models.events
 
 
 data class EventInfoResponse(
@@ -17,17 +17,3 @@ data class EventInfoResponse(
     val pictures: List<String>,
 )
 
-fun EventInfoResponse.toEventInfo(): Event = Event(
-    id = id,
-    capacity = capacity,
-    description = description,
-    end = end,
-    organizationID = organizationID,
-    start = start,
-    state = state.toEventState(),
-    title = title,
-    location = location,
-    cover = cover,
-    subscribed = subscribed,
-    categories = categories,
-)

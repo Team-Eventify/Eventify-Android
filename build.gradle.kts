@@ -5,9 +5,9 @@ plugins {
     kotlin("plugin.serialization") version "1.9.21"
     id("com.google.gms.google-services") version "4.4.2" apply false
     id("com.google.dagger.hilt.android") version "2.56.2" apply false
-    id("android-common-convention")
-    id("core-convention")
-    id("feature-convention")
+    id("android-common-convention") apply false
+    id("core-convention") apply false
+    id("feature-convention") apply false
 }
 
 buildscript {

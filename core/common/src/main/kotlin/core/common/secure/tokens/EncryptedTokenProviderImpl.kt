@@ -1,6 +1,8 @@
 package core.common.secure.tokens
 
 
+import com.auth0.jwt.JWT
+import com.auth0.jwt.interfaces.DecodedJWT
 import core.common.storages.EncryptedStorage
 import core.common.storages.LocaleStorage
 import core.common.storages.StorageKeys

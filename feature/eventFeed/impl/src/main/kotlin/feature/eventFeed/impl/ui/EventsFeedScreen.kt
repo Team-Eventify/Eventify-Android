@@ -17,8 +17,12 @@ import feature.eventFeed.impl.components.EventCard
 import feature.eventFeed.impl.state.UiState
 import uikit.EventifyTheme
 import uikit.LocalDimentions
+import uikit.components.HeadingText
 import java.util.UUID
 import kotlin.random.Random
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.google.accompanist.swiperefresh.SwipeRefresh
+
 
 @Composable
 internal fun EventsFeedScreen(

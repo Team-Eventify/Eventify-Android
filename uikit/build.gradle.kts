@@ -1,4 +1,3 @@
-import java.util.Properties
 
 plugins {
     id("android-common-convention")
@@ -17,6 +16,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.foundation)
     implementation(libs.androidx.navigation.compose)
-
+    implementation(libs.coil3.coil.compose)
+    implementation(libs.accompanist.swiperefresh)
 
 }

@@ -3,6 +3,7 @@ package data.repositories.events
 import javax.inject.Inject
 import data.models.Event
 import data.models.EventDetail
+import data.models.toBusiness
 import data.remote.models.events.EventsFilterData
 import data.remote.api.EventsAPI
 import data.remote.utils.handle
@@ -21,7 +22,7 @@ class EventRepositoryImpl @Inject constructor(
             title = filter?.title,
         ).handle {
             transformSuccess { body ->
-                body.map { it.toEventInfo() }
+                body.map { it.toBusiness() }
             }
             process(404){
                 emptyList()
@@ -32,7 +33,7 @@ class EventRepositoryImpl @Inject constructor(
 
     override suspend fun getEventDetail(eventId: String): EventDetail {
         return dataSource.getEvent(eventId = eventId).handle {
-            transformSuccess { it.toEventDetail() }
+            transformSuccess { it.toBusiness() }
         }
     }
 
