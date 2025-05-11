@@ -14,6 +14,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.eventify.presentation.ui.common.ErrorInputText
 import com.example.eventify.presentation.ui.theme.EventifyTheme
+import uikit.EventifyTheme
+import uikit.components.ErrorInputText
 
 @Composable
 fun ProfileEditInput(

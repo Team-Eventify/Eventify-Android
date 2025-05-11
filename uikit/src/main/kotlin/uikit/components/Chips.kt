@@ -24,23 +24,23 @@ import uikit.EventifyTheme
 
 @Composable
 fun CategorySelectChip(
-    category: CategorySelectItem,
-    onSelect: (String, Boolean) -> Unit,
+    title: String,
+    isSelected: Boolean = false,
+    color: Color = MaterialTheme.colorScheme.primary,
+    onSelect: () -> Unit,
 ) {
     FilterChip(
-        onClick = {
-            onSelect(category.id, !category.selected)
-        },
+        onClick = onSelect,
         label = {
             Text(
-                text = category.title,
-                color = if (category.selected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface
+                text = title,
+                color = MaterialTheme.colorScheme.onPrimary.takeIf { isSelected } ?: MaterialTheme.colorScheme.onSurface
             )
         },
-        selected = category.selected,
+        selected = isSelected,
         leadingIcon = null,
         colors = FilterChipDefaults.filterChipColors(
-            selectedContainerColor = category.color
+            selectedContainerColor = color
         )
     )
 }
@@ -70,6 +70,7 @@ fun ChipInfo(
         },
         modifier = Modifier
             .padding(0.dp)
+            .then(modifier)
     )
 }
 
@@ -160,20 +161,6 @@ fun FinishedEventInfoChip(
     }
 }
 
-
-@Preview(name = "CategorySelectChip")
-@Composable
-private fun PreviewCategorySelectChip() {
-    CategorySelectChip(
-        CategorySelectItem(
-            id = "",
-            title = "Backend",
-            selected = true,
-            color = Color.Cyan
-        ),
-        {_, _->}
-    )
-}
 
 @Preview(name = "ChipInfo")
 @Composable

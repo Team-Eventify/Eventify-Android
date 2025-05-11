@@ -1,5 +1,7 @@
 plugins {
     id("feature-convention")
+    alias(libs.plugins.compose.compiler)
+
 }
 
 
@@ -9,8 +11,6 @@ android {
 
 dependencies {
     implementation(libs.coil.compose)
-    implementation(libs.accompanist.swiperefresh)
-
 
     api(project(":feature:eventFeed:api"))
     api(project(":feature:eventDetail:api"))

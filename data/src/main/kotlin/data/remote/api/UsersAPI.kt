@@ -1,4 +1,4 @@
-package data.remote .api
+package data.remote.api
 
 import data.remote.models.category.CategoryInfoResponse
 import data.remote.models.events.EventInfoResponse

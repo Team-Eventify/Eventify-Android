@@ -1,5 +1,6 @@
 plugins {
     id("android-common-convention")
+    alias(libs.plugins.compose.compiler)
 
 }
 

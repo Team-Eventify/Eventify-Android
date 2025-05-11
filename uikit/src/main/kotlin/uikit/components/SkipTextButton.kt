@@ -10,12 +10,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import uikit.EventifyTheme
+import com.example.eventify.uikit.R as UiKitR
 
 @Composable
 fun SkipTextButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    text: String = stringResource(R.string.skip)
+    text: String = stringResource(UiKitR.string.skip)
 ) {
     TextButton(
         onClick = onClick,

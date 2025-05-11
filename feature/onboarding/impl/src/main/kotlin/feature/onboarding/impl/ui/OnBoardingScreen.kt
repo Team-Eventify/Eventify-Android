@@ -30,6 +30,7 @@ import uikit.LocalDimentions
 import uikit.components.PrimaryButtonText
 import uikit.components.TitleText
 import uikit.components.buttons.PrimaryButton
+import com.example.eventify.uikit.R as UiKitR
 
 
 @Composable
@@ -40,22 +41,22 @@ fun OnBoardingScreen(
 
     val items = listOf(
         OnBoardingItem(
-            primaryImage = painterResource(R.drawable.events_svgrepo),
+            primaryImage = painterResource(UiKitR.drawable.events_svgrepo),
             title = "Актуальные мероприятия",
             body = "Все события вашего университета теперь собраны в одном удобном приложении.",
         ),
         OnBoardingItem(
-            primaryImage = painterResource(R.drawable.user_add),
+            primaryImage = painterResource(UiKitR.drawable.user_add),
             title = "Легкая регистрация",
             body = "Узнавайте подробности о мероприятиях и записывайтесь на них всего в пару кликов.",
         ),
         OnBoardingItem(
-            primaryImage = painterResource(R.drawable.category_svgrepo),
+            primaryImage = painterResource(UiKitR.drawable.category_svgrepo),
             title = "Интересные категории",
             body = "Выберите интересы, и приложение предложит подходящие ивенты",
         ),
         OnBoardingItem(
-            primaryImage = painterResource(R.drawable.users_group),
+            primaryImage = painterResource(UiKitR.drawable.users_group),
             title = "Организуйте мероприятие",
             body = "Напишите нам и мы вместе сделаем ваше мероприятие ярким и незабываемым!",
         ),
@@ -69,14 +70,14 @@ fun OnBoardingScreen(
             .padding(dimentions.windowPaddings)
     ) {
         Image(
-            painter = painterResource(R.drawable.ic_launcher_foreground),
-            contentDescription = stringResource(R.string.app_name),
+            painter = painterResource(UiKitR.drawable.ic_launcher_foreground),
+            contentDescription = stringResource(UiKitR.string.app_name),
         )
         Spacer(
             modifier = Modifier.height(10.dp),
             )
         TitleText(
-            text = stringResource(R.string.app_name),
+            text = stringResource(UiKitR.string.app_name),
         )
         Spacer(
             modifier = Modifier.height(40.dp),
@@ -120,7 +121,7 @@ fun OnBoardingScreen(
             onClick = actions::flowNext,
         ) {
             PrimaryButtonText(
-                text = stringResource(R.string.next),
+                text = stringResource(UiKitR.string.next),
             )
         }
     }

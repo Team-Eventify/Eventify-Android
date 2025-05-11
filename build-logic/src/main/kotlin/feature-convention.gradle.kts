@@ -7,6 +7,9 @@ android {
     buildFeatures {
         compose = true
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.8.1"
+    }
 }
 
 dependencies {
@@ -14,6 +17,10 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.runtime)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.accompanist.swiperefresh)
+
 
     // Hilt
     implementation(libs.hilt.android)

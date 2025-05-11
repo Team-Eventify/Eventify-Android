@@ -1,4 +1,4 @@
-package data.remote .models.users
+package data.remote.models.users
 
 data class ChangeUserRequest(
     val firstName: String,

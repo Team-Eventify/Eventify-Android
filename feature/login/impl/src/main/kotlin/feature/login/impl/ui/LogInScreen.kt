@@ -44,7 +44,7 @@ import uikit.components.PrimaryButtonText
 import uikit.components.TextInput
 import uikit.components.TitleText
 import uikit.components.buttons.PrimaryButton
-
+import com.example.eventify.uikit.R as UiKitR
 
 @Composable
 internal fun LogInScreen(
@@ -64,13 +64,13 @@ internal fun LogInScreen(
             .padding(dimmentions.windowPaddings),
         verticalArrangement = Arrangement.Center
     ) {
-        Image(painter = painterResource(id=R.drawable.login_icon), contentDescription = null)
+        Image(painter = painterResource(id=UiKitR.drawable.login_icon), contentDescription = null)
         Spacer(modifier = Modifier.height(30.dp))
-        TitleText(text = stringResource(R.string.log_in))
+        TitleText(text = stringResource(UiKitR.string.log_in))
         Spacer(modifier = Modifier.height(10.dp))
 
-        BodyText(text = stringResource(R.string.pleace_login))
-        BodyText(text = stringResource(R.string.it_takes_less_then_minute))
+        BodyText(text = stringResource(UiKitR.string.pleace_login))
+        BodyText(text = stringResource(UiKitR.string.it_takes_less_then_minute))
 
         Spacer(modifier = Modifier.height(44.dp))
 
@@ -114,7 +114,7 @@ internal fun LogInScreen(
             )
         )
         ActionText(
-            text = stringResource(R.string.forgot_password),
+            text = stringResource(UiKitR.string.forgot_password),
             onClick = {
                 actions.navigateToResetPassword(sharedEmail = state.login)
             },
@@ -133,7 +133,7 @@ internal fun LogInScreen(
             modifier = Modifier
                 .fillMaxWidth()
         ) {
-            PrimaryButtonText(text = stringResource(R.string.login_action))
+            PrimaryButtonText(text = stringResource(UiKitR.string.login_action))
         }
         Spacer(modifier = Modifier.height(20.dp))
         Row(
@@ -141,9 +141,9 @@ internal fun LogInScreen(
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally)
         ) {
-            Text(text = stringResource(R.string.no_account_question))
+            Text(text = stringResource(UiKitR.string.no_account_question))
             ActionPrimaryText(
-                text = stringResource(R.string.register_action),
+                text = stringResource(UiKitR.string.register_action),
                 onClick = actions::navigateToRegister
             )
         }

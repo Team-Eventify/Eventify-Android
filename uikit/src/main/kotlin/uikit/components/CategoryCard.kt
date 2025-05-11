@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -16,31 +17,35 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import uikit.LocaleImageLoader
+import uikit.utils.conditional
 
 @Composable
 fun CategoryCard(
-    category: Category,
-    onClick: ((String) -> Unit)? = null,
+    title: String,
+    coverUrl: String,
+    color: Color = MaterialTheme.colorScheme.primary,
     modifier: Modifier = Modifier,
+    onClick: (() -> Unit)? = null,
 ) {
     val imageLoader = LocaleImageLoader.current
 
     Card(
         shape = RoundedCornerShape(10.dp),
         colors = CardDefaults.cardColors(
-            containerColor = category.color.toColor(Color.Cyan)
+            containerColor = color
         ),
         modifier = Modifier
             .fillMaxWidth()
-            .clickable {
-                onClick?.invoke(category.id)
+            .conditional(onClick != null) {
+                clickable {
+                    onClick?.invoke()
+                }
             }
             .composed { modifier }
     ){
@@ -50,7 +55,7 @@ fun CategoryCard(
                 .fillMaxWidth()
         ) {
             Text(
-                text = category.title,
+                text = title,
                 fontSize = 24.sp,
                 lineHeight = 24.sp,
                 fontWeight = FontWeight.SemiBold,
@@ -59,7 +64,7 @@ fun CategoryCard(
             )
             AsyncImage(
                 model = ImageRequest.Builder(context = LocalContext.current)
-                    .data("https://eventify.website/api/v1/files/${category.cover}")
+                    .data("https://eventify.website/api/v1/files/$coverUrl")
                     .crossfade(true)
                     .build(),
                 imageLoader = imageLoader,
@@ -70,18 +75,4 @@ fun CategoryCard(
             )
         }
     }
-}
-
-@Preview(name = "CategoryCard", showBackground = true)
-@Composable
-private fun PreviewCategoryCard() {
-    CategoryCard(
-        category = Category(
-            id = "",
-            title = "Backend",
-            color = "FF93B3E6",
-            cover = ""
-        ),
-        onClick = {}
-    )
 }

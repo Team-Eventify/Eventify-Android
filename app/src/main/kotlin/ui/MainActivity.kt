@@ -33,6 +33,9 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.flowWithLifecycle
 import androidx.navigation.compose.rememberNavController
 import coil3.ImageLoader
+import com.example.eventify.uikit.R
+import core.common.navigation.AuthRoot
+import core.common.navigation.EventsRoot
 import uikit.components.screens.NoInternetConnectionScreen
 import featuresProvider
 import ui.navigation.navgraphs.MainNavHost
@@ -44,17 +47,19 @@ import core.featureManager.clearNavigate
 import core.featureManager.navigateToFeature
 import dagger.hilt.android.AndroidEntryPoint
 import domain.SessionManager
+import feature.eventFeed.api.EventFeedPath
 import feature.eventFeed.api.EventsFeedEntry
-import feature.eventFeed.api.EventsRootPath
-import feature.login.api.AuthRootPath
 import feature.login.api.LoginEntry
+import feature.myEvents.api.MyEventsPath
 import feature.onboarding.api.OnBoardingPath
+import feature.profile.api.ProfilePath
 import kotlinx.coroutines.runBlocking
 import rememberConnectivityState
 import uikit.EventifyTheme
 import uikit.LocaleImageLoader
 import uikit.LocaleSnackbarState
 import uikit.components.EventifySnackbar
+import uikit.components.bottomBar.BottomBarItem
 import uikit.components.bottomBar.BottomNavBar
 import uikit.components.topBar.EventifyTopAppBar
 import uikit.components.topBar.LocalTopBarState
@@ -97,6 +102,34 @@ class MainActivity : ComponentActivity() {
 
             val startDist = remember {
                 getStartDis()
+            }
+
+            val items = remember {
+                listOf(
+                    BottomBarItem(
+                        titleResId = R.string.home,
+                        iconResId = R.drawable.ic_house,
+                        route = EventFeedPath.route
+                    ),
+//                    BottomBarItem(
+//                        titleResId = R.string.search,
+//                        iconResId = R.drawable.ic_magnifying_glass,
+//                        route = SearchPath.route,
+//                        nestedRoutes = listOf(
+//                            SearchDetailPath.route,
+//                        )
+//                    ),
+                    BottomBarItem(
+                        titleResId = R.string.my_events,
+                        iconResId = R.drawable.ic_bookmark,
+                        route = MyEventsPath.route
+                    ),
+                    BottomBarItem(
+                        titleResId = R.string.profile,
+                        iconResId = R.drawable.ic_person,
+                        route = ProfilePath.route
+                    ),
+                )
             }
 
 
@@ -147,7 +180,7 @@ class MainActivity : ComponentActivity() {
                             }
                         },
                         bottomBar = {
-                            BottomNavBar(navController)
+                            BottomNavBar(items, navController)
                         },
                         snackbarHost = {
                             SnackbarHost(snackbarHostState){
@@ -176,8 +209,8 @@ class MainActivity : ComponentActivity() {
         return runBlocking {
             when {
                 localeStorage.isShowOnboarding() -> OnBoardingPath.baseRoute
-                sessionManager.isLoggedIn() -> EventsRootPath.baseRoute
-                else -> AuthRootPath.baseRoute
+                sessionManager.isLoggedIn() -> EventsRoot.baseRoute
+                else -> AuthRoot.baseRoute
             }
         }
     }

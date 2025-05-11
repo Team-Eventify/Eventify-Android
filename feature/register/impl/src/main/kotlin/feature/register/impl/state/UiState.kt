@@ -34,7 +34,7 @@ sealed class OtpState {
     data object None : OtpState()
     data object Requested : OtpState()
     data class ShowOtp(
-        val otp: OTP = OTP(),
+        val otp: String = "",
         val hasError: Boolean = false,
         val errorMessage: String? = null,
         val isSuccess: Boolean = false,

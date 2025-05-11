@@ -1,4 +1,4 @@
-package feature.profile.impl.components
+package uikit.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -10,21 +10,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.eventify.R
-import com.example.eventify.presentation.ui.common.AnnotationText
-import com.example.eventify.presentation.ui.theme.EventifyTheme
+import com.example.eventify.uikit.R
 
 @Composable
 fun SettingsBlock(
@@ -137,23 +132,4 @@ fun ImportantActionSettingsItem(
         },
         onClick = onClick
     )
-}
-
-
-@Preview(name = "SettingsBlock")
-@Composable
-private fun PreviewSettingsBlock() {
-    EventifyTheme(
-        darkTheme = true
-    ) {
-        Surface {
-            SettingsBlock{
-                NavigationSettingsItem("Navigation item")
-                HorizontalDivider()
-                ActionSettingsItem("Action item", onClick = null)
-                HorizontalDivider()
-                NavigationSettingsItem("Navigation item", supportingText = "With supporting text")
-            }
-        }
-    }
 }

@@ -21,6 +21,8 @@ import feature.aboutApp.impl.state.AboutAppListener
 import feature.aboutApp.impl.state.AboutAppState
 import uikit.EventifyTheme
 import uikit.LocalDimentions
+import uikit.components.NavigationSettingsItem
+import uikit.components.SettingsBlock
 import com.example.eventify.uikit.R as UiKitR
 
 

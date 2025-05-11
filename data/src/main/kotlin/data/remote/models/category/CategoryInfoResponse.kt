@@ -1,4 +1,4 @@
-package data.remote .models.category
+package data.remote.models.category
 
 
 data class CategoryInfoResponse(

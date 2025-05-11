@@ -1,4 +1,4 @@
-package data.remote .models.events
+package data.remote.models.events
 
 
 data class EventsFilterData(

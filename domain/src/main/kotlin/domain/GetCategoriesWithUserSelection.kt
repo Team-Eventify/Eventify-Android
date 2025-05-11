@@ -1,8 +1,10 @@
 package domain
 
 import core.common.secure.tokens.TokenProvider
+import core.common.toColorOrNull
 import data.repositories.users.UsersRepository
 import data.repositories.category.CategoryRepository
+import domain.models.CategorySelectItem
 import javax.inject.Inject
 
 class GetCategoriesWithUserSelection @Inject constructor(

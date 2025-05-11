@@ -17,11 +17,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.eventify.presentation.ui.common.shimmer
-import com.example.eventify.presentation.ui.theme.EventifyTheme
-import com.example.eventify.presentation.ui.theme.LocalDimentions
-import com.example.eventify.presentation.ui.theme.space10
-import com.example.eventify.presentation.ui.theme.space20
+import uikit.EventifyTheme
+import uikit.LocalDimentions
+import uikit.components.shimmer
+import uikit.space10
+import uikit.space20
 
 @Composable
 fun LoadingProfileEdit(

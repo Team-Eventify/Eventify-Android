@@ -1,6 +1,8 @@
 
 plugins {
     id("feature-convention")
+    alias(libs.plugins.compose.compiler)
+
 }
 
 
@@ -16,5 +18,6 @@ dependencies {
     implementation(project(":feature:login:api"))
     implementation(project(":feature:register:api"))
     implementation(project(":feature:resetPassword:api"))
+    implementation(project(":feature:eventFeed:api"))
     implementation(project(":data"))
 }

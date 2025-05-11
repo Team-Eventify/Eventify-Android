@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import core.common.navigation.AuthRoot
 import core.common.navigation.ComposableFeatureEntry
 import core.featureManager.LocalFeaturesProvider
 import core.featureManager.find
@@ -22,7 +23,7 @@ import feature.register.api.RegisterEntry
 @Composable
 fun MainNavHost(
     navController: NavHostController,
-    startDestination: String = AuthRootPath.baseRoute,
+    startDestination: String = AuthRoot.baseRoute,
     modifier: Modifier = Modifier
 ) {
     val features = LocalFeaturesProvider.current.features

@@ -1,6 +1,8 @@
 
 plugins {
     id("feature-convention")
+    alias(libs.plugins.compose.compiler)
+
 }
 
 
@@ -12,5 +14,6 @@ dependencies {
     api(project(":feature:eventDetail:api"))
     implementation(project(":core:common"))
     implementation(libs.coil3.coil.compose)
+    implementation(project(":data"))
 
 }

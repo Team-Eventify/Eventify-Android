@@ -1,5 +1,7 @@
 plugins {
     id("feature-convention")
+    alias(libs.plugins.compose.compiler)
+
 }
 
 

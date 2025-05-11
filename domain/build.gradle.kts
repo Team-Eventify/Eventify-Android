@@ -1,5 +1,7 @@
 plugins {
     id("core-convention")
+    alias(libs.plugins.compose.compiler)
+
 }
 
 

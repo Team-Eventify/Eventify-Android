@@ -1,4 +1,4 @@
-package data.remote .models.organizations
+package data.remote.models.organizations
 
 data class OrganizationDetailResponse(
     val description: String,

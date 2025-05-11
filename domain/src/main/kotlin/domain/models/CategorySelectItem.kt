@@ -1,7 +1,6 @@
 package domain.models
 
-import android.graphics.Color
-
+import androidx.compose.ui.graphics.Color
 
 data class CategorySelectItem(
     val id: String,

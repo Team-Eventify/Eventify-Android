@@ -4,10 +4,13 @@ import data.models.Category
 import data.models.Event
 import data.models.User
 import data.models.UserChange
+import data.models.toBusiness
+import data.remote.api.CategorySlug
 import javax.inject.Inject
 import data.remote.api.UsersAPI
 import data.remote.models.users.ChangeUserRequest
 import data.remote.utils.handle
+
 
 class UsersRepositoryImpl @Inject constructor(
     val dataSource: UsersAPI
@@ -22,20 +25,20 @@ class UsersRepositoryImpl @Inject constructor(
                 email = user.email
             )
         ).handle{
-            transformSuccess { it.toUserInfo() }
+            transformSuccess { it.toBusiness() }
         }
     }
 
     override suspend fun getUserInfo(userId: String): User {
         return dataSource.getUserInfo(userId = userId).handle{
-            transformSuccess { it.toUserInfo() }
+            transformSuccess { it.toBusiness() }
         }
     }
 
     override suspend fun getUserCategories(userId: String): List<Category> {
         return dataSource.getUserCategories(userId = userId).handle{
             transformSuccess { body ->
-                body.map { it.toCategoryInfo() }
+                body.map { it.toBusiness() }
             }
             process(404){
                 emptyList()
@@ -43,14 +46,14 @@ class UsersRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun setUserCategories(userId: String, categories: List<CategorySlug>): Unit {
+    override suspend fun setUserCategories(userId: String, categories: List<String>): Unit {
         return dataSource.setUserCategories(userId = userId, categories = categories).handle()
     }
 
     override suspend fun getUserSubscribedEvents(userId: String): List<Event> {
         return dataSource.getUserSubscribedEvents(userId = userId).handle{
             transformSuccess { body ->
-                body.map { it.toEventInfo() }
+                body.map { it.toBusiness() }
             }
             process(404){
                 emptyList()

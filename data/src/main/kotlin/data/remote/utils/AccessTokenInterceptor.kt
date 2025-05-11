@@ -1,6 +1,6 @@
 package data.remote.utils
 
-import core.data.repositories.tokens.TokenProvider
+import core.common.secure.tokens.TokenProvider
 import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject

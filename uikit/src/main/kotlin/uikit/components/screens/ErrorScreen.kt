@@ -8,6 +8,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import uikit.EventifyTheme
 import uikit.components.BorderedImage
+import com.example.eventify.uikit.R as UiKitR
 
 @Composable
 fun ErrorScreen(
@@ -18,7 +19,7 @@ fun ErrorScreen(
     BaseInfoScreen(
         icon = {
             BorderedImage(
-                painter = painterResource(R.drawable.ic_error),
+                painter = painterResource(UiKitR.drawable.ic_error),
             )
         },
         title = title,

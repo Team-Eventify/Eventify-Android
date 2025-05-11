@@ -8,13 +8,25 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import core.common.navigation.ARG_SHARED_EMAIL
+import core.featureManager.LocalFeaturesProvider
+import core.featureManager.navigateToFeature
+import core.featureManager.navigateNewTaskFeature
+import domain.AccountCredentialManager
+import feature.eventFeed.api.EventsFeedEntry
 import feature.login.api.LoginEntry
 import feature.login.api.LoginListener
 import feature.login.impl.LogInViewModel
 import feature.login.impl.state.SideEffect
 import feature.register.api.RegisterEntry
+import feature.resetPassword.api.ResetPasswordEntry
 import kotlinx.coroutines.launch
+import uikit.LocaleSnackbarState
+import uikit.components.topBar.LocalTopBarState
+import uikit.utils.ObserveAsEvent
+import com.example.eventify.uikit.R as UiKitR
 
 @Composable
 internal fun LogInRoute(
@@ -74,7 +86,7 @@ internal fun LogInRoute(
         when (sideEffect) {
             SideEffect.ServerError -> {
                 snackBarState.showSnackbar(
-                    message = context.getString(R.string.server_error)
+                    message = context.getString(UiKitR.string.server_error)
                 )
             }
             SideEffect.SuccessLogIn -> {
@@ -82,7 +94,7 @@ internal fun LogInRoute(
             }
             SideEffect.UnsuccessLogIn -> {
                 snackBarState.showSnackbar(
-                    message = context.getString(R.string.incorrect_auth_data)
+                    message = context.getString(UiKitR.string.incorrect_auth_data)
                 )
             }
         }

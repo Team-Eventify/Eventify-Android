@@ -36,6 +36,7 @@ class HandleContext<T, R>(
         return handleDefaults(statusCode, body)
     }
 
+    @Suppress("UNCHECKED_CAST")
     private fun handleDefaults(statusCode: Int, body: T?): R {
         if (statusCode in 200..399) {
             return body?.let { responseBody ->

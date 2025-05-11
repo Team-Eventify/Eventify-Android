@@ -3,6 +3,8 @@ import java.util.Properties
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.compose.compiler)
+
 //
     id("kotlin-kapt")
 //    id("com.google.dagger.hilt.android")
@@ -39,7 +41,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.7"
+        kotlinCompilerExtensionVersion = "1.8.1"
     }
     packaging {
         resources {
@@ -47,11 +49,11 @@ android {
         }
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     val releaseProperties = loadProperties("../release.properties")
@@ -100,6 +102,8 @@ dependencies {
     implementation(libs.androidx.material3)
     kapt(libs.hilt.android.compiler) // annotation processor
     implementation(libs.hilt.android) // runtime
+    implementation(libs.androidx.runtime)
+
 
     implementation(project(":feature:login:impl"))
     implementation(project(":feature:register:impl"))

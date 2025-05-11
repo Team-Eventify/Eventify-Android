@@ -21,16 +21,20 @@ import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import domain.models.CategorySelectItem
 import feature.profileEdit.api.ProfileEditListener
+import feature.profileEdit.impl.components.CategorySelector
 import feature.profileEdit.impl.components.ProfileEditInput
 import feature.profileEdit.impl.state.UiState
 import uikit.EventifyTheme
 import uikit.LocalDimentions
 import uikit.components.AnnotationText
-import uikit.components.CategorySelector
+import uikit.components.ImportantActionSettingsItem
 import uikit.components.PrimaryButtonText
+import uikit.components.SettingsBlock
 import uikit.components.SubHeadingText
 import uikit.components.buttons.PrimaryButton
 import kotlin.random.Random
+import com.example.eventify.uikit.R as UiKitR
+
 
 @Composable
 fun ProfileEditScreen(
@@ -61,7 +65,7 @@ fun ProfileEditScreen(
             .padding(dimmentions.windowPaddings)
             .verticalScroll(scrollState)
     ) {
-        SubHeadingText(stringResource(R.string.first_name))
+        SubHeadingText(stringResource(UiKitR.string.first_name))
         ProfileEditInput(
             text = state.firstName,
             onChange = actions::onChangeFirstName,
@@ -69,7 +73,7 @@ fun ProfileEditScreen(
 //                .shimmer(showShimmer = state.isLoading)
         )
 
-        SubHeadingText(stringResource(R.string.last_name))
+        SubHeadingText(stringResource(UiKitR.string.last_name))
         ProfileEditInput(
             text = state.lastName,
             onChange = actions::onChangeLastName,
@@ -77,7 +81,7 @@ fun ProfileEditScreen(
 //                .shimmer(showShimmer = state.isLoading)
         )
 
-        SubHeadingText(stringResource(R.string.email))
+        SubHeadingText(stringResource(UiKitR.string.email))
         ProfileEditInput(
             text = state.email,
             onChange = actions::onChangeEmail,
@@ -87,7 +91,7 @@ fun ProfileEditScreen(
 //                .shimmer(showShimmer = state.isLoading)
         )
 
-        SubHeadingText(stringResource(R.string.telegram))
+        SubHeadingText(stringResource(UiKitR.string.telegram))
         ProfileEditInput(
             text = state.telegramName,
             onChange = actions::onChangeTelegram,
@@ -98,7 +102,7 @@ fun ProfileEditScreen(
 //                .shimmer(showShimmer = state.isLoading)
         )
 
-        SubHeadingText(stringResource(R.string.my_categories))
+        SubHeadingText(stringResource(UiKitR.string.my_categories))
         AnnotationText(text = "Выбирай категории ивентов под свои интересы!")
         CategorySelector(
             categories = state.categoryItems,
@@ -109,7 +113,7 @@ fun ProfileEditScreen(
 
         SettingsBlock {
             ImportantActionSettingsItem(
-                text = stringResource(R.string.delete_account),
+                text = stringResource(UiKitR.string.delete_account),
                 onClick = {
                     openDeleteAccountDialog.value = true
                 }
@@ -117,7 +121,7 @@ fun ProfileEditScreen(
         }
 
         PrimaryButton(onClick = actions::onSubmit) {
-            PrimaryButtonText(text = stringResource(R.string.save))
+            PrimaryButtonText(text = stringResource(UiKitR.string.save))
         }
 
     }

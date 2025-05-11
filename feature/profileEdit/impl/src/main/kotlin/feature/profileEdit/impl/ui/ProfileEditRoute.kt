@@ -8,7 +8,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import com.example.eventify.R
+import com.example.eventify.uikit.R
 import uikit.components.screens.ErrorScreen
 import feature.profileEdit.api.ProfileEditListener
 import feature.profileEdit.impl.ProfileEditViewModel

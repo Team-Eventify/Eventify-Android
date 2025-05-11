@@ -97,12 +97,12 @@ fun RegisterScreen(
                 .align(Alignment.Center),
             verticalArrangement = Arrangement.Center
         ) {
-            Image(painter = painterResource(id=R.drawable.auth_icon), contentDescription = null)
+            Image(painter = painterResource(id=UiKitR.drawable.auth_icon), contentDescription = null)
             Spacer(modifier = Modifier.height(30.dp))
-            TitleText(text = stringResource(R.string.register))
+            TitleText(text = stringResource(UiKitR.string.register))
             Spacer(modifier = Modifier.height(10.dp))
-            BodyText(text = stringResource(R.string.register_request))
-            BodyText(text = stringResource(R.string.it_takes_less_then_minute))
+            BodyText(text = stringResource(UiKitR.string.register_request))
+            BodyText(text = stringResource(UiKitR.string.it_takes_less_then_minute))
             Spacer(modifier = Modifier.height(44.dp))
             TextInput(
                 text = state.payloadState.login.value,
@@ -161,7 +161,7 @@ fun RegisterScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = stringResource(R.string.register_action),
+                    text = stringResource(UiKitR.string.register_action),
                     lineHeight = 22.sp,
                     fontSize = 17.sp,
                     fontWeight = FontWeight.Medium
@@ -172,9 +172,9 @@ fun RegisterScreen(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally)
             ) {
-                Text(text = stringResource(R.string.already_have_account_question))
+                Text(text = stringResource(UiKitR.string.already_have_account_question))
                 ActionPrimaryText(
-                    text = stringResource(R.string.login_action),
+                    text = stringResource(UiKitR.string.login_action),
                     onClick = actions::navigateToLogIn
                 )
             }
@@ -188,11 +188,11 @@ fun RegisterScreen(
                 .padding(vertical = 20.dp)
         ) {
             DisclaimerText(
-                text = stringResource(R.string.privacy_policy_text)
+                text = stringResource(UiKitR.string.privacy_policy_text)
             )
 
             DisclaimerText(
-                text = stringResource(R.string.privacy_policy_link),
+                text = stringResource(UiKitR.string.privacy_policy_link),
                 textDecoration = TextDecoration.Underline,
                 modifier = Modifier.clickable { actions.goToPrivacyPolicy() }
             )

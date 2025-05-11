@@ -22,39 +22,13 @@ import com.example.eventify.uikit.R as UiKitR
 
 @Composable
 fun BottomNavBar(
+    items: List<BottomBarItem>,
     navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
-    val items = remember {
-        listOf(
-            BottomBarItem(
-                titleResId = UiKitR.string.home,
-                iconResId = UiKitR.drawable.ic_house,
-                route = EventFeedPath.route
-            ),
-            BottomBarItem(
-                titleResId = UiKitR.string.search,
-                iconResId = UiKitR.drawable.ic_magnifying_glass,
-                route = SearchPath.route,
-                nestedRoutes = listOf(
-                    SearchDetailPath.route,
-                )
-            ),
-            BottomBarItem(
-                titleResId = UiKitR.string.my_events,
-                iconResId = UiKitR.drawable.ic_bookmark,
-                route = MyEventsPath.route
-            ),
-            BottomBarItem(
-                titleResId = UiKitR.string.profile,
-                iconResId = UiKitR.drawable.ic_person,
-                route = ProfilePath.route
-            ),
-        )
-    }
     val routes = items.map { it.route }
 
     AnimatedVisibility(

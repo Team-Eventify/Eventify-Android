@@ -3,7 +3,9 @@ package ui.navigation.navgraphs
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.navigation
+import core.common.navigation.AuthRoot
 import core.common.navigation.ComposableFeatureEntry
+import feature.login.api.LoginPath
 
 
 fun NavGraphBuilder.addAuthNavGraph(
@@ -11,8 +13,8 @@ fun NavGraphBuilder.addAuthNavGraph(
     features: List<ComposableFeatureEntry>,
     ) {
     navigation(
-        route = AuthRootPath.baseRoute,
-        startDestination = LoginPath.baseRoute
+        route = LoginPath.baseRoute,
+        startDestination = AuthRoot.baseRoute
     ) {
         features.forEach { feature ->
             with(feature) {

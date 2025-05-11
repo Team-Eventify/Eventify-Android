@@ -2,6 +2,7 @@
 plugins {
     id("kotlinx-serialization")
     id("android-common-convention")
+    alias(libs.plugins.compose.compiler)
 
 }
 
@@ -16,5 +17,5 @@ dependencies {
     implementation(libs.gson)
     implementation(libs.converter.gson)
     implementation(libs.hilt.android)
-
+    implementation(libs.logging.interceptor)
 }

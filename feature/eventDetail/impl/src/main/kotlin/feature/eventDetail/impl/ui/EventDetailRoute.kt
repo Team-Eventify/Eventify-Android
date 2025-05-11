@@ -12,7 +12,9 @@ import feature.eventDetail.impl.components.LoadingEvent
 import feature.eventDetail.impl.state.EventDetailUiState
 import feature.eventDetail.impl.state.SideEffect
 import uikit.LocaleSnackbarState
+import uikit.components.screens.ErrorScreen
 import uikit.utils.ObserveAsEvent
+import com.example.eventify.uikit.R as UiKitR
 
 
 @Composable
@@ -68,7 +70,7 @@ fun EventDetailRoute(
         EventDetailUiState.Loading -> LoadingEvent()
 
         is EventDetailUiState.Error -> ErrorScreen(
-            title = stringResource(R.string.error_load_event),
+            title = stringResource(UiKitR.string.error_load_event),
             description = (uiState as EventDetailUiState.Error).message
         )
         is EventDetailUiState.ShowEvent -> {

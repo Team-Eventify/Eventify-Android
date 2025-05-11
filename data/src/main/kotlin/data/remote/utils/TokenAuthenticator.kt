@@ -1,4 +1,4 @@
-package data.remote .utils
+package data.remote.utils
 
 import core.common.secure.tokens.TokenProvider
 import data.repositories.auth.AuthUserRepository
@@ -8,6 +8,7 @@ import okhttp3.Request
 import okhttp3.Response
 import okhttp3.Route
 import javax.inject.Inject
+import data.remote.utils.isAuthRequired
 
 val Response.responseCount: Int
     get() = generateSequence(this) { it.priorResponse }.count()

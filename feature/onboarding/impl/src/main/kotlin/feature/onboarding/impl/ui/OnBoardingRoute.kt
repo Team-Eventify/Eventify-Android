@@ -9,7 +9,8 @@ import feature.onboarding.api.OnBoardingListener
 import feature.onboarding.impl.OnBoardingViewModel
 import feature.register.api.RegisterEntry
 import uikit.components.topBar.LocalTopBarState
-
+import core.featureManager.LocalFeaturesProvider
+import core.featureManager.navigateNewTaskFeature
 
 @Composable
 fun OnBoardingRoute(

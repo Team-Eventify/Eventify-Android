@@ -7,6 +7,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import com.example.eventify.uikit.R
 import feature.aboutApp.impl.state.AboutAppListener
 import uikit.components.topBar.LocalTopBarState
 import uikit.components.topBar.TopBarAction

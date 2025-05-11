@@ -15,7 +15,6 @@ fun SettingsCheckBox(
     checked: Boolean,
     description: String? = null,
     onCheckedChange: ((Boolean) -> Unit)? = null,
-    modifier: Modifier = Modifier
 ) {
     Row(
         modifier = Modifier

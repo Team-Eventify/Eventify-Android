@@ -2,6 +2,8 @@
 plugins {
     id("core-convention")
     id("kotlinx-serialization")
+    alias(libs.plugins.compose.compiler)
+
 }
 
 

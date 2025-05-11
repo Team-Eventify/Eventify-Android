@@ -1,4 +1,4 @@
-package data.remote .api
+package data.remote.api
 
 import data.remote.models.organizations.OrganizationDetailResponse
 import data.remote.utils.AuthRequired

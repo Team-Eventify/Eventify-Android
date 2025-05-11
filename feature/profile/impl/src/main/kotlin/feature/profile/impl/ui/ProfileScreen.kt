@@ -14,14 +14,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import feature.profile.api.ProfileListener
-import feature.profile.impl.components.ActionSettingsItem
 import feature.profile.impl.components.LogOutDialog
-import feature.profile.impl.components.NavigationSettingsItem
-import feature.profile.impl.components.SettingsBlock
 import feature.profile.impl.components.UserProfilePanel
 import feature.profile.impl.state.UiState
 import uikit.EventifyTheme
 import uikit.LocalDimentions
+import uikit.components.ActionSettingsItem
+import uikit.components.NavigationSettingsItem
+import uikit.components.SettingsBlock
+import com.example.eventify.uikit.R as UiKitR
 
 
 @Composable
@@ -60,22 +61,22 @@ fun ProfileScreen(
 //                )
         )
         SettingsBlock {
-            NavigationSettingsItem(stringResource(R.string.notifications), onClick = {})
+            NavigationSettingsItem(stringResource(UiKitR.string.notifications), onClick = {})
             HorizontalDivider()
-            NavigationSettingsItem(stringResource(R.string.help_and_support))
+            NavigationSettingsItem(stringResource(UiKitR.string.help_and_support))
         }
 
         SettingsBlock {
-            NavigationSettingsItem(stringResource(R.string.about_app), onClick = actions::navigateToAppInfo)
+            NavigationSettingsItem(stringResource(UiKitR.string.about_app), onClick = actions::navigateToAppInfo)
             HorizontalDivider()
             NavigationSettingsItem(
-                text = stringResource(R.string.to_rate),
+                text = stringResource(UiKitR.string.to_rate),
             )
         }
 
         SettingsBlock {
             ActionSettingsItem(
-                text = stringResource(R.string.log_out),
+                text = stringResource(UiKitR.string.log_out),
                 onClick = {
                     openLogOutDialog.value = true
                 }

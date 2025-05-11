@@ -1,4 +1,4 @@
-package data.remote .models.auth
+package data.remote.models.auth
 
 data class RegisterValidationRequest(
     val email: String,
