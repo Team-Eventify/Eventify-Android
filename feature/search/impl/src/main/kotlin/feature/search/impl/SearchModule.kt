@@ -1,4 +1,4 @@
-package feature.resetPassword.impl
+package feature.search.impl
 
 import core.common.annotations.FeatureEntryKey
 import core.common.navigation.FeatureEntry
@@ -7,16 +7,15 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoMap
-import feature.resetPassword.api.ResetPasswordEntry
+import feature.search.api.SearchEntry
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class ResetPasswordModule {
-
+abstract class SearchModule {
     @Binds
     @Singleton
     @IntoMap
-    @FeatureEntryKey(ResetPasswordEntry::class)
-    abstract fun bindResetPasswordEntry(feature: ResetPasswordEntryImpl): FeatureEntry
+    @FeatureEntryKey(SearchEntry::class)
+    abstract fun bindSearchEntry(feature: SearchEntryImpl): FeatureEntry
 }

@@ -93,6 +93,9 @@ dependencies {
     implementation(project(":feature:profile:impl"))
     implementation(project(":feature:profileEdit:impl"))
     implementation(project(":feature:aboutApp:impl"))
+    implementation(project(":feature:resetPassword:impl"))
+    implementation(project(":feature:search:impl"))
+    implementation(project(":feature:searchResult:impl"))
     implementation(project(":uikit"))
 
 

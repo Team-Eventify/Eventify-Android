@@ -13,7 +13,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import feature.eventFeed.api.EventFeedListener
-import feature.eventFeed.impl.components.EventCard
 import feature.eventFeed.impl.state.UiState
 import uikit.EventifyTheme
 import uikit.LocalDimentions
@@ -22,8 +21,10 @@ import java.util.UUID
 import kotlin.random.Random
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.google.accompanist.swiperefresh.SwipeRefresh
+import core.common.extentions.asDate
 import data.models.EventState
 import domain.models.ShortEventItem
+import uikit.components.cards.EventCard
 import com.example.eventify.uikit.R as UiKitR
 
 @Composable
@@ -52,9 +53,15 @@ internal fun EventsFeedScreen(
                 key = { it.id }
             ){ event ->
                 EventCard(
-                    event = event,
-                    onClick = actions::onEventClick,
-                )
+                    title = event.title,
+                    description = event.description,
+                    duration = event.duration,
+                    location = event.location,
+                    startTime = event.start.asDate(),
+                    coverId = event.cover,
+                ) {
+                    actions.onEventClick(event.id)
+                }
             }
         }
     }

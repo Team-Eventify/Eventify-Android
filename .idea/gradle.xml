@@ -59,6 +59,12 @@
             <option value="$PROJECT_DIR$/feature/resetPassword" />
             <option value="$PROJECT_DIR$/feature/resetPassword/api" />
             <option value="$PROJECT_DIR$/feature/resetPassword/impl" />
+            <option value="$PROJECT_DIR$/feature/search" />
+            <option value="$PROJECT_DIR$/feature/search/api" />
+            <option value="$PROJECT_DIR$/feature/search/impl" />
+            <option value="$PROJECT_DIR$/feature/searchResult" />
+            <option value="$PROJECT_DIR$/feature/searchResult/api" />
+            <option value="$PROJECT_DIR$/feature/searchResult/impl" />
             <option value="$PROJECT_DIR$/feature/setup" />
             <option value="$PROJECT_DIR$/feature/setup/api" />
             <option value="$PROJECT_DIR$/feature/setup/impl" />

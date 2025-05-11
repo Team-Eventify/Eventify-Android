@@ -54,6 +54,8 @@ import feature.login.api.LoginEntry
 import feature.myEvents.api.MyEventsPath
 import feature.onboarding.api.OnBoardingPath
 import feature.profile.api.ProfilePath
+import feature.search.api.SearchPath
+import feature.searchResult.api.SearchDetailPath
 import kotlinx.coroutines.runBlocking
 import rememberConnectivityState
 import uikit.EventifyTheme
@@ -112,14 +114,14 @@ class MainActivity : ComponentActivity() {
                         iconResId = R.drawable.ic_house,
                         route = EventFeedPath.route
                     ),
-//                    BottomBarItem(
-//                        titleResId = R.string.search,
-//                        iconResId = R.drawable.ic_magnifying_glass,
-//                        route = SearchPath.route,
-//                        nestedRoutes = listOf(
-//                            SearchDetailPath.route,
-//                        )
-//                    ),
+                    BottomBarItem(
+                        titleResId = R.string.search,
+                        iconResId = R.drawable.ic_magnifying_glass,
+                        route = SearchPath.route,
+                        nestedRoutes = listOf(
+                            SearchDetailPath.route,
+                        )
+                    ),
                     BottomBarItem(
                         titleResId = R.string.my_events,
                         iconResId = R.drawable.ic_bookmark,

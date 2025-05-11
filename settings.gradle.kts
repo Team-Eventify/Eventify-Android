@@ -66,6 +66,11 @@ include(
     ":feature:profile:impl",
     ":feature:profileEdit:api",
     ":feature:profileEdit:impl",
+    ":feature:search:api",
+    ":feature:search:impl",
+    ":feature:searchResult:api",
+    ":feature:searchResult:impl",
+
 )
 
  

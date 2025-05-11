@@ -9,7 +9,6 @@ import core.common.navigation.ComposableFeatureEntry
 import core.featureManager.LocalFeaturesProvider
 import core.featureManager.find
 import feature.aboutApp.api.AboutAppEntry
-import feature.aboutApp.api.ResetPasswordEntry
 import feature.eventDetail.api.EventDetailEntry
 import feature.eventFeed.api.EventsFeedEntry
 import feature.login.api.LoginEntry
@@ -18,6 +17,9 @@ import feature.onboarding.api.OnBoardingEntry
 import feature.profile.api.ProfileEntry
 import feature.profileEdit.api.ProfileEditEntry
 import feature.register.api.RegisterEntry
+import feature.resetPassword.api.ResetPasswordEntry
+import feature.search.api.SearchEntry
+import feature.searchResult.api.SearchDetailEntry
 
 
 @Composable
@@ -31,7 +33,7 @@ fun MainNavHost(
     val authFeatures: List<ComposableFeatureEntry> = listOfNotNull(
         features.find<LoginEntry>(),
         features.find<RegisterEntry>(),
-//        features.find<ResetPasswordEntry>(),
+        features.find<ResetPasswordEntry>(),
 //        features.find<SetUpEntry>(),
     )
 
@@ -39,8 +41,8 @@ fun MainNavHost(
         features.find<EventsFeedEntry>(),
         features.find<EventDetailEntry>(),
         features.find<MyEventsEntry>(),
-//        features.find<SearchEntry>(),
-//        features.find<SearchDetailEntry>()
+        features.find<SearchEntry>(),
+        features.find<SearchDetailEntry>()
     )
 
     val settingsFeatures: List<ComposableFeatureEntry> = listOfNotNull(
