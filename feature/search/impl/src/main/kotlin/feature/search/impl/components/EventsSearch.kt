@@ -8,6 +8,8 @@ import androidx.compose.ui.Modifier
 import domain.models.ShortEventItem
 import feature.search.impl.state.EventId
 import androidx.compose.foundation.lazy.items
+import core.common.extentions.asDate
+import uikit.components.cards.EventCard
 import uikit.space18
 
 
@@ -22,10 +24,16 @@ fun EventsSearch(
             events,
             key = { it.id }
         ) { event ->
-//            EventCard(
-//                event = event,
-//                onClick = onEventClick,
-//            )
+            EventCard(
+                title = event.title,
+                description = event.description,
+                duration = event.duration,
+                location = event.location,
+                startTime = event.start.asDate(),
+                coverId = event.cover,
+            ) {
+                onEventClick(event.id)
+            }
             Spacer(Modifier.height(space18))
         }
     }

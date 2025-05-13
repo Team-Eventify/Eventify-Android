@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+
 @OptIn(FlowPreview::class)
 @HiltViewModel
 class SearchViewModel @Inject constructor(
@@ -50,7 +51,6 @@ class SearchViewModel @Inject constructor(
             searchMode = mode,
         )
     }
-//        .distinctUntilChanged()
         .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000L),
@@ -82,10 +82,10 @@ class SearchViewModel @Inject constructor(
             val queryFilter = EventsFilterData(
                 title = query
             ).takeIf { query.isNotEmpty() }
-
+            val events = getEventsUseCase(queryFilter)
             _searchResultStateFlow.update {
                 SearchResult.Events(
-                    items = getEventsUseCase(queryFilter)
+                    items = events
                         .filter { !it.state.isHidden() }
                         .map {
                             it.toShort()
@@ -131,7 +131,7 @@ class SearchViewModel @Inject constructor(
 
     private fun handleErrors(error: Throwable) {
         when {
-            error.isServerError() -> _searchResultStateFlow.update { SearchResult.Error() }
+            error.isServerError() -> _searchResultStateFlow.update { SearchResult.Error(error.message) }
 
             error.isNotFound() -> _searchResultStateFlow.update { SearchResult.Empty }
 
