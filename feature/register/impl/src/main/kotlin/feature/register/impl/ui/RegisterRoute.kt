@@ -93,8 +93,7 @@ fun RegisterRoute(
                         login = uiState.payloadState.login,
                         password = uiState.payloadState.password,
                     )
-//                    features.navigateToFeature<SetUpEntry>(navController)
-                    // TODO
+                    features.navigateToFeature<SetUpEntry>(navController)
                 }
             }
             is SideEffect.FailRegister -> {
