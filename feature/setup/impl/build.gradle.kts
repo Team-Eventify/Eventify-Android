@@ -12,6 +12,8 @@ android {
 }
 
 dependencies {
+    api(project(":feature:setup:api"))
+    api(project(":feature:eventFeed:api"))
 
 // Hilt
     implementation(libs.hilt.android)

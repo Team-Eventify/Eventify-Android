@@ -20,6 +20,7 @@ import feature.register.api.RegisterEntry
 import feature.resetPassword.api.ResetPasswordEntry
 import feature.search.api.SearchEntry
 import feature.searchResult.api.SearchDetailEntry
+import feature.setup.api.SetUpEntry
 
 
 @Composable
@@ -34,7 +35,7 @@ fun MainNavHost(
         features.find<LoginEntry>(),
         features.find<RegisterEntry>(),
         features.find<ResetPasswordEntry>(),
-//        features.find<SetUpEntry>(),
+        features.find<SetUpEntry>(),
     )
 
     val eventsFeatures: List<ComposableFeatureEntry> = listOfNotNull(

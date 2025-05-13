@@ -96,6 +96,7 @@ dependencies {
     implementation(project(":feature:resetPassword:impl"))
     implementation(project(":feature:search:impl"))
     implementation(project(":feature:searchResult:impl"))
+    implementation(project(":feature:setup:impl"))
     implementation(project(":uikit"))
 
 

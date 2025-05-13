@@ -23,6 +23,7 @@ import uikit.components.topBar.LocalTopBarState
 import uikit.utils.ObserveAsEvent
 import core.featureManager.LocalFeaturesProvider
 import core.featureManager.navigateToFeature
+import feature.setup.api.SetUpEntry
 import com.example.eventify.uikit.R as UiKitR
 
 @Composable

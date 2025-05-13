@@ -70,6 +70,8 @@ include(
     ":feature:search:impl",
     ":feature:searchResult:api",
     ":feature:searchResult:impl",
+    ":feature:setup:api",
+    ":feature:setup:impl",
 
 )
 
