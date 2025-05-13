@@ -23,7 +23,8 @@ import feature.login.impl.state.SideEffect
 import feature.register.api.RegisterEntry
 import feature.resetPassword.api.ResetPasswordEntry
 import kotlinx.coroutines.launch
-import uikit.LocaleSnackbarState
+import uikit.LocalSnackbarState
+import uikit.components.snackbar.SnackbarType
 import uikit.components.topBar.LocalTopBarState
 import uikit.utils.ObserveAsEvent
 import com.example.eventify.uikit.R as UiKitR
@@ -35,7 +36,7 @@ internal fun LogInRoute(
     val viewModel = hiltViewModel<LogInViewModel>()
     val uiState by viewModel.stateFlow.collectAsStateWithLifecycle()
     val topBarState = LocalTopBarState.current
-    val snackBarState = LocaleSnackbarState.current
+    val snackBarState = LocalSnackbarState.current
     val context = LocalContext.current
     val features = LocalFeaturesProvider.current.features
     val scope = rememberCoroutineScope()
@@ -85,16 +86,18 @@ internal fun LogInRoute(
     ObserveAsEvent(viewModel.sideEffect) { sideEffect ->
         when (sideEffect) {
             SideEffect.ServerError -> {
-                snackBarState.showSnackbar(
-                    message = context.getString(UiKitR.string.server_error)
+                snackBarState.show(
+                    message = context.getString(UiKitR.string.server_error),
+                    type = SnackbarType.Error
                 )
             }
             SideEffect.SuccessLogIn -> {
                 features.navigateNewTaskFeature<EventsFeedEntry, LoginEntry>(navController)
             }
             SideEffect.UnsuccessLogIn -> {
-                snackBarState.showSnackbar(
-                    message = context.getString(UiKitR.string.incorrect_auth_data)
+                snackBarState.show(
+                    message = context.getString(UiKitR.string.incorrect_auth_data),
+                    type = SnackbarType.Error
                 )
             }
         }

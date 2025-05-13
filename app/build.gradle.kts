@@ -1,13 +1,8 @@
-import java.util.Properties
 
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.compose.compiler)
-
-//
-//    id("kotlin-kapt")
-
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
 }
@@ -98,9 +93,6 @@ dependencies {
     implementation(project(":feature:searchResult:impl"))
     implementation(project(":feature:setup:impl"))
     implementation(project(":uikit"))
-
-
-
 }
 
 

@@ -11,8 +11,9 @@ import feature.eventDetail.impl.EventDetailViewModel
 import feature.eventDetail.impl.components.LoadingEvent
 import feature.eventDetail.impl.state.EventDetailUiState
 import feature.eventDetail.impl.state.SideEffect
-import uikit.LocaleSnackbarState
+import uikit.LocalSnackbarState
 import uikit.components.screens.ErrorScreen
+import uikit.components.snackbar.SnackbarType
 import uikit.utils.ObserveAsEvent
 import com.example.eventify.uikit.R as UiKitR
 
@@ -23,7 +24,7 @@ fun EventDetailRoute(
 ) {
     val viewModel = hiltViewModel<EventDetailViewModel>()
     val uiState by viewModel.stateFlow.collectAsStateWithLifecycle()
-    val snackBarState = LocaleSnackbarState.current
+    val snackBarState = LocalSnackbarState.current
 
     val listener = object : EventDetailListener {
         override fun navigateUp() {
@@ -43,24 +44,28 @@ fun EventDetailRoute(
         when (sideEffect) {
             SideEffect.SuccessSubscribeEvent -> {
                 navController.navigateUp()
-                snackBarState.showSnackbar(
-                    message = "Вы подписались на событие"
+                snackBarState.show(
+                    message = "Вы подписались на событие",
+                    type = SnackbarType.Success,
                 )
             }
             SideEffect.SuccessUnsubscribeEvent -> {
                 navController.navigateUp()
-                snackBarState.showSnackbar(
-                    message = "Вы отписались от события"
+                snackBarState.show(
+                    message = "Вы отписались от события",
+                    type = SnackbarType.Success,
                 )
             }
             is SideEffect.FailSubscribeEvent -> {
-                snackBarState.showSnackbar(
-                    message = sideEffect.message ?: "Не удалось подписаться на событие"
+                snackBarState.show(
+                    message = sideEffect.message ?: "Не удалось подписаться на событие",
+                    type = SnackbarType.Error,
                 )
             }
             is SideEffect.FailUnsubscribeEvent -> {
-                snackBarState.showSnackbar(
-                    message = sideEffect.message ?: "Не удалось отписаться от события"
+                snackBarState.show(
+                    message = sideEffect.message ?: "Не удалось отписаться от события",
+                    type = SnackbarType.Error,
                 )
             }
         }

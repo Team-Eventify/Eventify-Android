@@ -1,11 +1,11 @@
 package uikit
 
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.staticCompositionLocalOf
 import coil3.ImageLoader
+import uikit.components.snackbar.AppSnackbarState
 
 
-val LocaleSnackbarState = staticCompositionLocalOf<SnackbarHostState> {
+val LocalSnackbarState = staticCompositionLocalOf<AppSnackbarState> {
     error("No SnackbarHostState not provided")
 }
 

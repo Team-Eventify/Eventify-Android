@@ -13,7 +13,9 @@ import feature.setup.impl.state.SideEffect
 import core.featureManager.LocalFeaturesProvider
 import core.featureManager.clearNavigate
 import feature.eventFeed.api.EventsFeedEntry
-import uikit.LocaleSnackbarState
+import uikit.LocalSnackbarState
+import uikit.components.snackbar.SnackbarHost
+import uikit.components.snackbar.SnackbarType
 import uikit.utils.ObserveAsEvent
 
 @Composable
@@ -23,7 +25,7 @@ fun SetUpRoute(
     val viewModel = hiltViewModel<ChooseCategoriesViewModel>()
     val uiState by viewModel.stateFlow.collectAsState()
     val features = LocalFeaturesProvider.current.features
-    val snackBarState = LocaleSnackbarState.current
+    val snackBarState = LocalSnackbarState.current
 
     val listener = object : SetUpListener {
         override fun selectCategory(categoryId: String, selected: Boolean) {
@@ -50,8 +52,9 @@ fun SetUpRoute(
     ObserveAsEvent(viewModel.sideEffect) { sideEffect ->
         when (sideEffect) {
             is SideEffect.FailedProvideCategories -> {
-                snackBarState.showSnackbar(
-                    message = sideEffect.message ?: ""
+                snackBarState.show(
+                    message = sideEffect.message ?: "",
+                    type = SnackbarType.Error,
                 )
             }
             SideEffect.FinishSetUp -> {

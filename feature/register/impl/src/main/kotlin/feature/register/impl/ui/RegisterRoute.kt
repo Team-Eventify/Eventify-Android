@@ -18,12 +18,13 @@ import feature.login.api.LoginEntry
 import feature.register.api.RegisterListener
 import feature.register.impl.RegisterViewModel
 import feature.register.impl.state.SideEffect
-import uikit.LocaleSnackbarState
 import uikit.components.topBar.LocalTopBarState
 import uikit.utils.ObserveAsEvent
 import core.featureManager.LocalFeaturesProvider
 import core.featureManager.navigateToFeature
 import feature.setup.api.SetUpEntry
+import uikit.LocalSnackbarState
+import uikit.components.snackbar.SnackbarType
 import com.example.eventify.uikit.R as UiKitR
 
 @Composable
@@ -34,7 +35,7 @@ fun RegisterRoute(
     val uiState by viewModel.state.collectAsStateWithLifecycle()
     val topBarState = LocalTopBarState.current
     val features = LocalFeaturesProvider.current.features
-    val snackBarState = LocaleSnackbarState.current
+    val snackBarState = LocalSnackbarState.current
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val credentialManager = remember {
@@ -98,14 +99,16 @@ fun RegisterRoute(
                 }
             }
             is SideEffect.FailRegister -> {
-                snackBarState.showSnackbar(
-                    message = sideEffect.message ?: ""
+                snackBarState.show(
+                    message = sideEffect.message ?: "",
+                    type = SnackbarType.Error,
                 )
             }
 
             SideEffect.ServerError -> {
-                snackBarState.showSnackbar(
-                    message = context.getString(UiKitR.string.server_error)
+                snackBarState.show(
+                    message = context.getString(UiKitR.string.server_error),
+                    type = SnackbarType.Error
                 )
             }
         }

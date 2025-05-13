@@ -23,23 +23,16 @@ dependencyResolutionManagement {
 
 rootProject.name = "Eventify"
 include(":app")
-include(
-    ":uikit"
-)
+include(":uikit")
 
 include(
     ":core:common",
     ":core:featureManager",
 )
 
-include(
-    ":data",
-)
+include(":data")
 
-include(
-    ":domain",
-)
-
+include(":domain")
 
 include(
     ":feature:eventFeed:impl",
@@ -72,7 +65,6 @@ include(
     ":feature:searchResult:impl",
     ":feature:setup:api",
     ":feature:setup:impl",
-
 )
 
  

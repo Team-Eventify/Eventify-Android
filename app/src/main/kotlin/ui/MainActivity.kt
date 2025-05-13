@@ -15,13 +15,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
@@ -59,11 +59,12 @@ import feature.searchResult.api.SearchDetailPath
 import kotlinx.coroutines.runBlocking
 import rememberConnectivityState
 import uikit.EventifyTheme
+import uikit.LocalSnackbarState
 import uikit.LocaleImageLoader
-import uikit.LocaleSnackbarState
-import uikit.components.EventifySnackbar
 import uikit.components.bottomBar.BottomBarItem
 import uikit.components.bottomBar.BottomNavBar
+import uikit.components.snackbar.AppSnackbarState
+import uikit.components.snackbar.SnackbarHost
 import uikit.components.topBar.EventifyTopAppBar
 import uikit.components.topBar.LocalTopBarState
 import uikit.components.topBar.rememberTopBarState
@@ -93,7 +94,8 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val topBarState = rememberTopBarState()
-            val snackbarHostState = remember { SnackbarHostState() }
+            val scope = rememberCoroutineScope()
+            val snackbarHostState = remember { AppSnackbarState(scope) }
             val navController = rememberNavController()
             val connectionState by rememberConnectivityState()
             val lifecycleOwner = LocalLifecycleOwner.current
@@ -142,7 +144,7 @@ class MainActivity : ComponentActivity() {
                     LocaleImageLoader provides imageLoader,
                     LocalTopBarState provides topBarState,
                     LocalFeaturesProvider provides application.featuresProvider,
-                    LocaleSnackbarState provides snackbarHostState,
+                    LocalSnackbarState provides snackbarHostState,
                 ) {
                 LaunchedEffect(Unit) {
                     enableEdgeToEdge(
@@ -185,11 +187,6 @@ class MainActivity : ComponentActivity() {
                         bottomBar = {
                             BottomNavBar(items, navController)
                         },
-                        snackbarHost = {
-                            SnackbarHost(snackbarHostState){
-                                EventifySnackbar(it)
-                            }
-                        },
                     ) { innerPadding ->
                         MainNavHost(
                             navController = navController,
@@ -202,6 +199,8 @@ class MainActivity : ComponentActivity() {
                     if (!isConnected) {
                         NoInternetConnectionScreen()
                     }
+
+                    SnackbarHost()
 
                 }
             }

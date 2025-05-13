@@ -15,7 +15,8 @@ import feature.profileEdit.impl.ProfileEditViewModel
 import feature.profileEdit.impl.components.LoadingProfileEdit
 import feature.profileEdit.impl.state.SideEffect
 import feature.profileEdit.impl.state.UiState
-import uikit.LocaleSnackbarState
+import uikit.LocalSnackbarState
+import uikit.components.snackbar.SnackbarType
 import uikit.components.topBar.LocalTopBarState
 import uikit.components.topBar.TopBarAction
 import uikit.components.topBar.TopBarSize
@@ -30,7 +31,7 @@ fun ProfileEditRoute(
     val uiState by viewModel.stateFlow.collectAsStateWithLifecycle()
     val topBarState = LocalTopBarState.current
     val context = LocalContext.current
-    val snackBarState = LocaleSnackbarState.current
+    val snackBarState = LocalSnackbarState.current
 
     val listener = object : ProfileEditListener {
         override fun onSubmit() {
@@ -69,25 +70,29 @@ fun ProfileEditRoute(
     ObserveAsEvent(viewModel.sideEffect) { sideEffect ->
         when (sideEffect) {
             is SideEffect.FailUpdate -> {
-                snackBarState.showSnackbar(
-                    message = sideEffect.message ?: ""
+                snackBarState.show(
+                    message = sideEffect.message ?: "",
+                    type = SnackbarType.Error,
                 )
             }
             SideEffect.SuccessUpdate -> {
-                snackBarState.showSnackbar(
-                    message = context.getString(R.string.user_updated)
+                snackBarState.show(
+                    message = context.getString(R.string.user_updated),
+                    type = SnackbarType.Success,
                 )
             }
 
             SideEffect.AccountDeleted -> {
-                snackBarState.showSnackbar(
-                    message = "Аккаунт удален"
+                snackBarState.show(
+                    message = "Аккаунт удален",
+                    type = SnackbarType.Success,
                 )
             }
 
             SideEffect.FailedDeleteAccount -> {
-                snackBarState.showSnackbar(
-                    message = "Не удалось удалить аккаунт"
+                snackBarState.show(
+                    message = "Не удалось удалить аккаунт",
+                    type = SnackbarType.Error,
                 )
             }
         }
