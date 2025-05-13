@@ -31,15 +31,15 @@
 
             </intent-filter>
         </activity>
-<!--        <service-->
-<!--            android:name=".domain.services.FirebaseNotificationService"-->
-<!--            android:enabled="true"-->
-<!--            android:exported="false">-->
-<!--            <intent-filter android:priority="100">-->
-<!--                <action android:name="com.google.firebase.MESSAGING_EVENT" />-->
-<!--            </intent-filter>-->
-<!--        </service>-->
-<!--        <service android:name="io.appmetrica.analytics.push.provider.firebase.AppMetricaMessagingService" tools:node="remove"/>-->
+        <service
+            android:name="com.example.eventify.services.FirebaseNotificationService"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter android:priority="100">
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name="io.appmetrica.analytics.push.provider.firebase.AppMetricaMessagingService" tools:node="remove"/>
     </application>
 
 

@@ -1,7 +1,6 @@
 package com.example.eventify
 
 import android.app.Application
-import com.example.eventify.BuildConfig
 import dagger.hilt.android.HiltAndroidApp
 import io.appmetrica.analytics.AppMetrica
 import io.appmetrica.analytics.AppMetricaConfig
@@ -18,12 +17,12 @@ class EventifyApp: Application(){
     override fun onCreate() {
         super.onCreate()
 
-//        val config = AppMetricaConfig.newConfigBuilder("de8b1938-47f7-43a2-b230-4da1d2e2f8cc")
-//            .withCrashReporting(true)
-//            .build()
-//
-//        AppMetrica.activate(this, config)
-//        AppMetricaPush.activate(this)
+        val config = AppMetricaConfig.newConfigBuilder("de8b1938-47f7-43a2-b230-4da1d2e2f8cc")
+            .withCrashReporting(true)
+            .build()
+
+        AppMetrica.activate(this, config)
+        AppMetricaPush.activate(this)
     }
 
 }

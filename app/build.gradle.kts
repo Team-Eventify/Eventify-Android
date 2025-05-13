@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
+    id("com.google.gms.google-services")
 }
 
 
@@ -48,20 +49,13 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:common"))
-    implementation(project(":core:featureManager"))
-    implementation(project(":data"))
-    implementation(project(":domain"))
-
+    // Network
     implementation(libs.coil3.coil.compose)
     implementation(libs.coil.network.okhttp)
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
 
-    implementation(libs.analytics)
-    implementation(libs.push.provider.firebase)
-    implementation(libs.push)
-
+    // Compose
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.espresso.core)
     implementation(libs.androidx.core.splashscreen)
@@ -72,12 +66,24 @@ dependencies {
 
     implementation(libs.androidx.runtime)
 
+    // Yandex Appmetrica Notification & Analytics
+    implementation(libs.analytics)
+    implementation(libs.firebase.messaging)
+    implementation(libs.play.services.base)
+    implementation(libs.push)
+    implementation(libs.androidx.legacy.support.v4)
+    implementation(libs.push.provider.firebase)
+
     // HIlt
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
-
+    // Project
+    implementation(project(":core:common"))
+    implementation(project(":core:featureManager"))
+    implementation(project(":data"))
+    implementation(project(":domain"))
     implementation(project(":feature:login:impl"))
     implementation(project(":feature:register:impl"))
     implementation(project(":feature:onboarding:impl"))
