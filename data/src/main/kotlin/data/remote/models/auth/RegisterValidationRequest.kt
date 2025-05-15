@@ -1,6 +1,6 @@
 package data.remote.models.auth
 
-data class RegisterValidationRequest(
+internal data class RegisterValidationRequest(
     val email: String,
     val password: String
 )

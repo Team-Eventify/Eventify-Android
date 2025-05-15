@@ -5,7 +5,7 @@ import data.remote.api.FilesAPI
 import java.io.InputStream
 import javax.inject.Inject
 
-class FilesRepositoryImpl @Inject constructor(
+internal class FilesRepositoryImpl @Inject constructor(
     private val dataSource: FilesAPI
 ): FilesRepository {
     override suspend fun getFileById(fileId: String): InputStream {

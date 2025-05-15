@@ -77,7 +77,7 @@ fun OtpKeyboard(
                         }
                         BottomRightId -> {
                             OtpActionButton(
-                                iconRes = UiKitR.drawable.ic_arrow_right,
+                                iconRes = UiKitR.drawable.baseline_backspace_24,
                                 onClick = onDelete,
                             )
                         }
@@ -124,7 +124,6 @@ fun OtpActionButton(
         modifier = Modifier
             .size(94.dp, 70.dp)
             .clip(CircleShape)
-            .background(MaterialTheme.colorScheme.surfaceTint)
             .clickable {
                 onClick()
             }
@@ -133,7 +132,7 @@ fun OtpActionButton(
         Icon(
             painter = painterResource(iconRes),
             contentDescription = null,
-            tint = MaterialTheme.colorScheme.onSurface,
+            tint = MaterialTheme.colorScheme.primary,
             modifier = Modifier
                 .align(Alignment.Center)
         )

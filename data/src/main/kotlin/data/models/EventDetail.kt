@@ -23,7 +23,7 @@ data class EventDetail(
 
 
 // TODO refactor pictures
-fun EventDetailResponse.toBusiness() = EventDetail(
+internal fun EventDetailResponse.toBusiness() = EventDetail(
     capacity = this.capacity ,
     cover = this.cover ,
     description = this.description ,

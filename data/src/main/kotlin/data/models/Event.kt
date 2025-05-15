@@ -18,7 +18,7 @@ data class Event(
     val categories: List<String>? = null
 )
 
-fun EventInfoResponse.toBusiness(): Event = Event(
+internal fun EventInfoResponse.toBusiness(): Event = Event(
     id = id,
     capacity = capacity,
     description = description,

@@ -10,7 +10,7 @@ import okhttp3.Route
 import javax.inject.Inject
 import data.remote.utils.isAuthRequired
 
-val Response.responseCount: Int
+internal val Response.responseCount: Int
     get() = generateSequence(this) { it.priorResponse }.count()
 
 

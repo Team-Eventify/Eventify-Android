@@ -1,6 +1,6 @@
 package data.remote.models.events
 
-data class CreateEventRequest(
+internal data class CreateEventRequest(
     val description: String,
     val end: Int,
     val ownerID: String,

@@ -1,6 +1,5 @@
 package data.di
 
-import com.example.eventify.data.BuildConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,7 +18,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object CategoryModule {
+internal object CategoryModule {
 
     @Provides
     @Singleton

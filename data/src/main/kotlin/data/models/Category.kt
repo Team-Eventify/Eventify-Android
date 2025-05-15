@@ -9,7 +9,7 @@ data class Category(
     val cover: String
 )
 
-fun CategoryInfoResponse.toBusiness(): Category = Category(
+internal fun CategoryInfoResponse.toBusiness(): Category = Category(
     id = this.id,
     title = this.title,
     color = this.color,

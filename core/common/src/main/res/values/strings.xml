@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="minimum_password_length_error">Minimum 8 chars</string>
+    <string name="invalid_emal">Invalid email format</string>
+</resources>

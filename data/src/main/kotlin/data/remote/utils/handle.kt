@@ -5,13 +5,13 @@ import core.common.exceptions.NetworkException
 import retrofit2.Response
 
 
-fun <T, R>Response<T>.handle(configure: (HandleContext<T, R>.() -> Unit)? = null): R {
+internal fun <T, R>Response<T>.handle(configure: (HandleContext<T, R>.() -> Unit)? = null): R {
     val context = HandleContext<T, R>(this)
     configure?.let { context.it() }
     return context.execute()
 }
 
-class HandleContext<T, R>(
+internal class HandleContext<T, R>(
     private val response: Response<T>
 ){
     private val processors = mutableMapOf<Int, (T?) -> R>()

@@ -3,6 +3,8 @@ package feature.register.impl
 import android.content.Context
 import androidx.lifecycle.viewModelScope
 import core.common.BaseViewModel
+import core.common.extentions.asText
+import core.common.extentions.isNull
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -11,6 +13,9 @@ import data.models.RegisterValidationData
 import data.repositories.auth.AuthUserRepository
 import domain.auth.OtpRegisterUseCase
 import domain.auth.isIncorrectOtp
+import core.common.validation.EmailValidationUseCase
+import core.common.validation.PasswordValidationUseCase
+import core.common.extentions.onError
 import feature.register.impl.state.OtpState
 import feature.register.impl.state.RegisterPayloadState
 import feature.register.impl.state.RegisterUiState
@@ -33,6 +38,9 @@ class RegisterViewModel @Inject constructor(
     private val authRepository: AuthUserRepository,
     @ApplicationContext private val context: Context,
 ) : BaseViewModel() {
+
+    private val emailValidationUseCase = EmailValidationUseCase()
+    private val passwordValidationUseCase = PasswordValidationUseCase()
 
     private var validationResultId = MutableStateFlow<String?>(null)
 
@@ -93,10 +101,30 @@ class RegisterViewModel @Inject constructor(
         password: String
     ) {
         launchCatching(catch = ::handleRegisterErrors) {
-            // TODO needs validation
+
+            val validLogin = emailValidationUseCase(login).onError { error ->
+                mutableRegisterPayloadState.update { currentState ->
+                    currentState.copy(
+                        loginError = error.asText(context),
+                        hasLoginError = true,
+                    )
+                }
+            }
+
+            val validPassword = passwordValidationUseCase(password).onError { error ->
+                mutableRegisterPayloadState.update { currentState ->
+                    currentState.copy(
+                        passwordError = error.asText(context),
+                        hasPasswordError = true,
+                    )
+                }
+            }
+
+            if (validLogin.isNull() || validPassword.isNull()) return@launchCatching
+
             val otpData = RegisterValidationData(
-                email = login,
-                password = password,
+                email = validLogin!!,
+                password = validPassword!!,
             )
 
 

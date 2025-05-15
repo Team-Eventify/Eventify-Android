@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="minimum_password_length_error">Не менее 8 символов</string>
+    <string name="invalid_emal">Некоректный формат почты</string>
+
+</resources>
