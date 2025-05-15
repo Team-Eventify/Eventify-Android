@@ -51,7 +51,7 @@ internal class EventsFeedViewModel @Inject constructor(
         ) {
             _stateFlow.update {
                 UiState.ShowFeed(
-                    events = getEventsUseCase()
+                    events = getEventsUseCase(includeUserCategories = true)
                         .filter { !it.state.isHidden() }
                         .map {
                             it.toShort()
