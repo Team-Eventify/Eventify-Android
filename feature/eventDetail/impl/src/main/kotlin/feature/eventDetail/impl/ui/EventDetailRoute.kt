@@ -8,7 +8,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import feature.eventDetail.api.EventDetailListener
 import feature.eventDetail.impl.EventDetailViewModel
-import feature.eventDetail.impl.components.LoadingEvent
+import feature.eventDetail.impl.ui.components.LoadingEvent
 import feature.eventDetail.impl.state.EventDetailUiState
 import feature.eventDetail.impl.state.SideEffect
 import uikit.LocalSnackbarState
@@ -38,19 +38,22 @@ fun EventDetailRoute(
         override fun goToRatePage() {
             TODO("Not yet implemented")
         }
+
+        override fun refresh() {
+            viewModel.refresh()
+        }
     }
 
     ObserveAsEvent(viewModel.sideEffect) { sideEffect ->
         when (sideEffect) {
             SideEffect.SuccessSubscribeEvent -> {
-                navController.navigateUp()
+                viewModel.refresh()
                 snackBarState.show(
                     message = "Вы подписались на событие",
                     type = SnackbarType.Success,
                 )
             }
             SideEffect.SuccessUnsubscribeEvent -> {
-                navController.navigateUp()
                 snackBarState.show(
                     message = "Вы отписались от события",
                     type = SnackbarType.Success,

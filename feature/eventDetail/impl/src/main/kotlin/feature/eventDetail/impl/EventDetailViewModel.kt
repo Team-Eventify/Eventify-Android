@@ -19,9 +19,6 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
@@ -66,28 +63,27 @@ internal class EventDetailViewModel @Inject constructor(
         }
     }
 
+    fun refresh() {
+        loadEvent()
+    }
+
     fun primaryAction() {
         launchCatching {
-            _stateFlow
-                .map { it as? EventDetailUiState.ShowEvent }
-                .filterNotNull()
-                .map { it.event.eventInfo }
-                .collectLatest { event ->
-                    when {
-                        // Subscribed and can be changed -> unsubscribe
-                        event.state.isSubscribeEnabled() && event.subscribed -> {
-                            unsubscribeForEvent()
-                        }
-
-                        // Unsubscribed and can be changed -> subscribe
-                        event.state.isSubscribeEnabled() && event.subscribed.not() -> {
-                            subscribeForEvent()
-                        }
-                        // Else ignore
+            (_stateFlow.value as? EventDetailUiState.ShowEvent)?.event?.eventInfo?.let { event ->
+                when {
+                    // Subscribed and can be changed -> unsubscribe
+                    event.state.isSubscribeEnabled() && event.subscribed -> {
+                        unsubscribeForEvent()
                     }
-                }
-        }
 
+                    // Unsubscribed and can be changed -> subscribe
+                    event.state.isSubscribeEnabled() && event.subscribed.not() -> {
+                        subscribeForEvent()
+                    }
+                    // Else ignore
+                }
+            }
+        }
     }
 
     private fun subscribeForEvent(){

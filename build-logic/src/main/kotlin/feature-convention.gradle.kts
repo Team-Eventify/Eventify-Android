@@ -20,6 +20,8 @@ dependencies {
     implementation(libs.androidx.runtime)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.accompanist.swiperefresh)
+    debugImplementation(libs.androidx.ui.tooling)
+
 
 
     // Hilt

@@ -35,12 +35,12 @@ import core.common.extentions.asTime
 import data.models.EventState
 import domain.models.ShortEventItem
 import uikit.EventifyTheme
-import uikit.components.EventCardTitle
+import uikit.TypographyKit
 import uikit.components.FinishedEventInfoChip
 import com.example.eventify.uikit.R as UiKitR
 import kotlin.random.Random
 
-@OptIn(ExperimentalLayoutApi::class)
+
 @Composable
 fun FinishedEventCard(
     event: ShortEventItem,
@@ -56,7 +56,7 @@ fun FinishedEventCard(
         onClick = { onClick?.invoke(event.id) },
         modifier = Modifier
             .fillMaxWidth()
-            .height(IntrinsicSize.Min) // Ensures height matches content
+            .height(IntrinsicSize.Min)
     ) {
         Column {
             Row(
@@ -65,16 +65,16 @@ fun FinishedEventCard(
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
-                // Left Column (Event Info)
                 Column(
                     verticalArrangement = Arrangement.Center,
                     modifier = Modifier
-                        .padding(10.dp)// Ensure it fills the container's height
-                        .weight(.6f) // Let this column take 55% of the space
+                        .padding(10.dp)
+                        .weight(.6f)
                 ) {
-                    EventCardTitle(
+                    Text(
                         text = event.title,
-                        textColor = MaterialTheme.colorScheme.onSurfaceVariant
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        style = TypographyKit.bodyMedium,
                     )
                     Spacer(modifier = Modifier.height(10.dp))
                     FlowRow(
@@ -88,14 +88,13 @@ fun FinishedEventCard(
 
                 }
 
-                // Right Image
                 Image(
                     painter = painterResource(UiKitR.drawable.eventify_group_1),
                     contentDescription = null,
                     colorFilter = ColorFilter.tint(Color(0xFF858591)),
-                    contentScale = ContentScale.FillHeight, // Adjust to fill the container's height
+                    contentScale = ContentScale.FillHeight,
                     modifier = Modifier
-                        .weight(0.4f) // Let the image take 45% of the space
+                        .weight(0.4f)
                 )
             }
             if (showFeedbackButton){

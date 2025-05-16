@@ -26,7 +26,7 @@ fun TitleText(
 
 
 @Composable
-fun AnnotationText(
+private fun AnnotationText(
     text: String,
     textDecoration: TextDecoration = TextDecoration.None,
     textAlign: TextAlign = TextAlign.Left,
@@ -45,7 +45,7 @@ fun AnnotationText(
 }
 
 @Composable
-fun BodyText(
+private fun BodyText(
     text: String,
     maxlines: Int = Int.MAX_VALUE,
     modifier: Modifier = Modifier,
@@ -62,7 +62,7 @@ fun BodyText(
 }
 
 @Composable
-fun ActionText(
+private fun ActionText(
     text: String,
     onClick: () -> Unit,
     textAlign: TextAlign = TextAlign.Left,
@@ -80,7 +80,7 @@ fun ActionText(
 }
 
 @Composable
-fun ActionPrimaryText(
+private fun ActionPrimaryText(
     text: String,
     onClick: () -> Unit,
     textAlign: TextAlign = TextAlign.Left,
@@ -100,26 +100,9 @@ fun ActionPrimaryText(
     )
 }
 
-@Composable
-fun PrimaryButtonText(
-    text: String,
-    textDecoration: TextDecoration = TextDecoration.None,
-    modifier: Modifier = Modifier,
-) {
-    Text(
-        text = text,
-        lineHeight = 22.sp,
-        fontSize = 17.sp,
-        fontWeight = FontWeight.Medium,
-        textDecoration = textDecoration,
-        modifier = Modifier
-            .then(modifier)
-    )
-}
-
 
 @Composable
-fun EventCardTitle(
+private fun EventCardTitle(
     text: String,
     textColor: Color = MaterialTheme.colorScheme.onSecondary,
     modifier: Modifier = Modifier
@@ -153,7 +136,7 @@ fun HeadingText(
 }
 
 @Composable
-fun SubHeadingText(
+private fun SubHeadingText(
     text: String,
     modifier: Modifier = Modifier,
 ) {
@@ -167,7 +150,7 @@ fun SubHeadingText(
 }
 
 @Composable
-fun ErrorInputText(
+private fun ErrorInputText(
     text: String,
     modifier: Modifier = Modifier,
 ) {
@@ -181,7 +164,7 @@ fun ErrorInputText(
 
 
 @Composable
-fun DisclaimerText(
+private fun DisclaimerText(
     text: String,
     textDecoration: TextDecoration = TextDecoration.None,
     modifier: Modifier = Modifier,

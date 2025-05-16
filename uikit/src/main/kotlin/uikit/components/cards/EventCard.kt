@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -12,6 +13,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,12 +32,13 @@ import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.example.eventify.uikit.R
 import uikit.LocaleImageLoader
-import uikit.components.BodyText
-import uikit.components.EventCardTitle
+import uikit.TypographyKit
 import uikit.components.EventInfoTag
 import uikit.components.shimmer
+import uikit.space10
+import uikit.space12
 
-@OptIn(ExperimentalLayoutApi::class)
+
 @Composable
 fun EventCard(
     title: String,
@@ -108,11 +111,17 @@ fun EventCard(
                     EventInfoTag(startTime)
                     EventInfoTag(location)
                 }
-                EventCardTitle(
+                Text(
                     text = title,
-                    textColor = MaterialTheme.colorScheme.onSurface
+                    color = MaterialTheme.colorScheme.onSurface,
+                    style = TypographyKit.bodyMedium,
                 )
-                BodyText(description, maxlines = 7)
+                Spacer(Modifier.height(space10))
+                Text(
+                    text = description,
+                    style = TypographyKit.bodyRegular,
+                    maxLines = 7,
+                )
             }
         }
     }

@@ -1,4 +1,4 @@
-package feature.eventDetail.impl.components
+package feature.eventDetail.impl.ui.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -25,6 +25,7 @@ import coil3.request.ImageRequest
 import coil3.request.crossfade
 import data.models.Organization
 import uikit.LocaleImageLoader
+import uikit.TypographyKit
 import java.util.UUID
 
 @Composable
@@ -63,7 +64,11 @@ fun OrganizationInfoPanel(
                 isLoading.value = false
             }
         )
-        Text(text = organization.title, color = MaterialTheme.colorScheme.onSecondary, fontSize = 20.sp)
+        Text(
+            text = organization.title,
+            color = MaterialTheme.colorScheme.onSecondary,
+            style = TypographyKit.bodyMedium,
+        )
     }
 }
 
