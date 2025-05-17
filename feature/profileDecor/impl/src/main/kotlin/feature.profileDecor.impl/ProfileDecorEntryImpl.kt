@@ -1,9 +1,8 @@
+package feature.profileDecor.impl
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
-import com.example.eventify.presentation.navigation.BaseDestination
-import com.example.eventify.presentation.navigation.ComposableFeatureEntry
-import com.example.eventify.presentation.ui.account.profile.AccountRootPath
+import feature.profileDecor.api.ProfileDecorEntry
 import javax.inject.Inject
 
 class ProfileDecorEntryImpl @Inject constructor(): ProfileDecorEntry {

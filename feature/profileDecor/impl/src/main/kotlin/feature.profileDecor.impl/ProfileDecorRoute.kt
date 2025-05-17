@@ -1,4 +1,4 @@
-package com.example.eventify.presentation.ui.account.profile_decor
+package feature.profileDecor.impl
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
@@ -6,19 +6,17 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.eventify.R
-import com.example.eventify.presentation.LocalAppThemeState
-import com.example.eventify.presentation.LocalTopBarState
-import com.example.eventify.presentation.LocaleSnackbarState
-import com.example.eventify.presentation.TopBarAction
-import com.example.eventify.presentation.TopBarSize
-import com.example.eventify.presentation.TopBarState
-import com.example.eventify.presentation.models.LogoIcon
+import com.example.eventify.uikit.R as UiKitR
 import com.example.eventify.presentation.ui.account.profile_decor.state.ProfileDecorRouteListener
 import com.example.eventify.presentation.ui.account.profile_decor.state.ProfileDecorUiState
 import com.example.eventify.presentation.ui.account.profile_decor.state.SideEffect
 import com.example.eventify.presentation.ui.account.profile_decor.state.TypesTheme
-import com.example.eventify.presentation.utils.ObserveAsEvent
+import domain.models.LogoIcon
+import uikit.components.topBar.LocalTopBarState
+import uikit.components.topBar.TopBarAction
+import uikit.components.topBar.TopBarSize
+import uikit.components.topBar.TopBarState
+import uikit.utils.ObserveAsEvent
 
 @Composable
 fun ProfileDecorRoute(navController: NavController) {
@@ -60,7 +58,7 @@ fun ProfileDecorRoute(navController: NavController) {
 
             SideEffect.SuccessUpdate -> {
                 snackBarState.showSnackbar(
-                    message = context.getString(R.string.icon_logo_update)
+                    message = context.getString(UiKitR.string.icon_logo_update)
                 )
             }
         }
@@ -71,10 +69,10 @@ fun ProfileDecorRoute(navController: NavController) {
     LaunchedEffect(Unit) {
         topBarState.setUp(
             TopBarState.Base(
-                title = context.getString(R.string.design_section_title),
+                title = context.getString(UiKitR.string.design_section_title),
                 size = TopBarSize.SMALL,
                 leftAction = TopBarAction(
-                    iconRes = R.drawable.ic_chevron_right,
+                    iconRes = UiKitR.drawable.ic_chevron_right,
                     onClick = listener::onBackClick
                 )
             )

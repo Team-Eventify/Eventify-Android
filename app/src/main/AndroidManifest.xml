@@ -40,7 +40,7 @@
             android:icon="@mipmap/ic_launcher"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:theme="@style/Theme.SplashScreen.Logo1"
-            android:targetActivity=".presentation.MainActivity">
+            android:targetActivity="ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -55,7 +55,7 @@
             android:icon="@mipmap/icon_logo_2"
             android:roundIcon="@mipmap/icon_logo_2_round"
             android:theme="@style/Theme.SplashScreen.Logo2"
-            android:targetActivity=".presentation.MainActivity">
+            android:targetActivity="ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -70,7 +70,7 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.SplashScreen.Logo3"
-            android:targetActivity=".presentation.MainActivity">
+            android:targetActivity="ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -85,7 +85,7 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.SplashScreen.Logo4"
-            android:targetActivity=".presentation.MainActivity">
+            android:targetActivity="ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -100,7 +100,7 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.SplashScreen.Logo5"
-            android:targetActivity=".presentation.MainActivity">
+            android:targetActivity="ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

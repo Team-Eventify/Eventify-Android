@@ -1,13 +1,10 @@
-package com.example.eventify.presentation.ui.account.profile_decor
+package feature.profileDecor.api
 
-import androidx.compose.runtime.Composable
-import androidx.navigation.NavHostController
-import com.example.eventify.presentation.navigation.BaseDestination
-import com.example.eventify.presentation.navigation.ComposableFeatureEntry
-import com.example.eventify.presentation.ui.account.profile.AccountRootPath
-import javax.inject.Inject
+import core.common.navigation.AccountRoot
+import core.common.navigation.BaseDestination
+import core.common.navigation.ComposableFeatureEntry
 
-val ProfileDecorPath = AccountRootPath.child("decor")
+val ProfileDecorPath = AccountRoot.child("decor")
 
 interface ProfileDecorEntry: ComposableFeatureEntry {
     override val destination: BaseDestination

@@ -1,6 +1,6 @@
 package com.example.eventify.presentation.ui.account.profile_decor.state
 
-import com.example.eventify.presentation.models.LogoIcon
+import domain.models.LogoIcon
 
 interface ProfileDecorRouteListener {
     fun onBackClick(): Unit

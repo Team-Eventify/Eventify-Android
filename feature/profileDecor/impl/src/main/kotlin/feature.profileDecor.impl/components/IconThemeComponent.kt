@@ -1,4 +1,4 @@
-package com.example.eventify.presentation.ui.account.profile_decor.components
+package feature.profileDecor.impl.components
 
 import android.content.res.Configuration
 import androidx.annotation.StringRes
@@ -19,9 +19,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.eventify.R
-import com.example.eventify.presentation.ui.common.BodyText
-import com.example.eventify.presentation.ui.theme.EventifyTheme
+import com.example.eventify.uikit.R as R
+import uikit.EventifyTheme
+import uikit.components.BodyText
 
 @Composable
 fun IconThemeComponent(

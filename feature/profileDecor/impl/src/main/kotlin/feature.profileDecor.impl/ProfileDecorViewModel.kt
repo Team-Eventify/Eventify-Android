@@ -1,19 +1,17 @@
-package com.example.eventify.presentation.ui.account.profile_decor
+package feature.profileDecor.impl
 
 import android.content.ComponentName
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.eventify.data.storages.LocaleStorage
-import com.example.eventify.data.storages.SharedStorage
-import com.example.eventify.presentation.models.LogoIcon
 import com.example.eventify.presentation.ui.account.profile_decor.state.SideEffect
+import core.common.storages.LocaleStorage
+import core.common.storages.SharedStorage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import domain.models.LogoIcon
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
