@@ -107,7 +107,8 @@ fun ProfileDecorScreen(uiState: ProfileDecorUiState, actions: ProfileDecorRouteL
                                 )
                             .clip(RoundedCornerShape(size = 20.dp))
                         )
-                    Text(stringResource(item.titleRes))
+                    Text(text = stringResource(item.titleRes),
+                        modifier = Modifier.padding(horizontal = 6.dp))
                 }
             }
         }

@@ -63,7 +63,6 @@ fun ProfileDecorRoute(navController: NavController) {
                     message = context.getString(R.string.icon_logo_update)
                 )
             }
-            else -> {}
         }
     }
 

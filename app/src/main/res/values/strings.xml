@@ -108,5 +108,8 @@
     <string name="subscribe_for_event_action">I will go!</string>
     <string name="unsubscribe_for_event_action">Cancel appointment</string>
 
-    <string name="base">Base</string>
+    <string name="base_light">Base</string>
+    <string name="base_dark">Base</string>
+    <string name="sunset">Sunset</string>
+    <string name="night">Night</string>
 </resources>

@@ -65,7 +65,7 @@ private fun IconThemeComponentScreenPreview() {
                 iconTheme = R.drawable.circle_lefthalf_filled,
                 titleTheme = R.string.system_theme_ttile,
                 activeColor = Color.White,
-                changeTheme = TODO()
+                changeTheme = {}
             )
         }
     }
