@@ -62,9 +62,12 @@ fun ProfileScreen(
 //                )
         )
         SettingsBlock {
-            NavigationSettingsItem(stringResource(UiKitR.string.notifications), onClick = {})
-            HorizontalDivider()
             NavigationSettingsItem(stringResource(UiKitR.string.help_and_support))
+            HorizontalDivider()
+            NavigationSettingsItem(
+                text = "Оформление",
+                onClick = actions::navigateToDecor
+            )
         }
 
         SettingsBlock {
@@ -104,6 +107,7 @@ private fun ProfileScreenPreview() {
                     override fun onLogOut() = Unit
                     override fun navigateToProfileEdit() = Unit
                     override fun navigateToAppInfo() = Unit
+                    override fun navigateToDecor() = Unit
                 }
             )
         }

@@ -1,4 +1,4 @@
-package com.example.eventify.presentation.ui.account.profile_decor.state
+package feature.decor.impl.state
 
 sealed class SideEffect {
     data object SuccessUpdate : SideEffect()

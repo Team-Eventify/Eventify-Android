@@ -1,11 +1,12 @@
-package feature.profileDecor.impl
+package feature.decor.impl
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
-import feature.profileDecor.api.ProfileDecorEntry
+import feature.decor.impl.ui.ProfileDecorRoute
+import feature.decor.api.DecorEntry
 import javax.inject.Inject
 
-class ProfileDecorEntryImpl @Inject constructor(): ProfileDecorEntry {
+class DecorEntryImpl @Inject constructor(): DecorEntry {
 
     @Composable
     override fun Composable(navController: NavHostController) {

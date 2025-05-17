@@ -1,11 +1,11 @@
-package feature.profileDecor.impl
+package feature.decor.impl.ui
 
 import android.content.ComponentName
 import android.content.Context
 import android.content.pm.PackageManager
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.eventify.presentation.ui.account.profile_decor.state.SideEffect
+import feature.decor.impl.state.SideEffect
 import core.common.storages.LocaleStorage
 import core.common.storages.SharedStorage
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ProfileDecorViewModel @Inject constructor(
+class DecorViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     @SharedStorage private val localeStorage: LocaleStorage
 ): ViewModel() {

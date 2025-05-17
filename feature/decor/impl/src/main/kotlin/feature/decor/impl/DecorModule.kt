@@ -1,4 +1,4 @@
-package feature.profileDecor.impl
+package feature.decor.impl
 
 import core.common.annotations.FeatureEntryKey
 import core.common.navigation.FeatureEntry
@@ -7,15 +7,15 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoMap
-import feature.profileDecor.api.ProfileDecorEntry
+import feature.decor.api.DecorEntry
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class ProfileDecorModule {
+abstract class DecorModule {
     @Binds
     @Singleton
     @IntoMap
-    @FeatureEntryKey(ProfileDecorEntry::class)
-    abstract fun bindProfileEditEntry(feature: ProfileDecorEntryImpl): FeatureEntry
+    @FeatureEntryKey(DecorEntry::class)
+    abstract fun bindProfileEditEntry(feature: DecorEntryImpl): FeatureEntry
 }

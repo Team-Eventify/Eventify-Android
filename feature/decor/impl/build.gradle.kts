@@ -7,11 +7,11 @@ plugins {
 
 
 android {
-    namespace = "com.example.eventify.feature.profileDecor.impl"
+    namespace = "com.example.eventify.feature.decor.impl"
 }
 
 dependencies {
-    api(project(":feature:profileDecor:api"))
+    api(project(":feature:decor:api"))
 
     // Hilt
     implementation(libs.hilt.android)

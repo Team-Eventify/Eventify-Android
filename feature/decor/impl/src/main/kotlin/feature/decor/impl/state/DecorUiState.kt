@@ -1,9 +1,9 @@
-package com.example.eventify.presentation.ui.account.profile_decor.state
+package feature.decor.impl.state
 
 import com.example.eventify.uikit.R as R
 import domain.models.LogoIcon
 
-data class ProfileDecorUiState(
+data class DecorUiState(
     val listIcons: List<LogoIcon> = listOf<LogoIcon>(LogoIcon(R.string.base_dark, R.drawable.icon_logo_1, ".alias.icon_logo_1"),
        // LogoIcon(R.string.base_light, R.drawable.icon_logo_2, ".alias.icon_logo_2"),
         LogoIcon(R.string.sunset, R.drawable.icon_logo_3, ".alias.icon_logo_3"),

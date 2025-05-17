@@ -9,6 +9,7 @@ import core.common.navigation.ComposableFeatureEntry
 import core.featureManager.LocalFeaturesProvider
 import core.featureManager.find
 import feature.aboutApp.api.AboutAppEntry
+import feature.decor.api.DecorEntry
 import feature.eventDetail.api.EventDetailEntry
 import feature.eventFeed.api.EventsFeedEntry
 import feature.login.api.LoginEntry
@@ -53,6 +54,7 @@ fun MainNavHost(
     val accountFeatures: List<ComposableFeatureEntry> = listOfNotNull(
         features.find<ProfileEntry>(),
         features.find<ProfileEditEntry>(),
+        features.find<DecorEntry>(),
     )
 
     val onboarding = features.find<OnBoardingEntry>()

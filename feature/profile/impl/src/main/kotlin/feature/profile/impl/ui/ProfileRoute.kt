@@ -18,6 +18,7 @@ import uikit.components.screens.ErrorScreen
 import uikit.components.topBar.LocalTopBarState
 import core.featureManager.LocalFeaturesProvider
 import core.featureManager.navigateToFeature
+import feature.decor.api.DecorEntry
 import uikit.components.topBar.TopBarSize
 import uikit.components.topBar.TopBarState
 import com.example.eventify.uikit.R as UiKitR
@@ -45,6 +46,10 @@ internal fun ProfileRoute(
 
         override fun navigateToAppInfo() {
             features.navigateToFeature<AboutAppEntry>(navController)
+        }
+
+        override fun navigateToDecor() {
+            features.navigateToFeature<DecorEntry>(navController)
         }
     }
 

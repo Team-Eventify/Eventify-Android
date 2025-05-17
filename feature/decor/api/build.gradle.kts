@@ -7,7 +7,7 @@ plugins {
 
 
 android {
-    namespace = "com.example.eventify.feature.profileDecor.api"
+    namespace = "com.example.eventify.feature.decor.api"
 }
 
 dependencies {

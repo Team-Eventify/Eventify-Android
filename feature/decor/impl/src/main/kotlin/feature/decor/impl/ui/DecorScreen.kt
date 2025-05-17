@@ -1,4 +1,4 @@
-package feature.profileDecor.impl
+package feature.decor.impl.ui
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
@@ -26,26 +26,29 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import feature.profileDecor.impl.components.IconThemeComponent
-import com.example.eventify.presentation.ui.account.profile_decor.state.ProfileDecorRouteListener
-import com.example.eventify.presentation.ui.account.profile_decor.state.ProfileDecorUiState
-import com.example.eventify.presentation.ui.account.profile_decor.state.TypesTheme
+import feature.decor.impl.components.IconThemeComponent
+import feature.decor.impl.state.DecorListener
+import feature.decor.impl.state.DecorUiState
+import feature.decor.impl.state.TypesTheme
 import domain.models.LogoIcon
 import uikit.EventifyTheme
 import com.example.eventify.uikit.R as R
 
 import uikit.LocalDimentions
-import uikit.components.SubHeadingText
+import uikit.TypographyKit
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun ProfileDecorScreen(uiState: ProfileDecorUiState, actions: ProfileDecorRouteListener) {
+fun ProfileDecorScreen(uiState: DecorUiState, actions: DecorListener) {
     val dimmentions = LocalDimentions.current
 
     Column(modifier = Modifier
         .fillMaxSize()
         .padding(dimmentions.windowPaddings)) {
-        SubHeadingText(text = stringResource(R.string.theme_title))
+        Text(
+            text = stringResource(R.string.theme_title),
+            style = TypographyKit.bodyMedium
+        )
         Spacer(modifier = Modifier
             .height(10.dp),)
         Row(modifier = Modifier
@@ -73,7 +76,10 @@ fun ProfileDecorScreen(uiState: ProfileDecorUiState, actions: ProfileDecorRouteL
         HorizontalDivider(modifier = Modifier
             .padding(vertical=20.dp),)
 
-        SubHeadingText(text = stringResource(R.string.icon_logo))
+        Text(
+            text = stringResource(R.string.icon_logo),
+            style = TypographyKit.bodyMedium
+        )
 
 
         FlowRow(modifier = Modifier
@@ -116,7 +122,8 @@ fun ProfileDecorScreen(uiState: ProfileDecorUiState, actions: ProfileDecorRouteL
 private fun ProfileDecorScreenPreview() {
     EventifyTheme(darkTheme = true) {
         Surface {
-            ProfileDecorScreen(uiState = ProfileDecorUiState(), actions=object : ProfileDecorRouteListener {
+            ProfileDecorScreen(uiState = DecorUiState(), actions = object :
+                DecorListener {
                 override fun onBackClick() = Unit
                 override fun changeTheme(typeOfTheme: TypesTheme) = Unit
                 override fun getActiveTheme() = TypesTheme.SYSTEM_THEME

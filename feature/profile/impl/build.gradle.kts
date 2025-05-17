@@ -14,6 +14,7 @@ dependencies {
     api(project(":feature:profile:api"))
     api(project(":feature:profileEdit:api"))
     api(project(":feature:aboutApp:api"))
+    api(project(":feature:decor:api"))
 
     // Hilt
     implementation(libs.hilt.android)

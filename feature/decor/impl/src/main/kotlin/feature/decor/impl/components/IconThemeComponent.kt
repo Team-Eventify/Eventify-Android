@@ -1,4 +1,4 @@
-package feature.profileDecor.impl.components
+package feature.decor.impl.components
 
 import android.content.res.Configuration
 import androidx.annotation.StringRes
@@ -12,6 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -21,7 +22,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.eventify.uikit.R as R
 import uikit.EventifyTheme
-import uikit.components.BodyText
+import uikit.TypographyKit
+
 
 @Composable
 fun IconThemeComponent(
@@ -49,7 +51,10 @@ fun IconThemeComponent(
                 tint = if (isSystemOrDarkTheme) Color.White else Color.Black,
             )
             Spacer(modifier = Modifier.height(20.dp))
-            BodyText(text = stringResource(titleTheme))
+            Text(
+                text = stringResource(titleTheme),
+                style = TypographyKit.bodyRegular,
+            )
         }
     }
 }
