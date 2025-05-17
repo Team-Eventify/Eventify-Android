@@ -51,20 +51,28 @@ internal class EventDetailViewModel @Inject constructor(
             EventDetailUiState.Loading
         )
 
-    private fun loadEvent(){
+    private fun loadEvent(isRefreshing: Boolean = false){
         launchCatching(
             catch = ::handleEventErrors
         ) {
+            _stateFlow.update { currentState ->
+                EventDetailUiState.Loading.takeUnless { isRefreshing } ?:
+                (currentState as? EventDetailUiState.ShowEvent)?.copy(
+                    isRefreshing = true,
+                ) ?: currentState
+            }
+
             _stateFlow.update {
                 EventDetailUiState.ShowEvent(
-                    event = getEventDetailUseCase(eventId)
+                    event = getEventDetailUseCase(eventId),
+                    isRefreshing = false,
                 )
             }
         }
     }
 
     fun refresh() {
-        loadEvent()
+        loadEvent(isRefreshing = true)
     }
 
     fun primaryAction() {
@@ -95,6 +103,7 @@ internal class EventDetailViewModel @Inject constructor(
             }
         ) {
             subscribedEventsUseCase(eventId)
+            refresh()
             mutableSideEffect.send(SideEffect.SuccessSubscribeEvent)
         }
     }
@@ -108,6 +117,7 @@ internal class EventDetailViewModel @Inject constructor(
             }
         ) {
             unsubscribeForEventUseCase(eventId)
+            refresh()
             mutableSideEffect.send(SideEffect.SuccessUnsubscribeEvent)
         }
     }

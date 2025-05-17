@@ -47,7 +47,6 @@ fun EventDetailRoute(
     ObserveAsEvent(viewModel.sideEffect) { sideEffect ->
         when (sideEffect) {
             SideEffect.SuccessSubscribeEvent -> {
-                viewModel.refresh()
                 snackBarState.show(
                     message = "Вы подписались на событие",
                     type = SnackbarType.Success,

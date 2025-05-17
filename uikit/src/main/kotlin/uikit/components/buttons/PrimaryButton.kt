@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.requiredHeight
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -58,15 +60,17 @@ fun PrimaryButtonWithLoader(
     if (isLoading) {
         Box(
             modifier = Modifier
+                .then(modifier)
                 .fillMaxWidth()
                 .height(space48)
                 .clip(RoundedCornerShape(space10))
                 .background(color)
-                .then(modifier)
         ) {
             CircularProgressIndicator(
                 color = MaterialTheme.colorScheme.onPrimary,
+                strokeWidth = 3.dp,
                 modifier = Modifier
+                    .size(space48 / 2)
                     .align(Alignment.Center)
             )
         }

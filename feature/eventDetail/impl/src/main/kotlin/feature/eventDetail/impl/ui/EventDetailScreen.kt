@@ -106,6 +106,7 @@ internal fun EventDetailScreen(
                 EventActionButtonContainer(
                     eventState = state.event.eventInfo.state,
                     isSubscribed = state.event.eventInfo.subscribed,
+                    isLoading = state.isRefreshing,
                     onClick = actions::onActionClick,
                     modifier = Modifier
                         .padding(space20)

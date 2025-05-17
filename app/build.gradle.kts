@@ -1,3 +1,4 @@
+import com.android.build.gradle.internal.api.BaseVariantOutputImpl
 
 plugins {
     alias(libs.plugins.androidApplication)
@@ -14,6 +15,7 @@ android {
     namespace = "com.example.eventify"
     compileSdk = 35
 
+    // TODO to extention
     defaultConfig {
         applicationId = "com.example.eventify"
         minSdk = 29
@@ -29,6 +31,24 @@ android {
     buildFeatures {
         compose = true
         buildConfig = true
+    }
+
+    buildTypes {
+
+        // TODO to extention
+        applicationVariants.all {
+            val variant = this
+            variant.outputs
+                .map { it as BaseVariantOutputImpl }
+                .forEach { output ->
+                    // Eventify_release_
+                    val buildVariant = variant.buildType.name
+                    val versionCode = variant.versionCode
+                    val versionName = variant.versionName
+                    val outputFileName = ".apk"
+                    output.outputFileName = "Eventify_${buildVariant}_${versionName}.apk"
+                }
+        }
     }
 
     composeOptions {

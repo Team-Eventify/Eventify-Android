@@ -13,6 +13,7 @@ android {
 }
 
 dependencies {
+    // TODO devide between compose and feature plugins
     // Compose
     implementation(libs.androidx.material3)
     implementation(platform(libs.androidx.compose.bom))
