@@ -107,4 +107,6 @@
     <string name="incorrect_otp">Incorrect code</string>
     <string name="subscribe_for_event_action">I will go!</string>
     <string name="unsubscribe_for_event_action">Cancel appointment</string>
+
+    <string name="base">Base</string>
 </resources>

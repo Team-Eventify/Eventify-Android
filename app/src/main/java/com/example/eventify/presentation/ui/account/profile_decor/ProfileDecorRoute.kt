@@ -31,7 +31,8 @@ fun ProfileDecorRoute(navController: NavController) {
     val uiState = ProfileDecorUiState(
         isSystemOrDarkTheme = appThemeManager.getTypeTheme() == TypesTheme.DARK_THEME
             || (appThemeManager.getTypeTheme() == TypesTheme.SYSTEM_THEME && isSystemInDarkTheme()),
-        activeTypeOfTheme = appThemeManager.isDarkTheme.value)
+        activeTypeOfTheme = appThemeManager.isDarkTheme.value,
+        activeTypeOfIconAlias = viewModel.getPreviousAlias())
 
     val listener = object : ProfileDecorRouteListener {
         override fun onBackClick() {

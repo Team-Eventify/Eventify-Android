@@ -7,6 +7,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -36,6 +38,7 @@ import com.example.eventify.presentation.ui.common.SubHeadingText
 import com.example.eventify.presentation.ui.theme.EventifyTheme
 import com.example.eventify.presentation.ui.theme.LocalDimentions
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun ProfileDecorScreen(uiState: ProfileDecorUiState, actions: ProfileDecorRouteListener) {
     val dimmentions = LocalDimentions.current
@@ -116,7 +119,7 @@ fun ProfileDecorScreen(uiState: ProfileDecorUiState, actions: ProfileDecorRouteL
         SubHeadingText(text = stringResource(R.string.icon_logo))
 
 
-        Row(modifier = Modifier
+        FlowRow(modifier = Modifier
             .fillMaxWidth()
             .padding(top = 20.dp),
             horizontalArrangement = Arrangement.SpaceBetween) {
@@ -127,7 +130,7 @@ fun ProfileDecorScreen(uiState: ProfileDecorUiState, actions: ProfileDecorRouteL
                     Image(
                         painter = painterResource(item.icon),
                         contentDescription = null,
-
+                        modifier = Modifier.border(width = 2.dp, color = Color.White)
                         )
                     Text(item.title)
                 }

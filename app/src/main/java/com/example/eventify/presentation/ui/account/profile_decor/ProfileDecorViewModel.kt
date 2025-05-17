@@ -27,8 +27,10 @@ class ProfileDecorViewModel @Inject constructor(
     val sideEffect = mutableSideEffect.receiveAsFlow()
 
 
+    fun getPreviousAlias() = localeStorage.getString("alias_icon", null)
+
     fun updateIcon(icon: LogoIcon) {
-        val prevAlias = localeStorage.getString("alias_icon", null)
+        val prevAlias = getPreviousAlias()
 
         if (!prevAlias.equals(icon.alias)) {
             viewModelScope.launch {
