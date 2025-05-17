@@ -29,8 +29,8 @@ import uikit.components.otp.OtpTextField
 import com.example.eventify.uikit.R as UiKitR
 import uikit.space12
 import uikit.components.TitleText
-import uikit.components.AnnotationText
 import uikit.EventifyTheme
+import uikit.TypographyKit
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -66,8 +66,9 @@ fun RegistrationOtpBottomSheet(
             TitleText(
                 text = stringResource(UiKitR.string.email_confirmation)
             )
-            AnnotationText(
-                text = stringResource(UiKitR.string.otp_description)
+            Text(
+                text = stringResource(UiKitR.string.otp_description),
+                style = TypographyKit.bodyRegular,
             )
             Text(
                 text = otpState.errorMessage.takeIf { !it.isNullOrEmpty() } ?: "",

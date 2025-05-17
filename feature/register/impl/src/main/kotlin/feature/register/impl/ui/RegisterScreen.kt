@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -29,14 +30,12 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import feature.register.api.RegisterListener
 import feature.register.impl.components.RegistrationOtpBottomSheet
 import feature.register.impl.state.OtpState
@@ -44,14 +43,11 @@ import feature.register.impl.state.RegisterPayloadState
 import feature.register.impl.state.RegisterUiState
 import uikit.EventifyTheme
 import uikit.LocalDimentions
-import uikit.components.ActionPrimaryText
-import uikit.components.BodyText
-import uikit.components.DisclaimerText
-import uikit.components.ErrorInputText
+import uikit.TypographyKit
 import uikit.components.PasswordInput
 import uikit.components.TextInput
 import uikit.components.TitleText
-import uikit.components.buttons.PrimaryButton
+import uikit.components.buttons.PrimaryButtonWithLoader
 import com.example.eventify.uikit.R as UiKitR
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -101,8 +97,16 @@ fun RegisterScreen(
             Spacer(modifier = Modifier.height(30.dp))
             TitleText(text = stringResource(UiKitR.string.register))
             Spacer(modifier = Modifier.height(10.dp))
-            BodyText(text = stringResource(UiKitR.string.register_request))
-            BodyText(text = stringResource(UiKitR.string.it_takes_less_then_minute))
+            Text(
+                text = stringResource(UiKitR.string.register_request),
+                style = TypographyKit.bodyRegular,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Text(
+                text = stringResource(UiKitR.string.it_takes_less_then_minute),
+                style = TypographyKit.bodyRegular,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
             Spacer(modifier = Modifier.height(44.dp))
             TextInput(
                 text = state.payloadState.login,
@@ -112,7 +116,7 @@ fun RegisterScreen(
                 isError = state.payloadState.hasLoginError,
                 supportingText = {
                     state.payloadState.loginError?.let {
-                        ErrorInputText(text = it)
+//                        ErrorInputText(text = it)
                     }
                 },
                 modifier = Modifier.focusRequester(focusRequest),
@@ -134,7 +138,7 @@ fun RegisterScreen(
                 isError = state.payloadState.hasPasswordError,
                 supportingText = {
                     state.payloadState.passwordError?.let {
-                        ErrorInputText(text = it)
+//                        ErrorInputText(text = it)
                     }
                 },
                 keyboardOptions = KeyboardOptions(
@@ -148,7 +152,8 @@ fun RegisterScreen(
             )
 
             Spacer(modifier = Modifier.height(30.dp))
-            PrimaryButton(
+            PrimaryButtonWithLoader(
+                text = stringResource(UiKitR.string.register_action),
                 onClick = {
                     if (!state.isOtpRequested) {
                         actions.onRequestOtp(
@@ -157,25 +162,27 @@ fun RegisterScreen(
                         )
                     }
               },
-                enabled = state.payloadState.login.isNotEmpty() && state.payloadState.password.isNotEmpty(),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(
-                    text = stringResource(UiKitR.string.register_action),
-                    lineHeight = 22.sp,
-                    fontSize = 17.sp,
-                    fontWeight = FontWeight.Medium
-                )
-            }
+                isEnabled = state.payloadState.login.isNotEmpty() && state.payloadState.password.isNotEmpty(),
+            )
+
             Spacer(modifier = Modifier.height(20.dp))
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally)
             ) {
-                Text(text = stringResource(UiKitR.string.already_have_account_question))
-                ActionPrimaryText(
+                Text(
+                    text = stringResource(UiKitR.string.already_have_account_question),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    style = TypographyKit.bodyRegular,
+                )
+                Text(
                     text = stringResource(UiKitR.string.login_action),
-                    onClick = actions::navigateToLogIn
+                    style = TypographyKit.action,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier
+                        .clickable {
+                            actions.navigateToLogIn()
+                        },
                 )
             }
 
@@ -187,14 +194,21 @@ fun RegisterScreen(
                 .align(Alignment.BottomCenter)
                 .padding(vertical = 20.dp)
         ) {
-            DisclaimerText(
-                text = stringResource(UiKitR.string.privacy_policy_text)
+            Text(
+                text = stringResource(UiKitR.string.privacy_policy_text),
+                style = TypographyKit.caption,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
 
-            DisclaimerText(
+            Text(
                 text = stringResource(UiKitR.string.privacy_policy_link),
-                textDecoration = TextDecoration.Underline,
-                modifier = Modifier.clickable { actions.goToPrivacyPolicy() }
+                style = TypographyKit.caption.copy(
+                    textDecoration = TextDecoration.Underline,
+                ),
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier
+                    .clickable { actions.goToPrivacyPolicy()
+                    }
             )
         }
 

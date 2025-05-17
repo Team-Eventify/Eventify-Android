@@ -2,6 +2,7 @@ package feature.login.impl.ui
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -35,15 +36,11 @@ import feature.login.api.LoginListener
 import feature.login.impl.state.LogInState
 import uikit.EventifyTheme
 import uikit.LocalDimentions
-import uikit.components.ActionPrimaryText
-import uikit.components.ActionText
-import uikit.components.BodyText
-import uikit.components.ErrorInputText
+import uikit.TypographyKit
 import uikit.components.PasswordInput
-import uikit.components.PrimaryButtonText
 import uikit.components.TextInput
 import uikit.components.TitleText
-import uikit.components.buttons.PrimaryButton
+import uikit.components.buttons.PrimaryButtonWithLoader
 import com.example.eventify.uikit.R as UiKitR
 
 @Composable
@@ -69,8 +66,16 @@ internal fun LogInScreen(
         TitleText(text = stringResource(UiKitR.string.log_in))
         Spacer(modifier = Modifier.height(10.dp))
 
-        BodyText(text = stringResource(UiKitR.string.pleace_login))
-        BodyText(text = stringResource(UiKitR.string.it_takes_less_then_minute))
+        Text(
+            text = stringResource(UiKitR.string.pleace_login),
+            style = TypographyKit.bodyRegular,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        Text(
+            text = stringResource(UiKitR.string.it_takes_less_then_minute),
+            style = TypographyKit.bodyRegular,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
 
         Spacer(modifier = Modifier.height(44.dp))
 
@@ -81,7 +86,7 @@ internal fun LogInScreen(
             isError = state.loginError != null || state.hasLoginError,
             onValueChange = actions::onChangeLogin,
             supportingText = {
-                state.loginError?.let { ErrorInputText(text = it) }
+                state.loginError?.let { }
             },
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Next
@@ -102,7 +107,7 @@ internal fun LogInScreen(
             isError = state.passwordError != null || state.hasPasswordError,
             onValueChange = actions::onChangePassword,
             supportingText = {
-                state.passwordError?.let { ErrorInputText(text = it) }
+                state.passwordError?.let {}
             },
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Done
@@ -113,38 +118,47 @@ internal fun LogInScreen(
                 }
             )
         )
-        ActionText(
+        Text(
             text = stringResource(UiKitR.string.forgot_password),
-            onClick = {
-                actions.navigateToResetPassword(sharedEmail = state.login)
-            },
             textAlign = TextAlign.Right,
-            modifier = Modifier.fillMaxWidth()
+            style = TypographyKit.action,
+            modifier = Modifier
+                .align(Alignment.End)
+                .clickable {
+                    actions.navigateToResetPassword(sharedEmail = state.login)
+                }
         )
         Spacer(modifier = Modifier.height(30.dp))
-        PrimaryButton(
-            enabled = state.isValidForm,
+        PrimaryButtonWithLoader(
+            text = stringResource(UiKitR.string.login_action),
+            isEnabled = state.isValidForm,
+            isLoading = false,
             onClick = {
                 actions.login(
                     login = state.login,
                     password = state.password,
                 )
             },
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            PrimaryButtonText(text = stringResource(UiKitR.string.login_action))
-        }
+        )
+
         Spacer(modifier = Modifier.height(20.dp))
         Row(
             modifier = Modifier
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally)
         ) {
-            Text(text = stringResource(UiKitR.string.no_account_question))
-            ActionPrimaryText(
+            Text(
+                text = stringResource(UiKitR.string.no_account_question),
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Text(
                 text = stringResource(UiKitR.string.register_action),
-                onClick = actions::navigateToRegister
+                style = TypographyKit.action,
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier
+                    .clickable {
+                        actions.navigateToRegister()
+                    }
             )
         }
     }

@@ -8,7 +8,7 @@ import data.remote.models.events.EventsFilterData
 import data.remote.api.EventsAPI
 import data.remote.utils.handle
 
-class EventRepositoryImpl @Inject constructor(
+internal class EventRepositoryImpl @Inject constructor(
     private val dataSource: EventsAPI
 ) : EventsRepository {
     override suspend fun getEventsList(filter: EventsFilterData?): List<Event> {

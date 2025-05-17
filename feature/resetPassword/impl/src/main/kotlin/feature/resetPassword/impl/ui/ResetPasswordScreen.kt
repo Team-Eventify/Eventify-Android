@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -17,9 +18,8 @@ import feature.resetPassword.api.ResetPasswordListener
 import feature.resetPassword.impl.state.UiState
 import uikit.EventifyTheme
 import uikit.LocalDimentions
-import uikit.components.BodyText
+import uikit.TypographyKit
 import uikit.components.TitleText
-import uikit.components.PrimaryButtonText
 import com.example.eventify.uikit.R as UiKitR
 import uikit.components.TextInput
 import uikit.components.buttons.PrimaryButton
@@ -40,8 +40,9 @@ fun ResetPasswordScreen(
         Spacer(modifier = Modifier.height(30.dp))
         TitleText(text = "Сброс пароля")
         Spacer(modifier = Modifier.height(12.dp))
-        BodyText(
-            text = "Укажите email, который вы использовали для создания аккаунта. Мы отправим письмо с сыллкой для сброса пароля."
+        Text(
+            text = "Укажите email, который вы использовали для создания аккаунта. Мы отправим письмо с сыллкой для сброса пароля.",
+            style = TypographyKit.bodyRegular,
         )
         Spacer(modifier = Modifier.height(44.dp))
 
@@ -53,11 +54,10 @@ fun ResetPasswordScreen(
         Spacer(modifier = Modifier.height(22.dp))
 
         PrimaryButton(
+            text = "Отправить",
             onClick = actions::submit,
-            enabled = state.isValidEmail
-        ) {
-            PrimaryButtonText(text = "Отправить")
-        }
+            isEnabled = state.isValidEmail
+        )
     }
 }
 

@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,7 +31,7 @@ import core.common.extentions.asTime
 import data.models.EventState
 import domain.models.ShortEventItem
 import uikit.EventifyTheme
-import uikit.components.EventCardTitle
+import uikit.TypographyKit
 import uikit.components.UpComingEventInfoTag
 import java.util.UUID
 import com.example.eventify.uikit.R as UiKitR
@@ -50,7 +51,7 @@ fun UpComingEventCard(
         onClick = { onClick?.invoke(event.id) },
         modifier = Modifier
             .fillMaxWidth()
-            .height(IntrinsicSize.Min) // Ensures height matches content
+            .height(IntrinsicSize.Min)
             .then(modifier)
     ) {
         Row(
@@ -58,16 +59,16 @@ fun UpComingEventCard(
             modifier = Modifier
                 .fillMaxWidth()
         ) {
-            // Left Column (Event Info)
             Column(
                 verticalArrangement = Arrangement.Center,
                 modifier = Modifier
                     .fillMaxHeight()
-                    .padding(10.dp)// Ensure it fills the container's height
-                    .weight(.6f) // Let this column take 55% of the space
+                    .padding(10.dp)
+                    .weight(.6f)
             ) {
-                EventCardTitle(
+                Text(
                     text = event.title,
+                    style = TypographyKit.bodyMedium,
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 FlowRow(
@@ -87,10 +88,10 @@ fun UpComingEventCard(
             Image(
                 painter = painterResource(UiKitR.drawable.eventify_group_1),
                 contentDescription = null,
-                contentScale = ContentScale.FillHeight, // Adjust to fill the container's height
+                contentScale = ContentScale.FillHeight,
                 modifier = Modifier
-                    .fillMaxHeight() // Ensure the image takes up full height
-                    .weight(0.4f) // Let the image take 45% of the space
+                    .fillMaxHeight()
+                    .weight(0.4f)
             )
         }
     }

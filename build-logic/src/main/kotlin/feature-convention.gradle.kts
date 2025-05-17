@@ -13,6 +13,7 @@ android {
 }
 
 dependencies {
+    // TODO devide between compose and feature plugins
     // Compose
     implementation(libs.androidx.material3)
     implementation(platform(libs.androidx.compose.bom))
@@ -20,6 +21,8 @@ dependencies {
     implementation(libs.androidx.runtime)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.accompanist.swiperefresh)
+    debugImplementation(libs.androidx.ui.tooling)
+
 
 
     // Hilt

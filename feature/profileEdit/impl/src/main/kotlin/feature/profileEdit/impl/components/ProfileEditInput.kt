@@ -13,7 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import uikit.EventifyTheme
-import uikit.components.ErrorInputText
+//import uikit.components.ErrorInputText
 
 @Composable
 fun ProfileEditInput(
@@ -37,9 +37,9 @@ fun ProfileEditInput(
         prefix = { Text(prefix ?: "") },
         supportingText = {
             supportingText?.let {
-                ErrorInputText(
-                    text = it
-                )
+//                ErrorInputText(
+//                    text = it
+//                )
             }
         },
         shape = RoundedCornerShape(10.dp),
