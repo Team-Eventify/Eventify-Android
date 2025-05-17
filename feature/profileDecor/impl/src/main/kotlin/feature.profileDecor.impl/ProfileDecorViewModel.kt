@@ -33,7 +33,7 @@ class ProfileDecorViewModel @Inject constructor(
         if (!prevAlias.equals(icon.alias)) {
             viewModelScope.launch {
                 try {
-                    var result = "${context.packageName}.presentation.MainActivity"
+                    var result = "${context.packageName}.ui.MainActivity"
                     if (prevAlias != null) result = "${context.packageName}${prevAlias}"
 
                     context.packageManager.setComponentEnabledSetting(
