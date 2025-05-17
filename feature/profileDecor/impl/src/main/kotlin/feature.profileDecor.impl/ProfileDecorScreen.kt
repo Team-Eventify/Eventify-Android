@@ -30,16 +30,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.eventify.R
+import com.example.eventify.feature.profileDecor.impl.R as Rdecor
+import com.example.eventify.uikit.R as UiKitR
 import com.example.eventify.presentation.models.LogoIcon
 import com.example.eventify.presentation.ui.account.profile_decor.components.IconThemeComponent
 import com.example.eventify.presentation.ui.account.profile_decor.state.ProfileDecorRouteListener
 import com.example.eventify.presentation.ui.account.profile_decor.state.ProfileDecorUiState
 import com.example.eventify.presentation.ui.account.profile_decor.state.TypesTheme
-import com.example.eventify.presentation.ui.common.BodyText
-import com.example.eventify.presentation.ui.common.SubHeadingText
-import com.example.eventify.presentation.ui.theme.EventifyTheme
-import com.example.eventify.presentation.ui.theme.LocalDimentions
+import uikit.EventifyTheme
+import uikit.LocalDimentions
+import uikit.components.SubHeadingText
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -49,7 +49,7 @@ fun ProfileDecorScreen(uiState: ProfileDecorUiState, actions: ProfileDecorRouteL
     Column(modifier = Modifier
         .fillMaxSize()
         .padding(dimmentions.windowPaddings)) {
-        SubHeadingText(text = stringResource(R.string.theme_title))
+        SubHeadingText(text = stringResource(UiKitR.string.theme_title))
         Spacer(modifier = Modifier
             .height(10.dp),)
         Row(modifier = Modifier
@@ -57,27 +57,27 @@ fun ProfileDecorScreen(uiState: ProfileDecorUiState, actions: ProfileDecorRouteL
             horizontalArrangement = Arrangement.SpaceBetween) {
             IconThemeComponent(isActiveTheme = uiState.activeTypeOfTheme == null,
                 isSystemOrDarkTheme = uiState.isSystemOrDarkTheme,
-                iconTheme = R.drawable.circle_lefthalf_filled,
-                titleTheme = R.string.system_theme_ttile,
+                iconTheme = UiKitR.drawable.circle_lefthalf_filled,
+                titleTheme = UiKitR.string.system_theme_ttile,
                 activeColor = Color.White,
                 changeTheme = { actions.changeTheme(TypesTheme.SYSTEM_THEME) })
             IconThemeComponent(isActiveTheme = uiState.activeTypeOfTheme == false,
                 isSystemOrDarkTheme = uiState.isSystemOrDarkTheme,
-                iconTheme = R.drawable.sun_max_fill,
-                titleTheme = R.string.light_theme_title,
+                iconTheme = UiKitR.drawable.sun_max_fill,
+                titleTheme = UiKitR.string.light_theme_title,
                 activeColor = Color.Black,
                 changeTheme = { actions.changeTheme(TypesTheme.LIGHT_THEME) })
             IconThemeComponent(isActiveTheme = uiState.activeTypeOfTheme == true,
                 isSystemOrDarkTheme = uiState.isSystemOrDarkTheme,
-                iconTheme = R.drawable.moon_fill,
-                titleTheme = R.string.dark_theme_title,
+                iconTheme = UiKitR.drawable.moon_fill,
+                titleTheme = UiKitR.string.dark_theme_title,
                 activeColor = Color.White,
                 changeTheme = { actions.changeTheme(TypesTheme.DARK_THEME) })
         }
         HorizontalDivider(modifier = Modifier
             .padding(vertical=20.dp),)
 
-        SubHeadingText(text = stringResource(R.string.icon_logo))
+        SubHeadingText(text = stringResource(UiKitR.string.icon_logo))
 
 
         FlowRow(modifier = Modifier

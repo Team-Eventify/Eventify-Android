@@ -2,14 +2,14 @@ package com.example.eventify.presentation.ui.account.profile_decor
 
 import android.content.ComponentName
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.eventify.data.storages.LocaleStorage
-import com.example.eventify.data.storages.SharedStorage
 import com.example.eventify.presentation.models.LogoIcon
 import com.example.eventify.presentation.ui.account.profile_decor.state.SideEffect
+import core.common.BaseViewModel
+import core.common.storages.LocaleStorage
+import core.common.storages.SharedStorage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.channels.Channel
@@ -22,7 +22,7 @@ import javax.inject.Inject
 class ProfileDecorViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     @SharedStorage private val localeStorage: LocaleStorage
-): ViewModel() {
+): BaseViewModel() {
     private val mutableSideEffect = Channel<SideEffect>()
     val sideEffect = mutableSideEffect.receiveAsFlow()
 
