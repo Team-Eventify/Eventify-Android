@@ -31,6 +31,81 @@
 
             </intent-filter>
         </activity>
+        <activity-alias
+            android:name=".alias.icon_logo_1"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:enabled="false"
+            android:label="@string/app_name"
+            android:icon="@mipmap/ic_launcher"
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:theme="@style/Theme.SplashScreen.Logo1"
+            android:targetActivity=".presentation.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+        <activity-alias
+            android:name=".alias.icon_logo_2"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:enabled="false"
+            android:label="@string/app_name"
+            android:icon="@mipmap/icon_logo_2"
+            android:roundIcon="@mipmap/icon_logo_2_round"
+            android:theme="@style/Theme.SplashScreen.Logo2"
+            android:targetActivity=".presentation.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+        <activity-alias
+            android:name=".alias.icon_logo_3"
+            android:exported="true"
+            android:enabled="false"
+            android:icon="@mipmap/icon_logo_3"
+            android:roundIcon="@mipmap/icon_logo_3_round"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.SplashScreen.Logo3"
+            android:targetActivity=".presentation.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+        <activity-alias
+            android:name=".alias.icon_logo_4"
+            android:exported="true"
+            android:enabled="false"
+            android:icon="@mipmap/icon_logo_4"
+            android:roundIcon="@mipmap/icon_logo_4_round"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.SplashScreen.Logo4"
+            android:targetActivity=".presentation.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+        <activity-alias
+            android:name=".alias.icon_logo_5"
+            android:exported="true"
+            android:enabled="false"
+            android:icon="@mipmap/icon_logo_5"
+            android:roundIcon="@mipmap/icon_logo_5_round"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.SplashScreen.Logo5"
+            android:targetActivity=".presentation.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
         <service
             android:name="com.example.eventify.services.FirebaseNotificationService"
             android:enabled="true"
@@ -41,6 +116,5 @@
         </service>
         <service android:name="io.appmetrica.analytics.push.provider.firebase.AppMetricaMessagingService" tools:node="remove"/>
     </application>
-
 
 </manifest>
