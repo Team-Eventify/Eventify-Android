@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -23,6 +24,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -58,9 +60,11 @@ fun ProfileDecorScreen(uiState: ProfileDecorUiState, actions: ProfileDecorRouteL
                 .padding(5.dp)
                 .border(width = 2.dp,
                 color = if (uiState.activeTypeOfTheme == null) Color.White else Color.Gray,
-                shape = RoundedCornerShape(16.dp)).clickable { actions.changeTheme(TypesTheme.SYSTEM_THEME)
+                shape = RoundedCornerShape(16.dp))
+                .clickable { actions.changeTheme(TypesTheme.SYSTEM_THEME)
                 },) {
-                Column(modifier = Modifier.padding(vertical=15.dp, horizontal=20.dp),) {
+                Column(modifier = Modifier
+                    .padding(vertical=15.dp, horizontal=20.dp),) {
                     Icon(
                         painter = painterResource(R.drawable.circle_lefthalf_filled),
                         contentDescription = null,
@@ -124,13 +128,27 @@ fun ProfileDecorScreen(uiState: ProfileDecorUiState, actions: ProfileDecorRouteL
             .padding(top = 20.dp),
             horizontalArrangement = Arrangement.SpaceBetween) {
             uiState.listIcons.forEach { item ->
-                Column(modifier = Modifier.clickable {
+                Column(modifier = Modifier
+                    .clickable {
                     actions.changeIcon(item)
                 }){
                     Image(
                         painter = painterResource(item.icon),
                         contentDescription = null,
-                        modifier = Modifier.border(width = 2.dp, color = Color.White)
+                        modifier = Modifier
+                            .padding(3.dp)
+                            .border(1.dp,
+                                if (item.alias == uiState.activeTypeOfIconAlias) Color(0xFF74F6A7)
+                                else Color.Transparent,
+                                RoundedCornerShape(size = 20.dp),
+                                )
+                            .padding(3.dp)
+                            .border(1.dp,
+                                if (item.alias == uiState.activeTypeOfIconAlias) Color.Black
+                                else Color.Transparent,
+                                RoundedCornerShape(size = 20.dp),
+                                )
+                            .clip(RoundedCornerShape(size = 20.dp))
                         )
                     Text(item.title)
                 }
