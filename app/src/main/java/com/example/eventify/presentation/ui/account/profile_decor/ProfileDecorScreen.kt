@@ -32,6 +32,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.eventify.R
 import com.example.eventify.presentation.models.LogoIcon
+import com.example.eventify.presentation.ui.account.profile_decor.components.IconThemeComponent
 import com.example.eventify.presentation.ui.account.profile_decor.state.ProfileDecorRouteListener
 import com.example.eventify.presentation.ui.account.profile_decor.state.ProfileDecorUiState
 import com.example.eventify.presentation.ui.account.profile_decor.state.TypesTheme
@@ -54,68 +55,24 @@ fun ProfileDecorScreen(uiState: ProfileDecorUiState, actions: ProfileDecorRouteL
         Row(modifier = Modifier
             .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween) {
-            Box(modifier = Modifier
-                .width(120.dp)
-                .height(120.dp)
-                .padding(5.dp)
-                .border(width = 2.dp,
-                color = if (uiState.activeTypeOfTheme == null) Color.White else Color.Gray,
-                shape = RoundedCornerShape(16.dp))
-                .clickable { actions.changeTheme(TypesTheme.SYSTEM_THEME)
-                },) {
-                Column(modifier = Modifier
-                    .padding(vertical=15.dp, horizontal=20.dp),) {
-                    Icon(
-                        painter = painterResource(R.drawable.circle_lefthalf_filled),
-                        contentDescription = null,
-                        tint = if (uiState.isSystemOrDarkTheme) Color.White else Color.Black,
-                    )
-                    Spacer(modifier = Modifier.height(20.dp))
-                    BodyText(text = stringResource(R.string.system_theme_ttile))
-                }
-            }
-            Box(modifier = Modifier
-                .width(120.dp)
-                .height(120.dp)
-                .padding(5.dp)
-                .border(width = 2.dp,
-                color = if (uiState.activeTypeOfTheme == false) Color.Black else Color.Gray,
-                shape = RoundedCornerShape(16.dp))
-                .clickable { actions.changeTheme(TypesTheme.LIGHT_THEME) },) {
-                Column(
-                    modifier = Modifier
-                        .padding(vertical = 15.dp, horizontal = 20.dp),) {
-                    Icon(
-                        painter = painterResource(R.drawable.sun_max_fill),
-                        contentDescription = null,
-                        tint = if (uiState.isSystemOrDarkTheme) Color.White else Color.Black
-                    )
-                    Spacer(modifier = Modifier
-                        .height(20.dp),)
-                    BodyText(text = stringResource(R.string.light_theme_title))
-                }
-            }
-            Box(modifier = Modifier
-                .width(120.dp)
-                .height(120.dp)
-                .padding(5.dp)
-                .border(width = 2.dp,
-                color = if (uiState.activeTypeOfTheme == true) Color.White else Color.Gray,
-                    shape = RoundedCornerShape(16.dp))
-                .clickable { actions.changeTheme(TypesTheme.DARK_THEME)  }) {
-                Column(
-                    modifier = Modifier
-                        .padding(vertical = 15.dp, horizontal = 20.dp),) {
-                    Icon(
-                        painter = painterResource(R.drawable.moon_fill),
-                        contentDescription = null,
-                        tint = if (uiState.isSystemOrDarkTheme) Color.White else Color.Black
-                    )
-                    Spacer(modifier = Modifier
-                        .height(20.dp),)
-                    BodyText(text = stringResource(R.string.dark_theme_title))
-                }
-            }
+            IconThemeComponent(isActiveTheme = uiState.activeTypeOfTheme == null,
+                isSystemOrDarkTheme = uiState.isSystemOrDarkTheme,
+                iconTheme = R.drawable.circle_lefthalf_filled,
+                titleTheme = R.string.system_theme_ttile,
+                activeColor = Color.White,
+                changeTheme = { actions.changeTheme(TypesTheme.SYSTEM_THEME) })
+            IconThemeComponent(isActiveTheme = uiState.activeTypeOfTheme == false,
+                isSystemOrDarkTheme = uiState.isSystemOrDarkTheme,
+                iconTheme = R.drawable.sun_max_fill,
+                titleTheme = R.string.light_theme_title,
+                activeColor = Color.Black,
+                changeTheme = { actions.changeTheme(TypesTheme.LIGHT_THEME) })
+            IconThemeComponent(isActiveTheme = uiState.activeTypeOfTheme == true,
+                isSystemOrDarkTheme = uiState.isSystemOrDarkTheme,
+                iconTheme = R.drawable.moon_fill,
+                titleTheme = R.string.dark_theme_title,
+                activeColor = Color.White,
+                changeTheme = { actions.changeTheme(TypesTheme.DARK_THEME) })
         }
         HorizontalDivider(modifier = Modifier
             .padding(vertical=20.dp),)
@@ -150,7 +107,7 @@ fun ProfileDecorScreen(uiState: ProfileDecorUiState, actions: ProfileDecorRouteL
                                 )
                             .clip(RoundedCornerShape(size = 20.dp))
                         )
-                    Text(item.title)
+                    Text(stringResource(item.titleRes))
                 }
             }
         }

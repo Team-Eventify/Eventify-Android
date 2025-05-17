@@ -1,7 +1,9 @@
 package com.example.eventify.presentation.models
 
+import androidx.annotation.StringRes
+
 data class LogoIcon(
-    val title: String,
+    @StringRes val titleRes: Int,
     val icon: Int,
     val alias: String
-);
+)
