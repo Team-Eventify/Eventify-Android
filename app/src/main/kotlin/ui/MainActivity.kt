@@ -104,6 +104,7 @@ class MainActivity : ComponentActivity() {
                     connectionState === NetworkConnectionState.Available
                 }
             }
+            val appThemeState = rememberAppTheme(localeStorage)
 
             val startDist = remember {
                 getStartDis()
@@ -145,6 +146,8 @@ class MainActivity : ComponentActivity() {
                     LocalTopBarState provides topBarState,
                     LocalFeaturesProvider provides application.featuresProvider,
                     LocalSnackbarState provides snackbarHostState,
+                    LocalAppThemeState provides appThemeState,
+
                 ) {
                 LaunchedEffect(Unit) {
                     enableEdgeToEdge(
