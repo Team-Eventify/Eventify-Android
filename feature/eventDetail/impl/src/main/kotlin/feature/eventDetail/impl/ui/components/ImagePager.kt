@@ -1,4 +1,4 @@
-package feature.eventDetail.impl.components
+package feature.eventDetail.impl.ui.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues

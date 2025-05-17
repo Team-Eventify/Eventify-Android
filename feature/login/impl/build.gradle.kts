@@ -14,10 +14,10 @@ android {
 dependencies {
 //    kapt(libs.hilt.android.compiler)
 
-    implementation(project(":feature:login:api"))
-    implementation(project(":feature:register:api"))
-    implementation(project(":feature:resetPassword:api"))
-    implementation(project(":feature:eventFeed:api"))
+    api(project(":feature:login:api"))
+    api(project(":feature:register:api"))
+    api(project(":feature:resetPassword:api"))
+    api(project(":feature:eventFeed:api"))
 
     // Hilt
     implementation(libs.hilt.android)

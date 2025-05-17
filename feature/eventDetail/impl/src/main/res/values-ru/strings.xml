@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <string name="event_finished">Событие завершено</string>
+    <string name="event_unavailable">Событие недоступно</string>
+    <string name="successful_subscribe">Successful subscribe</string>
+    <string name="failed_subscribe">Failed subscribe</string>
+    <string name="successful_unsubscribe">Successful unsubscribe</string>
+    <string name="failed_unsubscribe">Failed unsubscribe</string>
 </resources>

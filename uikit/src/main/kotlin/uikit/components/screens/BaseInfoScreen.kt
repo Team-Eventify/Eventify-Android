@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import uikit.components.AnnotationText
+import uikit.TypographyKit
 
 @Composable
 fun BaseInfoScreen(
@@ -44,9 +44,10 @@ fun BaseInfoScreen(
             fontSize = 20.sp
         )
         description?.let {
-            AnnotationText(
+            Text(
                 text = it,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                style = TypographyKit.bodyRegular,
             )
         }
 

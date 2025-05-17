@@ -16,7 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import uikit.EventifyTheme
-import uikit.components.AnnotationText
+import uikit.TypographyKit
 import com.example.eventify.uikit.R as UiKitR
 
 
@@ -45,7 +45,10 @@ fun DeleteAccountDialog(
             )
         },
         text = {
-            AnnotationText(text = "Аккаунт будет удален перманентно. Вы не сможете его воссатновить.")
+            Text(
+                text = "Аккаунт будет удален перманентно. Вы не сможете его воссатновить.",
+                style = TypographyKit.bodyRegular,
+            )
         },
         confirmButton = {
             TextButton(

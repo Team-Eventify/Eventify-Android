@@ -1,4 +1,4 @@
-package feature.eventDetail.impl.components
+package feature.eventDetail.impl.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

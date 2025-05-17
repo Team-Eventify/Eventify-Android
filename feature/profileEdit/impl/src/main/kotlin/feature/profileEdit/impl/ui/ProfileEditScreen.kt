@@ -9,6 +9,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -27,12 +28,10 @@ import feature.profileEdit.impl.components.ProfileEditInput
 import feature.profileEdit.impl.state.UiState
 import uikit.EventifyTheme
 import uikit.LocalDimentions
-import uikit.components.AnnotationText
+import uikit.TypographyKit
 import uikit.components.ImportantActionSettingsItem
-import uikit.components.PrimaryButtonText
 import uikit.components.SettingsBlock
-import uikit.components.SubHeadingText
-import uikit.components.buttons.PrimaryButton
+import uikit.components.buttons.PrimaryButtonWithLoader
 import kotlin.random.Random
 import com.example.eventify.uikit.R as UiKitR
 
@@ -66,7 +65,10 @@ fun ProfileEditScreen(
             .padding(dimmentions.windowPaddings)
             .verticalScroll(scrollState)
     ) {
-        SubHeadingText(stringResource(UiKitR.string.first_name))
+        Text(
+            text = stringResource(UiKitR.string.first_name),
+            style = TypographyKit.bodyMedium
+        )
         ProfileEditInput(
             text = state.firstName,
             onChange = actions::onChangeFirstName,
@@ -74,7 +76,10 @@ fun ProfileEditScreen(
 //                .shimmer(showShimmer = state.isLoading)
         )
 
-        SubHeadingText(stringResource(UiKitR.string.last_name))
+        Text(
+            text = stringResource(UiKitR.string.last_name),
+            style = TypographyKit.bodyMedium,
+        )
         ProfileEditInput(
             text = state.lastName,
             onChange = actions::onChangeLastName,
@@ -82,7 +87,10 @@ fun ProfileEditScreen(
 //                .shimmer(showShimmer = state.isLoading)
         )
 
-        SubHeadingText(stringResource(UiKitR.string.email))
+        Text(
+            text = stringResource(UiKitR.string.email),
+            style = TypographyKit.bodyMedium,
+        )
         ProfileEditInput(
             text = state.email,
             onChange = actions::onChangeEmail,
@@ -92,7 +100,10 @@ fun ProfileEditScreen(
 //                .shimmer(showShimmer = state.isLoading)
         )
 
-        SubHeadingText(stringResource(UiKitR.string.telegram))
+        Text(
+            text = stringResource(UiKitR.string.telegram),
+            style = TypographyKit.bodyMedium,
+        )
         ProfileEditInput(
             text = state.telegramName,
             onChange = actions::onChangeTelegram,
@@ -103,8 +114,14 @@ fun ProfileEditScreen(
 //                .shimmer(showShimmer = state.isLoading)
         )
 
-        SubHeadingText(stringResource(UiKitR.string.my_categories))
-        AnnotationText(text = "Выбирай категории ивентов под свои интересы!")
+        Text(
+            text = stringResource(UiKitR.string.my_categories),
+            style = TypographyKit.bodyMedium,
+        )
+        Text(
+            text = "Выбирай категории ивентов под свои интересы!",
+            style = TypographyKit.bodyRegular,
+        )
         CategorySelector(
             categories = state.categoryItems,
             onClickCategory = actions::onChangeCategoryFilterActive,
@@ -121,10 +138,10 @@ fun ProfileEditScreen(
             )
         }
 
-        PrimaryButton(onClick = actions::onSubmit) {
-            PrimaryButtonText(text = stringResource(UiKitR.string.save))
-        }
-
+        PrimaryButtonWithLoader(
+            onClick = actions::onSubmit,
+            text = stringResource(UiKitR.string.save)
+        )
     }
 }
 

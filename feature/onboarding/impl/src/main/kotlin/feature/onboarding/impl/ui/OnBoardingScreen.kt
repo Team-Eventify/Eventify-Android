@@ -19,15 +19,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import feature.onboarding.api.OnBoardingListener
 import feature.onboarding.impl.state.OnBoardingItem
 import uikit.EventifyTheme
 import uikit.LocalDimentions
-import uikit.components.PrimaryButtonText
+import uikit.TypographyKit
 import uikit.components.TitleText
 import uikit.components.buttons.PrimaryButton
 import com.example.eventify.uikit.R as UiKitR
@@ -102,13 +100,13 @@ fun OnBoardingScreen(
                 Column {
                     Text(
                         text = item.title,
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold,
-                        )
+                        style = TypographyKit.bodyMedium
+                    )
                     Text(
                         text=item.body,
-                        fontSize = 16.sp,
-                        color = Color.White.copy(alpha = 0.5f)
+                        style = TypographyKit.bodyRegular.copy(
+                            color = Color.White.copy(alpha = 0.5f),
+                        )
                     )
                 }
             }
@@ -118,12 +116,9 @@ fun OnBoardingScreen(
                 .weight(1f)
         )
         PrimaryButton(
+            text = stringResource(UiKitR.string.next),
             onClick = actions::flowNext,
-        ) {
-            PrimaryButtonText(
-                text = stringResource(UiKitR.string.next),
-            )
-        }
+        )
     }
 }
 

@@ -2,10 +2,11 @@ package feature.eventDetail.impl.ui
 
 import android.annotation.SuppressLint
 import android.content.res.Configuration
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,6 +28,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
@@ -39,15 +41,16 @@ import data.models.Category
 import data.models.EventDetail
 import data.models.EventState
 import data.models.Organization
+import domain.extentions.isSubscribeEnabled
 import domain.models.FullEventDetail
 import feature.eventDetail.api.EventDetailListener
-import feature.eventDetail.impl.components.EventActionButton
-import feature.eventDetail.impl.components.ImagePager
-import feature.eventDetail.impl.components.OrganizationInfoPanel
+import feature.eventDetail.impl.ui.components.EventActionButtonContainer
+import feature.eventDetail.impl.ui.components.ImagePager
+import feature.eventDetail.impl.ui.components.OrganizationInfoPanel
 import feature.eventDetail.impl.state.EventDetailUiState
 import uikit.EventifyTheme
 import uikit.LocalDimentions
-import uikit.components.BodyText
+import uikit.TypographyKit
 import uikit.components.CategoryTagChip
 import uikit.components.ChipInfo
 import uikit.components.EventImage
@@ -55,12 +58,13 @@ import uikit.components.topBar.LocalTopBarState
 import uikit.components.topBar.TopBarAction
 import uikit.components.topBar.TopBarSize
 import uikit.components.topBar.TopBarState
+import uikit.space10
+import uikit.space20
 import uikit.utils.conditional
 import java.util.UUID
 import com.example.eventify.uikit.R as UiKitR
 
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun EventDetailScreen(
     state: EventDetailUiState.ShowEvent,
@@ -70,6 +74,9 @@ internal fun EventDetailScreen(
     val dimmentions = LocalDimentions.current
     val topBarState = LocalTopBarState.current
     var isShowFullSizeImage by remember { mutableStateOf(false) }
+    val subscribeEnabled = remember {
+        state.event.eventInfo.state.isSubscribeEnabled()
+    }
 
 
     LaunchedEffect(Unit) {
@@ -85,70 +92,92 @@ internal fun EventDetailScreen(
         )
     }
 
-    Column(
-        modifier = Modifier
-            .verticalScroll(rememberScrollState())
-    ) {
-
-        ImagePager(
-            pagerState = pagerState,
-            key = state.event.eventInfo.pictures::get
-        ){ page ->
-            EventImage(
-                uri = state.event.eventInfo.pictures[page],
+    Scaffold(
+        bottomBar = {
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .conditional(!isShowFullSizeImage) {
-                        height(200.dp)
-                    }
-                    .clip(RoundedCornerShape(10.dp))
-                    .clickable {
-                        isShowFullSizeImage = !isShowFullSizeImage
-                    }
-            )
+                    .background(
+                        Brush.verticalGradient(
+                            0.0f to MaterialTheme.colorScheme.background.copy(alpha = 0f),
+                            1.0f to MaterialTheme.colorScheme.background,
+                        ))
+            ){
+                EventActionButtonContainer(
+                    eventState = state.event.eventInfo.state,
+                    isSubscribed = state.event.eventInfo.subscribed,
+                    isLoading = state.isRefreshing,
+                    onClick = actions::onActionClick,
+                    modifier = Modifier
+                        .padding(space20)
+                )
+            }
         }
+    ) { paddings ->
         Column(
-            modifier = Modifier.padding(dimmentions.windowPaddings)
+            modifier = Modifier
+                .verticalScroll(rememberScrollState())
+                .padding(bottom = paddings.calculateBottomPadding())
         ) {
 
-            FlowRow(
-                horizontalArrangement = Arrangement.spacedBy(10.dp, alignment = Alignment.Start)
-            ) {
-                ChipInfo(text = state.event.eventInfo.start.asDate())
-                ChipInfo(text = state.event.eventInfo.start.asTime())
-                ChipInfo(text = state.event.eventInfo.location)
-
-                state.event.categories.forEach{ tag ->
-                    CategoryTagChip(
-                        text = tag.title,
-                        color = tag.color.toColorOrNull()!!
-                    )
-                }
+            ImagePager(
+                pagerState = pagerState,
+                key = state.event.eventInfo.pictures::get
+            ){ page ->
+                EventImage(
+                    uri = state.event.eventInfo.pictures[page],
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .conditional(!isShowFullSizeImage) {
+                            height(200.dp)
+                        }
+                        .clip(RoundedCornerShape(10.dp))
+                        .clickable {
+                            isShowFullSizeImage = !isShowFullSizeImage
+                        }
+                )
             }
+            Column(
+                modifier = Modifier.padding(dimmentions.windowPaddings)
+            ) {
 
-            BodyText(text = state.event.eventInfo.description)
-            Spacer(modifier = Modifier.height(10.dp))
+                FlowRow(
+                    horizontalArrangement = Arrangement.spacedBy(10.dp, alignment = Alignment.Start)
+                ) {
+                    ChipInfo(text = state.event.eventInfo.start.asDate())
+                    ChipInfo(text = state.event.eventInfo.start.asTime())
+                    ChipInfo(text = state.event.eventInfo.location)
+
+                    state.event.categories.forEach{ tag ->
+                        CategoryTagChip(
+                            text = tag.title,
+                            color = tag.color.toColorOrNull()!!
+                        )
+                    }
+                }
+
+                Text(
+                    text = state.event.eventInfo.description,
+                    style = TypographyKit.bodyRegular
+                )
+                Spacer(modifier = Modifier.height(10.dp))
 
 
-            Text(
-                text = stringResource(UiKitR.string.organizer),
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                fontSize = 12.sp
-            )
-            Spacer(modifier = Modifier.height(10.dp))
-            OrganizationInfoPanel(
-                organization = state.event.organization,
-                onClick = {},
-            )
-            Spacer(modifier = Modifier.height(20.dp))
-
-            EventActionButton(
-                eventState = state.event.eventInfo.state,
-                isSubscribed = state.event.eventInfo.subscribed,
-                onClick = actions::onActionClick
-            )
+                Text(
+                    text = stringResource(UiKitR.string.organizer),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    style = TypographyKit.caption,
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+                OrganizationInfoPanel(
+                    organization = state.event.organization,
+                    onClick = {},
+                )
+            }
         }
     }
+
+
 }
 
 
@@ -197,6 +226,7 @@ private fun EventDetailScreenLightPreview() {
                     override fun navigateUp() = Unit
                     override fun onActionClick() = Unit
                     override fun goToRatePage() = Unit
+                    override fun refresh() = Unit
                 },
             )
         }

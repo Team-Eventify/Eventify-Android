@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.eventify.uikit.R
+import uikit.TypographyKit
 
 @Composable
 fun SettingsBlock(
@@ -69,22 +70,7 @@ fun BaseSettingsItem(
     }
 }
 
-@Composable
-fun SettingsItemText(
-    text: String,
-    color: Color = MaterialTheme.colorScheme.onSurface
-) {
-    Text(text = text, color = color)
-}
 
-@Composable
-fun SupportingSettingsItemText(
-    text: String
-) {
-    AnnotationText(
-        text = text
-    )
-}
 
 @Composable
 fun NavigationSettingsItem(
@@ -95,9 +81,15 @@ fun NavigationSettingsItem(
     BaseSettingsItem(
         content = {
             Column {
-                SettingsItemText(text = text)
+                Text(
+                    text = text,
+                    style = TypographyKit.bodyRegular
+                )
                 supportingText?.let {
-                    SupportingSettingsItemText(text = it)
+                    Text(
+                        text = supportingText,
+                        style = TypographyKit.caption,
+                    )
                 }
             }
         },
@@ -115,7 +107,10 @@ fun ActionSettingsItem(
 ) {
     BaseSettingsItem(
         content = {
-            SettingsItemText(text)
+            Text(
+                text = text,
+                style = TypographyKit.bodyRegular
+            )
         },
         onClick = onClick
     )
@@ -128,7 +123,11 @@ fun ImportantActionSettingsItem(
 ) {
     BaseSettingsItem(
         content = {
-            SettingsItemText(text, color = MaterialTheme.colorScheme.error)
+            Text(
+                text = text,
+                style = TypographyKit.bodyRegular,
+                color = MaterialTheme.colorScheme.error,
+            )
         },
         onClick = onClick
     )

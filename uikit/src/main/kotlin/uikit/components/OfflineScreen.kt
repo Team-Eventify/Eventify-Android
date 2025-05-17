@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import uikit.EventifyTheme
+import uikit.TypographyKit
 import uikit.components.buttons.UpdateStatusButton
 import com.example.eventify.uikit.R as UiKitR
 
@@ -45,8 +46,9 @@ fun OfflineScreen(
                 fontWeight = FontWeight.SemiBold
             )
 
-            AnnotationText(
+            Text(
                 text = message,
+                style = TypographyKit.caption,
             )
 
             UpdateStatusButton(

@@ -1,3 +1,4 @@
+
 plugins {
     id("android-common-convention")
     alias(libs.plugins.compose.compiler)
@@ -17,5 +18,7 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.coil3.coil.compose)
     implementation(libs.accompanist.swiperefresh)
+    debugImplementation(libs.androidx.ui.tooling)
+
 
 }

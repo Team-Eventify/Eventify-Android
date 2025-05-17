@@ -9,6 +9,7 @@ internal sealed class EventDetailUiState {
         val message: String,
     ) : EventDetailUiState()
     data class ShowEvent(
+        val isRefreshing: Boolean = false,
         val event: FullEventDetail,
     ) : EventDetailUiState()
 }
