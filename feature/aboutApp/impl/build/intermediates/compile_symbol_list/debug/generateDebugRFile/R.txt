@@ -1,0 +1,1 @@
+int string about_us 0x0

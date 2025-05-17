@@ -1,0 +1,2 @@
+com.example.eventify.feature.aboutApp.impl
+string about_us

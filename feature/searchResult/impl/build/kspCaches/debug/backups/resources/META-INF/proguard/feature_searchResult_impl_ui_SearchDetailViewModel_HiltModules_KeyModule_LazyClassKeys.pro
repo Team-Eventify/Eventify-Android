@@ -1,0 +1,1 @@
+-keep,allowobfuscation,allowshrinking class feature.searchResult.impl.ui.SearchDetailViewModel

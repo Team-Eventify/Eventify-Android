@@ -1,0 +1,1 @@
+-keep,allowobfuscation,allowshrinking class feature.onboarding.impl.OnBoardingViewModel

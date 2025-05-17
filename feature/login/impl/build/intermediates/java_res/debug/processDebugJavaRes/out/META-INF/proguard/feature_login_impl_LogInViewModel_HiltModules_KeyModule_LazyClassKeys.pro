@@ -1,0 +1,1 @@
+-keep,allowobfuscation,allowshrinking class feature.login.impl.LogInViewModel

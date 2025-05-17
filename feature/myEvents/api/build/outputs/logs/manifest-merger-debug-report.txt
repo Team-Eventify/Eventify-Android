@@ -1,0 +1,16 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/macbook/AndroidStudioProjects/Eventify-Android/feature/myEvents/api/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest16294963604924085624.xml:2:13-83
+INJECTED from /Users/macbook/AndroidStudioProjects/Eventify-Android/feature/myEvents/api/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest16294963604924085624.xml:2:13-83
+	package
+		INJECTED from /Users/macbook/AndroidStudioProjects/Eventify-Android/feature/myEvents/api/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest16294963604924085624.xml
+	xmlns:android
+		ADDED from /Users/macbook/AndroidStudioProjects/Eventify-Android/feature/myEvents/api/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest16294963604924085624.xml:2:23-81
+uses-sdk
+INJECTED from /Users/macbook/AndroidStudioProjects/Eventify-Android/feature/myEvents/api/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest16294963604924085624.xml reason: use-sdk injection requested
+INJECTED from /Users/macbook/AndroidStudioProjects/Eventify-Android/feature/myEvents/api/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest16294963604924085624.xml
+INJECTED from /Users/macbook/AndroidStudioProjects/Eventify-Android/feature/myEvents/api/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest16294963604924085624.xml
+	android:targetSdkVersion
+		INJECTED from /Users/macbook/AndroidStudioProjects/Eventify-Android/feature/myEvents/api/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest16294963604924085624.xml
+	android:minSdkVersion
+		INJECTED from /Users/macbook/AndroidStudioProjects/Eventify-Android/feature/myEvents/api/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest16294963604924085624.xml

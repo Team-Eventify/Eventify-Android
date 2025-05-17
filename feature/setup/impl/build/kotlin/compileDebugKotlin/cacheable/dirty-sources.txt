@@ -1,0 +1,4 @@
+/Users/macbook/AndroidStudioProjects/Eventify-Android/feature/setup/impl/src/main/kotlin/feature/setup/impl/SetUpEntryImpl.kt
+/Users/macbook/AndroidStudioProjects/Eventify-Android/feature/setup/impl/src/main/kotlin/feature/setup/impl/SetUpModule.kt
+/Users/macbook/AndroidStudioProjects/Eventify-Android/feature/setup/impl/src/main/kotlin/feature/setup/impl/ui/ChooseCategoriesViewModel.kt
+/Users/macbook/AndroidStudioProjects/Eventify-Android/feature/setup/impl/src/main/kotlin/feature/setup/impl/ui/SetUpRoute.kt

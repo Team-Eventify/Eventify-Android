@@ -1,0 +1,1 @@
+-keep,allowobfuscation,allowshrinking class feature.aboutApp.impl.ui.AboutAppViewModel
