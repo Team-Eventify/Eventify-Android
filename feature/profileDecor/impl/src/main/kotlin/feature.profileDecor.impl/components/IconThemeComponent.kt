@@ -19,9 +19,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.eventify.uikit.R as UiKitR
-import uikit.EventifyTheme
-import uikit.components.BodyText
+import com.example.eventify.R
+import com.example.eventify.presentation.ui.common.BodyText
+import com.example.eventify.presentation.ui.theme.EventifyTheme
 
 @Composable
 fun IconThemeComponent(
@@ -62,8 +62,8 @@ private fun IconThemeComponentScreenPreview() {
             IconThemeComponent(
                 isActiveTheme = true,
                 isSystemOrDarkTheme = false,
-                iconTheme = UiKitR.drawable.circle_lefthalf_filled,
-                titleTheme = UiKitR.string.system_theme_ttile,
+                iconTheme = R.drawable.circle_lefthalf_filled,
+                titleTheme = R.string.system_theme_ttile,
                 activeColor = Color.White,
                 changeTheme = {}
             )
