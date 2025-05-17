@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -39,12 +40,20 @@ import com.example.eventify.presentation.ui.theme.LocalDimentions
 fun ProfileDecorScreen(uiState: ProfileDecorUiState, actions: ProfileDecorRouteListener) {
     val dimmentions = LocalDimentions.current
 
-    Column(modifier = Modifier.fillMaxSize().padding(dimmentions.windowPaddings)) {
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .padding(dimmentions.windowPaddings)) {
         SubHeadingText(text = stringResource(R.string.theme_title))
-        Spacer(modifier = Modifier.height(10.dp),)
-        Row(modifier = Modifier.fillMaxWidth(),
+        Spacer(modifier = Modifier
+            .height(10.dp),)
+        Row(modifier = Modifier
+            .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween) {
-            Box(modifier = Modifier.border(width = 2.dp,
+            Box(modifier = Modifier
+                .width(120.dp)
+                .height(120.dp)
+                .padding(5.dp)
+                .border(width = 2.dp,
                 color = if (uiState.activeTypeOfTheme == null) Color.White else Color.Gray,
                 shape = RoundedCornerShape(16.dp)).clickable { actions.changeTheme(TypesTheme.SYSTEM_THEME)
                 },) {
@@ -58,40 +67,57 @@ fun ProfileDecorScreen(uiState: ProfileDecorUiState, actions: ProfileDecorRouteL
                     BodyText(text = stringResource(R.string.system_theme_ttile))
                 }
             }
-            Box(modifier = Modifier.border(width = 2.dp,
+            Box(modifier = Modifier
+                .width(120.dp)
+                .height(120.dp)
+                .padding(5.dp)
+                .border(width = 2.dp,
                 color = if (uiState.activeTypeOfTheme == false) Color.Black else Color.Gray,
-                shape = RoundedCornerShape(16.dp)).clickable { actions.changeTheme(TypesTheme.LIGHT_THEME) },) {
+                shape = RoundedCornerShape(16.dp))
+                .clickable { actions.changeTheme(TypesTheme.LIGHT_THEME) },) {
                 Column(
-                    modifier = Modifier.padding(vertical = 15.dp, horizontal = 20.dp),) {
+                    modifier = Modifier
+                        .padding(vertical = 15.dp, horizontal = 20.dp),) {
                     Icon(
                         painter = painterResource(R.drawable.sun_max_fill),
                         contentDescription = null,
                         tint = if (uiState.isSystemOrDarkTheme) Color.White else Color.Black
                     )
-                    Spacer(modifier = Modifier.height(20.dp),)
+                    Spacer(modifier = Modifier
+                        .height(20.dp),)
                     BodyText(text = stringResource(R.string.light_theme_title))
                 }
             }
-            Box(modifier = Modifier.border(width = 2.dp,
-                color = if (uiState.activeTypeOfTheme == true) Color.White else Color.Gray, shape = RoundedCornerShape(16.dp)).clickable { actions.changeTheme(TypesTheme.DARK_THEME)  }) {
+            Box(modifier = Modifier
+                .width(120.dp)
+                .height(120.dp)
+                .padding(5.dp)
+                .border(width = 2.dp,
+                color = if (uiState.activeTypeOfTheme == true) Color.White else Color.Gray,
+                    shape = RoundedCornerShape(16.dp))
+                .clickable { actions.changeTheme(TypesTheme.DARK_THEME)  }) {
                 Column(
-                    modifier = Modifier.padding(vertical = 15.dp, horizontal = 20.dp),) {
+                    modifier = Modifier
+                        .padding(vertical = 15.dp, horizontal = 20.dp),) {
                     Icon(
                         painter = painterResource(R.drawable.moon_fill),
                         contentDescription = null,
                         tint = if (uiState.isSystemOrDarkTheme) Color.White else Color.Black
                     )
-                    Spacer(modifier = Modifier.height(20.dp),)
+                    Spacer(modifier = Modifier
+                        .height(20.dp),)
                     BodyText(text = stringResource(R.string.dark_theme_title))
                 }
             }
         }
-        HorizontalDivider(modifier = Modifier.padding(vertical=20.dp),)
+        HorizontalDivider(modifier = Modifier
+            .padding(vertical=20.dp),)
 
         SubHeadingText(text = stringResource(R.string.icon_logo))
 
 
-        Row(modifier = Modifier.fillMaxWidth()
+        Row(modifier = Modifier
+            .fillMaxWidth()
             .padding(top = 20.dp),
             horizontalArrangement = Arrangement.SpaceBetween) {
             uiState.listIcons.forEach { item ->
