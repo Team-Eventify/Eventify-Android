@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import uikit.EventifyTheme
+import uikit.TypographyKit
 
 
 @Composable
@@ -34,7 +35,8 @@ fun CategorySelectChip(
         label = {
             Text(
                 text = title,
-                color = MaterialTheme.colorScheme.onPrimary.takeIf { isSelected } ?: MaterialTheme.colorScheme.onSurface
+                color = MaterialTheme.colorScheme.onPrimary.takeIf { isSelected } ?: MaterialTheme.colorScheme.onSurface,
+                style = TypographyKit.bodyRegular,
             )
         },
         selected = isSelected,

@@ -8,5 +8,5 @@ sealed class UiState {
         val userInfo: UserShortInfo,
     ) : UiState()
     data object Loading : UiState()
-    data class Error(val message: String? = null) : UiState()
+    data object Error : UiState()
 }

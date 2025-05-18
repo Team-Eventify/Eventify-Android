@@ -5,9 +5,7 @@ import domain.models.FullEventDetail
 
 internal sealed class EventDetailUiState {
     data object Loading : EventDetailUiState()
-    data class Error(
-        val message: String,
-    ) : EventDetailUiState()
+    data object Error : EventDetailUiState()
     data class ShowEvent(
         val isRefreshing: Boolean = false,
         val event: FullEventDetail,

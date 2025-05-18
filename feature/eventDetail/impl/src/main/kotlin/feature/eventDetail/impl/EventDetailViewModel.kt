@@ -118,17 +118,17 @@ internal class EventDetailViewModel @Inject constructor(
         ) {
             unsubscribeForEventUseCase(eventId)
             refresh()
-            mutableSideEffect.send(SideEffect.FailSubscribeEvent())
+            mutableSideEffect.send(SideEffect.SuccessUnsubscribeEvent)
         }
     }
 
     private fun handleEventErrors(exception: Throwable) = when {
         exception.isNotFound() -> _stateFlow.update {
-            EventDetailUiState.Error(message = context.getString(R.string.not_found))
+            EventDetailUiState.Error
         }
 
         else -> _stateFlow.update {
-            EventDetailUiState.Error(message = context.getString(R.string.server_error))
+            EventDetailUiState.Error
         }
 
     }

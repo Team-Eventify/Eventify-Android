@@ -34,6 +34,7 @@ import uikit.components.SettingsBlock
 import uikit.components.buttons.PrimaryButtonWithLoader
 import kotlin.random.Random
 import com.example.eventify.uikit.R as UiKitR
+import com.example.eventify.feature.profileEdit.impl.R as EditR
 
 
 @Composable
@@ -73,7 +74,6 @@ fun ProfileEditScreen(
             text = state.firstName,
             onChange = actions::onChangeFirstName,
             modifier = Modifier
-//                .shimmer(showShimmer = state.isLoading)
         )
 
         Text(
@@ -84,7 +84,6 @@ fun ProfileEditScreen(
             text = state.lastName,
             onChange = actions::onChangeLastName,
             modifier = Modifier
-//                .shimmer(showShimmer = state.isLoading)
         )
 
         Text(
@@ -97,7 +96,6 @@ fun ProfileEditScreen(
             isError = state.emailError != null || state.hasEmailError,
             supportingText = state.emailError,
             modifier = Modifier
-//                .shimmer(showShimmer = state.isLoading)
         )
 
         Text(
@@ -111,7 +109,6 @@ fun ProfileEditScreen(
             isError = state.telegramNameError != null || state.hasTelegramNameError,
             supportingText = state.telegramNameError,
             modifier = Modifier
-//                .shimmer(showShimmer = state.isLoading)
         )
 
         Text(
@@ -119,14 +116,13 @@ fun ProfileEditScreen(
             style = TypographyKit.bodyMedium,
         )
         Text(
-            text = "Выбирай категории ивентов под свои интересы!",
+            text = stringResource(EditR.string.choose_categorie_actions),
             style = TypographyKit.bodyRegular,
         )
         CategorySelector(
             categories = state.categoryItems,
             onClickCategory = actions::onChangeCategoryFilterActive,
             modifier = Modifier
-//                .shimmer(showShimmer = state.isLoading)
         )
 
         SettingsBlock {

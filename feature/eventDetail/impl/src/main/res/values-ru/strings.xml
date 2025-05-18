@@ -2,8 +2,10 @@
 <resources>
     <string name="event_finished">Событие завершено</string>
     <string name="event_unavailable">Событие недоступно</string>
-    <string name="successful_subscribe">Successful subscribe</string>
-    <string name="failed_subscribe">Failed subscribe</string>
-    <string name="successful_unsubscribe">Successful unsubscribe</string>
-    <string name="failed_unsubscribe">Failed unsubscribe</string>
+    <string name="successful_subscribe_title">Ты успешно записался на событие!</string>
+    <string name="successful_subscribe_description">Добавлено в твое события</string>
+    <string name="failed_subscribe">Не удалось подписаться на событие</string>
+    <string name="successful_unsubscribe_title">Ты отписался от события!</string>
+    <string name="successful_unsubscribe_description">Участие отменено</string>
+    <string name="failed_unsubscribe">Не удалось отписаться от события</string>
 </resources>

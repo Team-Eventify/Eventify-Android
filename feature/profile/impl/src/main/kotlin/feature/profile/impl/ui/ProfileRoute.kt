@@ -22,6 +22,7 @@ import feature.decor.api.DecorEntry
 import uikit.components.topBar.TopBarSize
 import uikit.components.topBar.TopBarState
 import com.example.eventify.uikit.R as UiKitR
+import com.example.eventify.core.common.R as CommonR
 
 
 @Composable
@@ -54,10 +55,10 @@ internal fun ProfileRoute(
     }
 
     when (uiState) {
-        is UiState.Error -> {
+        UiState.Error -> {
             ErrorScreen(
                 title = stringResource(UiKitR.string.failed_load_profile),
-                description = (uiState as UiState.Error).message
+                description = stringResource(CommonR.string.try_again_later)
             )
         }
         UiState.Loading -> LoadingProfile()

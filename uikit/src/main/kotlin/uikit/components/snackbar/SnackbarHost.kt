@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -35,11 +34,8 @@ import uikit.EventifyTheme
 import uikit.LocalSnackbarState
 import uikit.TypographyKit
 import uikit.space10
-import uikit.space12
 import uikit.space18
-import uikit.space20
-import uikit.space24
-import uikit.space32
+import uikit.space28
 import uikit.space64
 import com.example.eventify.uikit.R as UiKitR
 
@@ -98,7 +94,7 @@ fun AppSnackbar(
             modifier = Modifier.Companion
                 .padding(
                     vertical = space18,
-                    horizontal = space32
+                    horizontal = space28
                 )
                 .fillMaxWidth(),
             verticalAlignment = Alignment.Companion.CenterVertically
@@ -110,7 +106,7 @@ fun AppSnackbar(
                     contentDescription = null,
                     tint = colors.iconTint,
                     modifier = Modifier
-                        .size(space32)
+                        .size(space28)
                 )
             }
 

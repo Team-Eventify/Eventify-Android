@@ -3,6 +3,7 @@ package feature.myEvents.impl.components
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -27,6 +28,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
@@ -56,61 +58,47 @@ fun FinishedEventCard(
         onClick = { onClick?.invoke(event.id) },
         modifier = Modifier
             .fillMaxWidth()
-            .height(IntrinsicSize.Min)
     ) {
-        Column {
-            Row(
-                horizontalArrangement = Arrangement.Start,
-                verticalAlignment = Alignment.CenterVertically,
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            Column(
+                verticalArrangement = Arrangement.Center,
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .padding(10.dp)
+                    .fillMaxWidth(.7f)
+                    .align(Alignment.CenterStart)
             ) {
-                Column(
-                    verticalArrangement = Arrangement.Center,
-                    modifier = Modifier
-                        .padding(10.dp)
-                        .weight(.6f)
-                ) {
-                    Text(
-                        text = event.title,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        style = TypographyKit.bodyMedium,
-                    )
-                    Spacer(modifier = Modifier.height(10.dp))
-                    FlowRow(
-                        verticalArrangement = Arrangement.spacedBy(5.dp, Alignment.CenterVertically),
-                        horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.Start)
-                    ) {
-                        FinishedEventInfoChip(text = event.start.asDate())
-                        FinishedEventInfoChip(text = event.start.asTime())
-                        FinishedEventInfoChip(text = "онлайн")
-                    }
-
-                }
-
-                Image(
-                    painter = painterResource(UiKitR.drawable.eventify_group_1),
-                    contentDescription = null,
-                    colorFilter = ColorFilter.tint(Color(0xFF858591)),
-                    contentScale = ContentScale.FillHeight,
-                    modifier = Modifier
-                        .weight(0.4f)
+                Text(
+                    text = event.title,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    style = TypographyKit.bodyMedium,
+                    overflow = TextOverflow.StartEllipsis,
+                    maxLines = 2,
                 )
-            }
-            if (showFeedbackButton){
-                Button(
-                    onClick = { onFeedbackAction?.invoke(event.id) },
-                    shape = RoundedCornerShape(0.dp, 0.dp, 10.dp, 10.dp),
-                    modifier = Modifier
-                        .height(IntrinsicSize.Min)
-                        .fillMaxWidth()
+                Spacer(modifier = Modifier.height(10.dp))
+                FlowRow(
+                    verticalArrangement = Arrangement.spacedBy(5.dp, Alignment.CenterVertically),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.Start)
                 ) {
-                    Text(
-                        text = stringResource(UiKitR.string.feedback_action),
-                        fontWeight = FontWeight.Medium
-                    )
+                    FinishedEventInfoChip(text = event.start.asDate())
+                    FinishedEventInfoChip(text = event.start.asTime())
+                    FinishedEventInfoChip(text = event.location)
                 }
+
             }
+
+            Image(
+                painter = painterResource(UiKitR.drawable.eventify_group_1),
+                contentDescription = null,
+                colorFilter = ColorFilter.tint(Color(0xFF858591)),
+                contentScale = ContentScale.FillHeight,
+                modifier = Modifier
+                    .fillMaxWidth(.4f)
+                    .align(Alignment.BottomEnd)
+            )
+
         }
     }
 }
