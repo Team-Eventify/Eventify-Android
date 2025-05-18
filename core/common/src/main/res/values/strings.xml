@@ -3,4 +3,6 @@
     <string name="try_again">Try again</string>
     <string name="try_again_later">Try again later</string>
     <string name="change_your_data">Change your data</string>
+    <string name="minimum_password_length_error">Minimum 8 chars</string>
+    <string name="invalid_email">Invalid email format</string>
 </resources>

@@ -1,7 +1,7 @@
 package data.remote.models.category
 
 
-data class CategoryInfoResponse(
+internal data class CategoryInfoResponse(
     val id: String,
     val title: String,
     val color: String,

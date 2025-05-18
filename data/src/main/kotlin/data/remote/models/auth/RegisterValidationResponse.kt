@@ -1,5 +1,5 @@
 package data.remote.models.auth
 
-data class RegisterValidationResponse(
+internal data class RegisterValidationResponse(
     val validation_id: String
 )

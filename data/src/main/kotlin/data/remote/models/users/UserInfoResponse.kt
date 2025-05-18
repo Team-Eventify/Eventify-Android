@@ -1,6 +1,6 @@
 package data.remote.models.users
 
-data class UserInfoResponse(
+internal data class UserInfoResponse(
     val email: String,
     val firstName: String?,
     val id: String,

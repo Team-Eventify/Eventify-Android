@@ -1,6 +1,6 @@
 package data.remote.models.auth
 
-data class RefreshTokenResponse(
+internal data class RefreshTokenResponse(
     val accessToken: String,
     val refreshToken: String,
     val userID: String

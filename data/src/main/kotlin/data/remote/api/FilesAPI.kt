@@ -9,7 +9,7 @@ import retrofit2.http.Path
 
 
 @AuthRequired
-interface FilesAPI {
+internal interface FilesAPI {
 
     @GET("{id}")
     suspend fun getFile(@Path("id") id: String): Response<ResponseBody>

@@ -116,7 +116,11 @@ fun RegisterScreen(
                 isError = state.payloadState.hasLoginError,
                 supportingText = {
                     state.payloadState.loginError?.let {
-//                        ErrorInputText(text = it)
+                        Text(
+                            text = it,
+                            style = TypographyKit.bodyRegular,
+                            color = MaterialTheme.colorScheme.error,
+                        )
                     }
                 },
                 modifier = Modifier.focusRequester(focusRequest),
@@ -138,7 +142,11 @@ fun RegisterScreen(
                 isError = state.payloadState.hasPasswordError,
                 supportingText = {
                     state.payloadState.passwordError?.let {
-//                        ErrorInputText(text = it)
+                        Text(
+                            text = it,
+                            style = TypographyKit.bodyRegular,
+                            color = MaterialTheme.colorScheme.error,
+                        )
                     }
                 },
                 keyboardOptions = KeyboardOptions(

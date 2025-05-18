@@ -6,15 +6,15 @@ import retrofit2.Invocation
 
 @Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
-annotation class AuthRequired
+internal annotation class AuthRequired
 
 
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
-annotation class NoAuthRequired
+internal annotation class NoAuthRequired
 
 
-fun Request.isAuthRequired(): Boolean {
+internal fun Request.isAuthRequired(): Boolean {
     val method = this.tag(Invocation::class.java)?.method() ?: return false
     val apiClass = method.declaringClass
 

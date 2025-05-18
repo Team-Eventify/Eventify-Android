@@ -17,7 +17,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AuthModule {
+internal object AuthModule {
     @Provides
     @Singleton
     fun provideAuthAPI(): AuthAPI = NetworkServiceFactory.getApi("https://eventify.website/api/v1/auth/", AuthAPI::class.java)

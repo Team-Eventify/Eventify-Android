@@ -7,7 +7,7 @@ import data.remote.utils.handle
 import javax.inject.Inject
 
 
-class OrganizationsRepositoryImpl @Inject constructor(
+internal class OrganizationsRepositoryImpl @Inject constructor(
     private val dataSource: OrganizationsAPI
 ) : OrganizationsRepository{
     override suspend fun getOrganization(organizationId: String): Organization {

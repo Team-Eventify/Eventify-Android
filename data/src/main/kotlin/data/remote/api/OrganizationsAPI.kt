@@ -8,7 +8,7 @@ import retrofit2.http.Path
 
 
 @AuthRequired
-interface OrganizationsAPI {
+internal interface OrganizationsAPI {
     @GET("organizations/{id}")
     suspend fun getOrganization(@Path("id") organizationId: String): Response<OrganizationDetailResponse>
 }

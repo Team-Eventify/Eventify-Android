@@ -11,19 +11,19 @@ data class TokenData(
     val userID: String
 )
 
-fun RegisterResponse.toTokenData() = TokenData(
+internal fun RegisterResponse.toTokenData() = TokenData(
     accessToken = this.accessToken,
     refreshToken = this.refreshToken,
     userID = this.userID,
 )
 
-fun LogInResponse.toTokenData() = TokenData(
+internal fun LogInResponse.toTokenData() = TokenData(
     accessToken = this.accessToken,
     refreshToken = this.refreshToken,
     userID = this.userID,
 )
 
-fun RefreshTokenResponse.toTokenData() = TokenData(
+internal fun RefreshTokenResponse.toTokenData() = TokenData(
     accessToken = this.accessToken,
     refreshToken = this.refreshToken,
     userID = this.userID,
