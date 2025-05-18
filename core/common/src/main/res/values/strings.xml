@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="try_again">Try again</string>
+    <string name="try_again_later">Try again later</string>
+    <string name="change_your_data">Change your data</string>
+</resources>

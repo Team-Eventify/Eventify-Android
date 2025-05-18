@@ -24,10 +24,12 @@ import feature.register.api.RegisterEntry
 import feature.resetPassword.api.ResetPasswordEntry
 import kotlinx.coroutines.launch
 import uikit.LocalSnackbarState
-import uikit.components.snackbar.SnackbarType
+import uikit.components.snackbar.SnackbarStyle
 import uikit.components.topBar.LocalTopBarState
 import uikit.utils.ObserveAsEvent
 import com.example.eventify.uikit.R as UiKitR
+import com.example.eventify.core.common.R as CommonR
+import com.example.eventify.feature.loging.impl.R as LoginR
 
 @Composable
 internal fun LogInRoute(
@@ -88,7 +90,8 @@ internal fun LogInRoute(
             SideEffect.ServerError -> {
                 snackBarState.show(
                     message = context.getString(UiKitR.string.server_error),
-                    type = SnackbarType.Error
+                    description = context.getString(CommonR.string.try_again_later),
+                    style = SnackbarStyle.Error,
                 )
             }
             SideEffect.SuccessLogIn -> {
@@ -97,7 +100,8 @@ internal fun LogInRoute(
             SideEffect.UnsuccessLogIn -> {
                 snackBarState.show(
                     message = context.getString(UiKitR.string.incorrect_auth_data),
-                    type = SnackbarType.Error
+                    description = context.getString(CommonR.string.change_your_data),
+                    style = SnackbarStyle.Error
                 )
             }
         }

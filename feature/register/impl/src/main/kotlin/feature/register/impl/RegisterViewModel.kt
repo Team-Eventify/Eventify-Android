@@ -160,6 +160,7 @@ class RegisterViewModel @Inject constructor(
                 }
             }
             else -> {
+                mutableSideEffect.trySend(SideEffect.FailedRegister)
                 mutableOtpState.update { currentState ->
                     (currentState as? OtpState.ShowOtp)?.copy(
                         hasError = true,

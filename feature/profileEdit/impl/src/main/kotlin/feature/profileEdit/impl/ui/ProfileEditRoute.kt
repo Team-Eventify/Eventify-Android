@@ -16,7 +16,7 @@ import feature.profileEdit.impl.components.LoadingProfileEdit
 import feature.profileEdit.impl.state.SideEffect
 import feature.profileEdit.impl.state.UiState
 import uikit.LocalSnackbarState
-import uikit.components.snackbar.SnackbarType
+import uikit.components.snackbar.SnackbarStyle
 import uikit.components.topBar.LocalTopBarState
 import uikit.components.topBar.TopBarAction
 import uikit.components.topBar.TopBarSize
@@ -72,27 +72,29 @@ fun ProfileEditRoute(
             is SideEffect.FailUpdate -> {
                 snackBarState.show(
                     message = sideEffect.message ?: "",
-                    type = SnackbarType.Error,
+                    style = SnackbarStyle.Error,
                 )
             }
             SideEffect.SuccessUpdate -> {
                 snackBarState.show(
                     message = context.getString(R.string.user_updated),
-                    type = SnackbarType.Success,
+                    description = "Изменения сохранены",
+                    style = SnackbarStyle.Success(),
                 )
             }
 
             SideEffect.AccountDeleted -> {
                 snackBarState.show(
                     message = "Аккаунт удален",
-                    type = SnackbarType.Success,
+                    style = SnackbarStyle.Success(),
                 )
             }
 
             SideEffect.FailedDeleteAccount -> {
                 snackBarState.show(
                     message = "Не удалось удалить аккаунт",
-                    type = SnackbarType.Error,
+                    description = "Попробуйте позже",
+                    style = SnackbarStyle.Error,
                 )
             }
         }

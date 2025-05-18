@@ -24,8 +24,11 @@ import core.featureManager.LocalFeaturesProvider
 import core.featureManager.navigateToFeature
 import feature.setup.api.SetUpEntry
 import uikit.LocalSnackbarState
-import uikit.components.snackbar.SnackbarType
+import uikit.components.snackbar.SnackbarStyle
 import com.example.eventify.uikit.R as UiKitR
+import com.example.eventify.core.common.R as CommonR
+import com.example.eventify.feature.register.impl.R as RegisterR
+
 
 @Composable
 fun RegisterRoute(
@@ -98,19 +101,26 @@ fun RegisterRoute(
                     features.navigateToFeature<SetUpEntry>(navController)
                 }
             }
-            is SideEffect.FailRegister -> {
-                snackBarState.show(
-                    message = sideEffect.message ?: "",
-                    type = SnackbarType.Error,
-                )
-            }
 
             SideEffect.ServerError -> {
                 snackBarState.show(
                     message = context.getString(UiKitR.string.server_error),
-                    type = SnackbarType.Error
+                    description = context.getString(CommonR.string.try_again_later),
+                    style = SnackbarStyle.Error
                 )
             }
+
+            SideEffect.FailedRegister -> snackBarState.show(
+                message = context.getString(RegisterR.string.registration_error),
+                description = context.getString(CommonR.string.try_again),
+                style = SnackbarStyle.Error,
+            )
+
+            SideEffect.FailedSendOTP -> snackBarState.show(
+                message = context.getString(RegisterR.string.faild_send_otp),
+                description = context.getString(CommonR.string.try_again),
+                style = SnackbarStyle.Error,
+            )
         }
     }
 

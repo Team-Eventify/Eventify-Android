@@ -14,8 +14,7 @@ import core.featureManager.LocalFeaturesProvider
 import core.featureManager.clearNavigate
 import feature.eventFeed.api.EventsFeedEntry
 import uikit.LocalSnackbarState
-import uikit.components.snackbar.SnackbarHost
-import uikit.components.snackbar.SnackbarType
+import uikit.components.snackbar.SnackbarStyle
 import uikit.utils.ObserveAsEvent
 
 @Composable
@@ -54,7 +53,7 @@ fun SetUpRoute(
             is SideEffect.FailedProvideCategories -> {
                 snackBarState.show(
                     message = sideEffect.message ?: "",
-                    type = SnackbarType.Error,
+                    style = SnackbarStyle.Error,
                 )
             }
             SideEffect.FinishSetUp -> {

@@ -1,8 +1,6 @@
 package uikit.components.snackbar
 
-import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Stable
-import androidx.compose.ui.graphics.Color
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -10,8 +8,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import uikit.BrandYellow
-import com.example.eventify.uikit.R as UiKitR
 
 
 class AppSnackbarState(private val scope: CoroutineScope) {
@@ -22,11 +18,18 @@ class AppSnackbarState(private val scope: CoroutineScope) {
 
     fun show(
         message: String,
-        type: SnackbarType,
+        style: SnackbarStyle,
         durationMillis: SnackbarDurations = SnackbarDurations.DEFAULT,
+        description: String? = null,
         force: Boolean = false
     ) {
-        val snackbar = SnackbarMessage(message, type, durationMillis, force)
+        val snackbar = SnackbarMessage(
+            title = message,
+            description = description,
+            style = style,
+            durationMillis = durationMillis,
+            force = force,
+        )
 
         if (job?.isActive == true) {
             if (force) {
@@ -57,36 +60,13 @@ class AppSnackbarState(private val scope: CoroutineScope) {
 }
 
 
-// TODO add icons
-// TODO try another way to get colors
-sealed class SnackbarType(
-    val backgroundColor: Color,
-    val textColor: Color,
-    @DrawableRes val iconResId: Int? = null,
-) {
-    data object Success : SnackbarType(
-        backgroundColor = BrandYellow,
-        textColor = Color(0xFFFFFFFF),
-        iconResId = UiKitR.drawable.ic_error,
-    )
 
-    data object Error : SnackbarType(
-        backgroundColor = Color(0xFFFF8F88),
-        textColor = Color(0xFFFFFFFF),
-        iconResId = UiKitR.drawable.ic_error,
-    )
-
-    data object Info : SnackbarType(
-        backgroundColor = Color(0xFF858591),
-        textColor = Color(0xFFFFFFFF),
-        iconResId = UiKitR.drawable.ic_error,
-    )
-}
 
 @Stable
 data class SnackbarMessage(
-    val text: String,
-    val type: SnackbarType,
+    val title: String,
+    val description: String? = null,
+    val style: SnackbarStyle,
     val durationMillis: SnackbarDurations = SnackbarDurations.DEFAULT,
     val force: Boolean = false,
     val isVisible: Boolean = true,

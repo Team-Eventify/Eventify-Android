@@ -118,7 +118,7 @@ internal class EventDetailViewModel @Inject constructor(
         ) {
             unsubscribeForEventUseCase(eventId)
             refresh()
-            mutableSideEffect.send(SideEffect.SuccessUnsubscribeEvent)
+            mutableSideEffect.send(SideEffect.FailSubscribeEvent())
         }
     }
 

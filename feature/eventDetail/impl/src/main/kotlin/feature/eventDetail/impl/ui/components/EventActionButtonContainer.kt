@@ -24,15 +24,14 @@ internal fun EventActionButtonContainer(
     onClick: () -> Unit,
 ) {
     val context = LocalContext.current
-    val buttonText = remember {
-        when {
+    val buttonText = when {
             !eventState.isSubscribeEnabled() -> context.getString(R.string.event_finished)
             isSubscribed -> context.getString(UiKitR.string.unsubscribe_for_event_action)
             !isSubscribed -> context.getString(UiKitR.string.subscribe_for_event_action)
             else -> context.getString(R.string.event_unavailable)
         }
-    }
-    val buttonColor = MaterialTheme.colorScheme.errorContainer.takeIf { isSubscribed } ?: MaterialTheme.colorScheme.primary
+
+    val buttonColor = MaterialTheme.colorScheme.error.takeIf { isSubscribed } ?: MaterialTheme.colorScheme.primary
 
     PrimaryButtonWithLoader(
         text = buttonText,

@@ -13,7 +13,7 @@ import feature.eventDetail.impl.state.EventDetailUiState
 import feature.eventDetail.impl.state.SideEffect
 import uikit.LocalSnackbarState
 import uikit.components.screens.ErrorScreen
-import uikit.components.snackbar.SnackbarType
+import uikit.components.snackbar.SnackbarStyle
 import uikit.utils.ObserveAsEvent
 import com.example.eventify.uikit.R as UiKitR
 
@@ -48,26 +48,36 @@ fun EventDetailRoute(
         when (sideEffect) {
             SideEffect.SuccessSubscribeEvent -> {
                 snackBarState.show(
-                    message = "Вы подписались на событие",
-                    type = SnackbarType.Success,
+                    message = "Ты успешно записался на событие!",
+                    description = "Добавлено в твои события",
+                    force = true,
+                    style = SnackbarStyle.Success(
+                        iconResId = UiKitR.drawable.check_circle_fill,
+                    ),
                 )
             }
             SideEffect.SuccessUnsubscribeEvent -> {
                 snackBarState.show(
-                    message = "Вы отписались от события",
-                    type = SnackbarType.Success,
+                    message = "Ты отписался от события!",
+                    description = "Участие отменено",
+                    force = true,
+                    style = SnackbarStyle.Success(
+                        iconResId = UiKitR.drawable.xmark_circle_fill,
+                    ),
                 )
             }
             is SideEffect.FailSubscribeEvent -> {
                 snackBarState.show(
-                    message = sideEffect.message ?: "Не удалось подписаться на событие",
-                    type = SnackbarType.Error,
+                    message = "Не удалось подписаться на событие",
+                    description = "Попробуйте еще раз позже",
+                    style = SnackbarStyle.Error,
                 )
             }
             is SideEffect.FailUnsubscribeEvent -> {
                 snackBarState.show(
-                    message = sideEffect.message ?: "Не удалось отписаться от события",
-                    type = SnackbarType.Error,
+                    message = "Не удалось отписаться от события",
+                    description = "Попробуйте еще раз позже",
+                    style = SnackbarStyle.Error,
                 )
             }
         }

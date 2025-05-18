@@ -8,12 +8,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import core.common.theme.ThemeType
-import domain.models.LogoIcon
 import feature.decor.impl.state.DecorListener
 import feature.decor.impl.state.SideEffect
 import uikit.components.topBar.LocalTopBarState
 import uikit.LocalSnackbarState
-import uikit.components.snackbar.SnackbarType
+import uikit.components.snackbar.SnackbarStyle
 import uikit.components.topBar.TopBarAction
 import uikit.components.topBar.TopBarSize
 import uikit.components.topBar.TopBarState
@@ -44,14 +43,14 @@ fun ProfileDecorRoute(navController: NavController) {
             is SideEffect.FailUpdate -> {
                 snackBarState.show(
                     message = sideEffect.message ?: "",
-                    type = SnackbarType.Error,
+                    style = SnackbarStyle.Error,
                 )
             }
 
             SideEffect.SuccessUpdate -> {
                 snackBarState.show(
                     message = context.getString(UiKitR.string.icon_logo_update),
-                    type = SnackbarType.Success,
+                    style = SnackbarStyle.Success(),
                 )
             }
         }

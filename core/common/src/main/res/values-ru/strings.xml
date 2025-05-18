@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="try_again">Попробуйте еще раз</string>
+    <string name="try_again_later">Попробуйте еще раз позже</string>
+    <string name="change_your_data">Введите другие данные</string>
+
+</resources>
