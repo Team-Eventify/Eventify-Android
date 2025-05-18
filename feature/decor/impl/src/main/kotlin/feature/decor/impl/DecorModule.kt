@@ -17,5 +17,5 @@ abstract class DecorModule {
     @Singleton
     @IntoMap
     @FeatureEntryKey(DecorEntry::class)
-    abstract fun bindProfileEditEntry(feature: DecorEntryImpl): FeatureEntry
+    abstract fun bindDecorEntry(feature: DecorEntryImpl): FeatureEntry
 }

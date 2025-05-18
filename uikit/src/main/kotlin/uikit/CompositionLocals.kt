@@ -12,7 +12,3 @@ val LocalSnackbarState = staticCompositionLocalOf<AppSnackbarState> {
 val LocaleImageLoader = staticCompositionLocalOf<ImageLoader> {
     error("No ImageLoader provided")
 }
-
-val LocalAppThemeState = staticCompositionLocalOf<AppThemeManager> {
-    error("AppThemeManager not provided")
-}

@@ -1,16 +1,36 @@
 package feature.decor.impl.state
 
-import com.example.eventify.uikit.R as R
-import domain.models.LogoIcon
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
+import core.common.theme.ThemeType
+import com.example.eventify.uikit.R as UiKitR
+import com.example.eventify.feature.decor.impl.R as DecorR
+
 
 data class DecorUiState(
-    val listIcons: List<LogoIcon> = listOf<LogoIcon>(LogoIcon(R.string.base_dark, R.drawable.icon_logo_1, ".alias.icon_logo_1"),
-       // LogoIcon(R.string.base_light, R.drawable.icon_logo_2, ".alias.icon_logo_2"),
-        LogoIcon(R.string.sunset, R.drawable.icon_logo_3, ".alias.icon_logo_3"),
-        LogoIcon(R.string.base_light, R.drawable.icon_logo_4, ".alias.icon_logo_4"),
-        LogoIcon(R.string.night, R.drawable.icon_logo_5, ".alias.icon_logo_5")),
-    val isSystemOrDarkTheme: Boolean = true,
-    val activeTypeOfTheme: Boolean? = null,
-    val activeTypeOfIconAlias: String? = null
-
+    val currentTheme: ThemeType = ThemeType.SYSTEM,
 )
+
+enum class ThemeTypePreviews(
+    val themeType: ThemeType,
+    @DrawableRes val iconResId: Int,
+    @StringRes val titleResId: Int,
+) {
+    SYSTEM(
+        themeType = ThemeType.SYSTEM,
+        iconResId = UiKitR.drawable.circle_lefthalf_filled,
+        titleResId = DecorR.string.system_theme_ttile,
+    ),
+
+    DARK(
+        themeType = ThemeType.DARK,
+        iconResId = UiKitR.drawable.moon_fill,
+        titleResId = DecorR.string.dark_theme_title,
+        ),
+
+    LIGHT(
+        themeType = ThemeType.LIGHT,
+        iconResId = UiKitR.drawable.sun_max_fill,
+        titleResId = DecorR.string.light_theme_title,
+        )
+}

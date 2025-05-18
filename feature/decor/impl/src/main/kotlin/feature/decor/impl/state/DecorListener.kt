@@ -1,10 +1,8 @@
 package feature.decor.impl.state
 
-import domain.models.LogoIcon
+import core.common.theme.ThemeType
 
 interface DecorListener {
-    fun onBackClick(): Unit
-    fun changeTheme(typeOfTheme: TypesTheme): Unit
-    fun getActiveTheme(): TypesTheme
-    fun changeIcon(icon: LogoIcon): Unit
+    fun onChangeTheme(theme: ThemeType)
+    fun navigateBack()
 }

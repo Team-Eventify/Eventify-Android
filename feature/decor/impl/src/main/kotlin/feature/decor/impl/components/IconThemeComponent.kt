@@ -11,17 +11,14 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Surface
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.eventify.uikit.R as R
-import uikit.EventifyTheme
 import uikit.TypographyKit
 
 
@@ -30,21 +27,26 @@ fun IconThemeComponent(
     isActiveTheme: Boolean,
     isSystemOrDarkTheme: Boolean,
     iconTheme: Int,
-    activeColor: Color,
     @StringRes titleTheme: Int,
     changeTheme: (() -> Unit)
 ) {
 
-    IconButton(onClick = { changeTheme() }, modifier = Modifier
-        .width(120.dp)
-        .height(120.dp)
-        .padding(5.dp)
-        .border(width = 2.dp,
-        color = if (isActiveTheme) activeColor else Color.Gray,
-        shape = RoundedCornerShape(16.dp)
-    )) {
-        Column(modifier = Modifier
-            .padding(vertical=15.dp, horizontal=20.dp),) {
+    IconButton(
+        onClick = changeTheme,
+        modifier = Modifier
+            .width(120.dp)
+            .height(120.dp)
+            .padding(5.dp)
+            .border(
+                width = 2.dp,
+                color = MaterialTheme.colorScheme.primary.takeIf { isActiveTheme } ?: MaterialTheme.colorScheme.surface,
+                shape = RoundedCornerShape(16.dp)
+            )
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(vertical=15.dp, horizontal=20.dp),
+            ) {
             Icon(
                 painter = painterResource(iconTheme),
                 contentDescription = null,
@@ -54,23 +56,6 @@ fun IconThemeComponent(
             Text(
                 text = stringResource(titleTheme),
                 style = TypographyKit.bodyRegular,
-            )
-        }
-    }
-}
-
-@Composable
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-private fun IconThemeComponentScreenPreview() {
-    EventifyTheme(darkTheme = true) {
-        Surface {
-            IconThemeComponent(
-                isActiveTheme = true,
-                isSystemOrDarkTheme = false,
-                iconTheme = R.drawable.circle_lefthalf_filled,
-                titleTheme = R.string.system_theme_ttile,
-                activeColor = Color.White,
-                changeTheme = {}
             )
         }
     }
