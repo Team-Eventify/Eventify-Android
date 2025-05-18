@@ -65,6 +65,8 @@ include(
     ":feature:searchResult:impl",
     ":feature:setup:api",
     ":feature:setup:impl",
+    ":feature:decor:api",
+    ":feature:decor:impl",
 )
 
  

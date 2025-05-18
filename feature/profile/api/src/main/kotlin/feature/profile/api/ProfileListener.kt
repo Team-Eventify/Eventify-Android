@@ -4,4 +4,5 @@ interface ProfileListener {
     fun onLogOut(): Unit
     fun navigateToProfileEdit(): Unit
     fun navigateToAppInfo(): Unit
+    fun navigateToDecor(): Unit
 }

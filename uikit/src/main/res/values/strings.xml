@@ -98,4 +98,14 @@
     <string name="incorrect_otp">Incorrect code</string>
     <string name="subscribe_for_event_action">I will go!</string>
     <string name="unsubscribe_for_event_action">Cancel appointment</string>
+
+    <string name="design_section_title">Decor</string>
+    <string name="icon_logo_update">Icon was updated</string>
+    <string name="icon_logo">App icon</string>
+    <string name="theme_title">Theme</string>
+
+    <string name="base_light">Base</string>
+    <string name="base_dark">Base</string>
+    <string name="sunset">Sunset</string>
+    <string name="night">Night</string>
 </resources>

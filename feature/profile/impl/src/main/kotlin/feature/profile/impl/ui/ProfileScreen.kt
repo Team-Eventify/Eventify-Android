@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.eventify.feature.profile.impl.R as ProfileR
 import domain.models.UserShortInfo
 import feature.profile.api.ProfileListener
 import feature.profile.impl.components.LogOutDialog
@@ -57,14 +58,14 @@ fun ProfileScreen(
             lastName = state.userInfo.lastName,
             onClick = actions::navigateToProfileEdit,
             modifier = Modifier
-//                .shimmer(
-//                    showShimmer = state.isLoading
-//                )
         )
         SettingsBlock {
-            NavigationSettingsItem(stringResource(UiKitR.string.notifications), onClick = {})
-            HorizontalDivider()
             NavigationSettingsItem(stringResource(UiKitR.string.help_and_support))
+            HorizontalDivider()
+            NavigationSettingsItem(
+                text = stringResource(ProfileR.string.decor_item_title),
+                onClick = actions::navigateToDecor
+            )
         }
 
         SettingsBlock {
@@ -104,6 +105,7 @@ private fun ProfileScreenPreview() {
                     override fun onLogOut() = Unit
                     override fun navigateToProfileEdit() = Unit
                     override fun navigateToAppInfo() = Unit
+                    override fun navigateToDecor() = Unit
                 }
             )
         }

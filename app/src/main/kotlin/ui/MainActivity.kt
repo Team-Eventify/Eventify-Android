@@ -18,6 +18,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -76,7 +77,6 @@ class MainActivity : ComponentActivity() {
 
     private val viewModel: RootViewModel by viewModels()
 
-//    @RequestsSessionManager
     @Inject
     lateinit var sessionManager: SessionManager
 
@@ -137,9 +137,10 @@ class MainActivity : ComponentActivity() {
                 )
             }
 
+            val isDarkTheme by viewModel.themeManager.isDarkTheme.collectAsState()
 
             EventifyTheme(
-                darkTheme = isSystemInDarkTheme(),
+                darkTheme = isDarkTheme ?: isSystemInDarkTheme(),
                 dynamicColor = false,
                     LocaleImageLoader provides imageLoader,
                     LocalTopBarState provides topBarState,

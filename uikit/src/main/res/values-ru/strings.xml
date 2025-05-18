@@ -97,4 +97,14 @@
     <string name="incorrect_otp">Неверный код</string>
     <string name="subscribe_for_event_action">Я пойду!</string>
     <string name="unsubscribe_for_event_action">Отменить запись</string>
+
+    <string name="design_section_title">Оформление</string>
+    <string name="icon_logo_update">Иконка приложения обновлена</string>
+    <string name="icon_logo">Иконка приложения обновлена</string>
+    <string name="theme_title">Тема</string>
+
+    <string name="base_dark">Основная</string>
+    <string name="base_light">Основная</string>
+    <string name="sunset">Закат</string>
+    <string name="night">Ночь</string>
 </resources>
