@@ -13,6 +13,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import kotlinx.coroutines.launch
 import androidx.core.net.toUri
+import core.common.extentions.redirect
 import domain.AccountCredentialManager
 import feature.login.api.LoginEntry
 import feature.register.api.RegisterListener
@@ -83,8 +84,7 @@ fun RegisterRoute(
         }
 
         override fun goToPrivacyPolicy() {
-            val intent = Intent(Intent.ACTION_VIEW, "https://nometa.xyz".toUri())
-            context.startActivity(intent)
+            "https://nometa.xyz".redirect(context)
         }
 
     }

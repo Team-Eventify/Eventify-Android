@@ -8,6 +8,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import core.common.extentions.redirect
 import feature.aboutApp.api.AboutAppEntry
 import feature.profile.api.ProfileListener
 import feature.profile.impl.ProfileViewModel
@@ -51,6 +52,10 @@ internal fun ProfileRoute(
 
         override fun navigateToDecor() {
             features.navigateToFeature<DecorEntry>(navController)
+        }
+
+        override fun navigateToSupport() {
+            "https://t.me/idoverchiviiloh".redirect(context)
         }
     }
 

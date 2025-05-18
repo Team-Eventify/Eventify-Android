@@ -30,11 +30,7 @@ internal class ProfileViewModel @Inject constructor(
     fun loadData(){
         launchCatching(
             catch = { error ->
-                _stateFlow.update {
-                    UiState.Error(
-                        message = error.message
-                    )
-                }
+                _stateFlow.update { UiState.Error }
             }
         ) {
             _stateFlow.update {

@@ -55,9 +55,7 @@ fun Modifier.shimmer(
 
     val isDarkTheme = isSystemInDarkTheme()
 
-    val gradient = remember(isDarkTheme) { mutableStateOf(
-        gradientColorsDark.takeIf { isDarkTheme } ?: gradientColorsWhite
-    ) }
+    val gradient = gradientColorsDark.takeIf { isDarkTheme } ?: gradientColorsWhite
 
     val transition = rememberInfiniteTransition(label = "shimmer animation transition")
     val translateAnimation by transition.animateFloat(
@@ -77,7 +75,7 @@ fun Modifier.shimmer(
     return this then drawWithContent {
         with(drawContext.canvas) {
             val brush = Brush.linearGradient(
-                colors = gradient.value,
+                colors = gradient,
                 start = Offset(
                     size.width * translateAnimation * cos(radians),
                     size.height * translateAnimation * sin(radians)

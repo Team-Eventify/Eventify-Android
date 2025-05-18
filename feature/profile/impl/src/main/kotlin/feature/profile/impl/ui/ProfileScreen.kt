@@ -59,8 +59,12 @@ fun ProfileScreen(
             onClick = actions::navigateToProfileEdit,
             modifier = Modifier
         )
+
         SettingsBlock {
-            NavigationSettingsItem(stringResource(UiKitR.string.help_and_support))
+            NavigationSettingsItem(
+                text = stringResource(UiKitR.string.help_and_support),
+                onClick = actions::navigateToSupport
+            )
             HorizontalDivider()
             NavigationSettingsItem(
                 text = stringResource(ProfileR.string.decor_item_title),
@@ -69,10 +73,9 @@ fun ProfileScreen(
         }
 
         SettingsBlock {
-            NavigationSettingsItem(stringResource(UiKitR.string.about_app), onClick = actions::navigateToAppInfo)
-            HorizontalDivider()
             NavigationSettingsItem(
-                text = stringResource(UiKitR.string.to_rate),
+                text = stringResource(UiKitR.string.about_app),
+                onClick = actions::navigateToAppInfo,
             )
         }
 
@@ -106,6 +109,7 @@ private fun ProfileScreenPreview() {
                     override fun navigateToProfileEdit() = Unit
                     override fun navigateToAppInfo() = Unit
                     override fun navigateToDecor() = Unit
+                    override fun navigateToSupport() = Unit
                 }
             )
         }
