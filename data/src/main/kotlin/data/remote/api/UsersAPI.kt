@@ -17,7 +17,7 @@ import retrofit2.http.Path
 typealias CategorySlug = String
 
 @AuthRequired
-interface UsersAPI {
+internal interface UsersAPI {
 
     @PATCH("{id}")
     suspend fun changeUser(@Path("id") userId: String, @Body user: ChangeUserRequest): Response<UserInfoResponse>

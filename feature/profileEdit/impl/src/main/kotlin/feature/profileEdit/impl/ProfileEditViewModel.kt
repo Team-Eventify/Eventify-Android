@@ -1,7 +1,9 @@
 package feature.profileEdit.impl
 
+import android.content.Context
 import androidx.lifecycle.viewModelScope
 import core.common.BaseViewModel
+import core.common.extentions.asText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import data.models.UserChange
 import domain.GetCategoriesWithUserSelection
@@ -9,6 +11,10 @@ import domain.account.ChangeUserUseCase
 import domain.account.DeleteAccountUseCase
 import domain.account.GetCurrentUserUseCase
 import domain.account.SetUserCategoriesUseCase
+import core.common.validation.EmailValidationUseCase
+import core.common.validation.TelegramNameValidationUseCase
+import core.common.extentions.onError
+import dagger.hilt.android.qualifiers.ApplicationContext
 import feature.profileEdit.impl.state.SideEffect
 import feature.profileEdit.impl.state.UiState
 import kotlinx.coroutines.channels.Channel
@@ -30,7 +36,11 @@ internal class ProfileEditViewModel @Inject constructor(
     private val changeUserUseCase: ChangeUserUseCase,
     private val setUserCategoriesUseCase: SetUserCategoriesUseCase,
     private val deleteAccountUseCase: DeleteAccountUseCase,
+    @ApplicationContext private val context: Context,
 ) : BaseViewModel() {
+
+    private val emailValidationUseCase = EmailValidationUseCase()
+    private val telegramNameValidationError = TelegramNameValidationUseCase()
 
     private val mutableSideEffect = Channel<SideEffect>()
     val sideEffect = mutableSideEffect.receiveAsFlow()
@@ -69,27 +79,38 @@ internal class ProfileEditViewModel @Inject constructor(
 
 
     fun saveUser() {
-        val validEmail = validateEmail() ?: return
-        val validTelegram = validateTelegramName() ?: return
-
         val userData = (stateFlow.value as? UiState.ShowProfileEdit)?.let {
             UserChange(
                 firstName = it.firstName,
                 lastName = it.lastName,
-                email = validEmail,
-                telegramName = validTelegram
+                email = it.email,
+                telegramName = it.telegramName
             )
+        } ?: return
+
+        emailValidationUseCase(userData.email).onError { error ->
+            _stateFlow.update { currentState ->
+                (currentState as? UiState.ShowProfileEdit)?.copy(
+                    emailError = error.asText(context),
+                    hasEmailError = true,
+                ) ?: currentState
+            }
+        } ?: return
+
+        telegramNameValidationError(userData.telegramName).onError { error ->
+            _stateFlow.update { currentState ->
+                (currentState as? UiState.ShowProfileEdit)?.copy(
+                    telegramNameError = error.asText(context),
+                    hasTelegramNameError = true,
+                ) ?: currentState
+            }
         } ?: return
 
         val categoryIds = (stateFlow.value as? UiState.ShowProfileEdit)?.let {
             it.categoryItems.filter { categoryItem -> categoryItem.selected }.map { categoryItem -> categoryItem.id }
         } ?: return
 
-        launchCatching(
-            catch = {
-                // TODO обработать ошибку
-            }
-        ) {
+        launchCatching {
             changeUserUseCase(userData)
             setUserCategoriesUseCase(categoryIds = categoryIds)
             mutableSideEffect.send(SideEffect.SuccessUpdate)
@@ -121,14 +142,6 @@ internal class ProfileEditViewModel @Inject constructor(
         }
     }
 
-
-    private fun validateEmail(): String? {
-        val currentState = (_stateFlow.value as? UiState.ShowProfileEdit) ?: return null
-
-        return currentState.email
-
-    }
-
         fun changeUserFirstName(value: String) {
             _stateFlow.update { currentState ->
                 (currentState as? UiState.ShowProfileEdit)?.copy(
@@ -153,11 +166,6 @@ internal class ProfileEditViewModel @Inject constructor(
             }
         }
 
-    private fun validateTelegramName(): String? {
-        val currentState = (_stateFlow.value as? UiState.ShowProfileEdit) ?: return null
-
-        return currentState.telegramName
-    }
 
     fun deleteAccount() {
         launchCatching(

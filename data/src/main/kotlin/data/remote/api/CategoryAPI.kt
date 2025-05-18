@@ -8,7 +8,7 @@ import retrofit2.http.POST
 import retrofit2.http.Path
 
 @AuthRequired
-interface CategoryAPI {
+internal interface CategoryAPI {
 
     @GET(".")
     suspend fun getCategoriesList(): Response<List<CategoryInfoResponse>>

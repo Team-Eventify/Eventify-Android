@@ -9,7 +9,7 @@ data class Organization(
     val title: String,
 )
 
-fun OrganizationDetailResponse.toBusiness() = Organization(
+internal fun OrganizationDetailResponse.toBusiness() = Organization(
     id = id,
     description = description,
     photoUrl = "https://eventify.website/api/v1/files/$photoID",

@@ -10,7 +10,7 @@ enum class EventState {
     UNKNOWN,
 }
 
-fun String.toEventState(): EventState = try {
+internal fun String.toEventState(): EventState = try {
         EventState.valueOf(this)
     } catch (e: IllegalArgumentException) {
         EventState.UNKNOWN

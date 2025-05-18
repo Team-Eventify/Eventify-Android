@@ -12,7 +12,7 @@ import data.remote.models.users.ChangeUserRequest
 import data.remote.utils.handle
 
 
-class UsersRepositoryImpl @Inject constructor(
+internal class UsersRepositoryImpl @Inject constructor(
     val dataSource: UsersAPI
 ): UsersRepository {
     override suspend fun changeUser(userId: String, user: UserChange): User {

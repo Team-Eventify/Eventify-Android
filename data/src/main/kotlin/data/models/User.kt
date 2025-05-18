@@ -10,7 +10,7 @@ data class User(
     val telegramName: String
 )
 
-fun UserInfoResponse.toBusiness(): User = User(
+internal fun UserInfoResponse.toBusiness(): User = User(
     email = this.email,
     firstName = this.firstName ?: "",
     id = this.id,

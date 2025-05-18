@@ -1,7 +1,7 @@
 package data.remote.models.events
 
 
-data class EventDetailResponse(
+internal data class EventDetailResponse(
     val capacity: Int,
     val cover: String,
     val description: String,

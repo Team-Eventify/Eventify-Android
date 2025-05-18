@@ -19,7 +19,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object OrganizationsModule {
+internal object OrganizationsModule {
     @Provides
     @Singleton
     fun provideOrganizationsAPI(accessTokenInterceptor: AccessTokenInterceptor, tokenAuthenticator: TokenAuthenticator): OrganizationsAPI {

@@ -11,7 +11,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 @AuthRequired
-interface EventsAPI {
+internal interface EventsAPI {
 
     @GET(".")
     suspend fun getEventsList(

@@ -1,5 +1,5 @@
 package data.remote.models.auth
 
-data class RefreshTokenRequestData(
+internal data class RefreshTokenRequestData(
     val refresh: String
 )

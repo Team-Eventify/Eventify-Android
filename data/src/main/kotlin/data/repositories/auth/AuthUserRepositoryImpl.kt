@@ -16,7 +16,7 @@ import data.remote.utils.handle
 import javax.inject.Inject
 
 
-class AuthUserRepositoryImpl @Inject constructor (
+internal class AuthUserRepositoryImpl @Inject constructor (
     private val dataSource: AuthAPI
 ): AuthUserRepository {
     override suspend fun refreshAccessToken(refreshToken: String): TokenData {
