@@ -1,6 +1,7 @@
 package feature.register.impl
 
 import android.content.Context
+import androidx.compose.runtime.currentRecomposeScope
 import androidx.lifecycle.viewModelScope
 import core.common.BaseViewModel
 import core.common.extentions.asText
@@ -87,6 +88,8 @@ class RegisterViewModel @Inject constructor(
     }
 
     fun updateOtp(value: String){
+        if (value.length > 6) return
+
         mutableOtpState.update { currentState ->
             (currentState as? OtpState.ShowOtp)?.copy(
                 otp = value,

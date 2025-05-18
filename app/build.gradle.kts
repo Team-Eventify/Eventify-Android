@@ -21,7 +21,7 @@ android {
         minSdk = 29
         targetSdk = 35
         versionCode = 1
-        versionName = "1.0"
+        versionName = "0.1.0"
 
         vectorDrawables {
             useSupportLibrary = true
@@ -41,11 +41,8 @@ android {
             variant.outputs
                 .map { it as BaseVariantOutputImpl }
                 .forEach { output ->
-                    // Eventify_release_
                     val buildVariant = variant.buildType.name
-                    val versionCode = variant.versionCode
                     val versionName = variant.versionName
-                    val outputFileName = ".apk"
                     output.outputFileName = "Eventify_${buildVariant}_${versionName}.apk"
                 }
         }
