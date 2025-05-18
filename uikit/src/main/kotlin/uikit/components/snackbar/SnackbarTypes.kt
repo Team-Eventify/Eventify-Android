@@ -30,7 +30,7 @@ sealed interface SnackbarStyle {
     fun colors(): SnackbarColors
 
     data class Success(
-        override val iconResId: Int? = UiKitR.drawable.xmark_circle_fill
+        override val iconResId: Int? = UiKitR.drawable.check_circle_fill
     ) : SnackbarStyle {
 
         @Composable

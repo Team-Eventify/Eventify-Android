@@ -124,6 +124,14 @@ fun ProfileEditScreen(
             onClickCategory = actions::onChangeCategoryFilterActive,
             modifier = Modifier
         )
+        state.categoriesError?.let {
+            Text(
+                text = it,
+                color = MaterialTheme.colorScheme.error,
+                style = TypographyKit.bodyRegular,
+            )
+        }
+
 
         SettingsBlock {
             ImportantActionSettingsItem(

@@ -17,7 +17,8 @@ sealed class SetupStep {
 }
 
 data class ChooseCategoriesState(
-    val categories: List<CategorySelectItem> = emptyList()
+    val categories: List<CategorySelectItem> = emptyList(),
+    val error: String? = null,
 )
 
 data class UserDataState(

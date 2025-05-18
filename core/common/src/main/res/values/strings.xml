@@ -5,4 +5,5 @@
     <string name="change_your_data">Change your data</string>
     <string name="minimum_password_length_error">Minimum 8 chars</string>
     <string name="invalid_email">Invalid email format</string>
+    <string name="needs_select_minimum_one_category">Needs select minimum one category</string>
 </resources>

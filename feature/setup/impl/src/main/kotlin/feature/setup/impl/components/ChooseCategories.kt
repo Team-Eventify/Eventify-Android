@@ -62,6 +62,13 @@ fun ChooseCategories(
                 categories = state.categoriesState.categories,
                 onCategoryClick = actions::selectCategory
             )
+            state.categoriesState.error?.let {
+                Text(
+                    text = it,
+                    style = TypographyKit.bodyRegular,
+                    color = MaterialTheme.colorScheme.error,
+                )
+            }
         }
 
         Column(

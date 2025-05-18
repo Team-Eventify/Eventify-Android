@@ -22,6 +22,8 @@ import uikit.components.topBar.TopBarAction
 import uikit.components.topBar.TopBarSize
 import uikit.components.topBar.TopBarState
 import uikit.utils.ObserveAsEvent
+import com.example.eventify.core.common.R as CommonR
+
 
 @Composable
 fun ProfileEditRoute(
@@ -71,7 +73,8 @@ fun ProfileEditRoute(
         when (sideEffect) {
             is SideEffect.FailUpdate -> {
                 snackBarState.show(
-                    message = sideEffect.message ?: "",
+                    message = "Не удалось обновить аккаунт",
+                    description = context.getString(CommonR.string.try_again),
                     style = SnackbarStyle.Error,
                 )
             }
@@ -94,6 +97,14 @@ fun ProfileEditRoute(
                 snackBarState.show(
                     message = "Не удалось удалить аккаунт",
                     description = "Попробуйте позже",
+                    style = SnackbarStyle.Error,
+                )
+            }
+
+            SideEffect.EmptyCategories -> {
+                snackBarState.show(
+                    message = "Не удалось обновить аккаунт",
+                    description = "Выберите хотя бы одну категорию",
                     style = SnackbarStyle.Error,
                 )
             }
