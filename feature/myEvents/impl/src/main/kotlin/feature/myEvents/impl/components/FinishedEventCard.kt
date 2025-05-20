@@ -5,16 +5,11 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.IntrinsicSize
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -26,14 +21,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
-import core.common.extentions.asDate
-import core.common.extentions.asTime
+import core.common.extentions.DateTimePattern
+import core.common.extentions.durationUtcFormatted
+import core.common.extentions.toUtcFormat
 import data.models.EventState
 import domain.models.ShortEventItem
 import uikit.EventifyTheme
@@ -82,8 +76,8 @@ fun FinishedEventCard(
                     verticalArrangement = Arrangement.spacedBy(5.dp, Alignment.CenterVertically),
                     horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.Start)
                 ) {
-                    FinishedEventInfoChip(text = event.start.asDate())
-                    FinishedEventInfoChip(text = event.start.asTime())
+                    FinishedEventInfoChip(text = event.start.toUtcFormat(DateTimePattern.ShortNamedDate))
+                    FinishedEventInfoChip(text = durationUtcFormatted(event.start, event.end))
                     FinishedEventInfoChip(text = event.location)
                 }
 

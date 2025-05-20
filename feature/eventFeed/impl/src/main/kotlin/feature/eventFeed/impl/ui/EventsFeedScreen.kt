@@ -21,7 +21,9 @@ import java.util.UUID
 import kotlin.random.Random
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.google.accompanist.swiperefresh.SwipeRefresh
-import core.common.extentions.asDate
+import core.common.extentions.DateTimePattern
+import core.common.extentions.durationUtcFormatted
+import core.common.extentions.toUtcFormat
 import data.models.EventState
 import domain.models.ShortEventItem
 import uikit.components.cards.EventCard
@@ -55,9 +57,9 @@ internal fun EventsFeedScreen(
                 EventCard(
                     title = event.title,
                     description = event.description,
-                    duration = event.duration,
+                    duration = durationUtcFormatted(event.start, event.end),
                     location = event.location,
-                    startTime = event.start.asDate(),
+                    startTime = event.start.toUtcFormat(DateTimePattern.ShortNamedDate),
                     coverId = event.cover,
                 ) {
                     actions.onEventClick(event.id)
