@@ -13,6 +13,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import kotlinx.coroutines.launch
 import androidx.core.net.toUri
+import core.common.extentions.redirect
 import domain.AccountCredentialManager
 import feature.login.api.LoginEntry
 import feature.register.api.RegisterListener
@@ -24,8 +25,11 @@ import core.featureManager.LocalFeaturesProvider
 import core.featureManager.navigateToFeature
 import feature.setup.api.SetUpEntry
 import uikit.LocalSnackbarState
-import uikit.components.snackbar.SnackbarType
+import uikit.components.snackbar.SnackbarStyle
 import com.example.eventify.uikit.R as UiKitR
+import com.example.eventify.core.common.R as CommonR
+import com.example.eventify.feature.register.impl.R as RegisterR
+
 
 @Composable
 fun RegisterRoute(
@@ -80,8 +84,7 @@ fun RegisterRoute(
         }
 
         override fun goToPrivacyPolicy() {
-            val intent = Intent(Intent.ACTION_VIEW, "https://nometa.xyz".toUri())
-            context.startActivity(intent)
+            "https://nometa.xyz".redirect(context)
         }
 
     }
@@ -98,19 +101,26 @@ fun RegisterRoute(
                     features.navigateToFeature<SetUpEntry>(navController)
                 }
             }
-            is SideEffect.FailRegister -> {
-                snackBarState.show(
-                    message = sideEffect.message ?: "",
-                    type = SnackbarType.Error,
-                )
-            }
 
             SideEffect.ServerError -> {
                 snackBarState.show(
                     message = context.getString(UiKitR.string.server_error),
-                    type = SnackbarType.Error
+                    description = context.getString(CommonR.string.try_again_later),
+                    style = SnackbarStyle.Error
                 )
             }
+
+            SideEffect.FailedRegister -> snackBarState.show(
+                message = context.getString(RegisterR.string.registration_error),
+                description = context.getString(CommonR.string.try_again),
+                style = SnackbarStyle.Error,
+            )
+
+            SideEffect.FailedSendOTP -> snackBarState.show(
+                message = context.getString(RegisterR.string.faild_send_otp),
+                description = context.getString(CommonR.string.try_again),
+                style = SnackbarStyle.Error,
+            )
         }
     }
 

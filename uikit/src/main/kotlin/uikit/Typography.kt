@@ -6,6 +6,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.sp
 
 object TypographyKit {
+
     val bodyRegular = TextStyle(
         fontFamily = SFCompatFamily,
         lineHeight = 20.sp,

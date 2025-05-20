@@ -37,6 +37,7 @@ import uikit.components.EventInfoTag
 import uikit.components.shimmer
 import uikit.space10
 import uikit.space12
+import uikit.space6
 
 
 @Composable
@@ -97,6 +98,7 @@ fun EventCard(
                         blendMode = BlendMode.SrcAtop
                     )
             )
+
             Column(
                 modifier = Modifier
                     .padding(10.dp)
@@ -111,6 +113,9 @@ fun EventCard(
                     EventInfoTag(startTime)
                     EventInfoTag(location)
                 }
+
+                Spacer(Modifier.height(space6))
+
                 Text(
                     text = title,
                     color = MaterialTheme.colorScheme.onSurface,

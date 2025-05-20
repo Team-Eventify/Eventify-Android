@@ -3,6 +3,7 @@ package feature.setup.impl.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import feature.setup.impl.components.ChooseCategories
@@ -14,9 +15,11 @@ import core.featureManager.LocalFeaturesProvider
 import core.featureManager.clearNavigate
 import feature.eventFeed.api.EventsFeedEntry
 import uikit.LocalSnackbarState
-import uikit.components.snackbar.SnackbarHost
-import uikit.components.snackbar.SnackbarType
+import uikit.components.snackbar.SnackbarStyle
 import uikit.utils.ObserveAsEvent
+import com.example.eventify.core.common.R as CommonR
+import com.example.eventify.uikit.R as UiKitR
+
 
 @Composable
 fun SetUpRoute(
@@ -26,6 +29,7 @@ fun SetUpRoute(
     val uiState by viewModel.stateFlow.collectAsState()
     val features = LocalFeaturesProvider.current.features
     val snackBarState = LocalSnackbarState.current
+    val context = LocalContext.current
 
     val listener = object : SetUpListener {
         override fun selectCategory(categoryId: String, selected: Boolean) {
@@ -53,12 +57,21 @@ fun SetUpRoute(
         when (sideEffect) {
             is SideEffect.FailedProvideCategories -> {
                 snackBarState.show(
-                    message = sideEffect.message ?: "",
-                    type = SnackbarType.Error,
+                    message = context.getString(UiKitR.string.server_error),
+                    description = context.getString(CommonR.string.try_again),
+                    style = SnackbarStyle.Error,
                 )
             }
             SideEffect.FinishSetUp -> {
                 features.clearNavigate<EventsFeedEntry>(navController)
+            }
+
+            SideEffect.FailedSetUserData -> {
+                snackBarState.show(
+                    message = "Не удалось обноыить данные",
+                    description = context.getString(CommonR.string.try_again),
+                    style = SnackbarStyle.Error
+                )
             }
         }
     }

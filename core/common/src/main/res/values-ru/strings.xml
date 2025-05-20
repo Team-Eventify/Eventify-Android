@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="try_again">Попробуйте еще раз</string>
+    <string name="try_again_later">Попробуйте еще раз позже</string>
+    <string name="change_your_data">Введите другие данные</string>
     <string name="minimum_password_length_error">Не менее 8 символов</string>
-    <string name="invalid_emal">Некоректный формат почты</string>
+    <string name="invalid_email">Некоректный формат почты</string>
+    <string name="needs_select_minimum_one_category">Нужно выбрать хотя бы одну категорию</string>
 
 </resources>

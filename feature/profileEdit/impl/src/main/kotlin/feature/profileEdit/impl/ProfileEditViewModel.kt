@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlin.collections.filter
+import com.example.eventify.core.common.R as CommonR
 
 
 @HiltViewModel
@@ -107,8 +108,20 @@ internal class ProfileEditViewModel @Inject constructor(
         } ?: return
 
         val categoryIds = (stateFlow.value as? UiState.ShowProfileEdit)?.let {
-            it.categoryItems.filter { categoryItem -> categoryItem.selected }.map { categoryItem -> categoryItem.id }
+            it.categoryItems
+                .filter { categoryItem -> categoryItem.selected }
+                .map { categoryItem -> categoryItem.id }
         } ?: return
+
+        if (categoryIds.isEmpty()) {
+            _stateFlow.update { currentState ->
+                (currentState as? UiState.ShowProfileEdit)?.copy(
+                    categoriesError = context.getString(CommonR.string.needs_select_minimum_one_category)
+                ) ?: currentState
+            }
+            mutableSideEffect.trySend(SideEffect.EmptyCategories)
+            return
+        }
 
         launchCatching {
             changeUserUseCase(userData)
@@ -122,6 +135,7 @@ internal class ProfileEditViewModel @Inject constructor(
     fun changeCategoryFilterActive(categoryId: String, value: Boolean) {
         _stateFlow.update { currentState ->
             (currentState as? UiState.ShowProfileEdit)?.copy(
+                categoriesError = null,
                 categoryItems = currentState.categoryItems.map { category ->
                     if (category.id == categoryId) {
                         category.copy(selected = value)

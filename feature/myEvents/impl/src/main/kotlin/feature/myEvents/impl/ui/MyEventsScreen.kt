@@ -29,6 +29,7 @@ import kotlin.collections.isNotEmpty
 import data.models.EventState
 import com.example.eventify.uikit.R as UiKitR
 
+
 @Composable
 fun MyEventsScreen(
     state: UiState.ShowMyEvents,
@@ -65,6 +66,7 @@ fun MyEventsScreen(
                     HeadingText(text = stringResource(UiKitR.string.finished_events))
                 }
             }
+            // TODO сделать одну карточку для всех состоянией и менять наложение tint
             items(state.finishedEvents) { event ->
                 FinishedEventCard(
                     event = event,

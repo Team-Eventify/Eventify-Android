@@ -1,5 +1,6 @@
 package feature.setup.impl.ui
 
+import android.content.Context
 import androidx.lifecycle.viewModelScope
 import core.common.BaseViewModel
 import core.common.extentions.toColorOrNull
@@ -9,7 +10,9 @@ import feature.setup.impl.state.SetupStep
 import feature.setup.impl.state.SideEffect
 import feature.setup.impl.state.UserDataState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import data.models.Category
+import data.models.UserChange
 import domain.account.ChangeUserUseCase
 import domain.account.SetUserCategoriesUseCase
 import domain.categories.GetCategoriesUseCase
@@ -23,20 +26,22 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import com.example.eventify.core.common.R as CommonR
 
 
 @HiltViewModel
 class ChooseCategoriesViewModel @Inject constructor(
     private val setCategoriesUseCase: SetUserCategoriesUseCase,
-    private val changeUser: ChangeUserUseCase,
+    private val changeUserUseCase: ChangeUserUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
+    @ApplicationContext private val context: Context,
 ) : BaseViewModel() {
     private val mutableSideEffect = Channel<SideEffect>()
     val sideEffect = mutableSideEffect.receiveAsFlow()
 
     private val mutableCategoriesState = MutableStateFlow(ChooseCategoriesState())
     private val mutableUserDataState = MutableStateFlow(UserDataState())
-    private val mutableSetupStep = MutableStateFlow<SetupStep>(SetupStep.SetUserData)
+    private val mutableSetupStep = MutableStateFlow<SetupStep>(SetupStep.ChooseCategories)
 
     val stateFlow = combine(
         mutableCategoriesState,
@@ -77,6 +82,7 @@ class ChooseCategoriesViewModel @Inject constructor(
         when (mutableSetupStep.value) {
             SetupStep.Initial -> {}
             SetupStep.SetUserData -> {
+
                 mutableSetupStep.update { SetupStep.ChooseCategories }
             }
             SetupStep.ChooseCategories -> {
@@ -114,6 +120,7 @@ class ChooseCategoriesViewModel @Inject constructor(
     fun changeCategoryFilterActive(categoryId: String, value: Boolean) {
         mutableCategoriesState.update { currentState ->
             currentState.copy(
+                error = null,
                 categories = currentState.categories.map { category ->
                     category.copy(selected = value).takeIf { it.id == categoryId } ?: category
                 }
@@ -130,8 +137,37 @@ class ChooseCategoriesViewModel @Inject constructor(
             val categoriesId = mutableCategoriesState.value.categories
                 .filter { it.selected }
                 .map { it.id }
+
+            if (categoriesId.isEmpty()) {
+                mutableCategoriesState.update { currentState ->
+                    currentState.copy(
+                        error = context.getString(CommonR.string.needs_select_minimum_one_category)
+                    )
+                }
+                return@launchCatching
+            }
+
             setCategoriesUseCase(categoriesId)
             mutableSideEffect.trySend(SideEffect.FinishSetUp)
+        }
+    }
+
+    private fun setUserDataAndFlowNext() {
+        // TODO доделать
+        launchCatching(
+            catch = {
+                mutableSideEffect.trySend(SideEffect.FailedSetUserData)
+            }
+        ) {
+            val userData = mutableUserDataState.value.let {
+                UserChange(
+                    email = "",
+                    firstName = it.firstName,
+                    lastName = it.lastName,
+                    telegramName = ""
+                )
+            }
+            changeUserUseCase(userData)
         }
     }
 

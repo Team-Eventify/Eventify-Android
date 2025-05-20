@@ -1,8 +1,10 @@
 package feature.myEvents.impl.components
 
 import android.content.res.Configuration
+import android.text.Layout
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -33,6 +35,7 @@ import domain.models.ShortEventItem
 import uikit.EventifyTheme
 import uikit.TypographyKit
 import uikit.components.UpComingEventInfoTag
+import uikit.space12
 import java.util.UUID
 import com.example.eventify.uikit.R as UiKitR
 
@@ -51,28 +54,27 @@ fun UpComingEventCard(
         onClick = { onClick?.invoke(event.id) },
         modifier = Modifier
             .fillMaxWidth()
-            .height(IntrinsicSize.Min)
             .then(modifier)
     ) {
-        Row(
-            horizontalArrangement = Arrangement.Start,
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
         ) {
             Column(
                 verticalArrangement = Arrangement.Center,
                 modifier = Modifier
-                    .fillMaxHeight()
-                    .padding(10.dp)
-                    .weight(.6f)
+                    .fillMaxWidth(.7f)
+                    .align(Alignment.CenterStart)
+                    .padding(space12)
             ) {
                 Text(
                     text = event.title,
                     style = TypographyKit.bodyMedium,
+                    maxLines = 2
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 FlowRow(
-                    verticalArrangement = Arrangement.spacedBy(5.dp, Alignment.CenterVertically),
+                    verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
                     horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.Start),
                     overflow = FlowRowOverflow.Visible,
                     maxLines = 2
@@ -84,14 +86,13 @@ fun UpComingEventCard(
 
             }
 
-            // Right Image
             Image(
                 painter = painterResource(UiKitR.drawable.eventify_group_1),
                 contentDescription = null,
                 contentScale = ContentScale.FillHeight,
                 modifier = Modifier
-                    .fillMaxHeight()
-                    .weight(0.4f)
+                    .align(Alignment.BottomEnd)
+                    .fillMaxWidth(.4f)
             )
         }
     }

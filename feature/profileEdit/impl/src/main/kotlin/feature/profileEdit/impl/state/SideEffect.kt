@@ -5,4 +5,5 @@ sealed class SideEffect {
     data class FailUpdate(val message: String? = null) : SideEffect()
     data object AccountDeleted : SideEffect()
     data object FailedDeleteAccount : SideEffect()
+    data object EmptyCategories : SideEffect()
 }

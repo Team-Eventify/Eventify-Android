@@ -21,6 +21,6 @@ fun <T, E: ValidationError> ValidationResult<T, E>.onError(block: (E) -> Unit): 
 fun ValidationError.asText(context: Context): String {
     return when (this) {
         PasswordValidationError.TooShort -> context.getString(CommonR.string.minimum_password_length_error)
-        EmailValidationError.IncorrectEmail -> context.getString(CommonR.string.invalid_emal)
+        EmailValidationError.IncorrectEmail -> context.getString(CommonR.string.invalid_email)
     }
 }

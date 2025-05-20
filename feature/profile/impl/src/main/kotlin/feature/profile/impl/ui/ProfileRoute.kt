@@ -8,6 +8,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import core.common.extentions.redirect
 import feature.aboutApp.api.AboutAppEntry
 import feature.profile.api.ProfileListener
 import feature.profile.impl.ProfileViewModel
@@ -22,6 +23,7 @@ import feature.decor.api.DecorEntry
 import uikit.components.topBar.TopBarSize
 import uikit.components.topBar.TopBarState
 import com.example.eventify.uikit.R as UiKitR
+import com.example.eventify.core.common.R as CommonR
 
 
 @Composable
@@ -51,13 +53,17 @@ internal fun ProfileRoute(
         override fun navigateToDecor() {
             features.navigateToFeature<DecorEntry>(navController)
         }
+
+        override fun navigateToSupport() {
+            "https://t.me/idoverchiviiloh".redirect(context)
+        }
     }
 
     when (uiState) {
-        is UiState.Error -> {
+        UiState.Error -> {
             ErrorScreen(
                 title = stringResource(UiKitR.string.failed_load_profile),
-                description = (uiState as UiState.Error).message
+                description = stringResource(CommonR.string.try_again_later)
             )
         }
         UiState.Loading -> LoadingProfile()

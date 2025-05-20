@@ -5,4 +5,5 @@ interface ProfileListener {
     fun navigateToProfileEdit(): Unit
     fun navigateToAppInfo(): Unit
     fun navigateToDecor(): Unit
+    fun navigateToSupport(): Unit
 }

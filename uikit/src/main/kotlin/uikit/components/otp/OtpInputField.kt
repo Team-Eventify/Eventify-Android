@@ -45,6 +45,7 @@ fun OtpTextField(
 
 
     BasicTextField(
+        enabled = false,
         modifier = Modifier
             .then(modifier)
         ,

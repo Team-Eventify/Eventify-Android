@@ -8,6 +8,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.example.eventify.uikit.R
+import core.common.extentions.redirect
 import feature.aboutApp.impl.state.AboutAppListener
 import uikit.components.topBar.LocalTopBarState
 import uikit.components.topBar.TopBarAction
@@ -30,6 +31,7 @@ fun AboutAppRoute(
         }
 
         override fun goToAboutUs() {
+            "https://t.me/EventifyApp".redirect(context)
         }
 
         override fun goPrivacyPolicy() {

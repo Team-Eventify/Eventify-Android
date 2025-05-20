@@ -20,7 +20,8 @@ sealed class UiState {
         val hasTelegramNameError: Boolean = false,
         val telegramNameError: String? = null,
 
-        val categoryItems: List<CategorySelectItem> = emptyList()
+        val categoryItems: List<CategorySelectItem> = emptyList(),
+        val categoriesError: String? = null
     ) : UiState()
 
     data object Error : UiState()

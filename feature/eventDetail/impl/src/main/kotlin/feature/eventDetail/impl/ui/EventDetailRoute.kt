@@ -2,6 +2,7 @@ package feature.eventDetail.impl.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -13,9 +14,11 @@ import feature.eventDetail.impl.state.EventDetailUiState
 import feature.eventDetail.impl.state.SideEffect
 import uikit.LocalSnackbarState
 import uikit.components.screens.ErrorScreen
-import uikit.components.snackbar.SnackbarType
+import uikit.components.snackbar.SnackbarStyle
 import uikit.utils.ObserveAsEvent
 import com.example.eventify.uikit.R as UiKitR
+import com.example.eventify.feature.eventDetail.impl.R as DetailR
+import com.example.eventify.core.common.R as CommonR
 
 
 @Composable
@@ -25,6 +28,7 @@ fun EventDetailRoute(
     val viewModel = hiltViewModel<EventDetailViewModel>()
     val uiState by viewModel.stateFlow.collectAsStateWithLifecycle()
     val snackBarState = LocalSnackbarState.current
+    val context = LocalContext.current
 
     val listener = object : EventDetailListener {
         override fun navigateUp() {
@@ -48,26 +52,36 @@ fun EventDetailRoute(
         when (sideEffect) {
             SideEffect.SuccessSubscribeEvent -> {
                 snackBarState.show(
-                    message = "Вы подписались на событие",
-                    type = SnackbarType.Success,
+                    message = context.getString(DetailR.string.successful_subscribe_title),
+                    description = context.getString(DetailR.string.successful_subscribe_description),
+                    force = true,
+                    style = SnackbarStyle.Success(
+                        iconResId = UiKitR.drawable.check_circle_fill,
+                    ),
                 )
             }
             SideEffect.SuccessUnsubscribeEvent -> {
                 snackBarState.show(
-                    message = "Вы отписались от события",
-                    type = SnackbarType.Success,
+                    message = context.getString(DetailR.string.successful_unsubscribe_title),
+                    description = context.getString(DetailR.string.successful_unsubscribe_description),
+                    force = true,
+                    style = SnackbarStyle.Success(
+                        iconResId = UiKitR.drawable.xmark_circle_fill,
+                    ),
                 )
             }
             is SideEffect.FailSubscribeEvent -> {
                 snackBarState.show(
-                    message = sideEffect.message ?: "Не удалось подписаться на событие",
-                    type = SnackbarType.Error,
+                    message = context.getString(DetailR.string.failed_subscribe),
+                    description = context.getString(CommonR.string.try_again),
+                    style = SnackbarStyle.Error,
                 )
             }
             is SideEffect.FailUnsubscribeEvent -> {
                 snackBarState.show(
-                    message = sideEffect.message ?: "Не удалось отписаться от события",
-                    type = SnackbarType.Error,
+                    message = context.getString(DetailR.string.failed_unsubscribe),
+                    description = context.getString(CommonR.string.try_again),
+                    style = SnackbarStyle.Error,
                 )
             }
         }
@@ -76,9 +90,9 @@ fun EventDetailRoute(
     when (uiState) {
         EventDetailUiState.Loading -> LoadingEvent()
 
-        is EventDetailUiState.Error -> ErrorScreen(
+        EventDetailUiState.Error -> ErrorScreen(
             title = stringResource(UiKitR.string.error_load_event),
-            description = (uiState as EventDetailUiState.Error).message
+            description = stringResource(CommonR.string.try_again_later)
         )
         is EventDetailUiState.ShowEvent -> {
             EventDetailScreen(uiState as EventDetailUiState.ShowEvent, listener)
