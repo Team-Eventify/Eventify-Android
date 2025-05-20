@@ -58,30 +58,6 @@ fun AboutAppScreen(
                 onClick = actions::goToAboutUs,
             )
         }
-
-//        SettingsBlock{
-//            NavigationSettingsItem(
-//                text = stringResource(UiKitR.string.privacy_policy),
-//                onClick = actions::goPrivacyPolicy,
-//            )
-//            HorizontalDivider()
-//            NavigationSettingsItem(
-//                text = stringResource(UiKitR.string.terms_of_use),
-//                onClick = actions::goTermsOfUse,
-//            )
-//            HorizontalDivider()
-//            NavigationSettingsItem(
-//                text = stringResource(UiKitR.string.information_security),
-//                onClick = actions::goToInformationSecurity,
-//            )
-//        }
-//
-//        SettingsBlock{
-//            NavigationSettingsItem(
-//                text = stringResource(UiKitR.string.donate),
-//                onClick = actions::goToDonate,
-//            )
-//        }
     }
 
 }

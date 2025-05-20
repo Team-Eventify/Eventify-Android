@@ -70,66 +70,7 @@ fun ProfileDecorScreen(
 
 
             }
-
-
-
-//            IconThemeComponent(isActiveTheme = false,
-//                isSystemOrDarkTheme = isDarkTheme,
-//                iconTheme = R.drawable.sun_max_fill,
-//                titleTheme = R.string.light_theme_title,
-//                activeColor = Color.Black,
-//                changeTheme = onClick,
-//            )
-//
-//            IconThemeComponent(isActiveTheme = true,
-//                isSystemOrDarkTheme = isDarkTheme,
-//                iconTheme = R.drawable.moon_fill,
-//                titleTheme = R.string.dark_theme_title,
-//                activeColor = Color.White,
-//                changeTheme = onClick,
-//            )
         }
-//        HorizontalDivider(modifier = Modifier
-//            .padding(vertical=20.dp),)
-//
-//        Text(
-//            text = stringResource(UiKitR.string.icon_logo),
-//            style = TypographyKit.bodyMedium
-//        )
-
-
-//        FlowRow(modifier = Modifier
-//            .fillMaxWidth()
-//            .padding(top = 20.dp),
-//            horizontalArrangement = Arrangement.SpaceBetween) {
-//            uiState.listIcons.forEach { item ->
-//                Column(modifier = Modifier
-//                    .clickable {
-//                    actions.changeIcon(item)
-//                }){
-//                    Image(
-//                        painter = painterResource(item.icon),
-//                        contentDescription = null,
-//                        modifier = Modifier
-//                            .padding(3.dp)
-//                            .border(1.dp,
-//                                if (item.alias == uiState.activeTypeOfIconAlias) Color(0xFF74F6A7)
-//                                else Color.Transparent,
-//                                RoundedCornerShape(size = 20.dp),
-//                                )
-//                            .padding(3.dp)
-//                            .border(1.dp,
-//                                if (item.alias == uiState.activeTypeOfIconAlias) Color.Black
-//                                else Color.Transparent,
-//                                RoundedCornerShape(size = 20.dp),
-//                                )
-//                            .clip(RoundedCornerShape(size = 20.dp))
-//                        )
-//                    Text(text = stringResource(item.titleRes),
-//                        modifier = Modifier.padding(horizontal = 6.dp))
-//                }
-//            }
-//        }
     }
 }
 

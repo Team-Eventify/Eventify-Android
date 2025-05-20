@@ -20,7 +20,6 @@ import kotlinx.coroutines.launch
 fun ImagePager(
     pagerState: PagerState,
     modifier: Modifier = Modifier,
-    key: ((Int) -> Any)? = null,
     pageContent: @Composable() (PagerScope.(page: Int) -> Unit),
 ) {
     val coroutineScope = rememberCoroutineScope()
