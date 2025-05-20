@@ -1,7 +1,6 @@
 package feature.myEvents.impl.components
 
 import android.content.res.Configuration
-import android.text.Layout
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -9,10 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.FlowRowOverflow
-import androidx.compose.foundation.layout.IntrinsicSize
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -28,8 +24,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
-import core.common.extentions.asDate
-import core.common.extentions.asTime
+import core.common.extentions.DateTimePattern
+import core.common.extentions.durationUtcFormatted
+import core.common.extentions.toUtcFormat
 import data.models.EventState
 import domain.models.ShortEventItem
 import uikit.EventifyTheme
@@ -79,8 +76,8 @@ fun UpComingEventCard(
                     overflow = FlowRowOverflow.Visible,
                     maxLines = 2
                 ) {
-                    UpComingEventInfoTag(text = event.start.asDate())
-                    UpComingEventInfoTag(text = event.start.asTime())
+                    UpComingEventInfoTag(text = event.start.toUtcFormat(DateTimePattern.ShortNamedDate))
+                    UpComingEventInfoTag(text = durationUtcFormatted(event.start, event.end))
                     UpComingEventInfoTag(text = event.location)
                 }
 

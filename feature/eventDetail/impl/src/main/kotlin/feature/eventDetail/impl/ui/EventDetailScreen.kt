@@ -33,10 +33,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import core.common.extentions.asDate
-import core.common.extentions.asTime
+import core.common.extentions.DateTimePattern
+import core.common.extentions.durationUtcFormatted
 import core.common.extentions.toColorOrNull
+import core.common.extentions.toUtcFormat
 import data.models.Category
 import data.models.EventDetail
 import data.models.EventState
@@ -58,7 +58,6 @@ import uikit.components.topBar.LocalTopBarState
 import uikit.components.topBar.TopBarAction
 import uikit.components.topBar.TopBarSize
 import uikit.components.topBar.TopBarState
-import uikit.space10
 import uikit.space20
 import uikit.utils.conditional
 import java.util.UUID
@@ -144,8 +143,8 @@ internal fun EventDetailScreen(
                 FlowRow(
                     horizontalArrangement = Arrangement.spacedBy(10.dp, alignment = Alignment.Start)
                 ) {
-                    ChipInfo(text = state.event.eventInfo.start.asDate())
-                    ChipInfo(text = state.event.eventInfo.start.asTime())
+                    ChipInfo(text = state.event.eventInfo.start.toUtcFormat(DateTimePattern.ShortNamedDate))
+                    ChipInfo(text = state.event.eventInfo.let { durationUtcFormatted(it.start, it.end) })
                     ChipInfo(text = state.event.eventInfo.location)
 
                     state.event.categories.forEach{ tag ->
