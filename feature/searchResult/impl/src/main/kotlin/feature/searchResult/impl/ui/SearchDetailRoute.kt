@@ -8,7 +8,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import feature.searchResult.impl.components.EventsSearchDetail
 import feature.searchResult.impl.state.SearchDetailListener
 import core.common.navigation.ARG_EVENT_ID
 import core.featureManager.LocalFeaturesProvider
