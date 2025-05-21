@@ -139,7 +139,6 @@ fun SegmentedTabSwitcher(
 
 @Composable
 @Preview(name = "Search", showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Preview(name = "Search", showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
 private fun SearchScreenPreview() {
     EventifyTheme  {
         SearchScreen(
@@ -152,12 +151,29 @@ private fun SearchScreenPreview() {
             ),
             listener = object : SearchListener {
                 override fun changeSearchMode(mode: SearchMode) = Unit
-                override fun onEventClick(eventId: EventId) = Unit
-                override fun onCategoryClick(categoryId: CategoryId) = Unit
-                override fun onChangeSearchQuery(value: String) = Unit
-                override fun search() = Unit
-                override fun cleanSearch() = Unit
-                override fun refresh() = Unit
+                override fun onEventClick(eventId: EventId) {
+                    TODO("Not yet implemented")
+                }
+
+                override fun onCategoryClick(categoryId: CategoryId) {
+                    TODO("Not yet implemented")
+                }
+
+                override fun onChangeSearchQuery(value: String) {
+                    TODO("Not yet implemented")
+                }
+
+                override fun search() {
+                    TODO("Not yet implemented")
+                }
+
+                override fun cleanSearch() {
+                    TODO("Not yet implemented")
+                }
+
+                override fun refresh() {
+                    TODO("Not yet implemented")
+                }
             }
         )
     }

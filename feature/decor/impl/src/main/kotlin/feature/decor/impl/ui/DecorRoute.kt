@@ -20,7 +20,7 @@ import uikit.utils.ObserveAsEvent
 import com.example.eventify.uikit.R as UiKitR
 
 @Composable
-internal fun ProfileDecorRoute(navController: NavController) {
+fun ProfileDecorRoute(navController: NavController) {
     val viewModel = hiltViewModel<DecorViewModel>()
     val topBarState = LocalTopBarState.current
     val context = LocalContext.current

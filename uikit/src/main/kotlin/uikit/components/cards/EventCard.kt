@@ -109,8 +109,8 @@ fun EventCard(
                     modifier = Modifier
                         .padding(top = 10.dp)
                 ) {
-                    EventInfoTag(startTime)
                     EventInfoTag(duration)
+                    EventInfoTag(startTime)
                     EventInfoTag(location)
                 }
 

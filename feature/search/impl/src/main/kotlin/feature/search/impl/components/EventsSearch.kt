@@ -8,9 +8,7 @@ import androidx.compose.ui.Modifier
 import domain.models.ShortEventItem
 import feature.search.impl.state.EventId
 import androidx.compose.foundation.lazy.items
-import core.common.extentions.DateTimePattern
-import core.common.extentions.durationUtcFormatted
-import core.common.extentions.toUtcFormat
+import core.common.extentions.asDate
 import uikit.components.cards.EventCard
 import uikit.space18
 
@@ -29,9 +27,9 @@ fun EventsSearch(
             EventCard(
                 title = event.title,
                 description = event.description,
-                duration = durationUtcFormatted(event.start, event.end),
+                duration = event.duration,
                 location = event.location,
-                startTime = event.start.toUtcFormat(DateTimePattern.ShortNamedDate),
+                startTime = event.start.asDate(),
                 coverId = event.cover,
             ) {
                 onEventClick(event.id)
