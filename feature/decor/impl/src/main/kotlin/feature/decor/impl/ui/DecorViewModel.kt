@@ -25,7 +25,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DecorViewModel @Inject constructor(
+internal class DecorViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     @SharedStorage private val localeStorage: LocaleStorage,
     private val appThemeManager: AppThemeManager
