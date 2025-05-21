@@ -1,5 +1,6 @@
 package feature.profile.impl.ui
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -28,7 +29,7 @@ import com.example.eventify.uikit.R as UiKitR
 
 
 @Composable
-fun ProfileScreen(
+internal fun ProfileScreen(
     state: UiState.ShowProfile,
     actions: ProfileListener,
 ) {
@@ -91,9 +92,10 @@ fun ProfileScreen(
 }
 
 @Composable
-@Preview(name = "Profile Default Dark")
+@Preview(name = "ProfileScreen", uiMode = Configuration.UI_MODE_NIGHT_NO)
+@Preview(name = "ProfileScreen", uiMode = Configuration.UI_MODE_NIGHT_YES)
 private fun ProfileScreenPreview() {
-    EventifyTheme(darkTheme = true) {
+    EventifyTheme {
         Surface {
             ProfileScreen(
                 state = UiState.ShowProfile(

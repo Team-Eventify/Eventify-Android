@@ -95,7 +95,10 @@ fun NavigationSettingsItem(
         },
         onClick = onClick,
         trailingIcon = {
-            Icon(painter = painterResource(id = R.drawable.ic_arrow_right), contentDescription = null)
+            Icon(
+                painter = painterResource(id = R.drawable.ic_arrow_right),
+                contentDescription = null,
+            )
         }
     )
 }
@@ -109,7 +112,7 @@ fun ActionSettingsItem(
         content = {
             Text(
                 text = text,
-                style = TypographyKit.bodyRegular
+                style = TypographyKit.bodyRegular,
             )
         },
         onClick = onClick

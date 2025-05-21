@@ -1,4 +1,4 @@
-package feature.searchResult.impl.components
+package feature.searchResult.impl.ui
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -10,11 +10,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
-import core.common.extentions.asDate
-import core.common.extentions.asTime
+import core.common.extentions.DateTimePattern
+import core.common.extentions.durationUtcFormatted
+import core.common.extentions.toUtcFormat
 import feature.searchResult.impl.state.SearchData
 import feature.searchResult.impl.state.SearchDetailListener
 import feature.searchResult.impl.state.SearchDetailUiState
@@ -22,6 +24,7 @@ import uikit.components.cards.EventCard
 import uikit.space16
 import uikit.space6
 import uikit.space18
+import com.example.eventify.feature.searchResult.impl.R
 
 @Composable
 fun EventsSearchDetail(
@@ -40,7 +43,8 @@ fun EventsSearchDetail(
         }
 
         val eventsAmount = buildAnnotatedString {
-            append("Найдено событий: ")
+            append(stringResource(R.string.found_events))
+            append(": ")
             withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.primary)) {
                 append(state.size.toString())
             }
@@ -61,9 +65,9 @@ fun EventsSearchDetail(
                 EventCard(
                     title = event.title,
                     description = event.description,
-                    duration = event.duration,
+                    duration = durationUtcFormatted(event.start, event.end),
                     location = event.location,
-                    startTime = event.start.asDate(),
+                    startTime = event.start.toUtcFormat(DateTimePattern.ShortNamedDate),
                     coverId = event.cover,
                 ) {
                     actions.onEventClick(event.id)
@@ -83,7 +87,8 @@ private fun SearchDataDescription(
 
     data.category?.let { category ->
         val categoryFilterDescription = buildAnnotatedString {
-            append("Все события категории ")
+            append(stringResource(R.string.all_events_in_category))
+            append(" ")
             withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.primary)) {
                 append(category.title)
             }
