@@ -1,5 +1,6 @@
 package feature.onboarding.impl.ui
 
+import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -17,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -87,9 +90,10 @@ fun OnBoardingScreen(
                     .fillMaxWidth()
                     .padding(vertical=10.dp)
             ) {
-                Image(
+                Icon(
                     painter = item.primaryImage,
                     contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onBackground,
                     modifier = Modifier
                         .width(52.dp)
                         .height(52.dp))
@@ -100,13 +104,13 @@ fun OnBoardingScreen(
                 Column {
                     Text(
                         text = item.title,
-                        style = TypographyKit.bodyMedium
+                        style = TypographyKit.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurface,
                     )
                     Text(
                         text=item.body,
-                        style = TypographyKit.bodyRegular.copy(
-                            color = Color.White.copy(alpha = 0.5f),
-                        )
+                        style = TypographyKit.bodyRegular,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
             }
@@ -123,9 +127,10 @@ fun OnBoardingScreen(
 }
 
 @Composable
-@Preview(name = "OnBoarding")
+@Preview(name = "OnBoarding", uiMode = Configuration.UI_MODE_NIGHT_NO)
+@Preview(name = "OnBoarding", uiMode = Configuration.UI_MODE_NIGHT_YES)
 private fun OnBoardingScreenPreview() {
-    EventifyTheme(darkTheme = true) {
+    EventifyTheme {
         Surface(
             color = MaterialTheme.colorScheme.background
         ) {

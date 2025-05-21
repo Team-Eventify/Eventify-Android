@@ -31,7 +31,7 @@ import uikit.space12
 
 
 @Composable
-fun ProfileDecorScreen(
+internal fun ProfileDecorScreen(
     state: DecorUiState,
     actions: DecorListener
 ) {
@@ -73,6 +73,7 @@ fun ProfileDecorScreen(
         }
     }
 }
+
 
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
