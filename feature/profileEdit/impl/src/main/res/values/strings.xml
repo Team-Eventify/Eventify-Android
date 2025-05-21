@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="choose_categorie_actions">Выбирай категории ивентов под свои интересы!</string>
+    <string name="choose_categories_actions">Choose event categories to suit your interests!</string>
 </resources>

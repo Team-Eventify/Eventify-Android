@@ -116,7 +116,7 @@ fun ProfileEditScreen(
             style = TypographyKit.bodyMedium,
         )
         Text(
-            text = stringResource(EditR.string.choose_categorie_actions),
+            text = stringResource(EditR.string.choose_categories_actions),
             style = TypographyKit.bodyRegular,
         )
         CategorySelector(

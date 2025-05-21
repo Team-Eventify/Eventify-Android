@@ -121,7 +121,6 @@ internal fun EventDetailScreen(
 
             ImagePager(
                 pagerState = pagerState,
-                key = state.event.eventInfo.pictures::get
             ){ page ->
                 EventImage(
                     uri = state.event.eventInfo.pictures[page],

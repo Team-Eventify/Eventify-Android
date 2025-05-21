@@ -45,9 +45,3 @@ fun HorizontalPagerTabs(
         }
     }
 }
-
-//@Preview(name = "HorizontalPagerTabs")
-//@Composable
-//private fun PreviewHorizontalPagerTabs() {
-//    HorizontalPagerTabs()
-//}
