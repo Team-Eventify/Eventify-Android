@@ -1,3 +1,4 @@
+import android.Manifest
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Network
@@ -5,13 +6,17 @@ import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 import android.os.Build
 import androidx.annotation.RequiresApi
+import android.Manifest.permission.ACCESS_NETWORK_STATE
+import androidx.annotation.RequiresPermission
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.platform.LocalContext
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.debounce
 
 sealed interface NetworkConnectionState {
     data object Available : NetworkConnectionState
@@ -29,6 +34,7 @@ private fun networkCallback(callback: (NetworkConnectionState) -> Unit): Connect
         }
     }
 
+@RequiresPermission(ACCESS_NETWORK_STATE)
 fun getCurrentConnectivityState(connectivityManager: ConnectivityManager): NetworkConnectionState {
     val network = connectivityManager.activeNetwork
 
@@ -39,7 +45,10 @@ fun getCurrentConnectivityState(connectivityManager: ConnectivityManager): Netwo
     return if (isConnected) NetworkConnectionState.Available else NetworkConnectionState.Unavailable
 }
 
-fun Context.observeConnectivityAsFlow(): Flow<NetworkConnectionState> = callbackFlow {
+
+@OptIn(FlowPreview::class)
+@RequiresPermission(ACCESS_NETWORK_STATE)
+fun Context.observeConnectivityAsFlow(): Flow<NetworkConnectionState> = callbackFlow  {
     val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
     val callback = networkCallback { connectionState ->
@@ -47,7 +56,7 @@ fun Context.observeConnectivityAsFlow(): Flow<NetworkConnectionState> = callback
     }
 
     val networkRequest = NetworkRequest.Builder()
-        .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+        .addCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
         .build()
 
     connectivityManager.registerNetworkCallback(networkRequest, callback)
@@ -58,15 +67,17 @@ fun Context.observeConnectivityAsFlow(): Flow<NetworkConnectionState> = callback
     awaitClose {
         connectivityManager.unregisterNetworkCallback(callback)
     }
-}
+}.debounce(500)
 
 val Context.currentConnectivityState: NetworkConnectionState
+    @RequiresPermission(ACCESS_NETWORK_STATE)
     get() {
         val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
         return getCurrentConnectivityState(connectivityManager)
     }
 
+@RequiresPermission(ACCESS_NETWORK_STATE)
 @Composable
 fun rememberConnectivityState(): State<NetworkConnectionState> {
     val context = LocalContext.current
