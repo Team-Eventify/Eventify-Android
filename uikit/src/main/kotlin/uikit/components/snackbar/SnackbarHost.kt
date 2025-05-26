@@ -48,7 +48,7 @@ fun SnackbarHost(
     val snackbarMessage by controller.current.collectAsStateWithLifecycle()
 
     Box(
-        modifier = modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth(),
         contentAlignment = Alignment.Companion.TopCenter
     ) {
         AnimatedVisibility(
@@ -67,8 +67,7 @@ fun SnackbarHost(
                     iconResId = state.style.iconResId,
                     colors = state.style.colors(),
                     modifier = Modifier
-                        .padding(top = space64)
-                        .padding(horizontal = space10)
+                        .then(modifier)
                 )
             }
         }
