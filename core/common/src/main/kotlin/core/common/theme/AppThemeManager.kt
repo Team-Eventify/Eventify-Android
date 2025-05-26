@@ -1,7 +1,5 @@
 package core.common.theme
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import core.common.storages.LocaleStorage
 import core.common.storages.SharedStorage
 import core.common.storages.StorageKeys
@@ -22,23 +20,19 @@ class AppThemeManager @Inject constructor(
         isDarkTheme.update { darkThemeEnabled }
     }
 
+    fun  getCurrentTheme(): ThemeType {
+        return when (localeStorage.getString(StorageKeys.IS_DARK_THEME, null)?.toBooleanStrictOrNull()) {
+            true -> ThemeType.DARK
+            false -> ThemeType.LIGHT
+            null -> ThemeType.SYSTEM
+        }
+    }
+
+
 
     fun changeTheme(typeOfTheme: ThemeType) {
         localeStorage.put(StorageKeys.IS_DARK_THEME, typeOfTheme.isDarkTheme.toString())
         isDarkTheme.update { typeOfTheme.isDarkTheme }
-    }
-
-//    fun getTypeTheme(): ThemeType {
-//        if (isDarkTheme.value == null) return TypesTheme.SYSTEM_THEME
-//        else if (isDarkTheme.value == true) return TypesTheme.DARK_THEME
-//        return TypesTheme.LIGHT_THEME
-//    }
-}
-
-@Composable
-fun rememberAppTheme(localeStorage: LocaleStorage): AppThemeManager {
-    return remember {
-        AppThemeManager(localeStorage)
     }
 }
 

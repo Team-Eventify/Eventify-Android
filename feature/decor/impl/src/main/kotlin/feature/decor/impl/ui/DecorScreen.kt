@@ -2,7 +2,6 @@ package feature.decor.impl.ui
 
 import android.content.res.Configuration
 import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -36,18 +35,21 @@ internal fun ProfileDecorScreen(
     actions: DecorListener
 ) {
     val dimmentions = LocalDimentions.current
-    val isDarkTheme = isSystemInDarkTheme()
 
-    Column(modifier = Modifier
-        .background(MaterialTheme.colorScheme.background)
-        .fillMaxSize()
-        .padding(dimmentions.windowPaddings)) {
+    Column(
+        modifier = Modifier
+            .background(MaterialTheme.colorScheme.background)
+            .fillMaxSize()
+            .padding(dimmentions.windowPaddings),
+    ) {
         Text(
             text = stringResource(DecorR.string.theme_title),
             style = TypographyKit.bodyMedium
         )
-        Spacer(modifier = Modifier
-            .height(10.dp),)
+        Spacer(
+            modifier = Modifier
+                .height(10.dp),
+            )
 
         Row(
             horizontalArrangement = Arrangement.spacedBy(space12),
@@ -67,8 +69,6 @@ internal fun ProfileDecorScreen(
                         .weight(1f)
                         .height(100.dp)
                 )
-
-
             }
         }
     }

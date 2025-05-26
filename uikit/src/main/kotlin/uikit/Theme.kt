@@ -1,10 +1,8 @@
-@file:Suppress("DEPRECATION")
 
 package uikit
 
 import android.app.Activity
 import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
@@ -19,7 +17,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import androidx.compose.runtime.ProvidedValue
-import androidx.compose.ui.graphics.toArgb
 
 
 private val DarkColorScheme = darkColorScheme(
@@ -54,7 +51,6 @@ private val LightColorScheme = lightColorScheme(
     surface = Color.White,
     onSurfaceVariant = Color(0xFF858591),
     surfaceVariant = Color.White,
-
 )
 
 @Composable
@@ -77,7 +73,6 @@ fun EventifyTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            window.statusBarColor = colorScheme.primary.toArgb()
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
         }
     }
