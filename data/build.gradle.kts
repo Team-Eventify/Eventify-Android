@@ -10,6 +10,13 @@ plugins {
 
 android {
     namespace = "com.example.eventify.data"
+
+    defaultConfig {
+        properties("../release.properties") {
+            buildConfigField("String", "API_BASE_URL", "\"${this["api.base.url"]}\"")
+        }
+    }
+
 }
 
 dependencies {

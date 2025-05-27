@@ -17,8 +17,8 @@ class EventifyApp: Application(){
     override fun onCreate() {
         super.onCreate()
 
-        val config = AppMetricaConfig.newConfigBuilder("de8b1938-47f7-43a2-b230-4da1d2e2f8cc")
-            .withCrashReporting(true)
+        val config = AppMetricaConfig.newConfigBuilder(BuildConfig.APPMETRICA_API_KEY)
+            .withCrashReporting(BuildConfig.ENABLED_CRASH_REPORTING)
             .build()
 
         AppMetrica.activate(this, config)
