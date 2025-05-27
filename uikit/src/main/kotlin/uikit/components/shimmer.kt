@@ -8,7 +8,11 @@ import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
@@ -23,6 +27,9 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.withSaveLayer
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import uikit.EventifyTheme
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -53,9 +60,11 @@ fun Modifier.shimmer(
 ): Modifier {
     if (!showShimmer) return this
 
-    val isDarkTheme = isSystemInDarkTheme()
-
-    val gradient = gradientColorsDark.takeIf { isDarkTheme } ?: gradientColorsWhite
+    val gradient = listOf(
+        MaterialTheme.colorScheme.surface,
+        MaterialTheme.colorScheme.surfaceBright,
+        MaterialTheme.colorScheme.surface,
+    )
 
     val transition = rememberInfiniteTransition(label = "shimmer animation transition")
     val translateAnimation by transition.animateFloat(
@@ -96,5 +105,19 @@ fun Modifier.shimmer(
                 )
             }
         }
+    }
+}
+
+
+@Preview
+@Composable
+private fun ShimmerPreview() {
+    EventifyTheme {
+        Box(
+            modifier = Modifier
+                .background(MaterialTheme.colorScheme.primary)
+                .size(100.dp)
+                .shimmer()
+        )
     }
 }
