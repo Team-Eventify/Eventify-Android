@@ -53,7 +53,7 @@ fun Modifier.shimmer(
 ): Modifier {
     if (!showShimmer) return this
 
-    val isDarkTheme = isSystemInDarkTheme()
+    val isDarkTheme = true
 
     val gradient = gradientColorsDark.takeIf { isDarkTheme } ?: gradientColorsWhite
 

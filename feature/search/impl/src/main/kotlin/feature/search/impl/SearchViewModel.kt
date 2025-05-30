@@ -25,7 +25,6 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import uikit.components.topBar.TopBarState
 
 
 @OptIn(FlowPreview::class)
@@ -38,7 +37,7 @@ class SearchViewModel @Inject constructor(
 
     private val sharedSearchQuery = savedStateHandle[ARG_SEARCH_TEXT] ?: ""
     private val _searchQueryStateFlow = MutableStateFlow(sharedSearchQuery)
-    private val _searchResultStateFlow = MutableStateFlow<SearchResult>(SearchResult.None)
+    private val _searchResultStateFlow = MutableStateFlow<SearchResult>(SearchResult.Initial)
     private val _searchModeStateFlow = MutableStateFlow(SearchMode.Categories)
 
     val stateFlow = combine(
@@ -57,7 +56,7 @@ class SearchViewModel @Inject constructor(
             SharingStarted.WhileSubscribed(5000L),
             SearchUiState(
                 searchText = sharedSearchQuery,
-                searchResult = SearchResult.None,
+                searchResult = SearchResult.Initial,
                 searchMode = SearchMode.Events,
             )
         )
