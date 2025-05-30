@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import uikit.TypographyKit
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -21,7 +22,10 @@ fun SmallTopBar(
     TopAppBar(
         title = {
             state.title?.let {
-                Text(text = it)
+                Text(
+                    text = it,
+                    style = TypographyKit.Heading.medium,
+                )
             }
         },
 

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -23,10 +24,10 @@ import feature.myEvents.impl.components.UpComingEventCard
 import feature.myEvents.impl.state.UiState
 import uikit.EventifyTheme
 import uikit.LocalDimentions
-import uikit.components.HeadingText
 import java.util.UUID
 import kotlin.collections.isNotEmpty
 import data.models.EventState
+import uikit.TypographyKit
 import com.example.eventify.uikit.R as UiKitR
 
 
@@ -50,7 +51,10 @@ fun MyEventsScreen(
         ) {
             item {
                 if (state.upComingEvents.isNotEmpty())
-                    HeadingText(text = stringResource(UiKitR.string.upcoming_events))
+                    Text(
+                        text = stringResource(UiKitR.string.upcoming_events),
+                        style = TypographyKit.Heading.large,
+                    )
             }
             items(state.upComingEvents) { event ->
                 UpComingEventCard(
@@ -63,7 +67,10 @@ fun MyEventsScreen(
             item {
                 if (state.finishedEvents.isNotEmpty()){
                     Spacer(modifier = Modifier.height(10.dp))
-                    HeadingText(text = stringResource(UiKitR.string.finished_events))
+                    Text(
+                        text = stringResource(UiKitR.string.finished_events),
+                        style = TypographyKit.Heading.large
+                    )
                 }
             }
             // TODO сделать одну карточку для всех состоянией и менять наложение tint

@@ -25,7 +25,6 @@ import uikit.EventifyTheme
 import uikit.LocalDimentions
 import uikit.TypographyKit
 import uikit.components.CategorySelectChip
-import uikit.components.TitleText
 import uikit.components.buttons.PrimaryButtonWithLoader
 import uikit.space20
 import com.example.eventify.uikit.R as UiKitR
@@ -51,11 +50,14 @@ fun ChooseCategories(
         Column(
             verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.Top)
         ) {
-            TitleText(text = stringResource(UiKitR.string.choose_categories_that_interest_you))
+            Text(
+                text = stringResource(UiKitR.string.choose_categories_that_interest_you),
+                style = TypographyKit.Heading.xlarge,
+            )
 
             Text(
                 text = stringResource(UiKitR.string.we_will_select_event_recommendations),
-                style = TypographyKit.bodyRegular,
+                style = TypographyKit.Body.regular,
             )
 
             CategorySelectorFlowRow(
@@ -65,7 +67,7 @@ fun ChooseCategories(
             state.categoriesState.error?.let {
                 Text(
                     text = it,
-                    style = TypographyKit.bodyRegular,
+                    style = TypographyKit.Body.regular,
                     color = MaterialTheme.colorScheme.error,
                 )
             }
@@ -77,7 +79,7 @@ fun ChooseCategories(
         ) {
             Text(
                 text = stringResource(UiKitR.string.you_can_always_change_your_choice),
-                style = TypographyKit.bodyRegular,
+                style = TypographyKit.Body.regular,
             )
             PrimaryButtonWithLoader(
                 text = stringResource(UiKitR.string.next),

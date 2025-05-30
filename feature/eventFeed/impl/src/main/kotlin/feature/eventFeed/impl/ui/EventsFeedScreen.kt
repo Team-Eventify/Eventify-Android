@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -16,7 +17,6 @@ import feature.eventFeed.api.EventFeedListener
 import feature.eventFeed.impl.state.UiState
 import uikit.EventifyTheme
 import uikit.LocalDimentions
-import uikit.components.HeadingText
 import java.util.UUID
 import kotlin.random.Random
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
@@ -26,6 +26,7 @@ import core.common.extentions.durationUtcFormatted
 import core.common.extentions.toUtcFormat
 import data.models.EventState
 import domain.models.ShortEventItem
+import uikit.TypographyKit
 import uikit.components.cards.EventCard
 import com.example.eventify.uikit.R as UiKitR
 
@@ -48,7 +49,10 @@ internal fun EventsFeedScreen(
                 .fillMaxSize()
         ) {
             item {
-                HeadingText(stringResource(UiKitR.string.popular_events))
+                Text(
+                    text = stringResource(UiKitR.string.popular_events),
+                    style = TypographyKit.Heading.large,
+                )
             }
             items(
                 items = state.events,

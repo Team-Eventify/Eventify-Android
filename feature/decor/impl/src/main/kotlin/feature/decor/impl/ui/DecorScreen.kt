@@ -44,7 +44,7 @@ internal fun ProfileDecorScreen(
     ) {
         Text(
             text = stringResource(DecorR.string.theme_title),
-            style = TypographyKit.bodyMedium
+            style = TypographyKit.Heading.medium
         )
         Spacer(
             modifier = Modifier

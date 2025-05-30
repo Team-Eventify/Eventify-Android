@@ -36,7 +36,7 @@ fun CategorySelectChip(
             Text(
                 text = title,
                 color = MaterialTheme.colorScheme.onPrimary.takeIf { isSelected } ?: MaterialTheme.colorScheme.onSurface,
-                style = TypographyKit.bodyRegular,
+                style = TypographyKit.Info.tag,
             )
         },
         selected = isSelected,
@@ -66,6 +66,7 @@ fun ChipInfo(
             Text(
                 text = text,
                 color = MaterialTheme.colorScheme.onPrimary,
+                style = TypographyKit.Info.tag,
                 modifier = Modifier
                     .padding(0.dp)
             )
@@ -93,7 +94,8 @@ fun CategoryTagChip(
         label = {
             Text(
                 text = text,
-                color = MaterialTheme.colorScheme.onPrimary
+                color = MaterialTheme.colorScheme.onPrimary,
+                style = TypographyKit.Info.tag,
             )
         }
     )
@@ -113,7 +115,8 @@ fun EventInfoTag(
             text = text,
             color = MaterialTheme.colorScheme.onSurface,
             maxLines = 1,
-            overflow = TextOverflow.Ellipsis
+            overflow = TextOverflow.Ellipsis,
+            style = TypographyKit.Info.tag,
         )
     }
 
@@ -130,12 +133,12 @@ fun UpComingEventInfoTag(
     ) {
         Text(
             text = text,
-            fontSize = 12.sp,
-            lineHeight = 12.sp,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             color = MaterialTheme.colorScheme.onPrimary,
-            modifier = Modifier
+            modifier = Modifier,
+            style = TypographyKit.Info.tag,
+
         )
     }
 }
@@ -155,10 +158,10 @@ fun FinishedEventInfoChip(
     ) {
         Text(
             text = text,
-            fontSize = 12.sp,
-            lineHeight = 12.sp,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier = Modifier
+            modifier = Modifier,
+            style = TypographyKit.Info.tag,
+
         )
     }
 }

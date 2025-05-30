@@ -19,7 +19,6 @@ import feature.resetPassword.impl.state.UiState
 import uikit.EventifyTheme
 import uikit.LocalDimentions
 import uikit.TypographyKit
-import uikit.components.TitleText
 import com.example.eventify.uikit.R as UiKitR
 import uikit.components.TextInput
 import uikit.components.buttons.PrimaryButton
@@ -38,11 +37,14 @@ fun ResetPasswordScreen(
     ) {
         Image(painter = painterResource(id= UiKitR.drawable.resetpassword_icon), contentDescription = null)
         Spacer(modifier = Modifier.height(30.dp))
-        TitleText(text = "Сброс пароля")
+        Text(
+            text = "Сброс пароля",
+            style = TypographyKit.Heading.xlarge,
+        )
         Spacer(modifier = Modifier.height(12.dp))
         Text(
             text = "Укажите email, который вы использовали для создания аккаунта. Мы отправим письмо с сыллкой для сброса пароля.",
-            style = TypographyKit.bodyRegular,
+            style = TypographyKit.Body.regular,
         )
         Spacer(modifier = Modifier.height(44.dp))
 

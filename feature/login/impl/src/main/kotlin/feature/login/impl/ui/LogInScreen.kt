@@ -39,7 +39,6 @@ import uikit.LocalDimentions
 import uikit.TypographyKit
 import uikit.components.PasswordInput
 import uikit.components.TextInput
-import uikit.components.TitleText
 import uikit.components.buttons.PrimaryButtonWithLoader
 import com.example.eventify.uikit.R as UiKitR
 
@@ -63,17 +62,20 @@ internal fun LogInScreen(
     ) {
         Image(painter = painterResource(id=UiKitR.drawable.login_icon), contentDescription = null)
         Spacer(modifier = Modifier.height(30.dp))
-        TitleText(text = stringResource(UiKitR.string.log_in))
+        Text(
+            text = stringResource(UiKitR.string.log_in),
+            style = TypographyKit.Heading.xlarge,
+        )
         Spacer(modifier = Modifier.height(10.dp))
 
         Text(
             text = stringResource(UiKitR.string.pleace_login),
-            style = TypographyKit.bodyRegular,
+            style = TypographyKit.Body.regular,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
         Text(
             text = stringResource(UiKitR.string.it_takes_less_then_minute),
-            style = TypographyKit.bodyRegular,
+            style = TypographyKit.Body.regular,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
 
@@ -121,7 +123,7 @@ internal fun LogInScreen(
         Text(
             text = stringResource(UiKitR.string.forgot_password),
             textAlign = TextAlign.Right,
-            style = TypographyKit.action,
+            style = TypographyKit.Body.regular,
             modifier = Modifier
                 .align(Alignment.End)
                 .clickable {
@@ -153,7 +155,7 @@ internal fun LogInScreen(
             )
             Text(
                 text = stringResource(UiKitR.string.register_action),
-                style = TypographyKit.action,
+                style = TypographyKit.Body.regular,
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
                     .clickable {
