@@ -18,8 +18,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,7 +27,6 @@ import feature.onboarding.impl.state.OnBoardingItem
 import uikit.EventifyTheme
 import uikit.LocalDimentions
 import uikit.TypographyKit
-import uikit.components.TitleText
 import uikit.components.buttons.PrimaryButton
 import com.example.eventify.uikit.R as UiKitR
 
@@ -77,8 +74,9 @@ fun OnBoardingScreen(
         Spacer(
             modifier = Modifier.height(10.dp),
             )
-        TitleText(
+        Text(
             text = stringResource(UiKitR.string.app_name),
+            style = TypographyKit.Heading.xlarge
         )
         Spacer(
             modifier = Modifier.height(40.dp),
@@ -104,12 +102,12 @@ fun OnBoardingScreen(
                 Column {
                     Text(
                         text = item.title,
-                        style = TypographyKit.bodyMedium,
+                        style = TypographyKit.Heading.medium,
                         color = MaterialTheme.colorScheme.onSurface,
                     )
                     Text(
                         text=item.body,
-                        style = TypographyKit.bodyRegular,
+                        style = TypographyKit.Heading.medium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }

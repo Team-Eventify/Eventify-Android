@@ -48,7 +48,7 @@ fun OfflineScreen(
 
             Text(
                 text = message,
-                style = TypographyKit.caption,
+                style = TypographyKit.Body.small,
             )
 
             UpdateStatusButton(

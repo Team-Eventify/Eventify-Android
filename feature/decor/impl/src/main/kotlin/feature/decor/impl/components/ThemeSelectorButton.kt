@@ -68,7 +68,7 @@ fun ThemeSelectorButton(
 
             Text(
                 text = stringResource(titleTheme),
-                style = TypographyKit.bodyRegular,
+                style = TypographyKit.Body.regular,
                 overflow = TextOverflow.Ellipsis,
                 color = currentColor,
                 maxLines = 1,

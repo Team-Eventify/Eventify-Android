@@ -119,12 +119,12 @@ fun EventCard(
                 Text(
                     text = title,
                     color = MaterialTheme.colorScheme.onSurface,
-                    style = TypographyKit.bodyMedium,
+                    style = TypographyKit.Heading.medium,
                 )
                 Spacer(Modifier.height(space10))
                 Text(
                     text = description,
-                    style = TypographyKit.bodyRegular,
+                    style = TypographyKit.Body.regular,
                     maxLines = 7,
                 )
             }

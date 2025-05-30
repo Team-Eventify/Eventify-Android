@@ -46,7 +46,7 @@ fun DeleteAccountDialog(
         text = {
             Text(
                 text = "Аккаунт будет удален перманентно. Вы не сможете его воссатновить.",
-                style = TypographyKit.bodyRegular,
+                style = TypographyKit.Body.regular,
             )
         },
         confirmButton = {

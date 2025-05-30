@@ -68,7 +68,7 @@ fun ProfileEditScreen(
     ) {
         Text(
             text = stringResource(UiKitR.string.first_name),
-            style = TypographyKit.bodyMedium
+            style = TypographyKit.Heading.medium
         )
         ProfileEditInput(
             text = state.firstName,
@@ -78,7 +78,7 @@ fun ProfileEditScreen(
 
         Text(
             text = stringResource(UiKitR.string.last_name),
-            style = TypographyKit.bodyMedium,
+            style = TypographyKit.Heading.medium,
         )
         ProfileEditInput(
             text = state.lastName,
@@ -88,7 +88,7 @@ fun ProfileEditScreen(
 
         Text(
             text = stringResource(UiKitR.string.email),
-            style = TypographyKit.bodyMedium,
+            style = TypographyKit.Heading.medium,
         )
         ProfileEditInput(
             text = state.email,
@@ -100,7 +100,7 @@ fun ProfileEditScreen(
 
         Text(
             text = stringResource(UiKitR.string.telegram),
-            style = TypographyKit.bodyMedium,
+            style = TypographyKit.Heading.medium,
         )
         ProfileEditInput(
             text = state.telegramName,
@@ -113,11 +113,11 @@ fun ProfileEditScreen(
 
         Text(
             text = stringResource(UiKitR.string.my_categories),
-            style = TypographyKit.bodyMedium,
+            style = TypographyKit.Heading.medium,
         )
         Text(
             text = stringResource(EditR.string.choose_categories_actions),
-            style = TypographyKit.bodyRegular,
+            style = TypographyKit.Body.regular,
         )
         CategorySelector(
             categories = state.categoryItems,
@@ -128,7 +128,7 @@ fun ProfileEditScreen(
             Text(
                 text = it,
                 color = MaterialTheme.colorScheme.error,
-                style = TypographyKit.bodyRegular,
+                style = TypographyKit.Body.regular,
             )
         }
 

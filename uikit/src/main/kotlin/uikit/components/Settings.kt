@@ -35,6 +35,7 @@ fun SettingsBlock(
         shape = RoundedCornerShape(12.dp),
         modifier = Modifier
             .fillMaxWidth()
+            .then(modifier)
     ) {
         Column(
             modifier = Modifier
@@ -83,12 +84,12 @@ fun NavigationSettingsItem(
             Column {
                 Text(
                     text = text,
-                    style = TypographyKit.bodyRegular
+                    style = TypographyKit.Body.regular
                 )
                 supportingText?.let {
                     Text(
                         text = supportingText,
-                        style = TypographyKit.caption,
+                        style = TypographyKit.Body.small,
                     )
                 }
             }
@@ -112,7 +113,7 @@ fun ActionSettingsItem(
         content = {
             Text(
                 text = text,
-                style = TypographyKit.bodyRegular,
+                style = TypographyKit.Body.regular,
             )
         },
         onClick = onClick
@@ -128,7 +129,7 @@ fun ImportantActionSettingsItem(
         content = {
             Text(
                 text = text,
-                style = TypographyKit.bodyRegular,
+                style = TypographyKit.Body.regular,
                 color = MaterialTheme.colorScheme.error,
             )
         },

@@ -52,7 +52,8 @@ fun BaseInfoScreen(
             Text(
                 text = it,
                 textAlign = TextAlign.Center,
-                style = TypographyKit.bodyRegular,
+                style = TypographyKit.Body.regular,
+                color = MaterialTheme.colorScheme.onBackground.copy(alpha = .7f)
             )
         }
 
