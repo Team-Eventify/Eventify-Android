@@ -20,7 +20,9 @@ fun SmallTopBar(
 ) {
     TopAppBar(
         title = {
-            Text(text = state.title)
+            state.title?.let {
+                Text(text = it)
+            }
         },
 
         navigationIcon = {
