@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import uikit.components.BorderedImage
 import uikit.components.buttons.PrimaryActionButton
 import uikit.components.screens.BaseInfoScreen
 import com.example.eventify.uikit.R as UiKitR
@@ -19,7 +20,7 @@ fun FailedSearch(
 ) {
     BaseInfoScreen(
         icon = {
-            Icon(
+            BorderedImage(
                 painter = painterResource(UiKitR.drawable.ic_error),
                 contentDescription = null,
             )

@@ -32,7 +32,8 @@ private val DarkColorScheme = darkColorScheme(
     surfaceContainer = Color(0xFF242427),
     errorContainer = Color(0xFFED2B32),
     error = PureRed,
-    surfaceVariant = Color(0xFF27272A)
+    surfaceVariant = Color(0xFF27272A),
+    outline = Color(0xFF595969),
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -43,7 +44,7 @@ private val LightColorScheme = lightColorScheme(
     secondary = PurpleGrey40,
     onSecondary = Color.Black,
     tertiary = Pink40,
-    background = Color(0xFFececec),
+    background = Color(0xFFF6F6F6),
     error = Color(0xFFFF8F88),
     errorContainer = Color(0xFFFF8F88),
     onError = Color.Black,
@@ -51,6 +52,8 @@ private val LightColorScheme = lightColorScheme(
     surface = Color.White,
     onSurfaceVariant = Color(0xFF858591),
     surfaceVariant = Color.White,
+    outline = Color(0xFFD7D7DA),
+    surfaceContainerHighest = Color(0xFFEBEBEB),
 )
 
 @Composable

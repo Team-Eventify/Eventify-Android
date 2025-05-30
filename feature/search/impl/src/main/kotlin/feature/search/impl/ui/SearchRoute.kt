@@ -3,6 +3,7 @@ package feature.search.impl.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
@@ -18,6 +19,9 @@ import feature.search.impl.state.SearchListener
 import feature.search.impl.state.SearchMode
 import feature.searchResult.api.SearchDetailEntry
 import uikit.components.topBar.LocalTopBarState
+import uikit.components.topBar.TopBarSize
+import uikit.components.topBar.TopBarState
+import com.example.eventify.uikit.R as UiKitR
 
 
 @Composable
@@ -28,6 +32,7 @@ fun SearchRoute(
     val uiState by viewModel.stateFlow.collectAsStateWithLifecycle()
     val topBarState = LocalTopBarState.current
     val features = LocalFeaturesProvider.current.features
+    val context = LocalContext.current
 
     val listener = object : SearchListener {
         override fun changeSearchMode(mode: SearchMode) {
@@ -72,7 +77,12 @@ fun SearchRoute(
     )
 
     LaunchedEffect(Unit) {
-        topBarState.hide()
+        topBarState.setUp(
+            TopBarState.Base(
+                title = context.getString(UiKitR.string.search),
+                size = TopBarSize.SMALL,
+            )
+        )
     }
 }
 
