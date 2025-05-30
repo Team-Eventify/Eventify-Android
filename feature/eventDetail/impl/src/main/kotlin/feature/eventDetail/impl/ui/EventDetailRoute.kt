@@ -1,6 +1,7 @@
 package feature.eventDetail.impl.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -15,6 +16,10 @@ import feature.eventDetail.impl.state.SideEffect
 import uikit.LocalSnackbarState
 import uikit.components.screens.ErrorScreen
 import uikit.components.snackbar.SnackbarStyle
+import uikit.components.topBar.LocalTopBarState
+import uikit.components.topBar.TopBarAction
+import uikit.components.topBar.TopBarSize
+import uikit.components.topBar.TopBarState
 import uikit.utils.ObserveAsEvent
 import com.example.eventify.uikit.R as UiKitR
 import com.example.eventify.feature.eventDetail.impl.R as DetailR
@@ -29,6 +34,7 @@ fun EventDetailRoute(
     val uiState by viewModel.stateFlow.collectAsStateWithLifecycle()
     val snackBarState = LocalSnackbarState.current
     val context = LocalContext.current
+    val topBarState = LocalTopBarState.current
 
     val listener = object : EventDetailListener {
         override fun navigateUp() {
@@ -86,6 +92,19 @@ fun EventDetailRoute(
             }
         }
     }
+
+    LaunchedEffect(Unit) {
+        topBarState.setUp(
+            TopBarState.Base(
+                size = TopBarSize.SMALL,
+                leftAction = TopBarAction(
+                    iconRes = UiKitR.drawable.ic_chevron_right,
+                    onClick = listener::navigateUp
+                )
+            )
+        )
+    }
+
 
     when (uiState) {
         EventDetailUiState.Loading -> LoadingEvent()

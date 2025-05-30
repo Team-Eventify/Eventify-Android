@@ -24,13 +24,16 @@ fun MediumTopBar(
 ) {
     MediumTopAppBar(
         title = {
-            Text(
-                text = state.title,
-                overflow = TextOverflow.Ellipsis,
-                maxLines = 1,
-                modifier = Modifier
-                    .fillMaxWidth()
-            )
+            state.title?.let {
+                Text(
+                    text = it,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 1,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                )
+            }
+
         },
         navigationIcon = {
             state.leftAction?.let { action ->
