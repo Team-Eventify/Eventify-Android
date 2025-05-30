@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import uikit.components.topBar.TopBarState
 
 
 @OptIn(FlowPreview::class)
@@ -82,15 +83,15 @@ class SearchViewModel @Inject constructor(
             val queryFilter = EventsFilterData(
                 title = query
             ).takeIf { query.isNotEmpty() }
-            val events = getEventsUseCase(queryFilter)
-            _searchResultStateFlow.update {
-                SearchResult.Events(
-                    items = events
-                        .filter { !it.state.isHidden() }
-                        .map {
-                            it.toShort()
-                        }
-                )
+
+            _searchResultStateFlow.update { _ ->
+                getEventsUseCase(queryFilter)
+                    .filter { !it.state.isHidden() }
+                    .takeIf { it.isNotEmpty() } ?.let { events ->
+                        SearchResult.Events(
+                            items = events.map { it.toShort() }
+                        )
+                    } ?: SearchResult.Empty
             }
 
         }

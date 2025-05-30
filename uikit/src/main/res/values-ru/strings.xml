@@ -107,4 +107,7 @@
     <string name="base_light">Основная</string>
     <string name="sunset">Закат</string>
     <string name="night">Ночь</string>
+
+    <string name="nothing_fount">Ничего не найдено</string>
+
 </resources>

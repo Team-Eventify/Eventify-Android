@@ -26,6 +26,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import uikit.EventifyTheme
+import uikit.space10
+import uikit.space18
 import uikit.space20
 import uikit.space4
 import com.example.eventify.uikit.R as UiKitR
@@ -38,6 +40,7 @@ fun SearchTopBar(
     modifier: Modifier = Modifier,
     onLeadingIconClick: (() -> Unit)? = null,
     onTrailingIconClick: (() -> Unit)? = null,
+    placeholder: String = stringResource(UiKitR.string.search),
     onSearch: (() -> Unit)? = null,
 ) {
     Box(
@@ -47,6 +50,7 @@ fun SearchTopBar(
             value = value,
             onLeadingIconClick = onLeadingIconClick,
             onTrailingIconClick = onTrailingIconClick,
+            placeholder = placeholder,
             onValueChanged = onValueChanged,
             onSearch = onSearch,
             modifier = modifier
@@ -54,8 +58,6 @@ fun SearchTopBar(
                 .fillMaxWidth()
         )
     }
-
-
 }
 
 @Composable
@@ -65,6 +67,7 @@ fun SearchInputField(
     modifier: Modifier = Modifier,
     onLeadingIconClick: (() -> Unit)? = null,
     onTrailingIconClick: (() -> Unit)? = null,
+    placeholder: String = stringResource(UiKitR.string.search),
     onSearch: (() -> Unit)? = null,
 ) {
     val focusRequester = remember { FocusRequester() }
@@ -76,7 +79,7 @@ fun SearchInputField(
         onValueChange = onValueChanged,
         placeholder = {
             Text(
-                text = stringResource(UiKitR.string.search),
+                text = placeholder,
             )
         },
         leadingIcon = {
@@ -118,7 +121,7 @@ fun SearchInputField(
             focusManager.clearFocus(force = true)
         }),
         singleLine = true,
-        shape = RoundedCornerShape(space20),
+        shape = RoundedCornerShape(space10),
         modifier = Modifier
             .focusRequester(focusRequester)
             .then(modifier)

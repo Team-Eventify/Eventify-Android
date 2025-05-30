@@ -108,4 +108,6 @@
     <string name="base_dark">Base</string>
     <string name="sunset">Sunset</string>
     <string name="night">Night</string>
+
+    <string name="nothing_fount">Nothing found</string>
 </resources>
