@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="event_finished">Event completed</string>
+    <string name="event_unavailable">The event is unavailable</string>
+    <string name="successful_subscribe_title">You have successfully signed up for the event!</string>
+    <string name="successful_subscribe_description">Added to your events</string>
+    <string name="failed_subscribe">Couldn\'t subscribe to the event</string>
+    <string name="successful_unsubscribe_title">You unsubscribed from the event!</string>
+    <string name="successful_unsubscribe_description">Participation cancelled</string>
+    <string name="failed_unsubscribe">Couldn\'t unsubscribe from the event</string>
+</resources>

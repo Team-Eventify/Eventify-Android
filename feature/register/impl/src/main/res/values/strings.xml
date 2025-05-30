@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="faild_send_otp">Failed to send code</string>
+    <string name="registration_error">Registration error</string>
+</resources>

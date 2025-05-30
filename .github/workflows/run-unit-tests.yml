@@ -1,0 +1,49 @@
+name: Run Unit Tests Before Push to Main
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17' # Set the Java version as required for your project
+          distribution: 'temurin'
+          cache: 'gradle'
+
+      - name: Load Google Service file
+        run: echo $DATA | base64 -di > app/google-services.json
+        env:
+          DATA: ${{ secrets.GOOGLE_SERVICES_JSON }}
+
+      - name: Grand execute permissions to gradlew
+        run: chmod +x gradlew
+
+      - name: Cache Gradle dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            gradle-${{ runner.os }}
+
+      - name: Run Tests
+        run: ./gradlew testDebugUnitTest -x lint -x check -x assembleDebug
+        env:
+          JAVA_TOOL_OPTIONS: "-Dnet.bytebuddy.experimental=true" # ignore deprecated bytebuddy warning

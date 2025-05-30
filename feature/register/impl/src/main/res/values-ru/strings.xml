@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="faild_send_otp">Не удалось отправить код</string>
+    <string name="registration_error">Ошибка регистрации</string>
+
+</resources>
