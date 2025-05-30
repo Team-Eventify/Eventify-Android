@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="choose_categories_actions">Choose event categories to suit your interests!</string>
+    <string name="failed_update_account">Failed to update account</string>
+    <string name="account_deleted">Account was deleted</string>
+    <string name="failed_delete_account">Failed to delete account</string>
+    <string name="changes_saved">Changes are saved</string>
+    <string name="minimum_categories_required">Select at least one category</string>
+    <string name="delete_account_title">Do you want to delete account?</string>
+    <string name="delete_account_description">The account will be permanently deleted. You will not be able to restore it.</string>
 </resources>
