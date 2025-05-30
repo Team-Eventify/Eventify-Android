@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import uikit.EventifyTheme
 import uikit.LocalDimentions
+import uikit.components.SkeletonBox
 import uikit.components.shimmer
 import uikit.space10
 import uikit.space20
@@ -39,21 +41,20 @@ fun LoadingProfileEdit(
             .then(modifier),
     ) {
         repeat(7) {
-            Column {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth(.5f)
-                        .height(30.dp)
-                        .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(space20))
-                )
-                Spacer(Modifier.height(space10))
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(50.dp)
-                        .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(space20))
-                )
-            }
+            SkeletonBox(height = 60.dp)
+        }
+        Row(horizontalArrangement = Arrangement.spacedBy(space10)) {
+            repeat(3) { SkeletonBox(height = 40.dp, width = 90.dp) }
+        }
+
+        Row(horizontalArrangement = Arrangement.spacedBy(space10)) {
+            repeat(2) { SkeletonBox(height = 40.dp, width = 130.dp) }
+        }
+        Row(horizontalArrangement = Arrangement.spacedBy(space10)) {
+            repeat(3) { SkeletonBox(height = 40.dp, width = 90.dp) }
+        }
+        repeat(3) {
+            SkeletonBox(height = 50.dp)
         }
     }
 }
