@@ -1,43 +1,39 @@
-package feature.myEvents.impl.components
+package feature.search.impl.components
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import uikit.EventifyTheme
 import uikit.components.SkeletonBox
-
+import uikit.space18
 
 @Composable
-fun LoadingMyEvents() {
+fun InitialSearch() {
     Column(
-        verticalArrangement = Arrangement.spacedBy(10.dp, Alignment.Top),
+        verticalArrangement = Arrangement.spacedBy(space18),
         modifier = Modifier
             .fillMaxSize()
-            .padding(10.dp)
     ) {
-        repeat(6) {
+        repeat(8) {
             SkeletonBox(
                 shimmer = true,
-                height = 140.dp,
+                height = 160.dp,
             )
         }
-
     }
 }
 
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-private fun PreviewLoadingMyEvents() {
+private fun InitialSearchPreview() {
     EventifyTheme {
-        LoadingMyEvents()
+        InitialSearch()
     }
 }

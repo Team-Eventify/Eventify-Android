@@ -17,9 +17,7 @@ import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -27,10 +25,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import com.example.eventify.uikit.R
 import feature.search.impl.components.CategoriesSearch
 import feature.search.impl.components.EventsSearch
-import feature.search.impl.components.FailedSearch
+import feature.search.impl.components.InitialSearch
 import feature.search.impl.state.CategoryId
 import feature.search.impl.state.EventId
 import feature.search.impl.state.SearchListener
@@ -117,7 +114,9 @@ fun SearchScreen(
                 SearchResult.Empty -> {
                     NothingFound()
                 }
-                SearchResult.None -> {}
+                SearchResult.Initial -> {
+                    InitialSearch()
+                }
             }
         }
     }
@@ -221,6 +220,11 @@ class SearchScreenPreviewProvider : PreviewParameterProvider<SearchUiState> {
         SearchUiState(
             searchMode = SearchMode.Events,
             searchResult = SearchResult.Empty,
+            searchText = ""
+        ),
+        SearchUiState(
+            searchMode = SearchMode.Events,
+            searchResult = SearchResult.Initial,
             searchText = ""
         )
     )
