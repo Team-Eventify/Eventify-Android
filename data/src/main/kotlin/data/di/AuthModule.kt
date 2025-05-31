@@ -1,5 +1,6 @@
 package data.di
 
+import com.example.eventify.data.BuildConfig
 import core.common.secure.tokens.TokenProvider
 import dagger.Module
 import dagger.Provides
@@ -20,7 +21,7 @@ import javax.inject.Singleton
 internal object AuthModule {
     @Provides
     @Singleton
-    fun provideAuthAPI(): AuthAPI = NetworkServiceFactory.getApi("https://eventify.website/api/v1/auth/", AuthAPI::class.java)
+    fun provideAuthAPI(): AuthAPI = NetworkServiceFactory.getApi("${BuildConfig.API_BASE_URL}/api/v1/auth/", AuthAPI::class.java)
 
     @Provides
     @Singleton

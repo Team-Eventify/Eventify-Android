@@ -23,11 +23,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-//    @Provides
-//    @Singleton
-//    fun provideFeaturesProvider(features: Features): FeaturesProvider = FeaturesProvider(features)
-
-
     @Provides
     @Singleton
     fun provideImageLoader(

@@ -1,4 +1,3 @@
-import com.android.build.gradle.internal.api.BaseVariantOutputImpl
 
 plugins {
     alias(libs.plugins.androidApplication)
@@ -26,6 +25,24 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        buildTypes {
+            release {
+                properties("../release.properties") {
+                    buildConfigField("String", "APPMETRICA_API_KEY", "\"${this["appmetrica.api.key"]}\"")
+                    buildConfigField("Boolean", "ENABLED_CRASH_REPORTING", "\"${this["appmetrica.crashreporting"]}\"")
+                }
+            }
+            debug {
+                properties("../debug.properties") {
+                    buildConfigField("String", "APPMETRICA_API_KEY", "\"${this["appmetrica.api.key"]}\"")
+                    buildConfigField("Boolean", "ENABLED_CRASH_REPORTING", "${this["appmetrica.crashreporting"]}")
+                }
+            }
+        }
+
+
+
     }
 
     buildFeatures {
@@ -33,20 +50,9 @@ android {
         buildConfig = true
     }
 
-    buildTypes {
+    setApkName("Eventify")
 
-        // TODO to extention
-        applicationVariants.all {
-            val variant = this
-            variant.outputs
-                .map { it as BaseVariantOutputImpl }
-                .forEach { output ->
-                    val buildVariant = variant.buildType.name
-                    val versionName = variant.versionName
-                    output.outputFileName = "Eventify_${buildVariant}_${versionName}.apk"
-                }
-        }
-    }
+
 
     composeOptions {
         kotlinCompilerExtensionVersion = "1.8.1"

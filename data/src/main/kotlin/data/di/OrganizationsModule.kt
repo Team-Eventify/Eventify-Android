@@ -31,7 +31,7 @@ internal object OrganizationsModule {
             .build()
 
         return Retrofit.Builder()
-            .baseUrl("https://eventify.website/api/v1/")
+            .baseUrl("${BuildConfig.API_BASE_URL}/api/v1/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
