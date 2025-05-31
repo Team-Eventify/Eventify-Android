@@ -67,7 +67,7 @@ fun OrganizationInfoPanel(
         Text(
             text = organization.title,
             color = MaterialTheme.colorScheme.onSecondary,
-            style = TypographyKit.bodyMedium,
+            style = TypographyKit.Heading.medium,
         )
     }
 }

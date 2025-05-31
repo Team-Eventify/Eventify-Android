@@ -15,6 +15,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import uikit.EventifyTheme
+import uikit.Typography
+import uikit.TypographyKit
 import com.example.eventify.uikit.R as UiKitR
 
 @Composable
@@ -37,20 +39,28 @@ fun LogOutDialog(
         title = {
             Text(
                 text = "Вы действительно хотите выйти из аккаунта?",
-                fontSize = 20.sp,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                style = TypographyKit.Body.regular
             )
         },
         confirmButton = {
             TextButton(
                 onClick = onConfirmation
             ) {
-                Text(text = "Выйти", color = MaterialTheme.colorScheme.error)
+                Text(
+                    text = "Выйти",
+                    color = MaterialTheme.colorScheme.error,
+                    style = TypographyKit.Body.regular,
+                )
             }
         },
         dismissButton = {
             TextButton(onClick = onDismissRequest) {
-                Text(text = "Отмена", color = MaterialTheme.colorScheme.onSurface)
+                Text(
+                    text = "Отмена",
+                    color = MaterialTheme.colorScheme.onSurface,
+                    style = TypographyKit.Body.regular,
+                )
             }
         },
         modifier = modifier

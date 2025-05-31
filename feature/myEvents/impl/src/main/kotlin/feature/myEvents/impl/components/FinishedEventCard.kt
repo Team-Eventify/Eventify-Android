@@ -67,7 +67,7 @@ fun FinishedEventCard(
                 Text(
                     text = event.title,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    style = TypographyKit.bodyMedium,
+                    style = TypographyKit.Heading.medium,
                     overflow = TextOverflow.StartEllipsis,
                     maxLines = 2,
                 )

@@ -5,37 +5,6 @@
         <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
         <item name="postSplashScreenTheme">@style/Theme.Eventify</item>
     </style>
-
-<!--    <style name="Theme.SplashScreen.Logo1" parent="Theme.SplashScreen">-->
-<!--        <item name="windowSplashScreenAnimatedIcon">@mipmap/icon_logo_1</item>-->
-<!--        <item name="windowSplashScreenBackground">#FF74F6A7</item>-->
-<!--        <item name="postSplashScreenTheme">@style/Theme.Eventify</item>-->
-<!--    </style>-->
-
-<!--    <style name="Theme.SplashScreen.Logo2" parent="Theme.SplashScreen">-->
-<!--        <item name="windowSplashScreenAnimatedIcon">@mipmap/icon_logo_2</item>-->
-<!--        <item name="windowSplashScreenBackground">#FF74F6A7</item>-->
-<!--        <item name="postSplashScreenTheme">@style/Theme.Eventify</item>-->
-<!--    </style>-->
-
-<!--    <style name="Theme.SplashScreen.Logo3" parent="Theme.SplashScreen">-->
-<!--        <item name="windowSplashScreenAnimatedIcon">@mipmap/icon_logo_3</item>-->
-<!--        <item name="windowSplashScreenBackground">#FF74F6A7</item>-->
-<!--        <item name="postSplashScreenTheme">@style/Theme.Eventify</item>-->
-<!--    </style>-->
-
-<!--    <style name="Theme.SplashScreen.Logo4" parent="Theme.SplashScreen">-->
-<!--        <item name="windowSplashScreenAnimatedIcon">@mipmap/icon_logo_4</item>-->
-<!--        <item name="windowSplashScreenBackground">#FF74F6A7</item>-->
-<!--        <item name="postSplashScreenTheme">@style/Theme.Eventify</item>-->
-<!--    </style>-->
-
-<!--    <style name="Theme.SplashScreen.Logo5" parent="Theme.SplashScreen">-->
-<!--        <item name="windowSplashScreenAnimatedIcon">@mipmap/icon_logo_5</item>-->
-<!--        <item name="windowSplashScreenBackground">#FF74F6A7</item>-->
-<!--        <item name="postSplashScreenTheme">@style/Theme.Eventify</item>-->
-<!--    </style>-->
-
     <style name="Theme.Eventify" parent="android:Theme.Material.Light.NoActionBar" >
     </style>
 </resources>

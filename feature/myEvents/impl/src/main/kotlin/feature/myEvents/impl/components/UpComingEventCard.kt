@@ -66,7 +66,7 @@ fun UpComingEventCard(
             ) {
                 Text(
                     text = event.title,
-                    style = TypographyKit.bodyMedium,
+                    style = TypographyKit.Heading.medium,
                     maxLines = 2
                 )
                 Spacer(modifier = Modifier.height(10.dp))

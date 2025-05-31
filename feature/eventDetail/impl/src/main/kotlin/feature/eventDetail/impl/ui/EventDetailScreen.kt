@@ -120,7 +120,7 @@ internal fun EventDetailScreen(
 
                 Text(
                     text = state.event.eventInfo.title,
-                    style = TypographyKit.bodyMedium,
+                    style = TypographyKit.Heading.medium,
                 )
                 FlowRow(
                     horizontalArrangement = Arrangement.spacedBy(10.dp, alignment = Alignment.Start),
@@ -141,7 +141,7 @@ internal fun EventDetailScreen(
 
                 Text(
                     text = state.event.eventInfo.description,
-                    style = TypographyKit.bodyRegular
+                    style = TypographyKit.Body.regular
                 )
                 Spacer(modifier = Modifier.height(10.dp))
 
@@ -149,7 +149,7 @@ internal fun EventDetailScreen(
                 Text(
                     text = stringResource(UiKitR.string.organizer),
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    style = TypographyKit.caption,
+                    style = TypographyKit.Body.small,
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 OrganizationInfoPanel(

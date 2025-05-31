@@ -2,6 +2,7 @@ package feature.profileEdit.impl.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -13,6 +14,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import uikit.EventifyTheme
+import uikit.TypographyKit
+
 //import uikit.components.ErrorInputText
 
 @Composable
@@ -37,9 +40,11 @@ fun ProfileEditInput(
         prefix = { Text(prefix ?: "") },
         supportingText = {
             supportingText?.let {
-//                ErrorInputText(
-//                    text = it
-//                )
+                Text(
+                    text = it,
+                    color = MaterialTheme.colorScheme.error,
+                    style = TypographyKit.Body.regular,
+                )
             }
         },
         shape = RoundedCornerShape(10.dp),

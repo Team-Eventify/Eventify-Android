@@ -23,6 +23,7 @@ import uikit.components.topBar.TopBarSize
 import uikit.components.topBar.TopBarState
 import uikit.utils.ObserveAsEvent
 import com.example.eventify.core.common.R as CommonR
+import com.example.eventify.feature.profileEdit.impl.R as ProfileR
 
 
 @Composable
@@ -73,7 +74,7 @@ fun ProfileEditRoute(
         when (sideEffect) {
             is SideEffect.FailUpdate -> {
                 snackBarState.show(
-                    message = "Не удалось обновить аккаунт",
+                    message = context.getString(ProfileR.string.failed_update_account),
                     description = context.getString(CommonR.string.try_again),
                     style = SnackbarStyle.Error,
                 )
@@ -81,30 +82,30 @@ fun ProfileEditRoute(
             SideEffect.SuccessUpdate -> {
                 snackBarState.show(
                     message = context.getString(R.string.user_updated),
-                    description = "Изменения сохранены",
+                    description = context.getString(ProfileR.string.changes_saved),
                     style = SnackbarStyle.Success(),
                 )
             }
 
             SideEffect.AccountDeleted -> {
                 snackBarState.show(
-                    message = "Аккаунт удален",
+                    message = context.getString(ProfileR.string.account_deleted),
                     style = SnackbarStyle.Success(),
                 )
             }
 
             SideEffect.FailedDeleteAccount -> {
                 snackBarState.show(
-                    message = "Не удалось удалить аккаунт",
-                    description = "Попробуйте позже",
+                    message = context.getString(ProfileR.string.failed_delete_account),
+                    description = context.getString(CommonR.string.try_again_later),
                     style = SnackbarStyle.Error,
                 )
             }
 
             SideEffect.EmptyCategories -> {
                 snackBarState.show(
-                    message = "Не удалось обновить аккаунт",
-                    description = "Выберите хотя бы одну категорию",
+                    message = context.getString(ProfileR.string.failed_update_account),
+                    description = context.getString(ProfileR.string.minimum_categories_required),
                     style = SnackbarStyle.Error,
                 )
             }
