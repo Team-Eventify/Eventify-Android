@@ -28,6 +28,7 @@ import java.util.UUID
 import kotlin.collections.isNotEmpty
 import data.models.EventState
 import uikit.TypographyKit
+import uikit.space10
 import com.example.eventify.uikit.R as UiKitR
 
 
@@ -64,12 +65,15 @@ fun MyEventsScreen(
                 }
             }
 
-
+            if (state.finishedEvents.isNotEmpty() && state.upComingEvents.isNotEmpty()) {
+                item {
+                    Spacer(modifier = Modifier.height(space10))
+                }
+            }
 
 
             if (state.finishedEvents.isNotEmpty()) {
                 item {
-                    Spacer(modifier = Modifier.height(10.dp))
                     Text(
                         text = stringResource(UiKitR.string.finished_events),
                         style = TypographyKit.Heading.large
