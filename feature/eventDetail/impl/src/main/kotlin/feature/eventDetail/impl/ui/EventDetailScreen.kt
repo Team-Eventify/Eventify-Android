@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -117,11 +118,12 @@ internal fun EventDetailScreen(
             Column(
                 modifier = Modifier.padding(dimmentions.windowPaddings)
             ) {
-
-                Text(
-                    text = state.event.eventInfo.title,
-                    style = TypographyKit.Heading.medium,
-                )
+                SelectionContainer {
+                    Text(
+                        text = state.event.eventInfo.title,
+                        style = TypographyKit.Heading.medium,
+                    )
+                }
                 FlowRow(
                     horizontalArrangement = Arrangement.spacedBy(10.dp, alignment = Alignment.Start),
                     modifier = Modifier
@@ -139,10 +141,13 @@ internal fun EventDetailScreen(
                     }
                 }
 
-                Text(
-                    text = state.event.eventInfo.description,
-                    style = TypographyKit.Body.regular
-                )
+                SelectionContainer {
+                    Text(
+                        text = state.event.eventInfo.description,
+                        style = TypographyKit.Body.regular
+                    )
+                }
+
                 Spacer(modifier = Modifier.height(10.dp))
 
 
