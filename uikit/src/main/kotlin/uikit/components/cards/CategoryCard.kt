@@ -23,6 +23,7 @@ import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import uikit.LocaleImageLoader
+import uikit.TypographyKit
 import uikit.utils.conditional
 
 @Composable
@@ -47,7 +48,7 @@ fun CategoryCard(
                     onClick?.invoke()
                 }
             }
-            .composed { modifier }
+            .then(modifier)
     ){
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -56,9 +57,8 @@ fun CategoryCard(
         ) {
             Text(
                 text = title,
-                fontSize = 24.sp,
-                lineHeight = 24.sp,
-                fontWeight = FontWeight.SemiBold,
+                style = TypographyKit.Heading.large,
+                color = MaterialTheme.colorScheme.onSecondary,
                 modifier = Modifier
                     .padding(top = 20.dp, start = 10.dp)
             )
