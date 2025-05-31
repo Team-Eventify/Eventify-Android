@@ -30,7 +30,7 @@ android {
             release {
                 properties("../release.properties") {
                     buildConfigField("String", "APPMETRICA_API_KEY", "\"${this["appmetrica.api.key"]}\"")
-                    buildConfigField("Boolean", "ENABLED_CRASH_REPORTING", "\"${this["appmetrica.crashreporting"]}\"")
+                    buildConfigField("Boolean", "ENABLED_CRASH_REPORTING", "${this["appmetrica.crashreporting"]}")
                 }
             }
             debug {
