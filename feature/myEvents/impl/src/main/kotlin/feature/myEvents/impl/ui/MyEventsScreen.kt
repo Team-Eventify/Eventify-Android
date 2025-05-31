@@ -49,38 +49,41 @@ fun MyEventsScreen(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            item {
-                if (state.upComingEvents.isNotEmpty())
+            if (state.upComingEvents.isNotEmpty()) {
+                item {
                     Text(
                         text = stringResource(UiKitR.string.upcoming_events),
                         style = TypographyKit.Heading.large,
                     )
-            }
-            items(state.upComingEvents) { event ->
-                UpComingEventCard(
-                    event = event,
-                    onClick = actions::navigateToEvent
-                )
+                }
+                items(state.upComingEvents) { event ->
+                    UpComingEventCard(
+                        event = event,
+                        onClick = actions::navigateToEvent
+                    )
+                }
             }
 
 
-            item {
-                if (state.finishedEvents.isNotEmpty()){
+
+
+            if (state.finishedEvents.isNotEmpty()) {
+                item {
                     Spacer(modifier = Modifier.height(10.dp))
                     Text(
                         text = stringResource(UiKitR.string.finished_events),
                         style = TypographyKit.Heading.large
                     )
                 }
-            }
-            // TODO сделать одну карточку для всех состоянией и менять наложение tint
-            items(state.finishedEvents) { event ->
-                FinishedEventCard(
-                    event = event,
-                    onClick = actions::navigateToEvent,
-                    showFeedbackButton = false,
-                    onFeedbackAction = actions::navigateToFeedback
-                )
+                // TODO сделать одну карточку для всех состоянией и менять наложение tint
+                items(state.finishedEvents) { event ->
+                    FinishedEventCard(
+                        event = event,
+                        onClick = actions::navigateToEvent,
+                        showFeedbackButton = false,
+                        onFeedbackAction = actions::navigateToFeedback
+                    )
+                }
             }
         }
 
@@ -106,7 +109,7 @@ private fun MyEventsScreenDefaultDarkPreview() {
                             start = 1231313,
                             end = 231231312,
                             location = LoremIpsum(2).values.joinToString(),
-                            state = EventState.PUBLISHED,
+                            state = EventState.FINISHED,
                         )
                     },
                     finishedEvents = List(3) {

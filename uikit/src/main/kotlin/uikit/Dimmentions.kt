@@ -24,7 +24,7 @@ val space64 = 64.dp
 
 
 data class Dimentions(
-    val windowPaddings: PaddingValues = PaddingValues(space16)
+    val windowPaddings: PaddingValues = PaddingValues(horizontal = space16)
 )
 
 val LocalDimentions = staticCompositionLocalOf<Dimentions> { Dimentions() }
