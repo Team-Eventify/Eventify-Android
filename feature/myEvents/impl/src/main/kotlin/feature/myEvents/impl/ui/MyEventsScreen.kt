@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -23,10 +24,11 @@ import feature.myEvents.impl.components.UpComingEventCard
 import feature.myEvents.impl.state.UiState
 import uikit.EventifyTheme
 import uikit.LocalDimentions
-import uikit.components.HeadingText
 import java.util.UUID
 import kotlin.collections.isNotEmpty
 import data.models.EventState
+import uikit.TypographyKit
+import uikit.space10
 import com.example.eventify.uikit.R as UiKitR
 
 
@@ -48,32 +50,44 @@ fun MyEventsScreen(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            item {
-                if (state.upComingEvents.isNotEmpty())
-                    HeadingText(text = stringResource(UiKitR.string.upcoming_events))
-            }
-            items(state.upComingEvents) { event ->
-                UpComingEventCard(
-                    event = event,
-                    onClick = actions::navigateToEvent
-                )
-            }
-
-
-            item {
-                if (state.finishedEvents.isNotEmpty()){
-                    Spacer(modifier = Modifier.height(10.dp))
-                    HeadingText(text = stringResource(UiKitR.string.finished_events))
+            if (state.upComingEvents.isNotEmpty()) {
+                item {
+                    Text(
+                        text = stringResource(UiKitR.string.upcoming_events),
+                        style = TypographyKit.Heading.large,
+                    )
+                }
+                items(state.upComingEvents) { event ->
+                    UpComingEventCard(
+                        event = event,
+                        onClick = actions::navigateToEvent
+                    )
                 }
             }
-            // TODO сделать одну карточку для всех состоянией и менять наложение tint
-            items(state.finishedEvents) { event ->
-                FinishedEventCard(
-                    event = event,
-                    onClick = actions::navigateToEvent,
-                    showFeedbackButton = false,
-                    onFeedbackAction = actions::navigateToFeedback
-                )
+
+            if (state.finishedEvents.isNotEmpty() && state.upComingEvents.isNotEmpty()) {
+                item {
+                    Spacer(modifier = Modifier.height(space10))
+                }
+            }
+
+
+            if (state.finishedEvents.isNotEmpty()) {
+                item {
+                    Text(
+                        text = stringResource(UiKitR.string.finished_events),
+                        style = TypographyKit.Heading.large
+                    )
+                }
+                // TODO сделать одну карточку для всех состоянией и менять наложение tint
+                items(state.finishedEvents) { event ->
+                    FinishedEventCard(
+                        event = event,
+                        onClick = actions::navigateToEvent,
+                        showFeedbackButton = false,
+                        onFeedbackAction = actions::navigateToFeedback
+                    )
+                }
             }
         }
 
@@ -99,7 +113,7 @@ private fun MyEventsScreenDefaultDarkPreview() {
                             start = 1231313,
                             end = 231231312,
                             location = LoremIpsum(2).values.joinToString(),
-                            state = EventState.PUBLISHED,
+                            state = EventState.FINISHED,
                         )
                     },
                     finishedEvents = List(3) {

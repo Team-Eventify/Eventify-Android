@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="choose_categories_actions">Выбирай категории ивентов под свои интересы!</string>
+    <string name="failed_update_account">Не удалось обновить аккаунт</string>
+    <string name="account_deleted">Аккаунт удален</string>
+    <string name="failed_delete_account">Не удалось удалить аккаунт</string>
+    <string name="changes_saved">Изменения сохранены</string>
+    <string name="minimum_categories_required">Выберите хотя бы одну категорию</string>
+    <string name="delete_account_title">Вы действительно хотите удалить аккаунт?</string>
+    <string name="delete_account_description">Аккаунт будет удален перманентно. Вы не сможете его воссатновить.</string>
 </resources>

@@ -8,12 +8,9 @@ import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
@@ -53,7 +50,7 @@ fun Modifier.shimmer(
 ): Modifier {
     if (!showShimmer) return this
 
-    val isDarkTheme = isSystemInDarkTheme()
+    val isDarkTheme = true
 
     val gradient = gradientColorsDark.takeIf { isDarkTheme } ?: gradientColorsWhite
 

@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.eventify.uikit.R as UiKitR
 import uikit.EventifyTheme
+import uikit.TypographyKit
 
 @Composable
 fun UserProfilePanel(
@@ -63,13 +64,12 @@ fun UserProfilePanel(
             Column {
                 Text(
                     text = profileName,
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Medium
+                    fontWeight = FontWeight.Medium,
+                    style = TypographyKit.Heading.medium,
                 )
                 Text(
                     text = stringResource(UiKitR.string.edit_profile),
-                    fontSize = 17.sp,
-                    fontWeight = FontWeight.Light
+                    style = TypographyKit.Body.small,
                 )
             }
             Icon(painter = painterResource(UiKitR.drawable.ic_arrow_right), contentDescription = "arrow right")

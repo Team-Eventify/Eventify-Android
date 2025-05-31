@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -18,9 +19,9 @@ import feature.setup.impl.state.MainSetupUiState
 import feature.setup.impl.state.SetUpListener
 import uikit.LocalDimentions
 import com.example.eventify.uikit.R as UiKitR
-import uikit.components.TitleText
 import uikit.space20
 import uikit.EventifyTheme
+import uikit.TypographyKit
 import uikit.components.buttons.PrimaryButtonWithLoader
 
 
@@ -41,7 +42,10 @@ fun SetupPersonData(
             .fillMaxSize()
             .padding(dimmentions.windowPaddings)
     ) {
-        TitleText(text = stringResource(UiKitR.string.choose_categories_that_interest_you))
+        Text(
+            text = stringResource(UiKitR.string.choose_categories_that_interest_you),
+            style = TypographyKit.Heading.xlarge,
+        )
 
         Column(
             verticalArrangement = Arrangement.spacedBy(space20)

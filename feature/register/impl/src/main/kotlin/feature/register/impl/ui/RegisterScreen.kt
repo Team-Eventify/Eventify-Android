@@ -46,9 +46,9 @@ import uikit.LocalDimentions
 import uikit.TypographyKit
 import uikit.components.PasswordInput
 import uikit.components.TextInput
-import uikit.components.TitleText
 import uikit.components.buttons.PrimaryButtonWithLoader
 import com.example.eventify.uikit.R as UiKitR
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -95,16 +95,19 @@ fun RegisterScreen(
         ) {
             Image(painter = painterResource(id=UiKitR.drawable.auth_icon), contentDescription = null)
             Spacer(modifier = Modifier.height(30.dp))
-            TitleText(text = stringResource(UiKitR.string.register))
+            Text(
+                text = stringResource(UiKitR.string.register),
+                style = TypographyKit.Heading.xlarge,
+            )
             Spacer(modifier = Modifier.height(10.dp))
             Text(
                 text = stringResource(UiKitR.string.register_request),
-                style = TypographyKit.bodyRegular,
+                style = TypographyKit.Body.regular,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             Text(
                 text = stringResource(UiKitR.string.it_takes_less_then_minute),
-                style = TypographyKit.bodyRegular,
+                style = TypographyKit.Body.regular,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             Spacer(modifier = Modifier.height(44.dp))
@@ -118,7 +121,7 @@ fun RegisterScreen(
                     state.payloadState.loginError?.let {
                         Text(
                             text = it,
-                            style = TypographyKit.bodyRegular,
+                            style = TypographyKit.Body.regular,
                             color = MaterialTheme.colorScheme.error,
                         )
                     }
@@ -144,7 +147,7 @@ fun RegisterScreen(
                     state.payloadState.passwordError?.let {
                         Text(
                             text = it,
-                            style = TypographyKit.bodyRegular,
+                            style = TypographyKit.Body.regular,
                             color = MaterialTheme.colorScheme.error,
                         )
                     }
@@ -181,11 +184,11 @@ fun RegisterScreen(
                 Text(
                     text = stringResource(UiKitR.string.already_have_account_question),
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    style = TypographyKit.bodyRegular,
+                    style = TypographyKit.Body.regular,
                 )
                 Text(
                     text = stringResource(UiKitR.string.login_action),
-                    style = TypographyKit.action,
+                    style = TypographyKit.Body.regular,
                     color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier
                         .clickable {
@@ -204,13 +207,13 @@ fun RegisterScreen(
         ) {
             Text(
                 text = stringResource(UiKitR.string.privacy_policy_text),
-                style = TypographyKit.caption,
+                style = TypographyKit.Body.regular,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
 
             Text(
                 text = stringResource(UiKitR.string.privacy_policy_link),
-                style = TypographyKit.caption.copy(
+                style = TypographyKit.Body.regular.copy(
                     textDecoration = TextDecoration.Underline,
                 ),
                 color = MaterialTheme.colorScheme.onSurfaceVariant,

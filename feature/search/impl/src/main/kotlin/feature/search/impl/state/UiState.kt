@@ -31,6 +31,6 @@ sealed class SearchResult {
     data class Error(
         val message: String? = null,
     ) : SearchResult()
-    data object None : SearchResult()
+    data object Initial : SearchResult()
     data object Empty : SearchResult()
 }

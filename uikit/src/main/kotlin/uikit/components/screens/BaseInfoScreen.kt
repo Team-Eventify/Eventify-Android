@@ -17,6 +17,8 @@ import androidx.compose.ui.unit.sp
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import uikit.TypographyKit
+import uikit.space10
+import uikit.utils.conditional
 
 @Composable
 fun BaseInfoScreen(
@@ -25,12 +27,15 @@ fun BaseInfoScreen(
     modifier: Modifier = Modifier,
     description: String? = null,
     button: (@Composable() (ColumnScope.() -> Unit))? = null,
-    verticalArrangement: Arrangement. Vertical = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
+    verticalArrangement: Arrangement. Vertical = Arrangement.spacedBy(space10, Alignment.CenterVertically),
     horizontalAlignment: Alignment. Horizontal = Alignment.CenterHorizontally,
+    fillMaxSize: Boolean = true,
 ) {
     Column(
         modifier = Modifier
-            .fillMaxSize()
+            .conditional(fillMaxSize){
+                fillMaxSize()
+            }
             .background(MaterialTheme.colorScheme.background)
             .then(modifier),
         horizontalAlignment = horizontalAlignment,
@@ -47,7 +52,8 @@ fun BaseInfoScreen(
             Text(
                 text = it,
                 textAlign = TextAlign.Center,
-                style = TypographyKit.bodyRegular,
+                style = TypographyKit.Body.regular,
+                color = MaterialTheme.colorScheme.onBackground.copy(alpha = .7f)
             )
         }
 

@@ -27,7 +27,7 @@ sealed class TopBarState {
 
     @Stable
     data class Base(
-        val title: String,
+        val title: String? = null,
         val size: TopBarSize,
         val subtitle: String? = null,
         val leftAction: TopBarAction? = null,

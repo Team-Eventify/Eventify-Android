@@ -11,12 +11,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
@@ -60,6 +62,7 @@ import feature.searchResult.api.SearchDetailPath
 import kotlinx.coroutines.runBlocking
 import rememberConnectivityState
 import uikit.EventifyTheme
+import uikit.LocalDimentions
 import uikit.LocalSnackbarState
 import uikit.LocaleImageLoader
 import uikit.components.bottomBar.BottomBarItem
@@ -89,6 +92,11 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
+        enableEdgeToEdge(
+            navigationBarStyle = SystemBarStyle.dark(
+                Color.Transparent.toArgb()
+            )
+        )
         super.onCreate(savedInstanceState)
         RequestNotificationPermission()
 
@@ -99,6 +107,7 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
             val connectionState by rememberConnectivityState()
             val lifecycleOwner = LocalLifecycleOwner.current
+            val dims = LocalDimentions.current
             val isConnected by remember(connectionState) {
                 derivedStateOf {
                     connectionState === NetworkConnectionState.Available
@@ -147,16 +156,6 @@ class MainActivity : ComponentActivity() {
                     LocalFeaturesProvider provides application.featuresProvider,
                     LocalSnackbarState provides snackbarHostState,
                 ) {
-                LaunchedEffect(Unit) {
-                    enableEdgeToEdge(
-                        statusBarStyle = SystemBarStyle.light(
-                            Color.Transparent.toArgb(), Color.Transparent.toArgb()
-                        ),
-                        navigationBarStyle = SystemBarStyle.light(
-                            Color(0xFF232326).toArgb(), Color(0xFF232326).toArgb()
-                        )
-                    )
-                }
 
                 LaunchedEffect(Unit) {
                     viewModel.authState
@@ -177,7 +176,7 @@ class MainActivity : ComponentActivity() {
 
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    color = MaterialTheme.colorScheme.background,
                 ) {
                     Scaffold(
                         topBar = {
@@ -188,6 +187,7 @@ class MainActivity : ComponentActivity() {
                         bottomBar = {
                             BottomNavBar(items, navController)
                         },
+                        contentWindowInsets = WindowInsets.safeDrawing,
                     ) { innerPadding ->
                         MainNavHost(
                             navController = navController,
@@ -196,13 +196,16 @@ class MainActivity : ComponentActivity() {
                         )
                     }
 
+                    SnackbarHost(
+                        modifier = Modifier
+                            .safeDrawingPadding()
+                            .padding(dims.windowPaddings)
+                    )
+
                     // Connectivity
                     if (!isConnected) {
                         NoInternetConnectionScreen()
                     }
-
-                    SnackbarHost()
-
                 }
             }
         }

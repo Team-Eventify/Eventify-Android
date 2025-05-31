@@ -28,7 +28,6 @@ import feature.register.impl.state.OtpState
 import uikit.components.otp.OtpTextField
 import com.example.eventify.uikit.R as UiKitR
 import uikit.space12
-import uikit.components.TitleText
 import uikit.EventifyTheme
 import uikit.TypographyKit
 
@@ -63,12 +62,13 @@ fun RegistrationOtpBottomSheet(
         ) {
             Image(painter = painterResource(id=UiKitR.drawable.email_icon), contentDescription = null)
             Spacer(modifier = Modifier.height(15.dp))
-            TitleText(
-                text = stringResource(UiKitR.string.email_confirmation)
+            Text(
+                text = stringResource(UiKitR.string.email_confirmation),
+                style = TypographyKit.Heading.xlarge,
             )
             Text(
                 text = stringResource(UiKitR.string.otp_description),
-                style = TypographyKit.bodyRegular,
+                style = TypographyKit.Body.regular,
             )
             Text(
                 text = otpState.errorMessage.takeIf { !it.isNullOrEmpty() } ?: "",

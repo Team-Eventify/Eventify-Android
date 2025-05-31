@@ -23,6 +23,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.sp
 import uikit.EventifyTheme
+import uikit.TypographyKit
 import uikit.space10
 import uikit.space48
 import uikit.utils.conditional
@@ -64,8 +65,7 @@ internal fun DefaultButton(
         }
         Text(
             overflow = TextOverflow.Ellipsis,
-            fontSize = 16.sp,
-            fontWeight = FontWeight.Medium,
+            style = TypographyKit.Label.medium,
             maxLines = 1,
             text = text,
         )

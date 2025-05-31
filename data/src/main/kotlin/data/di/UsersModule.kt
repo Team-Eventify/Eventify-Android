@@ -1,5 +1,6 @@
 package data.di
 
+import com.example.eventify.data.BuildConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,7 +32,7 @@ internal object UsersModule {
             .build()
 
         return Retrofit.Builder()
-            .baseUrl("https://eventify.website/api/v1/users/")
+            .baseUrl("${BuildConfig.API_BASE_URL}/api/v1/users/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()

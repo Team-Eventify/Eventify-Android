@@ -41,7 +41,6 @@ import data.models.Category
 import data.models.EventDetail
 import data.models.EventState
 import data.models.Organization
-import domain.extentions.isSubscribeEnabled
 import domain.models.FullEventDetail
 import feature.eventDetail.api.EventDetailListener
 import feature.eventDetail.impl.ui.components.EventActionButtonContainer
@@ -54,10 +53,7 @@ import uikit.TypographyKit
 import uikit.components.CategoryTagChip
 import uikit.components.ChipInfo
 import uikit.components.EventImage
-import uikit.components.topBar.LocalTopBarState
-import uikit.components.topBar.TopBarAction
-import uikit.components.topBar.TopBarSize
-import uikit.components.topBar.TopBarState
+import uikit.space10
 import uikit.space20
 import uikit.utils.conditional
 import java.util.UUID
@@ -71,25 +67,8 @@ internal fun EventDetailScreen(
 ) {
     val pagerState = rememberPagerState(pageCount = { state.event.eventInfo.pictures.size})
     val dimmentions = LocalDimentions.current
-    val topBarState = LocalTopBarState.current
     var isShowFullSizeImage by remember { mutableStateOf(false) }
-    val subscribeEnabled = remember {
-        state.event.eventInfo.state.isSubscribeEnabled()
-    }
 
-
-    LaunchedEffect(Unit) {
-        topBarState.setUp(
-            TopBarState.Base(
-                title = state.event.eventInfo.title,
-                size = TopBarSize.MEDIUM,
-                leftAction = TopBarAction(
-                    iconRes = UiKitR.drawable.ic_chevron_right,
-                    onClick = actions::navigateUp
-                )
-            )
-        )
-    }
 
     Scaffold(
         bottomBar = {
@@ -139,8 +118,14 @@ internal fun EventDetailScreen(
                 modifier = Modifier.padding(dimmentions.windowPaddings)
             ) {
 
+                Text(
+                    text = state.event.eventInfo.title,
+                    style = TypographyKit.Heading.medium,
+                )
                 FlowRow(
-                    horizontalArrangement = Arrangement.spacedBy(10.dp, alignment = Alignment.Start)
+                    horizontalArrangement = Arrangement.spacedBy(10.dp, alignment = Alignment.Start),
+                    modifier = Modifier
+                        .padding(vertical = space10)
                 ) {
                     ChipInfo(text = state.event.eventInfo.start.toUtcFormat(DateTimePattern.ShortNamedDate))
                     ChipInfo(text = state.event.eventInfo.let { durationUtcFormatted(it.start, it.end) })
@@ -156,7 +141,7 @@ internal fun EventDetailScreen(
 
                 Text(
                     text = state.event.eventInfo.description,
-                    style = TypographyKit.bodyRegular
+                    style = TypographyKit.Body.regular
                 )
                 Spacer(modifier = Modifier.height(10.dp))
 
@@ -164,7 +149,7 @@ internal fun EventDetailScreen(
                 Text(
                     text = stringResource(UiKitR.string.organizer),
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    style = TypographyKit.caption,
+                    style = TypographyKit.Body.small,
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 OrganizationInfoPanel(

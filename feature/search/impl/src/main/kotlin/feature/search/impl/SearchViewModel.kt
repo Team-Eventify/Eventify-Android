@@ -37,7 +37,7 @@ class SearchViewModel @Inject constructor(
 
     private val sharedSearchQuery = savedStateHandle[ARG_SEARCH_TEXT] ?: ""
     private val _searchQueryStateFlow = MutableStateFlow(sharedSearchQuery)
-    private val _searchResultStateFlow = MutableStateFlow<SearchResult>(SearchResult.None)
+    private val _searchResultStateFlow = MutableStateFlow<SearchResult>(SearchResult.Initial)
     private val _searchModeStateFlow = MutableStateFlow(SearchMode.Categories)
 
     val stateFlow = combine(
@@ -56,7 +56,7 @@ class SearchViewModel @Inject constructor(
             SharingStarted.WhileSubscribed(5000L),
             SearchUiState(
                 searchText = sharedSearchQuery,
-                searchResult = SearchResult.None,
+                searchResult = SearchResult.Initial,
                 searchMode = SearchMode.Events,
             )
         )
@@ -82,15 +82,15 @@ class SearchViewModel @Inject constructor(
             val queryFilter = EventsFilterData(
                 title = query
             ).takeIf { query.isNotEmpty() }
-            val events = getEventsUseCase(queryFilter)
-            _searchResultStateFlow.update {
-                SearchResult.Events(
-                    items = events
-                        .filter { !it.state.isHidden() }
-                        .map {
-                            it.toShort()
-                        }
-                )
+
+            _searchResultStateFlow.update { _ ->
+                getEventsUseCase(queryFilter)
+                    .filter { !it.state.isHidden() }
+                    .takeIf { it.isNotEmpty() } ?.let { events ->
+                        SearchResult.Events(
+                            items = events.map { it.toShort() }
+                        )
+                    } ?: SearchResult.Empty
             }
 
         }
