@@ -202,7 +202,6 @@ fun RegisterScreen(
                 )
             }
             Spacer(modifier = Modifier.height(100.dp))
-
         }
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
