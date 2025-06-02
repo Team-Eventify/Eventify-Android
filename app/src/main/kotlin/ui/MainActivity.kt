@@ -31,6 +31,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.flowWithLifecycle
@@ -99,7 +100,6 @@ class MainActivity : ComponentActivity() {
         )
         super.onCreate(savedInstanceState)
         RequestNotificationPermission()
-
         setContent {
             val topBarState = rememberTopBarState()
             val scope = rememberCoroutineScope()

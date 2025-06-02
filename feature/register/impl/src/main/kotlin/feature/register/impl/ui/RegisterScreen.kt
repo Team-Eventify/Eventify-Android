@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -83,17 +84,17 @@ fun RegisterScreen(
             otpState = state.otpState,
         )
     }
-
-
-    Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(dimmentions.windowPaddings)
-                .align(Alignment.Center),
+                .padding(dimmentions.windowPaddings),
             verticalArrangement = Arrangement.Center
         ) {
-            Image(painter = painterResource(id=UiKitR.drawable.auth_icon), contentDescription = null)
+
+            Image(
+                painter = painterResource(id = UiKitR.drawable.auth_icon),
+                contentDescription = null
+            )
             Spacer(modifier = Modifier.height(30.dp))
             Text(
                 text = stringResource(UiKitR.string.register),
@@ -172,7 +173,7 @@ fun RegisterScreen(
                             password = state.payloadState.password,
                         )
                     }
-              },
+                },
                 isEnabled = state.payloadState.login.isNotEmpty() && state.payloadState.password.isNotEmpty(),
             )
 
@@ -197,35 +198,32 @@ fun RegisterScreen(
                 )
             }
 
-        }
-
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(vertical = 20.dp)
-        ) {
-            Text(
-                text = stringResource(UiKitR.string.privacy_policy_text),
-                style = TypographyKit.Body.regular,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-
-            Text(
-                text = stringResource(UiKitR.string.privacy_policy_link),
-                style = TypographyKit.Body.regular.copy(
-                    textDecoration = TextDecoration.Underline,
-                ),
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+          //  Spacer(modifier = Modifier.weight(1f))
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
-                    .clickable { actions.goToPrivacyPolicy()
-                    }
-            )
+                    .fillMaxWidth()
+                    .padding(vertical = 20.dp)
+            ) {
+                Text(
+                    text = stringResource(UiKitR.string.privacy_policy_text),
+                    style = TypographyKit.Body.regular,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+
+                Text(
+                    text = stringResource(UiKitR.string.privacy_policy_link),
+                    style = TypographyKit.Body.regular.copy(
+                        textDecoration = TextDecoration.Underline,
+                    ),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier
+                        .clickable {
+                            actions.goToPrivacyPolicy()
+                        }
+                )
+            }
         }
-
-    }
-
-
 }
 
 
