@@ -205,8 +205,8 @@ fun RegisterScreen(
                         },
                 )
             }
-            Spacer(modifier = Modifier.height(100.dp))
         }
+        Spacer(modifier = Modifier.weight(1f))
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
