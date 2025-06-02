@@ -84,9 +84,10 @@ fun RegisterScreen(
             otpState = state.otpState,
         )
     }
+    Column(modifier = Modifier.fillMaxSize()) {
+        Spacer(Modifier.weight(1f))
         Column(
             modifier = Modifier
-                .fillMaxSize()
                 .padding(dimmentions.windowPaddings),
             verticalArrangement = Arrangement.Center
         ) {
@@ -180,7 +181,10 @@ fun RegisterScreen(
             Spacer(modifier = Modifier.height(20.dp))
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally)
+                horizontalArrangement = Arrangement.spacedBy(
+                    10.dp,
+                    Alignment.CenterHorizontally
+                )
             ) {
                 Text(
                     text = stringResource(UiKitR.string.already_have_account_question),
@@ -197,33 +201,34 @@ fun RegisterScreen(
                         },
                 )
             }
+            Spacer(modifier = Modifier.height(100.dp))
 
-          //  Spacer(modifier = Modifier.weight(1f))
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 20.dp)
-            ) {
-                Text(
-                    text = stringResource(UiKitR.string.privacy_policy_text),
-                    style = TypographyKit.Body.regular,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-
-                Text(
-                    text = stringResource(UiKitR.string.privacy_policy_link),
-                    style = TypographyKit.Body.regular.copy(
-                        textDecoration = TextDecoration.Underline,
-                    ),
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier
-                        .clickable {
-                            actions.goToPrivacyPolicy()
-                        }
-                )
-            }
         }
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 20.dp)
+        ) {
+            Text(
+                text = stringResource(UiKitR.string.privacy_policy_text),
+                style = TypographyKit.Body.regular,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+
+            Text(
+                text = stringResource(UiKitR.string.privacy_policy_link),
+                style = TypographyKit.Body.regular.copy(
+                    textDecoration = TextDecoration.Underline,
+                ),
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier
+                    .clickable {
+                        actions.goToPrivacyPolicy()
+                    }
+            )
+        }
+    }
 }
 
 
