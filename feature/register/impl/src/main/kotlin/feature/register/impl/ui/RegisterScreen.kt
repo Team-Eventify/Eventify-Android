@@ -84,7 +84,10 @@ fun RegisterScreen(
             otpState = state.otpState,
         )
     }
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .padding(vertical=16.dp),
+        ) {
         Spacer(Modifier.weight(1f))
         Column(
             modifier = Modifier
@@ -180,7 +183,8 @@ fun RegisterScreen(
 
             Spacer(modifier = Modifier.height(20.dp))
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(
                     10.dp,
                     Alignment.CenterHorizontally
