@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -83,17 +84,21 @@ fun RegisterScreen(
             otpState = state.otpState,
         )
     }
-
-
-    Box(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .padding(vertical=16.dp),
+        ) {
+        Spacer(Modifier.weight(1f))
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(dimmentions.windowPaddings)
-                .align(Alignment.Center),
+                .padding(dimmentions.windowPaddings),
             verticalArrangement = Arrangement.Center
         ) {
-            Image(painter = painterResource(id=UiKitR.drawable.auth_icon), contentDescription = null)
+
+            Image(
+                painter = painterResource(id = UiKitR.drawable.auth_icon),
+                contentDescription = null
+            )
             Spacer(modifier = Modifier.height(30.dp))
             Text(
                 text = stringResource(UiKitR.string.register),
@@ -172,14 +177,18 @@ fun RegisterScreen(
                             password = state.payloadState.password,
                         )
                     }
-              },
+                },
                 isEnabled = state.payloadState.login.isNotEmpty() && state.payloadState.password.isNotEmpty(),
             )
 
             Spacer(modifier = Modifier.height(20.dp))
             Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally)
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(
+                    10.dp,
+                    Alignment.CenterHorizontally
+                )
             ) {
                 Text(
                     text = stringResource(UiKitR.string.already_have_account_question),
@@ -196,13 +205,12 @@ fun RegisterScreen(
                         },
                 )
             }
-
         }
-
+        Spacer(modifier = Modifier.weight(1f))
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
-                .align(Alignment.BottomCenter)
+                .fillMaxWidth()
                 .padding(vertical = 20.dp)
         ) {
             Text(
@@ -218,14 +226,12 @@ fun RegisterScreen(
                 ),
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier
-                    .clickable { actions.goToPrivacyPolicy()
+                    .clickable {
+                        actions.goToPrivacyPolicy()
                     }
             )
         }
-
     }
-
-
 }
 
 
